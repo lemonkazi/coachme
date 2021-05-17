@@ -13,7 +13,14 @@ Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name(
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 
 //products
-Route::get('/all-categories',[App\Http\Controllers\ProductsController::class, 'show'])->middleware('auth');
+Route::get('/coaches',[App\Http\Controllers\CoachController::class, 'show'])->middleware('auth');
+
+Route::get('/coaches/{user}',[App\Http\Controllers\CoachController::class, 'show'])->middleware('auth');
+
+//Route::get('/coaches',[App\Http\Controllers\CoachController::class, 'index'])->name('coaches');
+//Route::get('coaches', 'CoachController@index');
+//Route::get('/coaches/{coach}', 'CoachController@show');
+
 
 Route::get('/create_product', function(){
     return view('admin.create_product');
