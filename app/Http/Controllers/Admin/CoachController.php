@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-//use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +16,11 @@ use Maatwebsite\Excel\Facades\Excel;
 class CoachController extends Controller
 {
     
+
+    function __construct()
+    {
+        //$this->middleware('admin');
+    }
     
     /**
      * Display a listing of the resource.
@@ -24,8 +29,6 @@ class CoachController extends Controller
      */
     public function index(Request $request, Coach $coach)
     {
-      echo "string1";
-      exit();
       $params = $request->all();
       $query = $city->filter($params);
 
@@ -106,9 +109,9 @@ class CoachController extends Controller
       $data = $request->all();
       $user = $request->user();
 
-      if ($user->isServiceAdmin()) {
+      if ($user->isSuperAdmin()) {
         $cityId = isset($data['city_id']) ? $data['city_id'] : null;
-      } elseif ($user->isCityAdmin()) {
+      } elseif ($user->isCoachUser()) {
         $cityId = $user->city_id;
       }
       if (!empty($cityId)) {
@@ -161,14 +164,33 @@ class CoachController extends Controller
 
       $params = $request->all();
       if (!empty($params)) {
-        $query = $user->filter($params);
-        $data = $query->find($user->id);
+        //$query = $user->filter($params);
+        //$data = $query->find($user->id);
       } else {
         //$query = $user->filter($params);
-        $data = $user->find($user->id);
+        //$data = $user->find($user->id);
       }
+
+      $users=User::paginate(20);
+      //$users= User::all();
+      // print_r($users);
+      // exit();
+
+      return view('admin.all-coaches', [
+          'pageInfo'=>
+           [
+            'siteTitle'        =>'Manage Users',
+            'pageHeading'      =>'Manage Users',
+            'pageHeadingSlogan'=>'Here the section to manage all registered users'
+            ]
+            ,
+            'data'=>
+            [
+               'users'      =>  $users
+              ]
+          ]);
       
-        return view('admin.all-categories')->with('productArr',User::all());
+        //return view('admin.all-categories')->with('productArr',User::all());
     }
 
     /**

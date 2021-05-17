@@ -13,10 +13,13 @@ Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name(
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 
 //products
-Route::get('/coaches',[App\Http\Controllers\CoachController::class, 'show'])->middleware('auth');
 
-Route::get('/coaches/{user}',[App\Http\Controllers\CoachController::class, 'show'])->middleware('auth');
 
+Route::middleware(['auth', 'authority:super_admin'])->group(function () {
+	Route::get('/coaches',[App\Http\Controllers\Admin\CoachController::class, 'show'])->middleware('auth');
+	Route::get('/coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show'])->middleware('auth');
+
+});
 //Route::get('/coaches',[App\Http\Controllers\CoachController::class, 'index'])->name('coaches');
 //Route::get('coaches', 'CoachController@index');
 //Route::get('/coaches/{coach}', 'CoachController@show');
