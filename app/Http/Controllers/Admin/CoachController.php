@@ -156,27 +156,23 @@ class CoachController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\products  $products
+     * @param  \App\Models\User  $users
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, User $user)
     {
-
       $params = $request->all();
-      if (!empty($params)) {
-        //$query = $user->filter($params);
-        //$data = $query->find($user->id);
+      
+      if (!empty($user->id)) {
+        return view('admin.coach.detail',[
+          'user' => User::find($user->id),
+        ]);
       } else {
-        //$query = $user->filter($params);
-        //$data = $user->find($user->id);
+        $queryUser = User::query();
+        $queryUser->where('authority','=','COACH_USER');
+        $users = $queryUser->paginate(20);
       }
-
-      $users=User::paginate(20);
-      //$users= User::all();
-      // print_r($users);
-      // exit();
-
-      return view('admin.all-coaches', [
+      return view('admin.coach.list', [
           'pageInfo'=>
            [
             'siteTitle'        =>'Manage Users',
@@ -189,46 +185,9 @@ class CoachController extends Controller
                'users'      =>  $users
               ]
           ]);
-      
-        //return view('admin.all-categories')->with('productArr',User::all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\City  $city
-     * @return \Illuminate\Http\Response
-     */
-    public function show1(Request $request, City $city)
-    {
-      $response = [];
-      $params = $request->all();
-
-      $query = $city->filter($params);
-      $data = $query->find($city->id);
-
-      if (!$data) {
-        throw new HttpResponseException(response()->error(trans('oauth.not_found'), Response::HTTP_NOT_FOUND));
-      }
-
-      $serialNoQuery = $city->filter($params);
-      $nextQuery = $city->filter($params);
-      $previousQuery = $city->filter($params);
-      $countQuery = $city->filter($params);
-      $total = $countQuery->count();
-
-      $next = $nextQuery->where('id', '<', $city->id)->orderBy('id', 'desc')->first();
-      $previous = $previousQuery->where('id', '>', $city->id)->orderBy('id')->first();
-      $serialNo = $serialNoQuery->where('id', '>', $city->id)->count();
-      
-      $response['data'] = $data;
-      $response['prev'] = $previous ? $previous->id : null;
-      $response['next'] = $next ? $next->id : null;
-      $response['total'] = $total;
-      $response['serial'] = $serialNo+1;
-      
-      return response()->success($response, trans('messages.success_message'), Response::HTTP_OK);
-    }
+    
 
     /**
      * Update the specified resource in storage.
