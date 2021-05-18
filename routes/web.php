@@ -17,8 +17,13 @@ Route::group(['middleware' => ['auth']], function () {
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	Route::get('coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);
-
+	Route::get('/add_coach',[App\Http\Controllers\Admin\CoachController::class, 'create']);
+	// Route::get('/add_coach', function(){
+	//     return view('admin.coach.add');
+	// });
 });
+Route::get('/coach_create',[App\Http\Controllers\CoachController::class, 'store']);
+
 
 Route::get('/create_product', function(){
     return view('admin.create_product');
