@@ -15,8 +15,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
-	Route::get('/coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
-	Route::get('/coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);
+	Route::get('coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
+	Route::get('coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 
 });
 

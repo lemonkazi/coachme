@@ -39,69 +39,83 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>Product ID</th>
-                    <th>Product Title</th>
-                    <th>Category</th>
-                    <th>Sub-Category</th>
-                    <th>Desctiption</th>
-                    <th>Picture</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Family Name</th>
+                    <th>About</th>
+                    <th>Province</th>
+                    <th>City</th>
+                    <th>Speciality</th>
+                    <th>Experience</th>
+                    <th>rink</th>
+                    <th>lang</th>
+                    <th>price</th>
+                    <th>certiface</th>
+                    <th>phone</th>
+                    <th>watsapp</th>
+                    <th>email</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                   @foreach($data['users'] as $user)
                   <tr>
                     <td>{{$user->id}}</td>
-                    <td>{{$user->title}}</td>
-                    <td>{{$user->category}}</td>
-                    <td>{{$user->sub_category}}</td>
-                    <td>{{$user->description}}</td>
-                    <td>{{$user->picture}}</td>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->family_name}}</td>
+                    <td>{{$user->about}}</td>
+                    <td>{{$user->province}}</td>
+                    <td>{{$user->city}}</td>
+                    <td>{{$user->speciality}}</td>
+                    <td>{{$user->experience}}</td>
+                    <td>{{$user->rink}}</td>
+                    <td>{{$user->lang}}</td>
                     <td>{{$user->price}}</td>
-                    <td>{{$user->quantity}}</td>
-                    <td> <div class="btn-group">
-                 <a href="#" class="btn btn-warning" title="Edit"><i class="fas fa-edit"></i>
-                             </a> 
-                 <a href="product_delete/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete"> <i class="fa fa-trash" aria-hidden="true"></i>   </a>             
-                           </div>
+                    <td>{{$user->certificate}}</td>
+                    <td>{{$user->phone_number}}</td>
+                    <td>{{$user->whatsapp}}</td>
+                    <td>{{$user->email}}</td>
+                    <td> 
+                      <div class="btn-group">
+                        <a href="{{url('coaches').'/'.$user->id}}" class="btn btn-primary">
+                          <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="#" class="btn btn-warning" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </a> 
+                        <a href="product_delete/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete">
+                          <i class="fa fa-trash" aria-hidden="true"></i>   
+                        </a>             
+                      </div>
                  </td>
                    </tr>
                   @endforeach
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Product ID</th>
-                  <th>Product Title</th>
-                    <th>Category</th>
-                    <th>Sub-Category</th>
-                    <th>Desctiption</th>
-                    <th>Picture</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Family Name</th>
+                    <th>About</th>
+                    <th>Province</th>
+                    <th>City</th>
+                    <th>Speciality</th>
+                    <th>Experience</th>
+                    <th>rink</th>
+                    <th>lang</th>
+                    <th>price</th>
+                    <th>certiface</th>
+                    <th>phone</th>
+                    <th>watsapp</th>
+                    <th>email</th>
+                    <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>
               </div>
               <div class="box-footer clearfix">
                   {{ $data['users']->links('pagination.default') }}
-                  
-                  <!-- <ul class="pagination pagination-sm no-margin pull-right">
-                      @if($data['users']->previousPageUrl())
-
-                        <li><a class="next page-numbers" href="{{$data['users']->previousPageUrl()}}"><< Previous</a></li>
-
-                      @endif
-
-                      @if($data['users']->hasMorePages())
-
-                        <li><a class="next page-numbers" href="{{$data['users']->nextPageUrl()}}">Next >></a></li>
-
-                      @endif
-                  </ul> -->
-                </div>
+              </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
