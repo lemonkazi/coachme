@@ -28,8 +28,10 @@ class Authority
                 return $next($request);
             }
         }
-        
-        // return $next($request);
-        return response()->error('Access denied!', 403);
+        //return response('Unauthorized.', 401);
+        return redirect()->route('home');
+        //return view('errors.404');
+        //return $next($request);
+        //return response()->error('Access denied!', 403);
     }
 }

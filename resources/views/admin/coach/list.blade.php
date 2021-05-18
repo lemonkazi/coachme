@@ -9,11 +9,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Products</h1>
-            @php
+            <!-- @php
              echo "<pre>";
-               print_r($AppUI);
+               print_r($AppUI->id);
              echo "</pre>";
-            @endphp
+            @endphp -->
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

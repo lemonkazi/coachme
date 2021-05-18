@@ -7,7 +7,10 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Auth;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 use View;
 use Route;
@@ -34,17 +37,30 @@ class Controller extends BaseController
     	$this->controller = strtolower($controller);
         $this->action = strtolower($method);
         $this->CURRENT_URL = url()->current();
-        if (Auth::check() && $this->isAuthorized()) {
-            $user = Auth::user();
+
+        $this->middleware(function ($request, $next) {
+
+            
+
             $this->AppUI = Auth::user();
-        }
-        $data = array(
-            'controller' => $this->controller,
-            'action' => $this->action,
-            'CURRENT_URL' => $this->CURRENT_URL,
-            'AppUI' => $this->AppUI,
-        );
-        View::share($data);
+            $data = array(
+                'controller' => $this->controller,
+                'action' => $this->action,
+                'CURRENT_URL' => $this->CURRENT_URL,
+                'AppUI' => $this->AppUI,
+            );
+            View::share($data);
+            return $next($request);
+        });
+
+        // print_r(Auth::user());
+        // exit();
+        // if (Auth::check() && $this->isAuthorized()) {
+        //     $user = Auth::user();
+
+        //     $this->AppUI = Auth::user();
+        // }
+        
     }
 
 
