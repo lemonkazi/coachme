@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
     public function manageCategory(){
         $categoryArr = Category::orderBy('id','DESC')->get();
         return view('admin.categories', compact('categoryArr'));

@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use View;
 use Route;
 
@@ -15,6 +18,8 @@ class Controller extends BaseController
 
     public $BASE_URL = '';
     public $CURRENT_URL = '';
+    /** @var object $AppUI Session infomation of user logged. */
+    public $AppUI = null;
     /** @var object $controller Controller name. */
     public $controller = null;
     public $action = null;
@@ -29,10 +34,15 @@ class Controller extends BaseController
     	$this->controller = strtolower($controller);
         $this->action = strtolower($method);
         $this->CURRENT_URL = url()->current();
+        if (Auth::check() && $this->isAuthorized()) {
+            $user = Auth::user();
+            $this->AppUI = Auth::user();
+        }
         $data = array(
             'controller' => $this->controller,
             'action' => $this->action,
             'CURRENT_URL' => $this->CURRENT_URL,
+            'AppUI' => $this->AppUI,
         );
         View::share($data);
     }
@@ -53,5 +63,29 @@ class Controller extends BaseController
         $uNmae = ucfirst($name);
 
         return 'App\\Models\\'.$uNmae;
+    }
+
+    /**
+     * Commont function check user is Authorized..
+     *
+     *
+     * @param object $user Session user logged.
+     * @return boolean  If true is authorize, and false is unauthorize.
+     */
+    public function isAuthorized($user = null) {
+        if (Auth::check()) {
+            if (empty($user)) {
+                $user = Auth::user();
+            }
+            if (!empty($user)) {
+                $this->AppUI = $user;
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
+        
+        
     }
 }
