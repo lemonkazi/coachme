@@ -46,5 +46,7 @@ class AppServiceProvider extends ServiceProvider
             $BASE_URL = url('/');
             $view->with('BASE_URL', $BASE_URL);
         });
+
+        
     }
 }

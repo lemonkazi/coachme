@@ -8,19 +8,18 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Products</h1>
-            <!-- @php
+            <h1 class="m-0">{{$data['Title']}}</h1>
+            <!-- // code in resources/views/view.blade.php -->
+           <!--  @php
              echo "<pre>";
-               print_r($AppUI->id);
+               print_r(count($data['breadcrumb']));
              echo "</pre>";
             @endphp -->
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">All Products</li>
-            </ol>
-          </div><!-- /.col -->
+          </div>
+            @php
+            echo htmlspecialchars_decode(render2($data['breadcrumb']))
+            @endphp
+          <!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -33,7 +32,7 @@
         <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">All existing Products</h3>
+                <h3 class="card-title">All existing {{$data['Title']}}</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

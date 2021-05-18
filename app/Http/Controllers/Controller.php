@@ -40,9 +40,11 @@ class Controller extends BaseController
 
         $this->middleware(function ($request, $next) {
 
-            
+            if (Auth::check() && $this->isAuthorized()) {
+                $user = Auth::user();
 
-            $this->AppUI = Auth::user();
+                $this->AppUI = Auth::user();
+            }
             $data = array(
                 'controller' => $this->controller,
                 'action' => $this->action,

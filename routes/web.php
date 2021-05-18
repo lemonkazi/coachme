@@ -1,32 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+// landing page
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
+// auth
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
-	//products
 
-
-	
 });
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('/coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	Route::get('/coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 
 });
-
-//Route::get('/coaches',[App\Http\Controllers\CoachController::class, 'index'])->name('coaches');
-//Route::get('coaches', 'CoachController@index');
-//Route::get('/coaches/{coach}', 'CoachController@show');
-
 
 Route::get('/create_product', function(){
     return view('admin.create_product');

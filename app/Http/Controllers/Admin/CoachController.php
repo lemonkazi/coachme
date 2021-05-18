@@ -172,6 +172,14 @@ class CoachController extends Controller
         $queryUser->where('authority','=','COACH_USER');
         $users = $queryUser->paginate(20);
       }
+
+      $breadcrumb = array(
+          array(
+             'name'=>'All Coach',
+             'link'=>'/coaches'
+          )
+      );
+
       return view('admin.coach.list', [
           'pageInfo'=>
            [
@@ -182,8 +190,10 @@ class CoachController extends Controller
             ,
             'data'=>
             [
-               'users'      =>  $users
-              ]
+               'users'      =>  $users,
+               'breadcrumb' =>  $breadcrumb,
+               'Title' =>  'Coach List'
+            ]
           ]);
     }
 
