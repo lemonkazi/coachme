@@ -56,172 +56,20 @@
     </ul>
   </nav>
   <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="/" class="brand-link">
-      <img src="{{ asset ('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">COACH ME</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <!-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Abiduzzaman Abid</a>
-        </div>
-      </div> -->
-
-      <!-- SidebarSearch Form -->
-      
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="{{ url('/home')}}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Products
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url('/all-categories')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All Products</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('/create_product')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Products</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Category
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url('/categories')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All Categories</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('/add_categories')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Categories</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
-              <p>
-                Sub Category
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ url('/sub_categories')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All Sub Categories</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url('/add_Sub_Categories')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Edit Sub Categories</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
-              <p>
-                Invoice
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Customer List
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Order List
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Coupons
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Warehouse
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Settings
-              </p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+  <!-- LEFT SIDEBAR Start -->
+  <!-- ========================================================= -->
+  @include('layouts.sidebar')
+  <!-- LEFT SIDEBAR End -->
+  <!-- CONTENT -->
+  <!-- ========================================================= -->
+  <!-- Main start -->
+    @yield('content')
+  <!-- Main End -->
+  
 
 
-<!-- footer -->
-@yield('content')
-
-<footer class="main-footer">
+  <!-- footer -->
+  <footer class="main-footer">
     <strong>Copyright &copy; 2021.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">

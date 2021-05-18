@@ -17,9 +17,9 @@ class CoachController extends Controller
 {
     
 
-    function __construct()
+    public function __construct()
     {
-        //$this->middleware('admin');
+        parent::__construct();
     }
     
     /**
