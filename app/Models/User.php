@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Rink;
+use App\Models\Speciality;
+use App\Models\Price;
+use App\Models\Language;
+use App\Models\Experience;
+use App\Models\Certificate;
+use App\Traits\ModelTrait;
+use DB;
 
 class User extends Authenticatable
 {
@@ -31,6 +39,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+
+
+    protected $appends = [
+        'speciality_name',
     ];
 
     /**
@@ -139,5 +157,63 @@ class User extends Authenticatable
     public function hasAuthority($authority)
     {
         return $this->authority === strtoupper($authority);
+    }
+
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getSpecialityNameAttribute()
+    {
+        return !empty($this->speciality) ? $this->speciality->name : null;
+    }
+
+
+    /**
+     * Get the speciality for the user.
+     */
+    public function speciality()
+    {
+        return $this->belongsTo(Speciality::class);
+    }
+
+     /**
+     * Get the rinks for the user.
+     */
+    public function rink()
+    {
+        return $this->belongsTo(Rink::class);
+    }
+
+     /**
+     * Get the rinks for the user.
+     */
+    public function price()
+    {
+        return $this->belongsTo(Price::class);
+    }
+     /**
+     * Get the language for the user.
+     */
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
+
+     /**
+     * Get the language for the user.
+     */
+    public function experience()
+    {
+        return $this->belongsTo(Experience::class);
+    }
+     /**
+     * Get the certificate for the user.
+     */
+    public function certificate()
+    {
+        return $this->belongsTo(Certificate::class);
     }
 }

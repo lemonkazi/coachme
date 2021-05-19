@@ -34,12 +34,70 @@
                       'label' => __('ID'),
                       'text' => '',
                   ),
+                  'name' => array(
+                      'label' => __('Name'),
+                      'text' => '',
+                  ),
+                  'family_name' => array(
+                      'label' => __('Family Name'),
+                      'text' => '',
+                  ),
                   'email' => array(
                       'label' => __('LABEL_EMAIL_JP'),
                       'text' => '',
                   ),
                   'authority' => array(
                       'label' => __('LABEL_AUTHORITY'),
+                      'text' => '',
+                  ),
+                  'about' => array(
+                      'label' => __('about'),
+                      'text' => '',
+                  ),
+                  'province' => array(
+                      'label' => __('province'),
+                      'text' => '',
+                  ),
+                  'city' => array(
+                      'label' => __('city'),
+                      'text' => '',
+                  ),
+                  'speciality' => array(
+                      'label' => __('speciality'),
+                      'text' => '',
+                      'related' => 'speciality'
+                  ),
+                  'experience' => array(
+                      'label' => __('experience'),
+                      'text' => '',
+                      'related' => 'experience'
+                  ),
+                  'rink' => array(
+                      'label' => __('rink'),
+                      'text' => '',
+                      'related' => 'rink'
+                  ),
+                  'lang' => array(
+                      'label' => __('lang'),
+                      'text' => '',
+                      'related' => 'language'
+                  ),
+                  'price' => array(
+                      'label' => __('price'),
+                      'text' => '',
+                      'related' => 'price'
+                  ),
+                  'certificate' => array(
+                      'label' => __('certificate'),
+                      'text' => '',
+                      'related' => 'certificate'
+                  ),
+                  'phone_number' => array(
+                      'label' => __('phone_number'),
+                      'text' => '',
+                  ),
+                  'whatsapp' => array(
+                      'label' => __('whatsapp'),
                       'text' => '',
                   ),
                   'created_at' => array(
@@ -62,6 +120,14 @@
                         $result[$key]['text'] = date('Y年m月d日', $data['user']->$key);
                     } elseif (!empty($result[$key]['is_array'])) {
                         $result[$key]['text'] = implode (", ", $data['user']->$key);
+                    } elseif (!empty($result[$key]['related'])) {
+                      // echo "<pre>";
+                      
+                      // print_r($data['user']->$related->name);
+                      // echo "</pre>";
+                      // exit();
+                      $related = (string)$result[$key]['related'];
+                      $result[$key]['text'] = $data['user']->$related->name;
                     } else {
                         $result[$key]['text'] = $data['user']->$key;
                     }
@@ -72,7 +138,7 @@
               ?> 
               <dl class="row">
                   <?php foreach ($result as $key => $value) : ?> 
-                          <dt class="col-sm-3 mx-20"><?php echo $value['label']; ?></dt>
+                          <dt class="col-sm-3 mx-20"><?php echo $value['label']; ?></dt>:
                           <dd class="col-sm-8"><?php echo $value['text']; ?></dd>
                       <?php endforeach; ?> 
               </dl>
