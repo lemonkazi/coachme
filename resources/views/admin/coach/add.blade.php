@@ -73,7 +73,7 @@
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label for="email">About</label>
+                          <label for="about">About</label>
                           <textarea class="form-control" id="about" placeholder="about"></textarea>
                         </div>
                       </div>

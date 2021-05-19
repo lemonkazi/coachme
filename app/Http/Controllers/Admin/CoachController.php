@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Response;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
@@ -75,8 +76,26 @@ class CoachController extends Controller
     public function store(Request $request)
     {
       $data = $request->all();
+      $user = $request->user();
+
       $data['authority'] = 'COACH_USER';
-      
+
+      $userExists = User::where([
+                                    ['email', $data['email']],
+                                    ['deleted_at', null],
+                                ])->first();
+        
+        if ($userExists) {
+          return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
+        }
+
+        if (isset($data['rink'])) {
+            $rink = Rink::find($data['rink']);
+
+            if (!$rink) {
+               return redirect()->back()->withInput()->withErrors('rink not exist');
+            }         
+        }
 
 
       $rules = array(
@@ -114,37 +133,46 @@ class CoachController extends Controller
         }
         else
         {
-          print_r($data);
-          exit();
-          $user = new User;
-          $user->name = $request->name;
-          $user->email = $request->email;
-          $user->access_level = User::ACCESS_LEVEL_STAFF;
-          $user->password = bcrypt($request->password);
-
-          $user->save();
-          $staff = new Staff;
-          $staff->user_id = $user->id;
-          $staff->phone = $request->phone;
-          $staff->address = $request->address;
-          if($request->post('type_staff') == 0)
+          $data['is_verified'] = true;
+          $user = User::create($data);
+          $user->rink_id = !empty($rink) ? $rink->id : null;
+          $user->authority = User::ACCESS_LEVEL_COACH;
+          
+          if($request->file('avatar_image_path'))
           {
-             $staff->access_level = Staff::ACCESS_LEVEL_MARKET;
-          }
-          elseif($request->post('type_staff') == 1)
-          {
-             $staff->access_level = Staff::ACCESS_LEVEL_ACCOUNT;
-          }
-          $staff->created_by = Auth::user()->id;
-          if($request->file('photo'))
-          {
-            $image = $request->file('photo');
+            $image = $request->file('avatar_image_path');
             $new_name = Auth::user()->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('staff_photo'), $new_name);
-             $staff->image = $new_name;
+            $image->move(public_path('coach_photo'), $new_name);
+             $user->avatar_image_path = $new_name;
           }
-           $staff->save();
-          Toastr::success('A new Staff has been created','Success');
+          if (!$user->save()) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+          // print_r($data);
+          // exit();
+          // $user = new User;
+          // $user->name = $request->name;
+          // $user->email = $request->email;
+          // $user->access_level = User::ACCESS_LEVEL_STAFF;
+          // $user->password = bcrypt($request->password);
+
+          // $user->save();
+          // $staff = new Staff;
+          // $staff->user_id = $user->id;
+          // $staff->phone = $request->phone;
+          // $staff->address = $request->address;
+          // if($request->post('type_staff') == 0)
+          // {
+          //    $staff->access_level = Staff::ACCESS_LEVEL_MARKET;
+          // }
+          // elseif($request->post('type_staff') == 1)
+          // {
+          //    $staff->access_level = Staff::ACCESS_LEVEL_ACCOUNT;
+          // }
+          // $staff->created_by = Auth::user()->id;
+          
+          Toastr::success('A new Coach has been created','Success');
           return back();
        }
 

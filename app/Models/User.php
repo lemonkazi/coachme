@@ -20,6 +20,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    const ACCESS_LEVEL_MASTER_ADMIN = 'SUPER_ADMIN';
+    const ACCESS_LEVEL_RINK = 'RINK_USER';
+    const ACCESS_LEVEL_COACH = 'COACH_USER';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,8 +31,19 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'family_name',
         'email',
         'password',
+        'about',
+        'province',
+        'city',
+        'phone_number',
+        'whatsapp',
+        'avatar_image_path',
+        'gender',
+        'authority',
+        'is_verified',
+        'deleted_at'
     ];
 
     /**
