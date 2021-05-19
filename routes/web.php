@@ -15,14 +15,27 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
+	
 	Route::get('coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	Route::get('coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);
-	Route::get('/add_coach',[App\Http\Controllers\Admin\CoachController::class, 'create']);
+	
+	Route::group(['prefix' =>'coach', 'as'=>'coach.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\CoachController::class, 'create']);
+	    Route::post('create',[App\Http\Controllers\Admin\CoachController::class, 'store']);
+	    
+	    //Route::get('all-coaches',['as' =>'all_managers','uses' =>'ManagerController@getAllManager' ]);
+	    //Route::get('details/{id}',['as' =>'details','uses' =>'ManagerController@detail' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CoachController::class, 'update']);
+	    //Route::post('save-edit',['as' =>'save_edit','uses' =>'ManagerController@update']);
+  	});
+
+	//Route::get('/add_coach',[App\Http\Controllers\Admin\CoachController::class, 'create']);
 	// Route::get('/add_coach', function(){
 	//     return view('admin.coach.add');
 	// });
 });
-Route::get('/coach_create',[App\Http\Controllers\CoachController::class, 'store']);
 
 
 Route::get('/create_product', function(){

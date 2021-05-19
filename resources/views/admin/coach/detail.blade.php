@@ -7,14 +7,11 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Coach Detail;</h1>
+          <h1 class="m-0">{{$data['Title']}}</h1>
         </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Add Products</li>
-          </ol>
-        </div><!-- /.col -->
+        @php
+          echo htmlspecialchars_decode(render2($data['breadcrumb']))
+        @endphp
         {{session('msg')}}
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -57,16 +54,16 @@
               );
               //print_r($user);
               foreach ($result as $key => $value) {
-                if (!isset($user->$key)) {
+                if (!isset($data['user']->$key)) {
                     continue;
                 }
-                if (!empty($user->$key)) {
+                if (!empty($data['user']->$key)) {
                     if (!empty($result[$key]['is_date_format'])) {
-                        $result[$key]['text'] = date('Y年m月d日', $user->$key);
+                        $result[$key]['text'] = date('Y年m月d日', $data['user']->$key);
                     } elseif (!empty($result[$key]['is_array'])) {
-                        $result[$key]['text'] = implode (", ", $user->$key);
+                        $result[$key]['text'] = implode (", ", $data['user']->$key);
                     } else {
-                        $result[$key]['text'] = $user->$key;
+                        $result[$key]['text'] = $data['user']->$key;
                     }
                 } else {
                     $result[$key]['text'] = '-';
@@ -82,7 +79,7 @@
             </div>
             <div class="card-footer text-center">
                 
-                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/users/update/' . $user->id ?>"><?php echo __('LABEL_UPDATE') ?></a>
+                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/coach/edit/' . $data['user']->id ?>"><?php echo __('LABEL_UPDATE') ?></a>
             
             </div>
           </div>

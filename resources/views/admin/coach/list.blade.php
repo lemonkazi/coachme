@@ -83,7 +83,7 @@
                         <a href="#" class="btn btn-warning" title="Edit">
                           <i class="fas fa-edit"></i>
                         </a> 
-                        <a href="product_delete/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete">
+                        <a href="coach/delete/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete">
                           <i class="fa fa-trash" aria-hidden="true"></i>   
                         </a>             
                       </div>

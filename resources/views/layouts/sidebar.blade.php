@@ -90,13 +90,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'show') echo 'active' ?>">
-              <a href="{{ url('/coaches')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('coaches')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'show') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>All Coach</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{ url('/add_coach')}}" class="nav-link">
+            <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/coach/add')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Coach</p>
               </a>

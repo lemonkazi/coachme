@@ -43,6 +43,10 @@ class CoachController extends Controller
           array(
              'name'=>'All Coach',
              'link'=>'/coaches'
+          ),
+          array(
+             'name'=>'Add Coach',
+             'link'=>''
           )
         );
         return view('admin.coach.add', [
@@ -57,7 +61,7 @@ class CoachController extends Controller
             [
                //'users'      =>  $users,
                'breadcrumb' =>  $breadcrumb,
-               'Title' =>  'Coach List'
+               'Title' =>  'Add Coach'
             ]
           ]);
     }
@@ -113,7 +117,7 @@ class CoachController extends Controller
       if (!$city) {
         throw new HttpResponseException(response()->error(trans('messages.error_message'), Response::HTTP_BAD_REQUEST));
       }
-      return redirect ('add_coach');
+      return redirect ('coach/add');
       //return response()->success($city, trans('messages.success_message'), Response::HTTP_CREATED);      
     }
 
@@ -128,9 +132,34 @@ class CoachController extends Controller
       $params = $request->all();
       
       if (!empty($user->id)) {
-        return view('admin.coach.detail',[
-          'user' => User::find($user->id),
-        ]);
+        $breadcrumb = array(
+          array(
+             'name'=>'All Coach',
+             'link'=>'/coaches'
+          ),
+          array(
+             'name'=>'Coach Detail',
+             'link'=>''
+          )
+        );
+        return view('admin.coach.detail', [
+          'pageInfo'=>
+           [
+            'siteTitle'        =>'Manage Users',
+            'pageHeading'      =>'Manage Users',
+            'pageHeadingSlogan'=>'Here the section to manage all registered users'
+            ]
+            ,
+            'data'=>
+            [
+               'user' => User::find($user->id),
+               'breadcrumb' =>  $breadcrumb,
+               'Title' =>  'Coach Detail'
+            ]
+          ]);
+        // return view('admin.coach.detail',[
+        //   'user' => User::find($user->id),
+        // ]);
       } else {
         $queryUser = User::query();
         $queryUser->where('authority','=','COACH_USER');
@@ -170,7 +199,7 @@ class CoachController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(CityUpdateRequest $request, City $city)
+    public function update(CoachUpdateRequest $request, $id)
     {
       $data = $request->all();
       $user = $request->user();
