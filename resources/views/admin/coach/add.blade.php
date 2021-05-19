@@ -26,44 +26,160 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title"><?php echo __('LABEL_ADD_NEW')?></h3>
+                    <h3 class="card-title">ADD NEW</h3>
                 </div>
 
                 <div class="card-body">
                   <!-- form start -->
-                  <form method="post" action="coach/create">
+                  <form action="{{ route('coach.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Title</label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="category">Category</label>
-                        <input type="text" class="form-control" name="category" id="category" placeholder="Category" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="sub_category">Sub_category</label>
-                        <input type="text" class="form-control" name="sub_category" id="sub_category" placeholder="Title" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" class="form-control" name="description" id="description" placeholder="Title" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="picture">Picture</label>
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" name="picture" id="picture" required>
-                          <label class="custom-file-label" for="customFile">Choose file</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name">Name</label>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
                         </div>
                       </div>
-                      <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="text" class="form-control" name="price" id="price" placeholder="Title" required>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="family_name">Family Name</label>
+                          <input type="text" class="form-control" id="family_name" name="family_name" placeholder="Family Name">
+                        </div>
                       </div>
-                      <div class="form-group">
-                        <label for="quantity">Quantity</label>
-                        <input type="text" class="form-control" name="quantity" id="quantity" placeholder="Title" required>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="email">Email address</label>
+                          <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
                       </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="password">Password</label>
+                              <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="email">About</label>
+                          <textarea class="form-control" id="about" placeholder="about"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="province">Province</label>
+                          <select name="province" class="form-control" style="width: 100%">
+                            <option value="none" selected="" disabled="">Select</option>
+                            <option value="0">aa</option>
+                            <option value="1">aaa</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="city">City</label>
+                            <select name="city" class="form-control" style="width: 100%">
+                              <option value="none" selected="" disabled="">Select</option>
+                              <option value="0">aa</option>
+                              <option value="1">aaa</option>
+                            </select>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="speciality">speciality</label>
+                          <select name="speciality" class="form-control" style="width: 100%">
+                            <option value="none" selected="" disabled="">Select</option>
+                            <option value="0">aa</option>
+                            <option value="1">aaa</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="experience">experience</label>
+                            <select name="experience" class="form-control" style="width: 100%">
+                              <option value="none" selected="" disabled="">Select</option>
+                              <option value="0">aa</option>
+                              <option value="1">aaa</option>
+                            </select>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="rink">rink</label>
+                          <select name="rink" class="form-control" style="width: 100%">
+                            <option value="none" selected="" disabled="">Select</option>
+                            <option value="0">aa</option>
+                            <option value="1">aaa</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="certificate">certificate</label>
+                            <select name="certificate" class="form-control" style="width: 100%">
+                              <option value="none" selected="" disabled="">Select</option>
+                              <option value="0">aa</option>
+                              <option value="1">aaa</option>
+                            </select>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="language">language</label>
+                          <select name="lang" class="form-control" style="width: 100%">
+                            <option value="none" selected="" disabled="">Select</option>
+                            <option value="0">aa</option>
+                            <option value="1">aaa</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="price">price</label>
+                            <select name="price" class="form-control" style="width: 100%">
+                              <option value="none" selected="" disabled="">Select</option>
+                              <option value="0">aa</option>
+                              <option value="1">aaa</option>
+                            </select>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="phone_number">Phone Number</label>
+                          <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="phone_number" required>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="whatsapp">whatsapp</label>
+                          <input type="text" class="form-control" id="whatsapp" name="whatsapp" placeholder="whatsapp">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="file">Upload Image</label>
+                            <input type="file" name="avatar_image_path" id="file" placeholder="no file selected">
+                        </div>
+                      </div>
+                    </div>
+                      
                       <!-- /.card-body -->
 
                       <div class="card-footer">
@@ -77,7 +193,7 @@
               <div class="card card-secondary">
                 <div class="card-header">
                   <h3 class="card-title">
-                    asdasdas
+                    Instraction
                   </h3>
                 </div>
                 <div class="card-body">

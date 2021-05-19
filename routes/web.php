@@ -22,8 +22,8 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::group(['prefix' =>'coach', 'as'=>'coach.'], function(){
 
 	    Route::get('add',[App\Http\Controllers\Admin\CoachController::class, 'create']);
-	    Route::post('create',[App\Http\Controllers\Admin\CoachController::class, 'store']);
-	    
+	    //Route::post('store',[App\Http\Controllers\Admin\CoachController::class, 'store']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\CoachController@store' ]);
 	    //Route::get('all-coaches',['as' =>'all_managers','uses' =>'ManagerController@getAllManager' ]);
 	    //Route::get('details/{id}',['as' =>'details','uses' =>'ManagerController@detail' ]);
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);

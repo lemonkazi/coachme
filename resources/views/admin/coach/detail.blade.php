@@ -77,6 +77,11 @@
                       'text' => '',
                       'related' => 'rink'
                   ),
+                  'certificate' => array(
+                      'label' => __('certificate'),
+                      'text' => '',
+                      'related' => 'certificate'
+                  ),
                   'lang' => array(
                       'label' => __('lang'),
                       'text' => '',
@@ -87,11 +92,7 @@
                       'text' => '',
                       'related' => 'price'
                   ),
-                  'certificate' => array(
-                      'label' => __('certificate'),
-                      'text' => '',
-                      'related' => 'certificate'
-                  ),
+                  
                   'phone_number' => array(
                       'label' => __('phone_number'),
                       'text' => '',

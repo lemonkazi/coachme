@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Http\Requests\CoachCreateRequest;
 use App\Models\User;
 
 //use App\Models\products;
@@ -71,8 +72,61 @@ class CoachController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CoachRequest $request)
+    public function store(Request $request)
     {
+      $data = $request->all();
+      print_r($data);
+      exit();
+
+      // $validator = Validator::make($request->all(), [
+      //         'name'   => 'required|min:3',
+      //         'email'  => 'required|email',
+      //         'phone' => 'required|min:11|max:13',
+      //         'type_staff'=> 'required',
+      //         'password'  => 'required|min:8',
+      //         'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      //      ]);
+
+      //   if ($validator->fails())
+      //   {
+      //       Toastr::warning('Error occured',$validator->errors()->all()[0]);
+      //       return redirect()->back()->withInput()->withErrors($validator);
+      //   }
+      //   else
+      //   {
+      //     $user = new User;
+      //     $user->name = $request->name;
+      //     $user->email = $request->email;
+      //     $user->access_level = User::ACCESS_LEVEL_STAFF;
+      //     $user->password = bcrypt($request->password);
+
+      //     $user->save();
+      //     $staff = new Staff;
+      //     $staff->user_id = $user->id;
+      //     $staff->phone = $request->phone;
+      //     $staff->address = $request->address;
+      //     if($request->post('type_staff') == 0)
+      //     {
+      //        $staff->access_level = Staff::ACCESS_LEVEL_MARKET;
+      //     }
+      //     elseif($request->post('type_staff') == 1)
+      //     {
+      //        $staff->access_level = Staff::ACCESS_LEVEL_ACCOUNT;
+      //     }
+      //     $staff->created_by = Auth::user()->id;
+      //     if($request->file('photo'))
+      //     {
+      //       $image = $request->file('photo');
+      //       $new_name = Auth::user()->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+      //       $image->move(public_path('staff_photo'), $new_name);
+      //        $staff->image = $new_name;
+      //     }
+      //      $staff->save();
+      //     Toastr::success('A new Staff has been created','Success');
+      //     return back();
+      //  }
+
+
       $data = $request->all();
       $user = $request->user();
 
