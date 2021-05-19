@@ -75,56 +75,78 @@ class CoachController extends Controller
     public function store(Request $request)
     {
       $data = $request->all();
-      print_r($data);
-      exit();
+      $data['authority'] = 'COACH_USER';
+      
 
-      // $validator = Validator::make($request->all(), [
-      //         'name'   => 'required|min:3',
-      //         'email'  => 'required|email',
-      //         'phone' => 'required|min:11|max:13',
-      //         'type_staff'=> 'required',
-      //         'password'  => 'required|min:8',
-      //         'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-      //      ]);
 
-      //   if ($validator->fails())
-      //   {
-      //       Toastr::warning('Error occured',$validator->errors()->all()[0]);
-      //       return redirect()->back()->withInput()->withErrors($validator);
-      //   }
-      //   else
-      //   {
-      //     $user = new User;
-      //     $user->name = $request->name;
-      //     $user->email = $request->email;
-      //     $user->access_level = User::ACCESS_LEVEL_STAFF;
-      //     $user->password = bcrypt($request->password);
+      $rules = array(
+              'name'   => 'required|string|max:255',
+              //'family_name'   => 'required|string|min:10',
+              'email'  => 'required|string|email|max:255',
+              'password' => 'required|min:8',
+              //'type_staff'=> 'required',
+              'password'  => 'required|min:8',
+              'avatar_image_path' => 'nullable',
+              //'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            );    
+      $messages = array(
+                  //'family_name.min' => trans('messages.name.max'),
+                  'name.required' => trans('messages.name.required'),
+                  'name.max' => trans('messages.name.max'),
+                  'email.required' => trans('messages.email.required'),
+                  'email.string' => trans('messages.email.string'),
+                  'email.email' => trans('messages.email.email'),
+                  'email.max' => trans('messages.email.max'),
+                  'password.required' => trans('messages.password.required'),
+                  'password.min' => trans('messages.password.min')
+                  
+                );
+      $validator = Validator::make( $data, $rules, $messages );
 
-      //     $user->save();
-      //     $staff = new Staff;
-      //     $staff->user_id = $user->id;
-      //     $staff->phone = $request->phone;
-      //     $staff->address = $request->address;
-      //     if($request->post('type_staff') == 0)
-      //     {
-      //        $staff->access_level = Staff::ACCESS_LEVEL_MARKET;
-      //     }
-      //     elseif($request->post('type_staff') == 1)
-      //     {
-      //        $staff->access_level = Staff::ACCESS_LEVEL_ACCOUNT;
-      //     }
-      //     $staff->created_by = Auth::user()->id;
-      //     if($request->file('photo'))
-      //     {
-      //       $image = $request->file('photo');
-      //       $new_name = Auth::user()->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
-      //       $image->move(public_path('staff_photo'), $new_name);
-      //        $staff->image = $new_name;
-      //     }
-      //      $staff->save();
-      //     Toastr::success('A new Staff has been created','Success');
-      //     return back();
-      //  }
+      if ( $validator->fails() ) 
+      {
+          // return [
+          //     'success' => 0, 
+          //     'message' => $validator->errors()->first()
+          // ];
+            //Toastr::warning('Error occured',$validator->errors()->all()[0]);
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+          print_r($data);
+          exit();
+          $user = new User;
+          $user->name = $request->name;
+          $user->email = $request->email;
+          $user->access_level = User::ACCESS_LEVEL_STAFF;
+          $user->password = bcrypt($request->password);
+
+          $user->save();
+          $staff = new Staff;
+          $staff->user_id = $user->id;
+          $staff->phone = $request->phone;
+          $staff->address = $request->address;
+          if($request->post('type_staff') == 0)
+          {
+             $staff->access_level = Staff::ACCESS_LEVEL_MARKET;
+          }
+          elseif($request->post('type_staff') == 1)
+          {
+             $staff->access_level = Staff::ACCESS_LEVEL_ACCOUNT;
+          }
+          $staff->created_by = Auth::user()->id;
+          if($request->file('photo'))
+          {
+            $image = $request->file('photo');
+            $new_name = Auth::user()->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('staff_photo'), $new_name);
+             $staff->image = $new_name;
+          }
+           $staff->save();
+          Toastr::success('A new Staff has been created','Success');
+          return back();
+       }
 
 
       $data = $request->all();
