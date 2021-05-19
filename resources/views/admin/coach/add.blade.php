@@ -46,13 +46,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="name">Name</label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{ old('name') }}" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="family_name">Family Name</label>
-                          <input type="text" class="form-control" id="family_name" name="family_name" placeholder="Family Name">
+                          <input type="text" class="form-control" id="family_name" name="family_name" placeholder="Family Name"  value="{{ old('family_name') }}">
                         </div>
                       </div>
                     </div>
@@ -60,13 +60,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="email">Email address</label>
-                          <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                          <input type="email" class="form-control" id="email" name="email" placeholder="Email"  value="{{ old('email') }}" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="password">Password</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                              <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}" required>
                           </div>
                       </div>
                     </div>
@@ -74,7 +74,9 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="about">About</label>
-                          <textarea class="form-control" id="about" placeholder="about"></textarea>
+                          <textarea class="form-control" id="about" placeholder="about">
+                            {{ old('about') }}
+                          </textarea>
                         </div>
                       </div>
                     </div>
@@ -83,9 +85,10 @@
                         <div class="form-group">
                           <label for="province">Province</label>
                           <select name="province" class="form-control" style="width: 100%">
-                            <option value="none" selected="" disabled="">Select</option>
-                            <option value="0">aa</option>
-                            <option value="1">aaa</option>
+                            <option value="">Select</option>
+                            <option value="0" {{ old('province') == '0' ? ' selected' : '' }}>aa
+                            </option>
+                            <option value="1" {{ old('province') == '1' ? ' selected' : '' }}>aaa</option>
                           </select>
                         </div>
                       </div>
@@ -93,9 +96,9 @@
                           <div class="form-group">
                             <label for="city">City</label>
                             <select name="city" class="form-control" style="width: 100%">
-                              <option value="none" selected="" disabled="">Select</option>
-                              <option value="0">aa</option>
-                              <option value="1">aaa</option>
+                              <option value="">Select</option>
+                              <option value="0" {{ old('city') == '0' ? ' selected' : '' }}>aa</option>
+                              <option value="1" {{ old('city') == '0' ? ' selected' : '' }}>aaa</option>
                             </select>
                           </div>
                       </div>
@@ -105,9 +108,9 @@
                         <div class="form-group">
                           <label for="speciality">speciality</label>
                           <select name="speciality" class="form-control" style="width: 100%">
-                            <option value="none" selected="" disabled="">Select</option>
-                            <option value="0">aa</option>
-                            <option value="1">aaa</option>
+                            <option value="">Select</option>
+                            <option value="0" {{ old('speciality') == '0' ? ' selected' : '' }}>aa</option>
+                            <option value="1" {{ old('speciality') == '0' ? ' selected' : '' }}>aaa</option>
                           </select>
                         </div>
                       </div>
@@ -170,13 +173,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="phone_number">Phone Number</label>
-                          <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="phone_number" required>
+                          <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="phone_number" value="{{ old('phone_number') }}" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="whatsapp">whatsapp</label>
-                          <input type="text" class="form-control" id="whatsapp" name="whatsapp" placeholder="whatsapp">
+                          <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}"  placeholder="whatsapp">
                         </div>
                       </div>
                     </div>

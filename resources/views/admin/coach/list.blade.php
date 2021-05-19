@@ -50,7 +50,7 @@
                     <th>rink</th>
                     <th>lang</th>
                     <th>price</th>
-                    <th>certiface</th>
+                    <th>Certificate</th>
                     <th>phone</th>
                     <th>watsapp</th>
                     <th>email</th>
@@ -66,12 +66,12 @@
                     <td>{{$user->about}}</td>
                     <td>{{$user->province}}</td>
                     <td>{{$user->city}}</td>
-                    <td>{{$user->speciality}}</td>
-                    <td>{{$user->experience}}</td>
-                    <td>{{$user->rink}}</td>
-                    <td>{{$user->lang}}</td>
-                    <td>{{$user->price}}</td>
-                    <td>{{$user->certificate}}</td>
+                    <td>{{$user->speciality_name}}</td>
+                    <td>{{$user->experience_name}}</td>
+                    <td>{{$user->rink_name}}</td>
+                    <td>{{$user->lang_name}}</td>
+                    <td>{{$user->price_name}}</td>
+                    <td>{{$user->certificate_name}}</td>
                     <td>{{$user->phone_number}}</td>
                     <td>{{$user->whatsapp}}</td>
                     <td>{{$user->email}}</td>
@@ -80,10 +80,10 @@
                         <a href="{{url('coaches').'/'.$user->id}}" class="btn btn-primary">
                           <i class="fas fa-eye"></i>
                         </a>
-                        <a href="#" class="btn btn-warning" title="Edit">
+                        <a href="<?php echo $BASE_URL . '/coach/edit/' . $user->id ?>" class="btn btn-warning" title="Edit">
                           <i class="fas fa-edit"></i>
                         </a> 
-                        <a href="coach/delete/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete">
+                        <a href="{{$BASE_URL}}/coach/delete/{{$user->id}}" class="btn btn-danger" data-toggle="tooltip" title="Delete">
                           <i class="fa fa-trash" aria-hidden="true"></i>   
                         </a>             
                       </div>
@@ -104,7 +104,7 @@
                     <th>rink</th>
                     <th>lang</th>
                     <th>price</th>
-                    <th>certiface</th>
+                    <th>Certificate</th>
                     <th>phone</th>
                     <th>watsapp</th>
                     <th>email</th>

@@ -64,6 +64,11 @@ class User extends Authenticatable
 
     protected $appends = [
         'speciality_name',
+        'experience_name',
+        'certificate_name',
+        'rink_name',
+        'lang_name',
+        'price_name',
     ];
 
     /**
@@ -183,6 +188,56 @@ class User extends Authenticatable
     public function getSpecialityNameAttribute()
     {
         return !empty($this->speciality) ? $this->speciality->name : null;
+    }
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getCertificateNameAttribute()
+    {
+        return !empty($this->certificate) ? $this->certificate->name : null;
+    }
+
+    /**
+     * Get the user's experience name.
+     *
+     * @return string
+     */
+    public function getExperienceNameAttribute()
+    {
+        return !empty($this->experience) ? $this->experience->name : null;
+    }
+
+    /**
+     * Get the user's rink name.
+     *
+     * @return string
+     */
+    public function getRinkNameAttribute()
+    {
+        return !empty($this->rink) ? $this->rink->name : null;
+    }
+
+    /**
+     * Get the user's rink name.
+     *
+     * @return string
+     */
+    public function getLangNameAttribute()
+    {
+        return !empty($this->language) ? $this->language->name : null;
+    }
+
+    /**
+     * Get the user's rink name.
+     *
+     * @return string
+     */
+    public function getPriceNameAttribute()
+    {
+        return !empty($this->price) ? $this->price->name : null;
     }
 
 

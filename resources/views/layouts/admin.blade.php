@@ -27,8 +27,7 @@
     <link rel="stylesheet" href="{{ asset ('plugins/summernote/summernote-bs4.min.css') }}">
     <!-- ========================================================= -->
     <!--Notification msj-->
-    
-        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
     <meta name="_token" content="{{ csrf_token() }}">
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
@@ -125,7 +124,8 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset ('dist/js/pages/dashboard.js') }}"></script>
     <!--Notification msj-->
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
+    
     {!! Toastr::message() !!}
   </body>
 </html>

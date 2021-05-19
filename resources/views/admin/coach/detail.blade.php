@@ -34,6 +34,10 @@
                       'label' => __('ID'),
                       'text' => '',
                   ),
+                  'avatar_image_path' => array(
+                        'label' => __('AVATAR_IMAGE'),
+                        'text' => '',
+                  ),
                   'name' => array(
                       'label' => __('Name'),
                       'text' => '',
@@ -122,13 +126,10 @@
                     } elseif (!empty($result[$key]['is_array'])) {
                         $result[$key]['text'] = implode (", ", $data['user']->$key);
                     } elseif (!empty($result[$key]['related'])) {
-                      // echo "<pre>";
-                      
-                      // print_r($data['user']->$related->name);
-                      // echo "</pre>";
-                      // exit();
                       $related = (string)$result[$key]['related'];
                       $result[$key]['text'] = $data['user']->$related->name;
+                    } elseif ($key == "avatar_image_path") {
+                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/coach_photo/{$data['user']->$key}' />";
                     } else {
                         $result[$key]['text'] = $data['user']->$key;
                     }

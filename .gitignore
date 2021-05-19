@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/coach_photo/
 /storage/*.key
 /vendor
 .env

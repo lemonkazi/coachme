@@ -133,6 +133,7 @@ class CoachController extends Controller
         }
         else
         {
+          
           $data['is_verified'] = true;
           $user = User::create($data);
           $user->rink_id = !empty($rink) ? $rink->id : null;
@@ -141,7 +142,7 @@ class CoachController extends Controller
           if($request->file('avatar_image_path'))
           {
             $image = $request->file('avatar_image_path');
-            $new_name = Auth::user()->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+            $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('coach_photo'), $new_name);
              $user->avatar_image_path = $new_name;
           }
@@ -335,5 +336,16 @@ class CoachController extends Controller
     {
       $city->delete();
       return response()->success(false, trans('messages.success_message'), Response::HTTP_OK);
+    }
+
+
+
+    private function uniqueString()
+    {
+        $m = explode(' ', microtime());
+        list($totalSeconds, $extraMilliseconds) = array($m[1], (int)round($m[0] * 1000, 3));
+        $txID = date('YmdHis', $totalSeconds) . sprintf('%03d', $extraMilliseconds);
+        $txID = substr($txID, 2, 15);
+        return $txID;
     }
 }
