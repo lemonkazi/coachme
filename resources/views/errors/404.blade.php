@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>404 | NAH!D</title>
+<title>404</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <link href='http://fonts.googleapis.com/css?family=Capriola' rel='stylesheet' type='text/css'>
 <style type="text/css">
@@ -71,7 +71,7 @@ body{
 	</div>
 
 	<div class="footer">
-	 <a href="http://nahid.co">NAH!D</a>
+	 
 	</div>
 
 </body>

@@ -150,6 +150,30 @@
             </li>
           </ul>
         </li>
+
+        <li class="nav-item <?php if ($controller == 'experiencecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'experiencecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Experiences
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'experiencecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('experiences')}}" class="nav-link <?php if ($controller == 'experiencecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Experiences</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'experiencecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/experience/add')}}" class="nav-link <?php if ($controller == 'experiencecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Experience</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>

@@ -60,6 +60,34 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\SpecialityController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\SpecialityController@update']);
   	});
+
+
+  	//experience route
+  	Route::get('experiences',[App\Http\Controllers\Admin\ExperienceController::class, 'show']);
+	Route::get('experiences/{experience}',[App\Http\Controllers\Admin\ExperienceController::class, 'show']);
+	
+	Route::group(['prefix' =>'experience', 'as'=>'experience.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\ExperienceController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\ExperienceController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\ExperienceController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\ExperienceController@update']);
+  	});
+
+
+  	//certificate route
+  	Route::get('certificates',[App\Http\Controllers\Admin\CertificateController::class, 'show']);
+	Route::get('certificates/{certificate}',[App\Http\Controllers\Admin\CertificateController::class, 'show']);
+	
+	Route::group(['prefix' =>'certificate', 'as'=>'certificate.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\CertificateController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\CertificateController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CertificateController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CertificateController@update']);
+  	});
 });
 
 

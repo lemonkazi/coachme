@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use App\Traits\ModelTrait;
 
 
 class BaseModel extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes, ModelTrait;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, ModelTrait;
     
     /**
      * If you need to customize the format of your timestamp

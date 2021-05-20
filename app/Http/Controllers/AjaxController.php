@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rink;
 use App\Models\Speciality;
+use App\Models\Experience;
+use App\Models\Certificate;
 
 class AjaxController extends Controller {
 
@@ -42,6 +44,24 @@ class AjaxController extends Controller {
 		if ($param['controller'] =='specialitycontroller') {
 			$speciality = Speciality::find($param['id']);
 			if ($speciality->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+
+		if ($param['controller'] =='experiencecontroller') {
+			$experience = Experience::find($param['id']);
+			if ($experience->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+
+		if ($param['controller'] =='certificatecontroller') {
+			$certificate = Certificate::find($param['id']);
+			if ($certificate->delete()) {
 				$result['message'] = trans('messages.success_message');
 			} else {
 				$result['status'] = 0;
