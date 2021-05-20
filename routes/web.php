@@ -32,8 +32,8 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    //Route::get('all-coaches',['as' =>'all_managers','uses' =>'ManagerController@getAllManager' ]);
 	    //Route::get('details/{id}',['as' =>'details','uses' =>'ManagerController@detail' ]);
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
-	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CoachController::class, 'update']);
-	    //Route::post('save-edit',['as' =>'save_edit','uses' =>'ManagerController@update']);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CoachController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CoachController@update']);
   	});
 
 	//Route::get('/add_coach',[App\Http\Controllers\Admin\CoachController::class, 'create']);

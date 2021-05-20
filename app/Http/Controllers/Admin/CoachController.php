@@ -39,18 +39,34 @@ class CoachController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id=null)
     {
-        $breadcrumb = array(
+      $user='';
+      $title='Add Coach';
+      $breadcrumb = array(
           array(
              'name'=>'All Coach',
              'link'=>'/coaches'
-          ),
-          array(
-             'name'=>'Add Coach',
-             'link'=>''
           )
         );
+      if (!empty($id)) {
+        $user = User::find($id);
+        if (!$user) {
+          return back();
+        } else {
+          $breadcrumb[] = array(
+             'name'=>'Edit Coach',
+             'link'=>''
+          );
+          $title='Edit Coach';
+        }
+      } else {
+        $breadcrumb[] = array(
+             'name'=>'Add Coach',
+             'link'=>''
+        );
+      }
+        
         return view('admin.coach.add', [
           'pageInfo'=>
            [
@@ -61,9 +77,9 @@ class CoachController extends Controller
             ,
             'data'=>
             [
-               //'users'      =>  $users,
+               'user'      =>  $user,
                'breadcrumb' =>  $breadcrumb,
-               'Title' =>  'Add Coach'
+               'Title' =>  $title
             ]
           ]);
     }
@@ -130,9 +146,9 @@ class CoachController extends Controller
           // ];
             //Toastr::warning('Error occured',$validator->errors()->all()[0]);
             return redirect()->back()->withInput()->withErrors($validator);
-        }
-        else
-        {
+      }
+      else
+      {
           
           $data['is_verified'] = true;
           $user = User::create($data);
@@ -175,55 +191,9 @@ class CoachController extends Controller
           
           Toastr::success('A new Coach has been created','Success');
           return back();
-       }
+      }
 
 
-      $data = $request->all();
-      $user = $request->user();
-
-      if ($user->isSuperAdmin()) {
-        $cityId = isset($data['city_id']) ? $data['city_id'] : null;
-      } elseif ($user->isCoachUser()) {
-        $cityId = $user->city_id;
-      }
-      if (!empty($cityId)) {
-        $city = City::find($cityId);
-        if (!$city) {
-          throw new HttpResponseException(response()->error(trans('messages.city_id.invalid'), Response::HTTP_BAD_REQUEST));
-        }
-      }
-      
-      $city = City::create($data);
-      
-      // Start -----> Prakash 26-06-2020
-      $insert_id = $city->id;
-      $pointBase_thread_data = [
-        'city_id' => $insert_id,
-        'content_type' => 'THREAD',
-        'point' => config('global.default_thread_point'),
-        'start_date' => date('Y/m/d H:i'),
-        'is_enable_multiple_time_read' => 1
-      ];
-      $thread_insert = PointBase::create($pointBase_thread_data);
-      $pointBase_comment_data = [
-        'city_id' => $insert_id,
-        'content_type' => 'COMMENT',
-        'point' => config('global.default_comment_point'),
-        'start_date' => date('Y/m/d H:i'),
-        'is_enable_multiple_time_read' => 1
-      ];
-      $comment_insert = PointBase::create($pointBase_comment_data);
-      // End -------> Prakash 26-06-2020
-      $data =array();
-      $data['id'] = $city->id;
-      $data['point_bases_id_for_thread'] = $thread_insert->id;
-      $data['point_bases_id_for_comment'] = $comment_insert->id;
-      $city->update($data);
-      if (!$city) {
-        throw new HttpResponseException(response()->error(trans('messages.error_message'), Response::HTTP_BAD_REQUEST));
-      }
-      return redirect ('coach/add');
-      //return response()->success($city, trans('messages.success_message'), Response::HTTP_CREATED);      
     }
 
     /**
@@ -304,10 +274,13 @@ class CoachController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(CoachUpdateRequest $request, $id)
+    public function update(Request $request, User $user)
     {
+
       $data = $request->all();
       $user = $request->user();
+      print_r($user);
+      exit();
 
       if ($user->isServiceAdmin() && isset($data['city_id'])) {
         $building = City::find($data['city_id']);

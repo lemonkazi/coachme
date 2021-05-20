@@ -41,19 +41,14 @@
                   <tr>
                     <th>User ID</th>
                     <th>Name</th>
-                    <th>Family Name</th>
-                    <th>About</th>
-                    <th>Province</th>
-                    <th>City</th>
+                    <th>email</th>
                     <th>Speciality</th>
                     <th>Experience</th>
                     <th>rink</th>
-                    <th>lang</th>
                     <th>price</th>
                     <th>Certificate</th>
                     <th>phone</th>
-                    <th>watsapp</th>
-                    <th>email</th>
+                    
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -62,19 +57,14 @@
                   <tr>
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
-                    <td>{{$user->family_name}}</td>
-                    <td>{{$user->about}}</td>
-                    <td>{{$user->province}}</td>
-                    <td>{{$user->city}}</td>
+                    <td>{{$user->email}}</td>
                     <td>{{$user->speciality_name}}</td>
                     <td>{{$user->experience_name}}</td>
                     <td>{{$user->rink_name}}</td>
-                    <td>{{$user->lang_name}}</td>
                     <td>{{$user->price_name}}</td>
                     <td>{{$user->certificate_name}}</td>
                     <td>{{$user->phone_number}}</td>
-                    <td>{{$user->whatsapp}}</td>
-                    <td>{{$user->email}}</td>
+                    
                     <td> 
                       <div class="btn-group">
                         <a href="{{url('coaches').'/'.$user->id}}" class="btn btn-primary">
@@ -95,19 +85,13 @@
                   <tr>
                     <th>User ID</th>
                     <th>Name</th>
-                    <th>Family Name</th>
-                    <th>About</th>
-                    <th>Province</th>
-                    <th>City</th>
+                    <th>email</th>
                     <th>Speciality</th>
                     <th>Experience</th>
                     <th>rink</th>
-                    <th>lang</th>
                     <th>price</th>
                     <th>Certificate</th>
                     <th>phone</th>
-                    <th>watsapp</th>
-                    <th>email</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>

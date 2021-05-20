@@ -12,6 +12,12 @@
         @php
           echo htmlspecialchars_decode(render2($data['breadcrumb']))
         @endphp
+
+        <!--  @php
+             echo "<pre>";
+               print_r($data['user']);
+             echo "</pre>";
+            @endphp -->
         
         {{session('msg')}}
       </div><!-- /.row -->
@@ -26,7 +32,7 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">ADD NEW</h3>
+                    <h3 class="card-title">{{$data['Title']}}</h3>
                 </div>
 
                 <div class="card-body">
@@ -40,19 +46,19 @@
                       </div>
                   @endif
                   <!-- form start -->
-                  <form action="{{ route('coach.store') }}" method="POST" enctype="multipart/form-data">
+                  <form action="{{!empty($data['user']) ? route('coach.update',[$data['user']->id]): route('coach.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="name">Name</label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{ old('name') }}" required>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['user']) ? old('name', $data['user']->name) : old('name')}}" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="family_name">Family Name</label>
-                          <input type="text" class="form-control" id="family_name" name="family_name" placeholder="Family Name"  value="{{ old('family_name') }}">
+                          <input type="text" class="form-control" id="family_name" name="family_name" placeholder="Family Name"  value="{{!empty($data['user']) ? old('family_name', $data['user']->family_name) : old('family_name')}}">
                         </div>
                       </div>
                     </div>
@@ -60,7 +66,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="email">Email address</label>
-                          <input type="email" class="form-control" id="email" name="email" placeholder="Email"  value="{{ old('email') }}" required>
+                          <input type="email" class="form-control" id="email" name="email" placeholder="Email"  value="{{!empty($data['user']) ? old('email', $data['user']->email) : old('email')}}" required>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -75,7 +81,7 @@
                         <div class="form-group">
                           <label for="about">About</label>
                           <textarea class="form-control" id="about" placeholder="about">
-                            {{ old('about') }}
+                            {{!empty($data['user']) ? old('about', $data['user']->about) : old('about')}}
                           </textarea>
                         </div>
                       </div>
@@ -86,9 +92,9 @@
                           <label for="province">Province</label>
                           <select name="province" class="form-control" style="width: 100%">
                             <option value="">Select</option>
-                            <option value="0" {{ old('province') == '0' ? ' selected' : '' }}>aa
+                            <option value="1" {{!empty($data['user']) ? (old('province', $data['user']->province) == 1 ? 'selected' : '') : (old('province') == 1 ? 'selected' : '')}} > aa
                             </option>
-                            <option value="1" {{ old('province') == '1' ? ' selected' : '' }}>aaa</option>
+                            <option value="2">aaa</option>
                           </select>
                         </div>
                       </div>
@@ -97,8 +103,8 @@
                             <label for="city">City</label>
                             <select name="city" class="form-control" style="width: 100%">
                               <option value="">Select</option>
-                              <option value="0" {{ old('city') == '0' ? ' selected' : '' }}>aa</option>
-                              <option value="1" {{ old('city') == '0' ? ' selected' : '' }}>aaa</option>
+                              <option value="1">aa</option>
+                              <option value="2">aaa</option>
                             </select>
                           </div>
                       </div>
@@ -109,8 +115,8 @@
                           <label for="speciality">speciality</label>
                           <select name="speciality" class="form-control" style="width: 100%">
                             <option value="">Select</option>
-                            <option value="0" {{ old('speciality') == '0' ? ' selected' : '' }}>aa</option>
-                            <option value="1" {{ old('speciality') == '0' ? ' selected' : '' }}>aaa</option>
+                            <option value="1" {{ old('speciality') == '1' ? ' selected' : '' }}>aa</option>
+                            <option value="2" {{ old('speciality') == '2' ? ' selected' : '' }}>aaa</option>
                           </select>
                         </div>
                       </div>
@@ -173,13 +179,13 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="phone_number">Phone Number</label>
-                          <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="phone_number" value="{{ old('phone_number') }}" required>
+                          <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="phone_number" value="{{!empty($data['user']) ? old('phone_number', $data['user']->phone_number) : old('phone_number')}}" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="whatsapp">whatsapp</label>
-                          <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{ old('whatsapp') }}"  placeholder="whatsapp">
+                          <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{!empty($data['user']) ? old('whatsapp', $data['user']->whatsapp) : old('whatsapp')}}"  placeholder="whatsapp">
                         </div>
                       </div>
                     </div>
