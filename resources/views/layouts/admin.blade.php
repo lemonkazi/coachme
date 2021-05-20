@@ -15,20 +15,31 @@
     <link rel="stylesheet" href="{{ asset ('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset ('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="{{ asset ('plugins/jqvmap/jqvmap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset ('dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset ('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{ asset ('plugins/daterangepicker/daterangepicker.css') }}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset ('plugins/summernote/summernote-bs4.min.css') }}">
     <!-- ========================================================= -->
     <!--Notification msj-->
     <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
     <meta name="_token" content="{{ csrf_token() }}">
+
+    <script type="text/javascript">
+      var baseUrl = '{{ $BASE_URL }}';
+      
+
+      var CURRENT_URL = '{{ $CURRENT_URL }}';
+
+
+      var controller = '{{ $controller }}';
+      var action = '{{ $action }}';
+
+      var HTTP_HOST = '{{ $_SERVER['HTTP_HOST'] }}';
+      var MESSAGE_CONFIRM_DELETE = '{{ __('MESSAGE_CONFIRM_DELETE') }}';
+      console.log(MESSAGE_CONFIRM_DELETE);
+    </script>
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -88,6 +99,7 @@
       <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+    @include('layouts.elements.modal_alert')
 
     <!-- jQuery -->
     <script src="{{ asset ('plugins/jquery/jquery.min.js') }}"></script>
@@ -99,13 +111,8 @@
     </script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset ('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- ChartJS -->
-    <script src="{{ asset ('plugins/chart.js/Chart.min.js') }}"></script>
     <!-- Sparkline -->
     <script src="{{ asset ('plugins/sparklines/sparkline.js') }}"></script>
-    <!-- JQVMap -->
-    <script src="{{ asset ('plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-    <script src="{{ asset ('plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
     <!-- jQuery Knob Chart -->
     <script src="{{ asset ('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
     <!-- daterangepicker -->
@@ -113,8 +120,6 @@
     <script src="{{ asset ('plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset ('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <!-- Summernote -->
-    <script src="{{ asset ('plugins/summernote/summernote-bs4.min.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset ('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
@@ -125,7 +130,56 @@
     <script src="{{ asset ('dist/js/pages/dashboard.js') }}"></script>
     <!--Notification msj-->
     <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
-    
+    <script type="text/javascript">
+
+      $(document).ready(function () {
+        $('.btn_delete').on('click', function(event){
+          event.preventDefault();
+
+          var tr = $(this).closest('tr');
+          var id = $(this).attr('data-id') ? $(this).attr('data-id') : '';
+          var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+          var data_controller = controller;
+
+          if (confirm(MESSAGE_CONFIRM_DELETE)) {
+
+              var data = {
+                  controller: data_controller,
+                  action: 'delete',
+                  id: id,
+                  delete: 1,
+                  _token:csrfToken
+              };
+              // console.log(data);
+              // return false;
+              $.ajax({
+                  type: 'POST',
+                  url: baseUrl + '/ajax_delete',
+                  data: data,
+                  dataType: 'json',
+                  success: function (response) {
+                    if (response.status == 0) {
+                        // Show error
+                        showAlertModal(response.message);
+                    }else {
+                        tr.remove();
+                    }
+                  },
+                  complete: function () {}
+              });
+          }
+        });
+      });
+
+      /**
+       * Show alert using bootstrap modal
+       * @param {string} message
+       */
+      function showAlertModal(message) {
+          $('#modal_alert_body').html(message);
+          $('#modal_alert').modal('show');
+      }
+    </script>
     {!! Toastr::message() !!}
   </body>
 </html>

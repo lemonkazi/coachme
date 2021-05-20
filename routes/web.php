@@ -6,6 +6,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('ajax', function(){ return view('ajax'); });
+
+Route::post('/ajax_delete','AjaxController@delete');
+
+
 Auth::routes();
 
 // auth
