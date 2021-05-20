@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\CoachCreateRequest;
 use App\Models\User;
+use App\Models\Rink;
+use App\Models\Experience;
+use App\Models\Certificate;
+use App\Models\Language;
+use App\Models\Price;
+use App\Models\Speciality;
 
 //use App\Models\products;
 use App\Exports\CollectionExport;
@@ -135,22 +141,28 @@ class CoachController extends Controller
              'link'=>''
         );
       }
-        
-        return view('admin.coach.add', [
-          'pageInfo'=>
-           [
-            'siteTitle'        =>'Manage Users',
-            'pageHeading'      =>'Manage Users',
-            'pageHeadingSlogan'=>'Here the section to manage all registered users'
-            ]
-            ,
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
+      $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
+      $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $price_all = Price::all()->pluck("name", "id")->sortBy("name");
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      
+      return view('admin.coach.add', [
+            'pageInfo'=>
+            [
+              'siteTitle'        =>'Manage Users',
+              'pageHeading'      =>'Manage Users',
+              'pageHeadingSlogan'=>'Here the section to manage all registered users'
+            ],
             'data'=>
             [
-               'user'      =>  $user,
-               'breadcrumb' =>  $breadcrumb,
-               'Title' =>  $title
+                 'user'      =>  $user,
+                 'breadcrumb' =>  $breadcrumb,
+                 'Title' =>  $title
             ]
-          ]);
+        ])
+        ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all'));
     }
     /**
      * Store a newly created resource in storage.

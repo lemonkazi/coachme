@@ -103,6 +103,29 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item <?php if ($controller == 'rinkcontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'rinkcontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Rinks
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'rinkcontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('rinks')}}" class="nav-link <?php if ($controller == 'rinkcontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Rinks</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'rinkcontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/rink/add')}}" class="nav-link <?php if ($controller == 'rinkcontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Rink</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>

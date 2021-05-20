@@ -36,7 +36,7 @@
                   <h3 class="card-title">All existing {{$data['Title']}}</h3>
                 </div>
                 <div class="col-md-2 float-sm-right ">
-                  <a href="{{ url('/coach/add')}}" class="btn btn-primary btn-block mb-3">Add New</a>
+                  <a href="{{ url('/rink/add')}}" class="btn btn-primary btn-block mb-3">Add New</a>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -44,41 +44,26 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>User ID</th>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>email</th>
-                    <th>Speciality</th>
-                    <th>Experience</th>
-                    <th>rink</th>
-                    <th>price</th>
-                    <th>Certificate</th>
-                    <th>phone</th>
                     
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                  @foreach($data['users'] as $user)
+                  @foreach($data['rinks'] as $rink)
                   <tr>
-                    <td>{{$user->id}}</td>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->speciality_name}}</td>
-                    <td>{{$user->experience_name}}</td>
-                    <td>{{$user->rink_name}}</td>
-                    <td>{{$user->price_name}}</td>
-                    <td>{{$user->certificate_name}}</td>
-                    <td>{{$user->phone_number}}</td>
-                    
+                    <td>{{$rink->id}}</td>
+                    <td>{{$rink->name}}</td>
                     <td> 
                       <div class="btn-group">
-                        <a href="{{url('coaches').'/'.$user->id}}" class="btn btn-primary">
+                        <a href="{{url('rinks').'/'.$rink->id}}" class="btn btn-primary">
                           <i class="fas fa-eye"></i>
                         </a>
-                        <a href="<?php echo $BASE_URL . '/coach/edit/' . $user->id ?>" class="btn btn-warning" title="Edit">
+                        <a href="<?php echo $BASE_URL . '/rink/edit/' . $rink->id ?>" class="btn btn-warning" title="Edit">
                           <i class="fas fa-edit"></i>
                         </a> 
-                        <a href="javascript:;" data-id="{{$user->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
+                        <a href="javascript:;" data-id="{{$rink->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
                           <i class="fa fa-trash" aria-hidden="true"></i>   
                         </a>             
                       </div>
@@ -88,22 +73,15 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>User ID</th>
+                    <th>ID</th>
                     <th>Name</th>
-                    <th>email</th>
-                    <th>Speciality</th>
-                    <th>Experience</th>
-                    <th>rink</th>
-                    <th>price</th>
-                    <th>Certificate</th>
-                    <th>phone</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>
               </div>
               <div class="box-footer clearfix">
-                  {{ $data['users']->links('pagination.default') }}
+                  {{ $data['rinks']->links('pagination.default') }}
               </div>
               <!-- /.card-body -->
             </div>

@@ -121,20 +121,22 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="speciality">speciality</label>
-                          <select name="speciality" class="form-control" style="width: 100%">
+                          <select name="speciality_id" class="form-control" style="width: 100%">
                             <option value="">Select</option>
-                            <option value="1" {{ old('speciality') == '1' ? ' selected' : '' }}>aa</option>
-                            <option value="2" {{ old('speciality') == '2' ? ' selected' : '' }}>aaa</option>
+                            @foreach($speciality_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('speciality_id') ? old('speciality_id') : $data['user']->speciality_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                             <label for="experience">experience</label>
-                            <select name="experience" class="form-control" style="width: 100%">
-                              <option value="none" selected="" disabled="">Select</option>
-                              <option value="0">aa</option>
-                              <option value="1">aaa</option>
+                            <select name="experience_id" class="form-control" style="width: 100%">
+                              <option value="">Select</option>
+                              @foreach($experience_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('experience_id') ? old('experience_id') : $data['user']->experience_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                              @endforeach
                             </select>
                           </div>
                       </div>
@@ -143,20 +145,22 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="rink">rink</label>
-                          <select name="rink" class="form-control" style="width: 100%">
+                          <select name="rink_id" class="form-control" style="width: 100%">
                             <option value="none" selected="" disabled="">Select</option>
-                            <option value="0">aa</option>
-                            <option value="1">aaa</option>
+                            @foreach($rink_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('rink_id') ? old('rink_id') : $data['user']->rink_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                             <label for="certificate">certificate</label>
-                            <select name="certificate" class="form-control" style="width: 100%">
-                              <option value="none" selected="" disabled="">Select</option>
-                              <option value="0">aa</option>
-                              <option value="1">aaa</option>
+                            <select name="certificate_id" class="form-control" style="width: 100%">
+                              <option value="">Select</option>
+                              @foreach($certificate_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('experience_id') ? old('experience_id') : $data['user']->experience_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                              @endforeach
                             </select>
                           </div>
                       </div>
@@ -165,20 +169,22 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="language">language</label>
-                          <select name="lang" class="form-control" style="width: 100%">
-                            <option value="none" selected="" disabled="">Select</option>
-                            <option value="0">aa</option>
-                            <option value="1">aaa</option>
+                          <select name="lang_id" class="form-control" style="width: 100%">
+                            <option value="">Select</option>
+                            @foreach($language_all as $id => $value)
+                              <option value="{{ $id }}" {{ (old('lang_id') ? old('lang_id') : $data['user']->lang_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                             <label for="price">price</label>
-                            <select name="price" class="form-control" style="width: 100%">
-                              <option value="none" selected="" disabled="">Select</option>
-                              <option value="0">aa</option>
-                              <option value="1">aaa</option>
+                            <select name="price_id" class="form-control" style="width: 100%">
+                              <option value="">Select</option>
+                              @foreach($price_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('price_id') ? old('price_id') : $data['user']->price_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                              @endforeach
                             </select>
                           </div>
                       </div>

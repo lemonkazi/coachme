@@ -27,19 +27,25 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::group(['prefix' =>'coach', 'as'=>'coach.'], function(){
 
 	    Route::get('add',[App\Http\Controllers\Admin\CoachController::class, 'create']);
-	    //Route::post('store',[App\Http\Controllers\Admin\CoachController::class, 'store']);
 	    Route::post('store',['as' =>'store','uses' =>'Admin\CoachController@store' ]);
-	    //Route::get('all-coaches',['as' =>'all_managers','uses' =>'ManagerController@getAllManager' ]);
-	    //Route::get('details/{id}',['as' =>'details','uses' =>'ManagerController@detail' ]);
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CoachController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CoachController@update']);
   	});
 
-	//Route::get('/add_coach',[App\Http\Controllers\Admin\CoachController::class, 'create']);
-	// Route::get('/add_coach', function(){
-	//     return view('admin.coach.add');
-	// });
+
+	//rinks route
+  	Route::get('rinks',[App\Http\Controllers\Admin\RinkController::class, 'show']);
+	Route::get('rinks/{rink}',[App\Http\Controllers\Admin\RinkController::class, 'show']);
+	
+	Route::group(['prefix' =>'rink', 'as'=>'rink.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\RinkController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\RinkController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\RinkController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\RinkController@update']);
+  	});
 });
 
 

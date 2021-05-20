@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Rink;
 
 class AjaxController extends Controller {
 
@@ -22,13 +23,23 @@ class AjaxController extends Controller {
 
 		if ($param['controller'] =='coachcontroller') {
 			$user = User::find($param['id']);
+			if ($user->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
 		}
 
-		if ($user->delete()) {
-			$result['message'] = trans('messages.success_message');
-		} else {
-			$result['status'] = 0;
+		if ($param['controller'] =='rinkcontroller') {
+			$rink = Rink::find($param['id']);
+			if ($rink->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
 		}
+
+		
 		return response()->json($result);
    }
 }
