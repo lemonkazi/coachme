@@ -35,6 +35,75 @@ class CoachController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $users
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, User $user)
+    {
+      $params = $request->all();
+      
+      if (!empty($user->id)) {
+        $breadcrumb = array(
+          array(
+             'name'=>'All Coach',
+             'link'=>'/coaches'
+          ),
+          array(
+             'name'=>'Coach Detail',
+             'link'=>''
+          )
+        );
+        return view('admin.coach.detail', [
+          'pageInfo'=>
+           [
+            'siteTitle'        =>'Manage Users',
+            'pageHeading'      =>'Manage Users',
+            'pageHeadingSlogan'=>'Here the section to manage all registered users'
+            ]
+            ,
+            'data'=>
+            [
+               'user' => User::find($user->id),
+               'breadcrumb' =>  $breadcrumb,
+               'Title' =>  'Coach Detail'
+            ]
+          ]);
+        // return view('admin.coach.detail',[
+        //   'user' => User::find($user->id),
+        // ]);
+      } else {
+        $queryUser = User::query();
+        $queryUser->where('authority','=','COACH_USER');
+        $users = $queryUser->paginate(20);
+      }
+
+      $breadcrumb = array(
+          array(
+             'name'=>'All Coach',
+             'link'=>'/coaches'
+          )
+      );
+
+      return view('admin.coach.list', [
+          'pageInfo'=>
+           [
+            'siteTitle'        =>'Manage Users',
+            'pageHeading'      =>'Manage Users',
+            'pageHeadingSlogan'=>'Here the section to manage all registered users'
+            ]
+            ,
+            'data'=>
+            [
+               'users'      =>  $users,
+               'breadcrumb' =>  $breadcrumb,
+               'Title' =>  'Coach List'
+            ]
+          ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -195,78 +264,6 @@ class CoachController extends Controller
 
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $users
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, User $user)
-    {
-      $params = $request->all();
-      
-      if (!empty($user->id)) {
-        $breadcrumb = array(
-          array(
-             'name'=>'All Coach',
-             'link'=>'/coaches'
-          ),
-          array(
-             'name'=>'Coach Detail',
-             'link'=>''
-          )
-        );
-        return view('admin.coach.detail', [
-          'pageInfo'=>
-           [
-            'siteTitle'        =>'Manage Users',
-            'pageHeading'      =>'Manage Users',
-            'pageHeadingSlogan'=>'Here the section to manage all registered users'
-            ]
-            ,
-            'data'=>
-            [
-               'user' => User::find($user->id),
-               'breadcrumb' =>  $breadcrumb,
-               'Title' =>  'Coach Detail'
-            ]
-          ]);
-        // return view('admin.coach.detail',[
-        //   'user' => User::find($user->id),
-        // ]);
-      } else {
-        $queryUser = User::query();
-        $queryUser->where('authority','=','COACH_USER');
-        $users = $queryUser->paginate(20);
-      }
-
-      $breadcrumb = array(
-          array(
-             'name'=>'All Coach',
-             'link'=>'/coaches'
-          )
-      );
-
-      return view('admin.coach.list', [
-          'pageInfo'=>
-           [
-            'siteTitle'        =>'Manage Users',
-            'pageHeading'      =>'Manage Users',
-            'pageHeadingSlogan'=>'Here the section to manage all registered users'
-            ]
-            ,
-            'data'=>
-            [
-               'users'      =>  $users,
-               'breadcrumb' =>  $breadcrumb,
-               'Title' =>  'Coach List'
-            ]
-          ]);
-    }
-
-    
-
     /**
      * Update the specified resource in storage.
      *
@@ -274,29 +271,75 @@ class CoachController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id=null)
     {
 
       $data = $request->all();
-      $user = $request->user();
-      print_r($user);
-      exit();
+      $Authuser = $request->user();
+      $user = User::find($id);
+      if (!$user) {
+        return back();
+      }
 
-      if ($user->isServiceAdmin() && isset($data['city_id'])) {
-        $building = City::find($data['city_id']);
-        if (!$building) {
-          throw new HttpResponseException(response()->error(trans('messages.city_id.invalid'), Response::HTTP_BAD_REQUEST));
-        }
-      } elseif ($user->isCityAdmin()) {
-        if ((isset($data['city_id'])) && ($user->city_id !== $data['city_id'])) {
-          throw new HttpResponseException(response()->error(trans('messages.city_id.invalid'), Response::HTTP_BAD_REQUEST));
-        }
+      $userExists = null;
+
+      if (isset($data['email'])) {
+          $userExists = User::where([
+                                      ['id', '<>', $user->id],
+                                      ['email', $data['email']],
+                                      ['deleted_at', null],
+                                  ])->first();
       }
       
-      $city->update($request->all());
-       
-     
-      return response()->success($city, trans('messages.success_message'), Response::HTTP_OK);
+      if ($userExists) {
+        return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
+      }
+
+      if (!empty($data['password'])) {
+          $data['password'] = $data['password'];
+      }else{
+          unset($data['password']);
+      }
+      $rules = array(
+              'name'   => 'filled|string|max:50',
+              //'family_name'   => 'required|string|min:10',
+              //'email'  => 'filled|string|email|max:255',
+              
+              //'type_staff'=> 'required',
+              'avatar_image_path' => 'nullable',
+              //'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            );    
+      $messages = array(
+                  //'family_name.min' => trans('messages.name.max'),
+                  'name.filled' => trans('messages.name.required'),
+                  'name.max' => trans('messages.name.max'),
+                  'email.required' => trans('messages.email.required'),
+                  'email.string' => trans('messages.email.string'),
+                  'email.email' => trans('messages.email.email'),
+                  'email.max' => trans('messages.email.max'),
+                  'password.required' => trans('messages.password.required'),
+                  'password.min' => trans('messages.password.min')
+                  
+                );
+      $validator = Validator::make( $data, $rules, $messages );
+
+      if ( $validator->fails() ) 
+      {
+          
+        Toastr::warning('Error occured',$validator->errors()->all()[0]);
+        return redirect()->back()->withInput()->withErrors($validator);
+      }
+      else
+      {
+
+        if (!$user->update($data)) {
+          return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+        }
+
+        Toastr::success('Coach has been updated','Success');
+        return back();
+      }
+      
     }
 
     /**

@@ -72,7 +72,17 @@
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="password">Password</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}" required>
+                              @php
+                              if(!empty($data['user'])) {
+                                @endphp
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}">
+                                @php
+                              } else {
+                                @endphp
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}" required>
+                                @php
+                              } 
+                              @endphp
                           </div>
                       </div>
                     </div>
@@ -80,9 +90,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="about">About</label>
-                          <textarea class="form-control" id="about" placeholder="about">
-                            {{!empty($data['user']) ? old('about', $data['user']->about) : old('about')}}
-                          </textarea>
+                          <textarea class="form-control" id="about" name ="about" placeholder="about">{{!empty($data['user']) ? old('about', $data['user']->about) : old('about')}}</textarea>
                         </div>
                       </div>
                     </div>
