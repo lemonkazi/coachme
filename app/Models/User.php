@@ -13,12 +13,18 @@ use App\Models\Price;
 use App\Models\Language;
 use App\Models\Experience;
 use App\Models\Certificate;
+
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
+use Carbon\Carbon;
+
 use App\Traits\ModelTrait;
 use DB;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes, ModelTrait;
 
     const ACCESS_LEVEL_MASTER_ADMIN = 'SUPER_ADMIN';
     const ACCESS_LEVEL_RINK = 'RINK_USER';
@@ -78,6 +84,44 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_verified' => 'boolean',
+        'created_at' => 'date:Y/m/d H:i',
+        'updated_at' => 'date:Y/m/d H:i',
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+
+    protected $cascadeDeletes = [
+        //'userNewsReads',
+        
+    ];
+
+    protected $dates = ['deleted_at'];
+
+    /**
+     * The attributes that are partially match filterable.
+     *
+     * @var array
+     */
+    protected $partialFilterable = [
+        'name',
+        'email',
+        'phone_number',
+        //'shop_name',
+    ];
+
+    /**
+     * The attributes that are exact match filterable.
+     *
+     * @var array
+     */
+    protected $exactFilterable = [
+        'rink_id',
+        'speciality_id'
     ];
 
 
