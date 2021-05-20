@@ -46,6 +46,20 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\RinkController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\RinkController@update']);
   	});
+
+
+	//speciality route
+  	Route::get('speciality',[App\Http\Controllers\Admin\SpecialityController::class, 'show']);
+	Route::get('speciality/{speciality}',[App\Http\Controllers\Admin\SpecialityController::class, 'show']);
+	
+  	Route::group(['prefix' =>'special', 'as'=>'special.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\SpecialityController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\SpecialityController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\SpecialityController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\SpecialityController@update']);
+  	});
 });
 
 

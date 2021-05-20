@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rink;
+use App\Models\Speciality;
 
 class AjaxController extends Controller {
 
@@ -33,6 +34,14 @@ class AjaxController extends Controller {
 		if ($param['controller'] =='rinkcontroller') {
 			$rink = Rink::find($param['id']);
 			if ($rink->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+		if ($param['controller'] =='specialitycontroller') {
+			$speciality = Speciality::find($param['id']);
+			if ($speciality->delete()) {
 				$result['message'] = trans('messages.success_message');
 			} else {
 				$result['status'] = 0;
