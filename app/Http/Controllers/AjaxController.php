@@ -6,6 +6,8 @@ use App\Models\Rink;
 use App\Models\Speciality;
 use App\Models\Experience;
 use App\Models\Certificate;
+use App\Models\Price;
+use App\Models\Language;
 
 class AjaxController extends Controller {
 
@@ -62,6 +64,23 @@ class AjaxController extends Controller {
 		if ($param['controller'] =='certificatecontroller') {
 			$certificate = Certificate::find($param['id']);
 			if ($certificate->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+		if ($param['controller'] =='pricecontroller') {
+			$price = Price::find($param['id']);
+			if ($price->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+
+		if ($param['controller'] =='languagecontroller') {
+			$language = Language::find($param['id']);
+			if ($language->delete()) {
 				$result['message'] = trans('messages.success_message');
 			} else {
 				$result['status'] = 0;

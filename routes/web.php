@@ -88,6 +88,32 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CertificateController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CertificateController@update']);
   	});
+  	//price route
+  	Route::get('prices',[App\Http\Controllers\Admin\PriceController::class, 'show']);
+	Route::get('prices/{price}',[App\Http\Controllers\Admin\PriceController::class, 'show']);
+	
+	Route::group(['prefix' =>'price', 'as'=>'price.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\PriceController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\PriceController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\PriceController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\PriceController@update']);
+  	});
+
+
+  	//language route
+  	Route::get('languages',[App\Http\Controllers\Admin\LanguageController::class, 'show']);
+	Route::get('languages/{language}',[App\Http\Controllers\Admin\LanguageController::class, 'show']);
+	
+	Route::group(['prefix' =>'language', 'as'=>'language.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\LanguageController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\LanguageController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\LanguageController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\LanguageController@update']);
+  	});
 });
 
 

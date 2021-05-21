@@ -42,7 +42,7 @@ class User extends Authenticatable
         'speciality_id',
         'experience_id',
         'certificate_id',
-        'lang_id',
+        'language_id',
         'price_id',
         'email',
         'password',
@@ -323,7 +323,7 @@ class User extends Authenticatable
     }
 
      /**
-     * Get the language for the user.
+     * Get the experience for the user.
      */
     public function experience()
     {

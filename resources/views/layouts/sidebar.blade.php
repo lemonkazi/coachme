@@ -174,6 +174,78 @@
             </li>
           </ul>
         </li>
+
+        <li class="nav-item <?php if ($controller == 'certificatecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'certificatecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Certificates
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'certificatecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('certificates')}}" class="nav-link <?php if ($controller == 'certificatecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Certificates</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'certificatecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/certificate/add')}}" class="nav-link <?php if ($controller == 'certificatecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Certificate</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item <?php if ($controller == 'pricecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'pricecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Prices
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'pricecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('prices')}}" class="nav-link <?php if ($controller == 'pricecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Prices</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'pricecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/price/add')}}" class="nav-link <?php if ($controller == 'pricecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Price</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item <?php if ($controller == 'languagecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'languagecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Languages
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'languagecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('languages')}}" class="nav-link <?php if ($controller == 'languagecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Languages</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'languagecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/language/add')}}" class="nav-link <?php if ($controller == 'languagecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Language</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>

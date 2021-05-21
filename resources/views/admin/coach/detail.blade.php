@@ -86,8 +86,8 @@
                       'text' => '',
                       'related' => 'certificate'
                   ),
-                  'lang' => array(
-                      'label' => __('lang'),
+                  'language' => array(
+                      'label' => __('language'),
                       'text' => '',
                       'related' => 'language'
                   ),
@@ -115,7 +115,8 @@
                       //'is_date_format' => 1
                   )
               );
-              //print_r($user);
+              // print_r($data['user']->lang_id);
+              // exit();
               foreach ($result as $key => $value) {
                 if (!isset($data['user']->$key)) {
                     continue;

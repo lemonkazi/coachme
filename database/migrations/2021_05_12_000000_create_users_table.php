@@ -25,8 +25,8 @@ class CreateUsersTable extends Migration
             $table->foreign('certificate_id')->references('id')->on('certificates');
             $table->unsignedInteger('price_id')->nullable();
             $table->foreign('price_id')->references('id')->on('prices');
-            $table->unsignedInteger('lang_id')->nullable();
-            $table->foreign('lang_id')->references('id')->on('languages');
+            $table->unsignedInteger('language_id')->nullable();
+            $table->foreign('language_id')->references('id')->on('languages');
             $table->string('family_name', 50)->nullable();
             $table->string('name', 50);
             $table->string('email')->unique();

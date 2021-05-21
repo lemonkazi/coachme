@@ -169,10 +169,10 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="language">language</label>
-                          <select name="lang_id" class="form-control" style="width: 100%">
+                          <select name="language_id" class="form-control" style="width: 100%">
                             <option value="">Select</option>
                             @foreach($language_all as $id => $value)
-                              <option value="{{ $id }}" {{ (old('lang_id') ? old('lang_id') : $data['user']->lang_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                              <option value="{{ $id }}" {{ (old('language_id') ? old('language_id') : $data['user']->language_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach
                           </select>
                         </div>
