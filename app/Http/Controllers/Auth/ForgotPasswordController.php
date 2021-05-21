@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PasswordReset;
+use Illuminate\Support\Facades\Password;
 
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Str;
@@ -49,28 +50,41 @@ class ForgotPasswordController extends Controller
 
 
 
-    // public function sendResetLinkEmail(Request $request)
-    // {
-    //     $this->validateEmail($request);
-    //     $data = $request->all();
-    //     $user = User::where([
-    //                             ['email', $data['email']],
-    //                        ])->first();
+    public function sendResetLinkEmail(Request $request)
+    {
+        $this->validateEmail($request);
+        $data = $request->all();
+        $user = User::where([
+                                ['email', $data['email']],
+                           ])->first();
 
-    //     // We will send the password reset link to this user. Once we have attempted
-    //     // to send the link, we will examine the response then see the message we
-    //     // need to show to the user. Finally, we'll send out a proper response.
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
 
-    //     if ($user) {
-    //         $response = $this->broker()->sendResetLink(
-    //             $request->only('email')
-    //         );
-    //         return back()->with('status', "If you've provided registered e-mail, you should get recovery e-mail shortly.");
-    //     }
-    //     else {
-    //         return redirect()->back()->withInput()->with('error', trans('global.reset_email_send_fail'));
-    //     }
-    // }
+        if ($user) {
+            $response = $this->broker()->sendResetLink(
+                $request->only('email')
+            );
+            //Return the response
+            if ($response == Password::RESET_LINK_SENT) {
+                // return response()->json(array(
+                //     'result' => 'ok',
+                // ), 200);
+                return back()->with('status', "If you've provided registered e-mail, you should get recovery e-mail shortly.");
+            } else {
+                // return response()->json(array(
+                //     'result' => 'fail',
+                // ), 500);
+                return redirect()->back()->withInput()->with('error', trans('global.reset_email_send_fail'));
+            }
+            
+            
+        }
+        else {
+            return redirect()->back()->withInput()->with('error', trans('global.reset_email_send_fail'));
+        }
+    }
 
     
 }
