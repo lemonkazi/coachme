@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -37,4 +40,45 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function index()
+    {
+        return view('auth.login', ['title' => 'Login']);
+    }
+
+    public function login(Request $request)
+    {
+        $data = $request->all();  
+
+        
+        
+        $this->validator($request);
+        $user = User::where([
+                                ['email', $data['email']],
+                           ])->first();
+        if ($user) {
+            
+            //Auth::logout();
+            if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+                if ($user->isSuperAdmin()) {
+                    return redirect()->intended(route('home'));
+                } elseif (!$user->isSuperAdmin()) {
+                    return redirect(RouteServiceProvider::ROOT);
+                }
+                
+            }
+        }
+        
+        return redirect()->back()->withInput()->with('error', 'Login failed, please try again!');
+    }
+
+    private function validator(Request $request)
+    {
+        $rules = [
+            'email'    => 'required|email|min:5|max:191',
+            'password' => 'required|string|min:4|max:255'
+        ];
+        $request->validate($rules);
+    }
+
 }

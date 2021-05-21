@@ -10,7 +10,9 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
-
+                        @if(session()->has('error'))
+                            <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+                        @endif
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="form-group row">

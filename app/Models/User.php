@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Carbon\Carbon;
+//use App\Notifications\PasswordReset; // Or the location that you store your notifications (this is default).
+
 
 use App\Traits\ModelTrait;
 use DB;
@@ -335,5 +337,32 @@ class User extends Authenticatable
     public function certificate()
     {
         return $this->belongsTo(Certificate::class);
+    }
+
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification1($token)
+    {
+        //$this->notify(new PasswordReset($token));
+
+
+        // $this->notify(new MyCustomResetPasswordNotification($token)); <--- remove this, use Mail instead like below
+
+        // $data = [
+        //     $this->email
+        // ];
+
+        // Mail::send('email.reset-password', [
+        //     'fullname'      => $this->fullname,
+        //     'reset_url'     => route('user.password.reset', ['token' => $token, 'email' => $this->email]),
+        // ], function($message) use($data){
+        //     $message->subject('Reset Password Request');
+        //     $message->to($data[0]);
+        // });
     }
 }

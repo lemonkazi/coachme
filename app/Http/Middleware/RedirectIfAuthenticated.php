@@ -6,6 +6,7 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class RedirectIfAuthenticated
 {
@@ -23,7 +24,20 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = User::where([
+                                ['email', $request['email']],
+                           ])->first();
+                if ($user) {
+                    
+                    //Auth::logout();
+                        if ($user->isSuperAdmin()) {
+                            return redirect(RouteServiceProvider::HOME);
+                        } elseif (!$user->isSuperAdmin()) {
+                            return redirect(RouteServiceProvider::ROOT);
+                        }
+                }
+
+                
             }
         }
 

@@ -2,25 +2,40 @@
 
 use Illuminate\Support\Facades\Route;
 // landing page
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+//Route::get('/', 'PublicContoller@index');
 Route::get('ajax', function(){ return view('ajax'); });
 
 Route::post('/ajax_delete','AjaxController@delete');
 
+Route::get('/', 'PublicContoller@index');
 
+
+/**Forgot Password Routes**/
+Route::get('password/request', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'index'])->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLink')->name('password.email');
+/**Reset Password Routes**/
+//Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+//Route::post('password/reset/{reset_token}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'updatePassword'])->name('password.update');
+
+
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset.token');
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
 Auth::routes();
+
+
 
 // auth
 Route::group(['middleware' => ['auth']], function () {
-	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+	//
+	
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 
 });
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
-	
+	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 	Route::get('coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	Route::get('coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	
@@ -117,41 +132,4 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 });
 
 
-Route::get('/create_product', function(){
-    return view('admin.create_product');
-})->middleware('auth');
 
-Route::get('/product_delete/{id}',[App\Http\Controllers\ProductsController::class, 'destroy'])->middleware('auth');
-
-Route::get('/product_create',[App\Http\Controllers\ProductsController::class, 'create'])->middleware('auth');
-
-Route::post('/product_submit',[App\Http\Controllers\ProductsController::class, 'store'])->middleware('auth');
-
-Route::get('/edit-categories', function(){
-    return view('admin.edit-categories');
-})->middleware('auth');
-
-
-//categories
-
-Route::get('/categories',[App\Http\Controllers\CategoryController::class, 'manageCategory'])->middleware('auth');
-
-Route::get('/category_delete/{id}',[App\Http\Controllers\CategoryController::class, 'destroy'])->middleware('auth');
-
-Route::post('/category_submit',[App\Http\Controllers\CategoryController::class, 'store'])->middleware('auth');
-
-Route::get('/add_categories', function(){
-    return view('admin.add_categories');
-})->middleware('auth');
-
-//sub_catergories
-
-Route::get('/sub_categories',[App\Http\Controllers\SubCategoryController::class, 'allSubCategory'])->middleware('auth');
-
-Route::get('/add_Sub_Categories',[App\Http\Controllers\SubCategoryController::class, 'showCategory'])->middleware('auth');
-
-
-Route::get('/sub_category_delete/{id}',[App\Http\Controllers\SubCategoryController::class, 'destroy'])->middleware('auth');
-
-
-Route::post('/subCategory_submit',[App\Http\Controllers\SubCategoryController::class, 'store'])->middleware('auth');
