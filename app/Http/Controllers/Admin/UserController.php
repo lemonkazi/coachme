@@ -15,7 +15,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\ProfilePasswordUpdateRequest;
 use App\Http\Requests\RegistrationRequest;
 
-
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 use App\Models\User;
 use App\Models\Rink;
@@ -26,6 +26,7 @@ use App\Models\Price;
 use App\Models\Speciality;
 
 use App\Mail\MachidoriAppsMail;
+use App\Mail\VerifyMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
+    use RegistersUsers;
     public function __construct()
     {
         parent::__construct();

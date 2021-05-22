@@ -14,11 +14,14 @@ use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
 
+use App\Mail\MachidoriAppsMail;
+use App\Mail\VerifyMail;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class CoachController extends Controller
 {
     
-
+  use RegistersUsers;
     public function __construct()
     {
         parent::__construct();
@@ -166,13 +169,7 @@ class CoachController extends Controller
           return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
         }
 
-        if (isset($data['rink_id'])) {
-            $rink = Rink::find($data['rink_id']);
-
-            if (!$rink) {
-               return redirect()->back()->withInput()->withErrors('rink not exist');
-            }         
-        }
+        
 
 
       $rules = array(
@@ -207,11 +204,22 @@ class CoachController extends Controller
       }
       else
       {
+        //$eMail = new MachidoriAppsMail();
+        //$eMail->resetPasswordMail($data['email'], $oauth_token, $userExists,$os);
           
           $data['is_verified'] = true;
           $user = User::create($data);
-          $user->rink_id = !empty($rink) ? $rink->id : null;
+          if (isset($data['rink_id'])) {
+            $rink = Rink::find($data['rink_id']);
+
+            if (!$rink) {
+               return redirect()->back()->withInput()->withErrors('rink not exist');
+            } 
+            $user->rink_id = !empty($rink) ? $rink->id : null;        
+          }
+          
           $user->authority = User::ACCESS_LEVEL_COACH;
+          $user->token = sha1(time());
           
           if($request->file('avatar_image_path'))
           {
@@ -221,8 +229,10 @@ class CoachController extends Controller
              $user->avatar_image_path = $new_name;
           }
           if (!$user->save()) {
+            
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
           }
+          \Mail::to($user->email)->send(new VerifyMail($user));
 
           // print_r($data);
           // exit();

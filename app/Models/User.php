@@ -24,7 +24,7 @@ use Carbon\Carbon;
 use App\Traits\ModelTrait;
 use DB;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, SoftDeletes, CascadeSoftDeletes, ModelTrait;
 

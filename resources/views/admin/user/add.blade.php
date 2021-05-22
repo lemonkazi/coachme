@@ -159,7 +159,7 @@
                         <div class="form-group">
                           <label for="rink">rink</label>
                           <select name="rink_id" class="form-control" style="width: 100%">
-                            <option value="0" selected="" disabled="">Select</option>
+                            <option value="" selected="" disabled="">Select</option>
                             @foreach($rink_all as $id => $value)
                                 <option value="{{ $id }}" {{ (old('rink_id') ? old('rink_id') : $data['user']->rink_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach

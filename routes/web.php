@@ -8,6 +8,8 @@ Route::get('ajax', function(){ return view('ajax'); });
 Route::post('/ajax_delete','AjaxController@delete');
 
 
+Auth::routes(['verify' => true]);
+
 
 
 /**Forgot Password Routes**/
@@ -20,6 +22,10 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLink')->na
 
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset.token');
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+
+
+Route::get('/user/verify/{token}', 'PublicContoller@verifyUser');
+
 Auth::routes();
 
 
