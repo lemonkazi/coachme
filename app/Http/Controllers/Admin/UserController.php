@@ -246,8 +246,10 @@ class UserController extends Controller
             if (!$user->save()) {
                 return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
             }
-
-              // print_r($data);
+            if ($user->authority=='RINK_USER') {
+              \Mail::to($user->email)->send(new VerifyMail($user));
+            }
+                          // print_r($data);
               // exit();
               // $user = new User;
               // $user->name = $request->name;

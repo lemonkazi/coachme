@@ -13,6 +13,16 @@
                         @if(session()->has('error'))
                             <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
                         @endif
+                        @if (session('status'))
+                          <div class="alert alert-success">
+                            {{ session('status') }}
+                          </div>
+                        @endif
+                        @if (session('warning'))
+                          <div class="alert alert-warning">
+                            {{ session('warning') }}
+                          </div>
+                        @endif
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 

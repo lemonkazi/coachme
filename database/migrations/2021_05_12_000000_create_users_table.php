@@ -40,7 +40,8 @@ class CreateUsersTable extends Migration
             $table->text('avatar_image_path')->nullable();
             $table->enum('gender', ['MALE', 'FEMALE', 'OTHER'])->nullable();
             $table->enum('authority', ['SUPER_ADMIN','COACH_USER', 'RINK_USER'])->nullable();
-            $table->boolean('is_verified');
+            $table->boolean('is_verified')->nullable();
+            $table->string('token')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();

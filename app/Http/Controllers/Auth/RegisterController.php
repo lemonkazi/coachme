@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::ROOT;
+    protected $redirectTo = RouteServiceProvider::LOGIN;
 
     /**
      * Create a new controller instance.
@@ -64,11 +64,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'is_verified' => true,
             'email' => $data['email'],
             'password' => $data['password'],
         ]);
+
+        $this->guard()->logout();
+        return redirect('/login')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
     }
 }
