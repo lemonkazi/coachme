@@ -26,7 +26,7 @@ class AjaxController extends Controller {
 		    'message' => 'failed to delete data',
 		);
 
-		if ($param['controller'] =='coachcontroller') {
+		if ($param['controller'] =='coachcontroller' || $param['controller'] =='usercontroller') {
 			$user = User::find($param['id']);
 			if ($user->delete()) {
 				$result['message'] = trans('messages.success_message');

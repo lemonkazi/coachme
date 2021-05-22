@@ -34,6 +34,10 @@
                       'label' => __('ID'),
                       'text' => '',
                   ),
+                  'authority' => array(
+                      'label' => __('Authority'),
+                      'text' => '',
+                  ),
                   'avatar_image_path' => array(
                         'label' => __('AVATAR_IMAGE'),
                         'text' => '',

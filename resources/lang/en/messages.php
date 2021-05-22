@@ -10,8 +10,8 @@
         'unauthorized_to_create_service_admin' => 'Unauthorized to create or update service admin',
         'unauthorized_to_create_service_and_building_admin' => 'Unauthorized to create or update service and building admin',
         'unauthorized_to_other_building_admin' => 'Unauthorized to create or update other building admin',
-        'unauthorized_to_other_city_admin' => 'Unauthorized to create or update other building shop admin',
-        'unauthorized_to_other_building_city_admin' => 'Unauthorized to create or update other shop admin',
+        'unauthorized_to_other_rink_admin' => 'Unauthorized to create or update other building shop admin',
+        'unauthorized_to_other_building_rink_admin' => 'Unauthorized to create or update other shop admin',
         'success_message' => 'Request successful',
         'error_message' => 'Request failed',
         'users' => [
@@ -39,10 +39,10 @@
             'invalid' => 'Shop is not valid',
             'building_mismatch' => 'Shop is not associated with selected building',
         ],
-        'city_id' => [
-            'required' => 'Please select a city name',
-            'numeric' => 'City value should be numeric',
-            'invalid' => 'City is not valid',
+        'rink_id' => [
+            'required' => 'Please select a rink name',
+            'numeric' => 'Rink value should be numeric',
+            'invalid' => 'Rink is not valid',
         ],
         'name' => [
             'required' => 'Please enter a username',

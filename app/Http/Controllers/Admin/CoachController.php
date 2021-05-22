@@ -166,8 +166,8 @@ class CoachController extends Controller
           return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
         }
 
-        if (isset($data['rink'])) {
-            $rink = Rink::find($data['rink']);
+        if (isset($data['rink_id'])) {
+            $rink = Rink::find($data['rink_id']);
 
             if (!$rink) {
                return redirect()->back()->withInput()->withErrors('rink not exist');

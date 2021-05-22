@@ -47,11 +47,9 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Speciality</th>
-                    <th>Experience</th>
+                    <th>Authority</th>
                     <th>Rink</th>
                     <th>Price</th>
-                    <th>Certificate</th>
                     <th>Phone</th>
                     
                     <th>Action</th>
@@ -63,11 +61,9 @@
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
-                    <td>{{$user->speciality_name}}</td>
-                    <td>{{$user->experience_name}}</td>
+                    <td>{{$user->authority}}</td>
                     <td>{{$user->rink_name}}</td>
                     <td>{{$user->price_name}}</td>
-                    <td>{{$user->certificate_name}}</td>
                     <td>{{$user->phone_number}}</td>
                     
                     <td> 
@@ -91,11 +87,9 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Speciality</th>
-                    <th>Experience</th>
+                    <th>Authority</th>
                     <th>Rink</th>
                     <th>Price</th>
-                    <th>Certificate</th>
                     <th>Phone</th>
                     <th>Action</th>
                   </tr>

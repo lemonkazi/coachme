@@ -89,6 +89,19 @@
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
+                          <label for="about">User Type</label>
+                          <select name="authority" class="form-control" style="width: 100%">
+                            <option value="">Select</option>
+                             @foreach($authority as $id => $value)
+                                <option value="{{ $id }}" {{ (old('authority') ? old('authority') : $data['user']->authority ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
                           <label for="about">About</label>
                           <textarea class="form-control" id="about" name ="about" placeholder="about">{{!empty($data['user']) ? old('about', $data['user']->about) : old('about')}}</textarea>
                         </div>
@@ -146,7 +159,7 @@
                         <div class="form-group">
                           <label for="rink">rink</label>
                           <select name="rink_id" class="form-control" style="width: 100%">
-                            <option value="none" selected="" disabled="">Select</option>
+                            <option value="0" selected="" disabled="">Select</option>
                             @foreach($rink_all as $id => $value)
                                 <option value="{{ $id }}" {{ (old('rink_id') ? old('rink_id') : $data['user']->rink_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach
