@@ -36,7 +36,7 @@
                   <h3 class="card-title">All existing {{$data['Title']}}</h3>
                 </div>
                 <div class="col-md-2 float-sm-right ">
-                  <a href="{{ url('/coach/add')}}" class="btn btn-primary btn-block mb-3">Add New</a>
+                  <a href="{{ url('/user/add')}}" class="btn btn-primary btn-block mb-3">Add New</a>
                 </div>
               </div>
               <!-- /.card-header -->
@@ -72,10 +72,10 @@
                     
                     <td> 
                       <div class="btn-group">
-                        <a href="{{url('coaches').'/'.$user->id}}" class="btn btn-primary">
+                        <a href="{{url('users').'/'.$user->id}}" class="btn btn-primary">
                           <i class="fas fa-eye"></i>
                         </a>
-                        <a href="<?php echo $BASE_URL . '/coach/edit/' . $user->id ?>" class="btn btn-warning" title="Edit">
+                        <a href="<?php echo $BASE_URL . '/user/edit/' . $user->id ?>" class="btn btn-warning" title="Edit">
                           <i class="fas fa-edit"></i>
                         </a> 
                         <a href="javascript:;" data-id="{{$user->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">

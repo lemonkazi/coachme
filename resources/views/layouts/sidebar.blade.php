@@ -34,6 +34,74 @@
             </p>
           </a>
         </li>
+
+        <li class="nav-item has-treeview <?php if (in_array($controller, array('coachcontroller','usercontroller'))) echo ' active menu-open' ?>">
+          <a href="#" class="nav-link multi <?php if (in_array($controller, array('coachcontroller','usercontroller'))) echo ' active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Users
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview" style="<?php if (in_array($controller, array('coachcontroller','usercontroller'))) { echo 'display: block;'; } else { echo 'display: none;'; }?>">
+            <li class="nav-item">
+              <br>
+            </li>
+            <li class="nav-item <?php if ($controller == 'coachcontroller') echo 'active menu-open' ?>">
+              <a href="#" class="nav-link multi <?php if ($controller == 'coachcontroller') echo 'active' ?>">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Coach
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="<?php if ($controller == 'coachcontroller') { echo 'display: block;'; } else { echo 'display: none;'; }?>">
+                <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'show') echo 'active' ?>">
+                  <a href="{{ url('coaches')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'show') echo 'active' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>All Coach</p>
+                  </a>
+                </li>
+                <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
+                  <a href="{{ url('/coach/add')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add Coach</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <br>
+            </li>
+            <li class="nav-item <?php if ($controller == 'usercontroller') echo 'active menu-open' ?>">
+              <a href="#" class="nav-link multi <?php if ($controller == 'usercontroller') echo 'active' ?>">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Other Users
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview" style="<?php if ($controller == 'usercontroller') { echo 'display: block;'; } else { echo 'display: none;'; }?>">
+                <li class="nav-item <?php if ($controller == 'usercontroller' && $action == 'show') echo 'active' ?>">
+                  <a href="{{ url('users')}}" class="nav-link <?php if ($controller == 'usercontroller' && $action == 'show') echo 'active' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>All Users</p>
+                  </a>
+                </li>
+                <li class="nav-item <?php if ($controller == 'usercontroller' && $action == 'create') echo 'active' ?>">
+                  <a href="{{ url('/user/add')}}" class="nav-link <?php if ($controller == 'usercontroller' && $action == 'create') echo 'active' ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add User</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <br>
+            </li>
+          </ul>
+
+        </li>
         <!-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-th"></i>
@@ -80,29 +148,7 @@
             </li>
           </ul>
         </li> -->
-        <li class="nav-item <?php if ($controller == 'coachcontroller') echo 'active menu-open' ?>"">
-          <a href="#" class="nav-link <?php if ($controller == 'coachcontroller') echo 'active' ?>">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              Coach
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'show') echo 'active' ?>">
-              <a href="{{ url('coaches')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'show') echo 'active' ?>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>All Coach</p>
-              </a>
-            </li>
-            <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
-              <a href="{{ url('/coach/add')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Add Coach</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+        
         <li class="nav-item <?php if ($controller == 'rinkcontroller') echo 'active menu-open' ?>"">
           <a href="#" class="nav-link <?php if ($controller == 'rinkcontroller') echo 'active' ?>">
             <i class="nav-icon fas fa-th"></i>
@@ -292,3 +338,12 @@
   </div>
   <!-- /.sidebar -->
 </aside>
+<style type="text/css">
+  [class*=sidebar-dark-] 
+.nav-treeview>
+.nav-item>
+.nav-link.multi.active{
+  background-color: #007bff;
+  color:white;
+}
+</style>

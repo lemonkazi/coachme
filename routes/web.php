@@ -2,15 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 // landing page
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-//Route::get('/', 'PublicContoller@index');
+Route::get('/', 'PublicContoller@index');
 Route::get('ajax', function(){ return view('ajax'); });
 
 Route::post('/ajax_delete','AjaxController@delete');
 
-Route::get('/', 'PublicContoller@index');
+
 
 
 /**Forgot Password Routes**/
@@ -36,6 +33,8 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+	
+	//rinks route
 	Route::get('coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	Route::get('coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	
@@ -46,6 +45,20 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CoachController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CoachController@update']);
+  	});
+
+
+  	//rinks route
+	Route::get('users',[App\Http\Controllers\Admin\UserController::class, 'show']);
+	Route::get('users/{user}',[App\Http\Controllers\Admin\UserController::class, 'show']);
+	
+	Route::group(['prefix' =>'user', 'as'=>'user.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\UserController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\UserController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\UserController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\UserController@update']);
   	});
 
 

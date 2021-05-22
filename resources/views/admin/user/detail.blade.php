@@ -148,7 +148,7 @@
             </div>
             <div class="card-footer text-center">
                 
-                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/coach/edit/' . $data['user']->id ?>"><?php echo __('LABEL_UPDATE') ?></a>
+                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/user/edit/' . $data['user']->id ?>"><?php echo __('LABEL_UPDATE') ?></a>
             
             </div>
           </div>

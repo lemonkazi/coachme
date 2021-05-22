@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Http\Response;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Requests\CoachCreateRequest;
 use App\Models\User;
 use App\Models\Rink;
 use App\Models\Experience;
@@ -17,9 +14,6 @@ use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
 
-//use App\Models\products;
-use App\Exports\CollectionExport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class CoachController extends Controller
 {
@@ -29,22 +23,11 @@ class CoachController extends Controller
     {
         parent::__construct();
     }
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, Coach $coach)
-    {
-      //
-    }
 
     /**
-     * Display the specified resource.
+     * Display a listing of the resource and the specified resource.
      *
-     * @param  \App\Models\User  $users
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\User  $user
      */
     public function show(Request $request, User $user)
     {
@@ -76,9 +59,6 @@ class CoachController extends Controller
                'Title' =>  'Coach Detail'
             ]
           ]);
-        // return view('admin.coach.detail',[
-        //   'user' => User::find($user->id),
-        // ]);
       } else {
         $queryUser = User::query();
         $queryUser->where('authority','=','COACH_USER');
@@ -112,7 +92,7 @@ class CoachController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * 
      */
     public function create($id=null)
     {
@@ -168,7 +148,7 @@ class CoachController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * 
      */
     public function store(Request $request)
     {
@@ -221,10 +201,7 @@ class CoachController extends Controller
 
       if ( $validator->fails() ) 
       {
-          // return [
-          //     'success' => 0, 
-          //     'message' => $validator->errors()->first()
-          // ];
+          
             //Toastr::warning('Error occured',$validator->errors()->all()[0]);
             return redirect()->back()->withInput()->withErrors($validator);
       }
@@ -240,7 +217,7 @@ class CoachController extends Controller
           {
             $image = $request->file('avatar_image_path');
             $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('coach_photo'), $new_name);
+            $image->move(public_path('user_photo'), $new_name);
              $user->avatar_image_path = $new_name;
           }
           if (!$user->save()) {
@@ -280,8 +257,7 @@ class CoachController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\City  $city
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\User  $id
      */
     public function update(Request $request, $id=null)
     {
@@ -314,15 +290,9 @@ class CoachController extends Controller
       }
       $rules = array(
               'name'   => 'filled|string|max:50',
-              //'family_name'   => 'required|string|min:10',
-              //'email'  => 'filled|string|email|max:255',
-              
-              //'type_staff'=> 'required',
               'avatar_image_path' => 'nullable',
-              //'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             );    
       $messages = array(
-                  //'family_name.min' => trans('messages.name.max'),
                   'name.filled' => trans('messages.name.required'),
                   'name.max' => trans('messages.name.max'),
                   'email.required' => trans('messages.email.required'),
@@ -354,17 +324,7 @@ class CoachController extends Controller
       
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\City  $city
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(City $city)
-    {
-      $city->delete();
-      return response()->success(false, trans('messages.success_message'), Response::HTTP_OK);
-    }
+   
 
 
 
