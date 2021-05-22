@@ -77,7 +77,7 @@ class MachidoriAppsMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.verifyUser');
+        //return $this->view('emails.verifyUser');
         return $this->markdown('emails.machidoriApp');
     }
 }
