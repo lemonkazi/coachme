@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 	
+	Route::get('profile', 'Admin\ProfileController@userDetail');
 	//rinks route
 	Route::get('coaches',[App\Http\Controllers\Admin\CoachController::class, 'show']);
 	Route::get('coaches/{user}',[App\Http\Controllers\Admin\CoachController::class, 'show']);

@@ -24,6 +24,10 @@
     <!-- ========================================================= -->
     <!--Notification msj-->
     <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
+    
+     <!-- common style -->
+    <link rel="stylesheet" href="{{ asset ('css/common.css') }}">
+    
     <meta name="_token" content="{{ csrf_token() }}">
 
     <script type="text/javascript">
@@ -69,6 +73,50 @@
             </a>
           </li>
         </ul>
+
+
+        <div class="navbar-custom-menu navbar-nav ml-4">
+          <ul class="nav navbar-nav">
+              <!-- User Account:-->
+              <li class="dropdown user user-menu ">
+                  <a href="#" class="dropdown-toggle">
+                      <i class="fa fa-user"></i>
+                      <span class="visable_desktop"><?php echo !empty($AppUI['name']) ? $AppUI['name'] : 'Admin';?><i class="caret"></i></span>
+                  </a>
+                  <ul class="dropdown-menu bg-secondary">
+                      <!-- User image -->
+                      <li class="user-header">
+                          <!-- <span><i class="fa fa-user-secret"></i></span>
+                          <p>
+                              <?php echo !empty($AppUI['name']) ? $AppUI['name'] : 'Admin';?>
+                              <?php if (!empty($AppUI['created'])): ?>
+                              <small><span><?php echo trans('global.LABEL_UPDATED')?>: </span><span><?php echo  date("Y-m", $AppUI['created']); ?></small>
+                              <?php endif; ?>
+                          </p> -->
+                          <div id="user_profile">
+                            <a href="<?= $BASE_URL;?>/profiles"><?php echo trans('global.LABEL_VIEW_PROFILE'); ?></a>
+                            <a href="<?= $BASE_URL;?>/profiles/changepassword"><?php echo trans('global.LABEL_CHANGE_PASSWORD'); ?></a>
+                            
+                            <!-- <?php
+                            if(isset($AppUI["shops"][0]["shop_id"]) && ($AppUI["shops"][0]["shop_id"] !="") && $AppUI['authority'] =='SHOP_ADMIN'){
+                              ?>
+                              <a href="<?= $BASE_URL."/shops/details/".$AppUI["shops"][0]["shop_id"]; ?>"><?php echo __('LABEL_MY_SHOP_INFORMATION'); ?></a>
+                              <?php
+                            }
+                            ?> -->
+                          </div>
+                      </li>
+                      <!-- Menu Footer-->
+                      <li class="user-footer">
+                          
+                          <div class="float-right">
+                              <a href="{{ url('/logout') }}" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i></a>
+                          </div>
+                      </li>
+                  </ul>
+              </li>
+          </ul>
+        </div>
       </nav>
       <!-- /.navbar -->
       <!-- LEFT SIDEBAR Start -->
@@ -168,6 +216,25 @@
                   complete: function () {}
               });
           }
+        });
+
+        /*
+        * Added by sumon
+        * Header user menu
+        */
+        $('li.dropdown.user-menu a').on('click', function (event) {
+            $(this).parent().toggleClass('show');
+            $(this).next('.dropdown-menu.bg-secondary').toggleClass('show');
+        });
+
+
+        $('body').on('click', function (e) {
+            if (!$('li.dropdown.user-menu').is(e.target) && $('li.dropdown.user-menu').has(e.target).length === 0  && $('.show').has(e.target).length === 0) {
+                $('.dropdown.user.user-menu').removeClass('show');
+                $('.dropdown.user.user-menu .bg-secondary').removeClass('show');
+                //$(this).parent().is(".show") && e.stopPropagation();
+                //console.log("aaaaaaaaaaaaaaa");
+            }
         });
       });
 

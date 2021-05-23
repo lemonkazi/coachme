@@ -34,7 +34,7 @@ use App\Exports\CollectionExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-class UserController extends Controller
+class ProfileController extends Controller
 {
     use RegistersUsers;
     public function __construct()

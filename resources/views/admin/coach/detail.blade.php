@@ -106,11 +106,11 @@
                       'text' => '',
                   ),
                   'created_at' => array(
-                      'label' => __('LABEL_CREATED'),
+                      'label' => trans('global.LABEL_CREATED'),
                       'text' => '',
                   ),
                   'updated_at' => array(
-                      'label' => __('LABEL_UPDATED'),
+                      'label' => trans('global.LABEL_UPDATED'),
                       'text' => '',
                       //'is_date_format' => 1
                   )
@@ -148,7 +148,7 @@
             </div>
             <div class="card-footer text-center">
                 
-                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/coach/edit/' . $data['user']->id ?>"><?php echo __('LABEL_UPDATE') ?></a>
+                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/coach/edit/' . $data['user']->id ?>"><?php echo trans('global.LABEL_UPDATE') ?></a>
             
             </div>
           </div>

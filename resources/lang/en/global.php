@@ -1,11 +1,5 @@
 <?php
-/** Translation for Admiko CMS. **/
-/**
- * @author     Thank you for using Admiko.com
- * @copyright  2020-2120
- * @link       https://Admiko.com
- * @Help       We are always looking to improve our code. If you know better and more creative way don't hesitate to contact us. Thank you.
- */
+
 /**
  * NOTE: We are always looking for help to translate on as many languages. Contact us. Thank you.
  */
@@ -132,4 +126,55 @@ return [
     'search_type_more'                   => 'Please type more.',
     'search_no_results'                  => 'No results.',
     'search_error'                       => 'Error in retrieving data.',
+
+    'KEY'  => 'Value',
+    'LABEL_DESCRIPTION'  => 'Description',
+    'LABEL_EMAIL'  => 'Email',
+    'LABEL_REMEMBER_ME'  => 'Remember Me',
+    'LABEL_SIGN_IN'  => 'Sign In',
+    'LABEL_LOGOUT'  => 'Sign Out',
+    'LABEL_DASHBOARD'  => 'Dashboard',
+    'LABEL_RESERVATION'  => 'Register',
+    'LABEL_MASTER'  => 'Master',
+    'about' =>'about',
+    'province' =>'Province',
+    'City' =>'City',
+
+    'LABEL_USER_DETAIL'  => 'Detail',
+    'MESSAGE_REQUIRED_LOGIN_PASSWORD_CONFIRM'  => 'Conform password not matched',
+    'LABEL_NAME'  => 'Name',
+    'Family Name' => 'Family Name',
+
+    'MESSAGE_CONFIRM_DELETE'  => 'Do you want to delete it？',
+    'LABEL_PASSWORD'  => 'Password',
+    'LABEL_LOGIN_TITLE'  => 'Sign in to start your session',
+
+    'MESSAGE_EMAIL_EMPTY'  => 'Email Empty',
+    'LABEL_SEARCH'  => 'Search',
+    'LABEL_DETAIL'  => 'Detail',
+    'LABEL_ID'  => 'ID',
+    'LABEL_USER_UPDATE'  => 'User Update',
+    'LABEL_LIMIT'  => 'Limit',
+    'LABEL_CHOOSE_ONE'  => 'Select Please',
+    'LABEL_HOME'  => 'Home',
+    'LABEL_ADDRESS'  => 'Address',
+    'LABEL_DELETE'  => 'Delete',
+    'LABEL_ADD_NEW'  => 'Add New',
+    'LABEL_DISABLE'  => 'Disable',
+    'LABEL_ENABLE'  => 'Enable',
+    'LABEL_CREATED'  => 'Created',
+    'LABEL_UPDATE' =>'Update',
+    'LABEL_UPDATED' =>'Updated',
+    'LABEL_CREATE'  => 'Create',
+    'LABEL_INFO'  => 'Info',
+    'LABEL_CLOSE'  => 'Close',
+    'LABEL_SAVE'  => 'Save',
+    'LABEL_CANCEL'  => 'Cancel',
+    'LABEL_AUTHORITY' =>'Authority',
+    'AVATAR_IMAGE' =>'Image',
+    'Profile' =>'Profile',
+    'All User' =>'All User',
+    'LABEL_VIEW_PROFILE' =>'View Profile',
+    'LABEL_FULL_NAME' =>'Full Name',
+    'LABEL_CHANGE_PASSWORD' =>'Change Password',
 ];

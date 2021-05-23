@@ -31,43 +31,39 @@
               <?php
               $result = array(
                   'id' => array(
-                      'label' => __('ID'),
+                      'label' => trans('global.LABEL_ID'),
                       'text' => '',
                   ),
                   'authority' => array(
-                      'label' => __('Authority'),
+                      'label' => trans('global.LABEL_AUTHORITY'),
                       'text' => '',
                   ),
                   'avatar_image_path' => array(
-                        'label' => __('AVATAR_IMAGE'),
+                        'label' => trans('global.AVATAR_IMAGE'),
                         'text' => '',
                   ),
                   'name' => array(
-                      'label' => __('Name'),
+                      'label' => trans('global.LABEL_NAME'),
                       'text' => '',
                   ),
                   'family_name' => array(
-                      'label' => __('Family Name'),
+                      'label' => trans('global.Family Name'),
                       'text' => '',
                   ),
                   'email' => array(
-                      'label' => __('LABEL_EMAIL_JP'),
-                      'text' => '',
-                  ),
-                  'authority' => array(
-                      'label' => __('LABEL_AUTHORITY'),
+                      'label' => trans('global.LABEL_EMAIL'),
                       'text' => '',
                   ),
                   'about' => array(
-                      'label' => __('about'),
+                      'label' => trans('global.about'),
                       'text' => '',
                   ),
                   'province' => array(
-                      'label' => __('province'),
+                      'label' => trans('global.province'),
                       'text' => '',
                   ),
                   'city' => array(
-                      'label' => __('city'),
+                      'label' => trans('global.City'),
                       'text' => '',
                   ),
                   'speciality' => array(
