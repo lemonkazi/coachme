@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Price;
 
+use App\Exports\CollectionExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class PriceController extends Controller
 {
     
@@ -66,10 +69,32 @@ class PriceController extends Controller
              'Title' =>  trans('global.Price Detail')
           ]
         ]);
-    } else {
-      $queryPrice = Price::query();
-      $prices = $queryPrice->paginate(20);
     }
+    $query = $price->filter($params);
+
+    $export = filter_var($request->input('export', false), FILTER_VALIDATE_BOOLEAN);
+    
+    try {
+        $limit = (int) $request->input('limit', 20);
+    } catch (\Exception $e) {
+        $limit = 20;
+    }
+
+    if (!is_int($limit) || $limit <= 0) {
+        $limit = 20;
+    }
+    if (isset($params['with'])) { 
+        $with = explode(',', $params['with']);
+
+        $query->with($with);
+    }
+    if (isset($params['sort']) && !empty($params['sort'])) {
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+    } else { 
+        $query->orderBy('id', 'desc');
+    }
+    $response = $query->paginate($limit);
 
     $breadcrumb = array(
       array(
@@ -77,22 +102,54 @@ class PriceController extends Controller
          'link'=>'/prices'
       )
     );
+    // If export parameter true, it will return csv file
+    if ($export) { 
+      // It maps model property (key) to column header (value)
+      $headPropertyMapper = [
+          'id' => 'ID', 
+          'name' => 'Name',
+          'created_at' => 'Created At',
+          'updated_at' => 'Updated At',
+      ];
 
-    return view('admin.price.list', [
-      'pageInfo'=>
-       [
-        'siteTitle'        =>'Manage Users',
-        'pageHeading'      =>'Manage Users',
-        'pageHeadingSlogan'=>'Here the section to manage all registered users'
-        ]
-        ,
-        'data'=>
-        [
-           'prices'      =>  $prices,
-           'breadcrumb' =>  $breadcrumb,
-           'Title' =>  trans('global.Price List')
-        ]
-    ]);
+      $data = $user->dataProcessor($headPropertyMapper, $response);
+      $headings = array_values($headPropertyMapper);
+      
+      // Create CollectionExport instance by passing file headers and data
+      $collectionExportInstance = new CollectionExport($headings, $data);
+      $fileName = date('Ymd_His').'_certificates.csv';
+
+      return Excel::download($collectionExportInstance, $fileName);
+    } else {
+      if (isset($params['page'])) {
+        $page = !empty($params['page']) ? $params['page'] : 1;
+      } else {
+        $page = 1;
+      }
+      $total = $response->total();
+      $sumary = '';
+      if ($total>$limit) {
+        $content = ($page - 1) * $limit + 1;
+        $sumary = "Total ".$total." Displaying ".$content."～".min($page * $limit, $total);
+      }
+
+      return view('admin.price.list', [
+        'pageInfo'=>
+         [
+          'siteTitle'        =>'Manage Users',
+          'pageHeading'      =>'Manage Users',
+          'pageHeadingSlogan'=>'Here the section to manage all registered users'
+          ]
+          ,
+          'data'=>
+          [
+            'prices'      =>  $response->appends(request()->except('page')),
+            'breadcrumb' =>  $breadcrumb,
+            'Title' =>  trans('global.Price List'),
+            'sumary' => $sumary
+          ]
+      ]);
+    }
   }
 
   /**

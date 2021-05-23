@@ -126,7 +126,7 @@ class CoachController extends Controller
 
       return Excel::download($collectionExportInstance, $fileName);
     } else {
-        if ($params['page']) {
+        if (isset($params['page'])) {
           $page = !empty($params['page']) ? $params['page'] : 1;
         } else {
           $page = 1;

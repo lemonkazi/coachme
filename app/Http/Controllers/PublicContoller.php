@@ -12,6 +12,9 @@ use Auth;
 use Illuminate\Support\Collection;
 
 
+use App\Providers\RouteServiceProvider;
+
+
 class PublicContoller extends Controller
 {
     
@@ -65,7 +68,15 @@ class PublicContoller extends Controller
      */
     public function login()
     {
-        return View::make('auth.publiclogin', ['title' => 'User Login','pageInfo'=>['siteTitle'=>'COACH ME']]);
+      if (Auth::check()) {
+          $user = Auth::user();
+          if ($user->isSuperAdmin()) {
+              return redirect()->intended(route('home'));
+          } elseif (!$user->isSuperAdmin()) {
+              return redirect(RouteServiceProvider::ROOT);
+          }
+      }
+      return View::make('auth.publiclogin', ['title' => 'User Login','pageInfo'=>['siteTitle'=>'COACH ME']]);
     }
 
     public function publiclogin(Request $request)
