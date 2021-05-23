@@ -25,7 +25,7 @@ use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
 
-use App\Mail\MachidoriAppsMail;
+use App\Mail\CoachmeAppsMail;
 use App\Mail\VerifyMail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -509,7 +509,7 @@ class UserController extends Controller
         }
         $passwordReset = PasswordReset::create($data);
         
-        $eMail = new MachidoriAppsMail();
+        $eMail = new CoachmeAppsMail();
         $eMail->resetPasswordMail($data['email'], $oauth_token, $userExists,$os);
         return response()->success(false, trans('oauth.email_send_reset_password'), Response::HTTP_OK);
     }

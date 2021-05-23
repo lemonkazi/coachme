@@ -129,7 +129,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $exactFilterable = [
         'rink_id',
-        'speciality_id'
+        'speciality_id',
+        'authority'
     ];
 
 
@@ -189,7 +190,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isSuperAdmin()
     {
-        return $this->authority === 'SUPER_ADMIN';
+        return $this->authority === self::ACCESS_LEVEL_MASTER_ADMIN;
     }
 
     /**
@@ -200,10 +201,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isCoachUser($cityId = null)
     {
         if ($cityId) {
-            return $this->city_id === $cityId && $this->authority === 'COACH_USER';
+            return $this->city_id === $cityId && $this->authority === self::ACCESS_LEVEL_COACH;
         }
 
-        return $this->authority === 'COACH_USER';
+        return $this->authority === self::ACCESS_LEVEL_COACH;
+    }
+
+    /**
+     * Check user has RINK_USER authority
+     * @param  integer  $rinkId
+     * @return boolean
+     */
+    public function isRinkUser($rinkId = null)
+    {
+        if ($rinkId) {
+            return $this->rink_id === $rinkId && $this->authority === self::ACCESS_LEVEL_RINK;
+        }
+
+        return $this->authority === self::ACCESS_LEVEL_RINK;
     }
 
     /**
@@ -217,7 +232,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->city_id === $cityId && $this->authority === 'RINK_USER';
         }
 
-        return $this->authority === 'RINK_USER';
+        return $this->authority === self::ACCESS_LEVEL_RINK;
     }
 
     /**
@@ -364,5 +379,95 @@ class User extends Authenticatable implements MustVerifyEmail
         //     $message->subject('Reset Password Request');
         //     $message->to($data[0]);
         // });
+    }
+
+
+
+    /**
+     * Search user based request parameters
+     * 
+     * @param array $params
+     * @return $query
+     */
+    public function filter($params)
+    {
+        $query = $this->newQuery();
+
+        $authUser = request()->user();
+
+        if ($authUser) {
+            $query->whereNotIn('id', [$authUser->id]);
+            if ($authUser->isRinkUser()) {
+                $query->where('rink_id', '=', $authUser->rink_id);
+            }
+        }
+
+        
+
+        if ($authUser['authority'] == self::ACCESS_LEVEL_MASTER_ADMIN) {
+            $list_authority = array(self::ACCESS_LEVEL_MASTER_ADMIN,self::ACCESS_LEVEL_COACH,self::ACCESS_LEVEL_RINK);
+        } else {
+            $list_authority = array(self::ACCESS_LEVEL_COACH,self::ACCESS_LEVEL_RINK);
+        }
+        $query->whereIn('authority', $list_authority);
+        if (empty($params) || !is_array($params)) {
+            return $query;
+        }
+
+        /*if (isset($params['authority:in']) && is_array($params['authority:in'])) {
+            $query->whereIn('authority', $params['authority:in']);
+            unset($params['authority:in']);
+        } elseif (isset($params['authority:not_in']) && is_array($params['authority:not_in'])) {
+            $query->whereNotIn('authority', $params['authority:not_in']);
+            unset($params['authority:not_in']);
+        } elseif (!empty($params['authority:not'])) { 
+            $query->where('authority', '<>', $params['authority:not']);
+        }  elseif (empty($params['authority'])) { 
+            $query->where('authority', '<>', 'AGENT');
+        } */
+        if (isset($params['group'])) {
+            $shop_ids = $this->groupShops($params['group']);
+            if (!empty($shop_ids)) {
+                $query->whereHas('shops', function($q) use ($shop_ids)
+                {
+                    $q->whereIn('id', $shop_ids);
+
+                });
+            }
+            
+        }
+        if (isset($params['cookie_shop'])) {
+
+            $query->whereHas('shops', function($q) use ($params)
+            {
+                $q->where('shop_id', '=', $params['cookie_shop']);
+
+            });
+        }
+
+        if (isset($params['shop_name'])) {
+
+            $query->whereHas('shops', function($q) use ($params)
+            {
+                $q->where('shop_name', 'LIKE', "%{$params['shop_name']}%");
+
+            });
+        } 
+
+        if (isset($params['is_varified'])) {
+            $params['is_verified'] = $params['is_varified'];
+            unset($params['is_varified']);
+        }
+        
+        foreach ($params as $key => $value) { 
+            if ($value != "") {
+                if (in_array($key, $this->partialFilterable)) { 
+                    $query->where($key, 'LIKE', "%{$value}%");
+                } elseif (in_array($key, $this->exactFilterable)) {
+                    $query->where($key, '=', $value);
+                }
+            }
+        }
+        return $query;
     }
 }

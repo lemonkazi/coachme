@@ -14,9 +14,12 @@ use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
 
-use App\Mail\MachidoriAppsMail;
+use App\Mail\CoachmeAppsMail;
 use App\Mail\VerifyMail;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
+use App\Exports\CollectionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CoachController extends Controller
 {
@@ -38,6 +41,7 @@ class CoachController extends Controller
   public function show(Request $request, User $user)
   {
     $params = $request->all();
+    
     
     if (!empty($user->id)) {
       $breadcrumb = array(
@@ -65,11 +69,33 @@ class CoachController extends Controller
              'Title' =>  trans('global.Coach Detail')
           ]
         ]);
-    } else {
-      $queryUser = User::query();
-      $queryUser->where('authority','=',User::ACCESS_LEVEL_COACH);
-      $users = $queryUser->paginate(20);
+    } 
+    $params['authority'] = User::ACCESS_LEVEL_COACH;
+    $query = $user->filter($params);
+    $export = filter_var($request->input('export', false), FILTER_VALIDATE_BOOLEAN);
+    
+    try {
+        $limit = (int) $request->input('limit', 20);
+    } catch (\Exception $e) {
+        $limit = 20;
     }
+
+    if (!is_int($limit) || $limit <= 0) {
+        $limit = 20;
+    }
+    if (isset($params['with'])) { 
+        $with = explode(',', $params['with']);
+
+        $query->with($with);
+    }
+    if (isset($params['sort']) && !empty($params['sort'])) {
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+    } else { 
+        $query->orderBy('id', 'desc');
+    }
+    $response = $query->paginate($limit);
+
 
     $breadcrumb = array(
         array(
@@ -78,21 +104,60 @@ class CoachController extends Controller
         )
     );
 
-    return view('admin.coach.list', [
-        'pageInfo'=>
-         [
-          'siteTitle'        =>'Manage Users',
-          'pageHeading'      =>'Manage Users',
-          'pageHeadingSlogan'=>'Here the section to manage all registered users'
-          ]
-          ,
-          'data'=>
-          [
-             'users'      =>  $users,
-             'breadcrumb' =>  $breadcrumb,
-             'Title' =>  trans('global.Coach List')
-          ]
+    // If export parameter true, it will return csv file
+    if ($export) { 
+      // It maps model property (key) to column header (value)
+      $headPropertyMapper = [
+          'id' => 'ID', 
+          'family_name' => 'Family Name',
+          'email' => 'Email',
+          'rink_name' => 'Rink',
+          'authority' => 'Authority',
+          'created_at' => 'Created At',
+          'updated_at' => 'Updated At',
+      ];
+
+      $data = $user->dataProcessor($headPropertyMapper, $response);
+      $headings = array_values($headPropertyMapper);
+      
+      // Create CollectionExport instance by passing file headers and data
+      $collectionExportInstance = new CollectionExport($headings, $data);
+      $fileName = date('Ymd_His').'_users.csv';
+
+      return Excel::download($collectionExportInstance, $fileName);
+    } else {
+        if ($params['page']) {
+          $page = !empty($params['page']) ? $params['page'] : 1;
+        } else {
+          $page = 1;
+        }
+        $total = $response->total();
+        $sumary = '';
+        if ($total>$limit) {
+          $content = ($page - 1) * $limit + 1;
+          $sumary = "Total ".$total." Displaying ".$content."～".min($page * $limit, $total);
+        }
+
+                
+        return view('admin.coach.list', [
+          'pageInfo'=>
+           [
+            'siteTitle'        =>'Manage Users',
+            'pageHeading'      =>'Manage Users',
+            'pageHeadingSlogan'=>'Here the section to manage all registered users'
+            ]
+            ,
+            'data'=>
+            [
+               'users'      =>  $response->appends(request()->except('page')),
+               'breadcrumb' =>  $breadcrumb,
+               'Title' =>  trans('global.Coach List'),
+               'sumary' => $sumary
+            ]
         ]);
+    }
+
+    
   }
 
   /**
@@ -201,7 +266,7 @@ class CoachController extends Controller
     }
     else
     {
-      //$eMail = new MachidoriAppsMail();
+      //$eMail = new CoachmeAppsMail();
       //$eMail->resetPasswordMail($data['email'], $oauth_token, $userExists,$os);
         
       $data['is_verified'] = true;

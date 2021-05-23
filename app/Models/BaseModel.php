@@ -109,43 +109,7 @@ class BaseModel extends Model
     }
 
 
-    /**
-     * Get content type label
-     *
-     * @return string
-     */
-    protected function getContentTypeLabel($contentType)
-    {
-        $contentTypeLabel = '';
-        
-        switch ($contentType) {
-            case 'EVENT':
-                $contentTypeLabel = 'イベント';
-                break;
-            case 'NEWS':
-                $contentTypeLabel = 'ニュース';
-                break;
-            case 'WORK':
-                $contentTypeLabel = 'ワーク';
-                break;
-            case 'THREAD':
-                $contentTypeLabel = '掲示板';
-                break;
-            case 'COMMENT':
-                $contentTypeLabel = 'コメント';
-                break;
-            case 'EXCHANGE_ITEM':
-                $contentTypeLabel = '交換アイテム';
-                break;
-            case 'COMMON':
-                $contentTypeLabel = '一般';
-                break;
-            default:
-                $contentTypeLabel = '';
-        }
-
-        return $contentTypeLabel;
-    }
+    
     
     /**
      * Get Start End Format 
@@ -170,48 +134,16 @@ class BaseModel extends Model
         $authUser = $request->user();
         
         if ($authUser) {
-            if ($authUser->isCityAdmin()) { 
-                if (in_array('city_id', $this->fillable)) {
-                    $query->where('city_id', '=', $authUser->city_id);
+            if ($authUser->isRinkUser()) { 
+                if (in_array('rink_id', $this->fillable)) {
+                    $query->where('rink_id', '=', $authUser->rink_id);
                 }
             } elseif ($authUser->isUser()) { 
                 
-                if (in_array('city_id', $this->fillable)) {
-                    if (get_class($this) === 'App\Models\News') {
-                        $query->where(function ($sq) use ($authUser) {
-                                $sq->where('city_id', '=', $authUser->city_id)
-                                    ->orWhere('city_id', null);
-                            });
-                    } else {
-                        $query->where('city_id', '=', $authUser->city_id);
-                    }
-                }
-
-                if (in_array('start_show_date', $this->fillable)) {
-                    $query->where('start_show_date', '<=', now())
-                          ->where('end_show_date', '>=', now());
-                }
-                if (in_array('start_display_date', $this->fillable)) {
-                    $query->where('start_display_date', '<=', now())
-                          ->where('end_display_date', '>=', now());
-                }
-
-                if (in_array('delivery_date', $this->fillable)) {
-                    $query->where('delivery_date', '<=', now())
-                          ->where('end_date', '>=', now());
-                }
-
-                if (in_array('status', $this->fillable)) {
-
-                    if (get_class($this) === 'App\Models\UserExchangeItemHistory') {
-                         $query->where('status', 'COMING');
-                    }
-                    elseif (get_class($this) === 'App\Models\ThreadReported') {
-                         $query->whereNotNull('status');
-                    } else {
-                         $query->where('status', 'RELEASED');
-                    }
-                   
+                if (in_array('rink_id', $this->fillable)) {
+                    
+                    $query->where('rink_id', '=', $authUser->rink_id);
+                    
                 }
             }
         } else { 

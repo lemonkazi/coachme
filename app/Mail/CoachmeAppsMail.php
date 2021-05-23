@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class MachidoriAppsMail extends Mailable
+class CoachmeAppsMail extends Mailable
 {
     use Queueable, SerializesModels;
 
