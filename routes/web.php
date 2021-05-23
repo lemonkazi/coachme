@@ -7,6 +7,9 @@ Route::get('ajax', function(){ return view('ajax'); });
 
 Route::post('/ajax_delete','AjaxController@delete');
 
+Route::get('/user/login', 'PublicContoller@login');
+//Route::get('login', [Auth\LoginController::class, 'index'])->name('login');
+Route::post('/user/login', 'PublicContoller@publiclogin');
 
 Auth::routes(['verify' => true]);
 

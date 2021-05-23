@@ -57,4 +57,57 @@ class PublicContoller extends Controller
       }
       return redirect('/login')->with('status', $status);
     }
+
+    /**
+     * Display login.
+     *
+     * @return Response
+     */
+    public function login()
+    {
+        return View::make('auth.publiclogin', ['title' => 'User Login','pageInfo'=>['siteTitle'=>'COACH ME']]);
+    }
+
+    public function publiclogin(Request $request)
+    {
+      $data = $request->all();
+        
+        $this->validator($request);
+
+        $user = User::where([
+                                ['email', $data['email']],
+                           ])->first();
+        if ($user) {
+            
+            //Auth::logout();
+            if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+                if ($user->isSuperAdmin()) {
+                    return redirect()->intended(route('home'));
+                } elseif (!$user->isSuperAdmin()) {
+                    return redirect(RouteServiceProvider::ROOT);
+                }
+                
+            }
+        }
+        
+        return redirect()->back()->withInput()->with('error', 'Login failed, please try again!');
+        // if (Auth::guard()->attempt($request->only('email', 'password'), $request->filled('remember'))) {
+        //     return redirect()->intended(route('admin.home'));
+        // }
+        // return redirect()->back()->withInput()->with('error', 'Login failed, please try again!');
+    }
+
+    private function validator(Request $request)
+    {
+        $rules = [
+            'email'    => 'required|email|min:5|max:191',
+            'password' => 'required|string|min:4|max:255'
+        ];
+        $request->validate($rules);
+    }
+
+    public function username()
+    {
+        return 'email';
+    }
 }
