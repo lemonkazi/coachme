@@ -181,6 +181,28 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
+
+        // add logic change value of result top condition
+        $('.form-control[data-change="top_result_change"]').on('change', function(){
+            var name = $(this).attr('name');
+
+            if (name == '') {
+                return false;
+            }
+
+            var value = $(this).val();
+            // Find hidden element with same name
+            var hidden_element = $('form input[type="hidden"][name="' + name + '"]');
+            console.log(hidden_element.length);
+            
+            if (hidden_element.length > 0) {
+                var form = $('.form-table1');
+                hidden_element.val(value);
+                form.submit();
+            }
+        });
+
+
         $('.btn_delete').on('click', function(event){
           event.preventDefault();
 

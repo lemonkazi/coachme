@@ -90,10 +90,12 @@ class CertificateController extends Controller
         $query->with($with);
     }
     if (isset($params['sort']) && !empty($params['sort'])) {
-        $sortExplode = explode('-', $params['sort']);
-        $query->orderBy($sortExplode[0],$sortExplode[1]);
+      $sort = $params['sort'];
+      $sortExplode = explode('-', $params['sort']);
+      $query->orderBy($sortExplode[0],$sortExplode[1]);
     } else { 
-        $query->orderBy('id', 'desc');
+      $sort = 'id-desc';
+      $query->orderBy('id', 'desc');
     }
     $response = $query->paginate($limit);
 
@@ -147,7 +149,10 @@ class CertificateController extends Controller
                'certificates'      =>  $response->appends(request()->except('page')),
                'breadcrumb' =>  $breadcrumb,
                'Title' =>  trans('global.Certificate List'),
-               'sumary' => $sumary
+               'sumary' => $sumary,
+               'request' => $params,
+               'sort' => $sort,
+               'limit' => $limit
             ]
           ]);
     }

@@ -36,7 +36,7 @@ class Controller extends BaseController
 
     	$this->controller = strtolower($controller);
         $this->action = strtolower($method);
-        $this->CURRENT_URL = url()->current();
+        $this->CURRENT_URL = url()->full();
 
         $this->middleware(function ($request, $next) {
 
