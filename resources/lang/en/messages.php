@@ -85,4 +85,24 @@
             'deleted_successfully' => 'Point deleted successfully',
             'could_not_be_deleted' => 'Point could not be deleted',
         ],
+        'password' => [
+            'required' => 'password required',
+            'min' => 'Minimum 8 degit required',
+            'confirmed' => 'check confirmed',
+            'same' => 'same',
+            'current'=>'current pass'
+        ],
+        'current_password' => [
+            'required' => 'current password required',
+            'min' => 'minumum 8 required',
+            'confirmed' => 'confirmed',
+            'current'=>'current password wrong'
+        ],
+        'new_password' => [
+            'required' => 'required',
+            'min' => 'min 8 required',
+            'confirmed' => 'confirmed not match',
+            'current'=>'check current',
+            'same' =>'new password not matched with confirmed password'
+        ],
     ];

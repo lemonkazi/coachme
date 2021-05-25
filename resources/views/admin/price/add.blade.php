@@ -51,7 +51,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="name">Name</label>
+                          <label for="name">Name <span class="input-required">*</span></label>
                           <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['price']) ? old('name', $data['price']->name) : old('name')}}" required>
                         </div>
                       </div>
