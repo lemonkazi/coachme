@@ -15,16 +15,16 @@ class CreateProgramsTable extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('level_id')->nullable();
+            $table->unsignedBigInteger('level_id')->nullable();
             $table->foreign('level_id')->references('id')->on('levels');
             
             $table->unsignedInteger('rink_id')->nullable();
             $table->foreign('rink_id')->references('id')->on('rinks');
             
-            $table->unsignedInteger('location_id')->nullable();
+            $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations');
             
-            $table->unsignedInteger('program_type_id')->nullable();
+            $table->unsignedBigInteger('program_type_id')->nullable();
             $table->foreign('program_type_id')->references('id')->on('program_types');
             
             $table->string('name', 50)->nullable();
@@ -45,7 +45,7 @@ class CreateProgramsTable extends Migration
             $table->datetime('schedule_end_date')->nullable();
             $table->text('schedule_log')->nullable();
 
-            $table->unsignedInteger('user_id')->nullable()->comment = 'This camp is created by user_id';
+            $table->unsignedBigInteger('user_id')->nullable()->comment = 'This camp is created by user_id';
             $table->foreign('user_id')->references('id')->on('users');
             
             $table->timestamps();

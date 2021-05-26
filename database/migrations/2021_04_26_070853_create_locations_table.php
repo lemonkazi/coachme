@@ -15,11 +15,15 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('province_id')->nullable();
-            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->unsignedBigInteger('province_id')->nullable();
             $table->string('name');
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
+
+            $table->foreign('province_id')
+                ->references('id')
+                ->on('provinces')
+                ->onDelete('cascade');
         });
     }
 

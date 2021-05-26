@@ -15,13 +15,13 @@ class CreateCampsTable extends Migration
     {
         Schema::create('camps', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('level_id')->nullable();
+            $table->unsignedBigInteger('level_id')->nullable();
             $table->foreign('level_id')->references('id')->on('levels');
             
             $table->unsignedInteger('rink_id')->nullable();
             $table->foreign('rink_id')->references('id')->on('rinks');
             
-            $table->unsignedInteger('camp_type_id')->nullable();
+            $table->unsignedBigInteger('camp_type_id')->nullable();
             $table->foreign('camp_type_id')->references('id')->on('camp_types');
             
             $table->string('name', 50)->nullable();
@@ -39,7 +39,7 @@ class CreateCampsTable extends Migration
             
             $table->text('coaches')->nullable();
 
-            $table->unsignedInteger('user_id')->nullable()->comment = 'This camp is created by user_id';
+            $table->unsignedBigInteger('user_id')->nullable()->comment = 'This camp is created by user_id';
             $table->foreign('user_id')->references('id')->on('users');
             
             $table->timestamps();
