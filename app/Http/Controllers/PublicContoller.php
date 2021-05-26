@@ -36,7 +36,7 @@ class PublicContoller extends Controller
      */
     public function index()
     {
-        return View::make('welcome', ['pageInfo'=>['siteTitle'=>'COACH ME']]);
+        return View::make('pages.home');
     }
 
 
