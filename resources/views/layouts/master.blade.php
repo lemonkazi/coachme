@@ -19,6 +19,21 @@
         <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+        <meta name="_token" content="{{ csrf_token() }}">
+        <script type="text/javascript">
+          var baseUrl = '{{ $BASE_URL }}';
+          
+
+          var CURRENT_URL = '{{ $CURRENT_URL }}';
+
+
+          var controller = '{{ $controller }}';
+          var action = '{{ $action }}';
+
+          var HTTP_HOST = '{{ $_SERVER['HTTP_HOST'] }}';
+          var MESSAGE_CONFIRM_DELETE = '{{ __('MESSAGE_CONFIRM_DELETE') }}';
+          console.log(MESSAGE_CONFIRM_DELETE);
+        </script>
     </head>
     <body>
         <!-- Header section -->
@@ -108,5 +123,59 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/104c8dfbc6.js" crossorigin="anonymous"></script>
+        <!-- jQuery -->
+        <script src="{{ asset ('plugins/jquery/jquery.min.js') }}"></script>
+        <!-- jQuery UI 1.11.4 -->
+        <script src="{{ asset ('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+          $.widget.bridge('uibutton', $.ui.button)
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                
+                $('#userLogin').click(function(e){
+                    e.preventDefault();
+                    var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+                    var data_controller = controller;
+                    var data = {
+                        controller: data_controller,
+                        email: $('#email').val(),
+                        password: $('#password').val(),
+                        _token:csrfToken
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: baseUrl + '/user/login',
+                        data: data,
+                        dataType: 'json',
+                        success: function (result) {
+                          if(result.errors)
+                          {
+                              $('.alert-danger').html('');
+
+                              $.each(result.errors, function(key, value){
+                                  $('.alert-danger').show();
+                                  $('.alert-danger').append('<li>'+value+'</li>');
+                              });
+                          }
+                          else
+                          {
+                            $('.alert-danger').hide();
+                            $('#exampleModalCenter').removeClass('show');
+                            if(result.success)
+                            {
+                              window.location = result.url;  
+                            }
+                                
+
+                          }
+                        },
+                        complete: function () {}
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
