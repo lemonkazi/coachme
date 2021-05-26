@@ -416,45 +416,80 @@ class ProfileController extends Controller
    * @param  \App\Http\Requests\ProfileUpdateRequest  $request
    * @return \Illuminate\Http\Response
    */
-  public function profileUpdate(ProfileUpdateRequest $request)
+  public function profileUpdate(Request $request)
   {
       $data = $request->all();
       $authUser = $request->user();
-
-      if (array_key_exists('authority', $data)) {
-          unset($data['authority']);
+      if (!$authUser) {
+        return back();
       }
+      if ($request->isMethod('post')) {
+          if (array_key_exists('authority', $data)) {
+              unset($data['authority']);
+          }
+          
+          if (array_key_exists('email', $data)) {
+              unset($data['email']);
+          }
+
+          
+          if (array_key_exists('current_password', $data)) {
+              if(!Hash::check($data['current_password'], $authUser->password)){
+                  throw new HttpResponseException(response()->error(trans('messages.password.current'), Response::HTTP_BAD_REQUEST));
+              }            
+          }
+
+          if (!$authUser->update($data)) {
+              throw new HttpResponseException(response()->error(trans('messages.error_message'), Response::HTTP_BAD_REQUEST));
+          }
+      }
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
+      $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
+      $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $price_all = Price::all()->pluck("name", "id")->sortBy("name");
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
       
-      if (array_key_exists('email', $data)) {
-          unset($data['email']);
+    
+
+      $response = [];
+
+      
+      if (!$authUser->isSuperAdmin()) { 
+          $filterParams = [];
       }
 
-      if (array_key_exists('phone_number', $data)) {
-          unset($data['phone_number']);
-      }
-      if (array_key_exists('current_password', $data)) {
-          if(!Hash::check($data['current_password'], $authUser->password)){
-              throw new HttpResponseException(response()->error(trans('messages.password.current'), Response::HTTP_BAD_REQUEST));
-          }            
-      }
-      if (isset($data['city_block_id']) && empty($data['city_block_id'])) {
-          $data['city_block_id'] = null;
-      }
+      $breadcrumb = array(
+        array(
+           'name'=>trans('global.Profile'),
+           'link'=>''
+        )
+      );
 
-      if (!$authUser->update($data)) {
-          throw new HttpResponseException(response()->error(trans('messages.error_message'), Response::HTTP_BAD_REQUEST));
-      }
-
-      return response()->success($authUser, trans('messages.user_success_message'), Response::HTTP_OK);
+      return view('admin.profile.update', [
+        'pageInfo'=>
+         [
+          'siteTitle'        =>'Manage Users',
+          'pageHeading'      =>'Manage Users',
+          'pageHeadingSlogan'=>'Here the section to manage all registered users'
+          ]
+          ,
+          'data'=>
+          [
+             'user'      =>  $authUser,
+             'breadcrumb' =>  $breadcrumb,
+             'Title' =>  trans('global.Profile')
+          ]
+        ])->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all'));
   }
 
   /**
    * Update the specified resource in storage.
    *
-   * @param  \App\Http\Requests\ProfilePasswordUpdateRequest  $request
+   * @param  \App\Http\Requests\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function updatePassword(ProfilePasswordUpdateRequest $request)
+  public function updatePassword(Request $request)
   {
       $data = $request->all();
       $authUser = $request->user();
@@ -464,21 +499,73 @@ class ProfileController extends Controller
                       ['deleted_at', null],
                   ])->first();
 
-      $is_current_password_match = 0;
-      if (isset($data['current_password']) && Hash::check($data['current_password'], $checkUser->password)) {
-          $is_current_password_match = 1;
-      } else {
-          throw new HttpResponseException(response()->error(trans('messages.current_password.current'), Response::HTTP_BAD_REQUEST));
+      if ($request->isMethod('post')) {
+        $rules = array(
+            'current_password' => 'filled',
+            'new_password' => 'filled|same:confirm_new_password',
+            'confirm_new_password' => 'filled',
+          );
+        $messages = array(
+          'current_password.filled' => trans('messages.current_password.required'),
+            //'current_password.min' => trans('messages.current_password.min'),
+            'new_password.filled' => trans('messages.new_password.required'),
+            'new_password.min' => trans('messages.new_password.min'),
+            'new_password.same' => trans('messages.new_password.same')
+        );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+          $is_current_password_match = 0;
+          if (isset($data['current_password']) && Hash::check($data['current_password'], $checkUser->password)) {
+              $is_current_password_match = 1;
+          } else {
+            Toastr::warning('Error occured',trans('messages.current_password.current'));
+            return redirect()->back()->withInput()->withErrors(trans('messages.current_password.current'));
+          }
+
+          if (isset($data['new_password']) && $is_current_password_match == 1) {
+              $updateData['id'] = $authUser->id;
+              $updateData['password'] = $data['new_password'];
+              if (!$authUser->update($updateData)) {
+                Toastr::warning('Error occured',trans('messages.error_message'));
+                return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+              }
+              Toastr::success(trans('oauth.update_password_successfully'),'Success');
+              return back();
+          }
+        }
       }
 
-      if (isset($data['new_password']) && $is_current_password_match == 1) {
-          $updateData['id'] = $authUser->id;
-          $updateData['password'] = $data['new_password'];
-          if (!$authUser->update($updateData)) {
-              throw new HttpResponseException(response()->error(trans('messages.error_message'), Response::HTTP_BAD_REQUEST));
-          }
-          return response()->success(false, trans('oauth.update_password_successfully'), Response::HTTP_OK); 
-      }
+      $breadcrumb = array(
+        array(
+           'name'=>trans('global.LABEL_CHANGE_PASSWORD'),
+           'link'=>''
+        )
+      );
+
+      return view('admin.profile.changepassword', [
+        'pageInfo'=>
+         [
+          'siteTitle'        =>'Manage Users',
+          'pageHeading'      =>'Manage Users',
+          'pageHeadingSlogan'=>'Here the section to manage all registered users'
+          ]
+          ,
+          'data'=>
+          [
+             'user'      =>  $authUser,
+             'breadcrumb' =>  $breadcrumb,
+             'Title' =>  trans('global.LABEL_CHANGE_PASSWORD')
+          ]
+        ]);
   }
 
   protected function resetPassword(ProfileUpdateRequest $request, User $user)
@@ -534,35 +621,20 @@ class ProfileController extends Controller
     $response = [];
     $params = $request->all();
 
-    if (!$user) {
-        throw new HttpResponseException(response()->error(trans('oauth.not_found'), Response::HTTP_NOT_FOUND));
-    }
+    
     if (!$user->isSuperAdmin()) { 
         $filterParams = [];
-
-        $data->unread_news = (new News())->filter($filterParams)->whereDoesntHave('newsReads')->get()
-                ->map(function($item, $key) use ($user) {
-                    return [
-                        'news_id' => $item->id
-                    ];
-                })
-                ->all();
-                ;
     }
     $response['data'] = $user;
 
     $breadcrumb = array(
-      array(
-         'name'=>trans('All User'),
-         'link'=>'/users'
-      ),
       array(
          'name'=>trans('global.Profile'),
          'link'=>''
       )
     );
 
-    return view('admin.user.profile', [
+    return view('admin.profile.profile', [
       'pageInfo'=>
        [
         'siteTitle'        =>'Manage Users',

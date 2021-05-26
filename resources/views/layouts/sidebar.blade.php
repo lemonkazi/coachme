@@ -14,7 +14,7 @@
         <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Abiduzzaman Abid</a>
+        <a href="#" class="d-block">Ab</a>
       </div>
     </div> -->
 
@@ -102,52 +102,6 @@
           </ul>
 
         </li>
-        <!-- <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              Products
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ url('/all-categories')}}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>All Products</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/create_product')}}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Add Products</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-              Category
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ url('/categories')}}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>All Categories</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ url('/add_categories')}}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Add Categories</p>
-              </a>
-            </li>
-          </ul>
-        </li> -->
         
         <li class="nav-item <?php if ($controller == 'rinkcontroller') echo 'active menu-open' ?>"">
           <a href="#" class="nav-link <?php if ($controller == 'rinkcontroller') echo 'active' ?>">
@@ -292,46 +246,15 @@
             </li>
           </ul>
         </li>
-        <!-- <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Customer List
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Order List
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Coupons
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Warehouse
-            </p>
-          </a>
-        </li> -->
-        <li class="nav-item">
+      
+       <!--  <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>
             <p>
               Settings
             </p>
           </a>
-        </li>
+        </li> -->
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

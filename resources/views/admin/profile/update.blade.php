@@ -46,7 +46,7 @@
                       </div>
                   @endif
                   <!-- form start -->
-                  <form action="{{!empty($data['user']) ? route('user.update',[$data['user']->id]): route('user.store')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{route('admin.profile.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                       <div class="col-md-6">
@@ -62,45 +62,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="email">Email address <span class="input-required">*</span></label>
-                          <input type="email" class="form-control" id="email" name="email" placeholder="Email"  value="{{!empty($data['user']) ? old('email', $data['user']->email) : old('email')}}" required>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              
-                              @php
-                              if(!empty($data['user'])) {
-                                @endphp
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}">
-                                @php
-                              } else {
-                                @endphp
-                                <label for="password">Password <span class="input-required">*</span></label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}" required>
-                                @php
-                              } 
-                              @endphp
-                          </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="about">User Type</label>
-                          <select name="authority" class="form-control" style="width: 100%">
-                            <option value="">Select</option>
-                             @foreach($authority as $id => $value)
-                                <option value="{{ $id }}" {{ (old('authority') ? old('authority') : $data['user']->authority ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>
-                    </div>
+                    
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -245,9 +207,7 @@
                 </div>
                 <div class="card-body">
                   <ul>
-                    <li><b>User name</b> 1 to 60 character.</li>
-                    <li><b>email</b> place email here.</li>
-                    <li><b>Password</b> Half-width alphanumeric characters between 8 and 20 characters.</li>
+                    <li><b>name</b> 1 to 60 character.</li>
                   </ul>
                 </div>
               </div>

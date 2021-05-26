@@ -86,24 +86,17 @@
                   <ul class="dropdown-menu bg-secondary">
                       <!-- User image -->
                       <li class="user-header">
-                          <!-- <span><i class="fa fa-user-secret"></i></span>
+                          <span><i class="fa fa-user-secret"></i></span>
                           <p>
                               <?php echo !empty($AppUI['name']) ? $AppUI['name'] : 'Admin';?>
-                              <?php if (!empty($AppUI['created'])): ?>
-                              <small><span><?php echo trans('global.LABEL_UPDATED')?>: </span><span><?php echo  date("Y-m", $AppUI['created']); ?></small>
+                              <?php if (!empty($AppUI['created_at'])): ?>
+                              <small><span><?php echo trans('global.LABEL_CREATED')?>: </span><span><?php echo $AppUI['created_at']; ?></small>
                               <?php endif; ?>
-                          </p> -->
+                          </p>
                           <div id="user_profile">
-                            <a href="<?= $BASE_URL;?>/profiles"><?php echo trans('global.LABEL_VIEW_PROFILE'); ?></a>
-                            <a href="<?= $BASE_URL;?>/profiles/changepassword"><?php echo trans('global.LABEL_CHANGE_PASSWORD'); ?></a>
+                            <a href="<?= $BASE_URL;?>/admin/profile"><?php echo trans('global.LABEL_VIEW_PROFILE'); ?></a>
+                            <a href="<?= $BASE_URL;?>/admin/profile/update-password"><?php echo trans('global.LABEL_CHANGE_PASSWORD'); ?></a>
                             
-                            <!-- <?php
-                            if(isset($AppUI["shops"][0]["shop_id"]) && ($AppUI["shops"][0]["shop_id"] !="") && $AppUI['authority'] =='SHOP_ADMIN'){
-                              ?>
-                              <a href="<?= $BASE_URL."/shops/details/".$AppUI["shops"][0]["shop_id"]; ?>"><?php echo __('LABEL_MY_SHOP_INFORMATION'); ?></a>
-                              <?php
-                            }
-                            ?> -->
                           </div>
                       </li>
                       <!-- Menu Footer-->

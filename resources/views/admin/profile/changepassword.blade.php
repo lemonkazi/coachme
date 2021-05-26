@@ -15,7 +15,7 @@
 
         <!--  @php
              echo "<pre>";
-               print_r($data['experience']);
+               print_r($data['user']);
              echo "</pre>";
             @endphp -->
         
@@ -46,17 +46,34 @@
                       </div>
                   @endif
                   <!-- form start -->
-                  <form action="{{!empty($data['experience']) ? route('experience.update',[$data['experience']->id]): route('experience.store')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{route('admin.profile.changepassword')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <div class="form-group">
-                          <label for="name">Name <span class="input-required">*</span></label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['experience']) ? old('name', $data['experience']->name) : old('name')}}" required>
+                          <label for="name">Current Password <span class="input-required">*</span></label>
+                          <input type="password" class="form-control" id="current_password" name="current_password"  value="{{ old('current_password') }}" required>
                         </div>
                       </div>
-                      
                     </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="name">New Password <span class="input-required">*</span></label>
+                          <input type="password" class="form-control" id="new_password" name="new_password"  value="{{ old('new_password') }}" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="name">Confirm New Password <span class="input-required">*</span></label>
+                          <input type="password" class="form-control" id="confirm_new_password" name="confirm_new_password" value="{{ old('confirm_new_password') }}" required>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    
                       
                       <!-- /.card-body -->
 
@@ -76,9 +93,7 @@
                 </div>
                 <div class="card-body">
                   <ul>
-                    <li><b>User name</b> 1 to 60 character.</li>
-                    <li><b>email</b> place email here.</li>
-                    <li><b>Password</b> Half-width alphanumeric characters between 8 and 20 characters.</li>
+                    <li><b>name</b> 1 to 60 character.</li>
                   </ul>
                 </div>
               </div>

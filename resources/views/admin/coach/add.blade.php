@@ -51,7 +51,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="name">Name</label>
+                          <label for="name">Name <span class="input-required">*</span></label>
                           <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['user']) ? old('name', $data['user']->name) : old('name')}}" required>
                         </div>
                       </div>
@@ -65,20 +65,22 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="email">Email address</label>
+                          <label for="email">Email address <span class="input-required">*</span></label>
                           <input type="email" class="form-control" id="email" name="email" placeholder="Email"  value="{{!empty($data['user']) ? old('email', $data['user']->email) : old('email')}}" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label for="password">Password</label>
+                              
                               @php
                               if(!empty($data['user'])) {
                                 @endphp
+                                <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}">
                                 @php
                               } else {
                                 @endphp
+                                <label for="password">Password <span class="input-required">*</span></label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password"  value="{{ old('password') }}" required>
                                 @php
                               } 
@@ -192,7 +194,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="phone_number">Phone Number</label>
+                          <label for="phone_number">Phone Number <span class="input-required">*</span></label>
                           <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="phone_number" value="{{!empty($data['user']) ? old('phone_number', $data['user']->phone_number) : old('phone_number')}}" required>
                         </div>
                       </div>

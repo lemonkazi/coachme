@@ -18,13 +18,14 @@
   </div>
   <!-- content HEADER -->
   <!-- Main content -->
-  <section class="content">
+  <section class="content content_profiles_index">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12">
-          <div class="card card-primary">
+        <div class="col-md-12">
+          <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Product Information</h3>
+              <h3 class="card-title pt-2">{{$data['Title']}}</h3>
+              <a class="col-sm-2 btn btn-block bg-gradient-primary btn-sm float-right" href="<?php echo $BASE_URL . '/admin/profile-update'?>">Update</a>
             </div>
             <div class="card-body">
 
@@ -148,8 +149,8 @@
             </div>
             <div class="card-footer text-center">
                 
-                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/user/edit/' . $data['user']->id ?>"><?php echo trans('global.LABEL_UPDATE') ?></a>
-            
+                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/admin/profile-update'?>"><?php echo trans('global.LABEL_UPDATE') ?></a>
+              <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?= $BASE_URL;?>/admin/profile/update-password"><?php echo trans('global.LABEL_USER_CHANGE_PASSWORD'); ?></a>
             </div>
           </div>
         </div>

@@ -238,6 +238,6 @@ return [
     'Add Speciality' => 'Add Speciality',
     'A new Speciality has been created' => 'A new Speciality has been created',
     'Speciality has been updated' => 'Speciality has been updated',
-
+    'LABEL_USER_CHANGE_PASSWORD' => 'Change Password'
 
 ];
