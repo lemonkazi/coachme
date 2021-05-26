@@ -12,20 +12,45 @@
               </button>
               <h3 class="text-center mb-2">Log in</h3>
               <h5 class="mb-3">Welcome back to Coach me solutions!</h5>
-              <form action="#" class="login-form">
+              <div class="alert alert-danger" style="display:none"></div>
+              <form method="POST" action="{{ url('user/login') }}" class="login-form">
+                @csrf
+                @if(session()->has('error'))
+                    <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+                @endif
+                @if (session('status'))
+                  <div class="alert alert-success">
+                    {{ session('status') }}
+                  </div>
+                @endif
+                @if (session('warning'))
+                  <div class="alert alert-warning">
+                    {{ session('warning') }}
+                  </div>
+                @endif
                 <div class="form-group">
                   <label for="log-email">Email</label>
-                  <input type="text" class="form-control rounded-left" placeholder="email" id="log-email">
+                  <input id="email" type="email" class="form-control rounded-left @error('email') is-invalid @enderror" placeholder="email" id="log-email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                  @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                 </div>
                 <div class="form-group">
                   <label for="log-password">Password</label>
                   <div class="icon-input mb-3">
-                    <input type="password" class="form-control rounded-left" placeholder="Password" id="log-password">
+                    <input id="password" type="password" class="form-control rounded-left @error('password') is-invalid @enderror" placeholder="Password" id="log-password" name="password" required autocomplete="password">
                     <i class="bi bi-eye-slash-fill"></i>
+                    @error('password')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
                   </div>
                   
                 <div class="form-group">
-                  <button type="submit" class="form-control btn btn-primary submit px-3">Login</button>
+                  <button type="submit" id="userLogin" class="form-control btn btn-primary submit px-3">Login</button>
                 </div>
               </form>
               <h1 class="a">or</h1>

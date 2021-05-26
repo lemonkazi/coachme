@@ -10,6 +10,9 @@ use App\Models\User;
 use View;
 use Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 
 use App\Providers\RouteServiceProvider;
@@ -82,37 +85,55 @@ class PublicContoller extends Controller
     public function publiclogin(Request $request)
     {
       $data = $request->all();
-        
-        $this->validator($request);
+     
+     $rules = array(
+            'email'  => 'required|string|email|max:255',
+            'password' => 'required|min:5'
+          );    
+      $messages = array(
+                'email.required' => trans('messages.email.required'),
+                'email.string' => trans('messages.email.string'),
+                'email.email' => trans('messages.email.email'),
+                'email.max' => trans('messages.email.max'),
+                'password.required' => trans('messages.password.required'),
+                'password.min' => trans('messages.password.min')
+              );
+    $validator = Validator::make( $data, $rules, $messages );
 
-        $user = User::where([
-                                ['email', $data['email']],
-                           ])->first();
-        if ($user) {
-            
-            //Auth::logout();
-            if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
-                if ($user->isSuperAdmin()) {
-                    return redirect()->intended(route('home'));
-                } elseif (!$user->isSuperAdmin()) {
-                    return redirect(RouteServiceProvider::ROOT);
-                }
-                
-            }
-        }
-        
-        return redirect()->back()->withInput()->with('error', 'Login failed, please try again!');
-        // if (Auth::guard()->attempt($request->only('email', 'password'), $request->filled('remember'))) {
-        //     return redirect()->intended(route('admin.home'));
-        // }
-        // return redirect()->back()->withInput()->with('error', 'Login failed, please try again!');
+    if ( $validator->fails() ) 
+    {
+      return response()->json(['errors'=>$validator->errors()->all()]);
+    }
+    else
+    {
+      $user = User::where([
+                ['email', $data['email']],
+           ])->first();
+      if ($user) {
+          if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+              //return redirect(route('home'));
+              if ($user->isSuperAdmin()) {
+                return response()->json(['success'=>true,'result'=>trans('messages.success_message'),'url'=> route('home')]);
+                 // return redirect()->intended(route('home'));
+              } elseif (!$user->isSuperAdmin()) {
+                return response()->json(['success'=>true,'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
+                  //return redirect(RouteServiceProvider::ROOT);
+              }
+              
+          }
+      }
+      return response()->json(['errors'=>['Login failed, please try again!']]);
+    }
+
+
+      
     }
 
     private function validator(Request $request)
     {
         $rules = [
             'email'    => 'required|email|min:5|max:191',
-            'password' => 'required|string|min:4|max:255'
+            'password' => 'required|string|min:6|max:255'
         ];
         $request->validate($rules);
     }

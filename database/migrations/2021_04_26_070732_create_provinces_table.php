@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRinkTable extends Migration
+class CreateProvincesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateRinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('rinks', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('provinces', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->text('address')->nullable();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });
@@ -29,6 +28,6 @@ class CreateRinkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rinks');
+        Schema::dropIfExists('provinces');
     }
 }

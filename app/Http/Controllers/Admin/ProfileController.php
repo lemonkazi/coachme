@@ -43,296 +43,9 @@ class ProfileController extends Controller
       parent::__construct();
   }
 
-  /**
-   * Display a listing of the resource and the specified resource.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\User  $user
-   */
-  public function show(Request $request, User $user)
-  {
-    $params = $request->all();
-    
-    if (!empty($user->id)) {
-      $breadcrumb = array(
-        array(
-           'name'=>trans('global.All User'),
-           'link'=>'/users'
-        ),
-        array(
-           'name'=>trans('global.User Detail'),
-           'link'=>''
-        )
-      );
-      return view('admin.user.detail', [
-        'pageInfo'=>
-         [
-          'siteTitle'        =>'Manage Users',
-          'pageHeading'      =>'Manage Users',
-          'pageHeadingSlogan'=>'Here the section to manage all registered users'
-          ]
-          ,
-          'data'=>
-          [
-             'user' => User::find($user->id),
-             'breadcrumb' =>  $breadcrumb,
-             'Title' =>  trans('global.User Detail')
-          ]
-        ]);
-    } else {
-      $queryUser = User::query();
-      $queryUser->where('authority','!=','COACH_USER');
-      $users = $queryUser->paginate(20);
-    }
-
-    $breadcrumb = array(
-        array(
-           'name'=>trans('global.All User'),
-           'link'=>'/users'
-        )
-    );
-
-    return view('admin.user.list', [
-        'pageInfo'=>
-         [
-          'siteTitle'        =>'Manage Users',
-          'pageHeading'      =>'Manage Users',
-          'pageHeadingSlogan'=>'Here the section to manage all registered users'
-          ]
-          ,
-          'data'=>
-          [
-             'users'      =>  $users,
-             'breadcrumb' =>  $breadcrumb,
-             'Title' =>  trans('global.User List')
-          ]
-        ]);
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   *
-   * 
-   */
-  public function create()
-  {
-      $user='';
-      $title=trans('global.Add User');
-      $breadcrumb = array(
-          array(
-              'name'=>trans('global.All User'),
-              'link'=>'/users'
-          )
-      );
-      if (!empty($id)) {
-          $user = User::find($id);
-          if (!$user) {
-              return back();
-          } else {
-              $breadcrumb[] = array(
-                  'name'=>trans('global.Edit User'),
-                  'link'=>''
-              );
-              $title=trans('global.Edit User');
-          }
-      } else {
-          $breadcrumb[] = array(
-              'name'=>trans('global.Add User'),
-              'link'=>''
-          );
-      }
-      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
-      $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
-      $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
-      $language_all = Language::all()->pluck("name", "id")->sortBy("name");
-      $price_all = Price::all()->pluck("name", "id")->sortBy("name");
-      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
-      $authority = array(
-          User::ACCESS_LEVEL_MASTER_ADMIN => __('LABEL_SUPER_ADMIN'),
-          User::ACCESS_LEVEL_RINK => __('RINK_USER')
-      );
-      return view('admin.user.add', [
-          'pageInfo'=>
-          [
-            'siteTitle'        =>'Manage Users',
-            'pageHeading'      =>'Manage Users',
-            'pageHeadingSlogan'=>'Here the section to manage all registered users'
-          ],
-          'data'=>
-          [
-               'user'      =>  $user,
-               'breadcrumb' =>  $breadcrumb,
-               'Title' =>  $title
-          ]
-      ])
-      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','authority'));
-  }
-
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * 
-   */
-  public function store(Request $request)
-  {
-      $data = $request->all();
-      $user = $request->user();
-
-
-      $userExists = User::where([
-                                  ['email', $data['email']],
-                                  ['deleted_at', null],
-                              ])->first();
-      
-      if ($userExists) {
-        return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
-      }
-
-      if (isset($data['rink_id'])) {
-          $rink = Rink::find($data['rink_id']);
-
-          if (!$rink) {
-             return redirect()->back()->withInput()->withErrors('rink not exist');
-          }         
-      }
-
-
-      $rules = array(
-          'name'   => 'required|string|max:255',
-          'authority' => 'required|in:SUPER_ADMIN,RINK_USER',
-          'rink_id' => 'required_if:authority,RINK_USER|numeric',
-          'email'  => 'required|string|email|max:255',
-          'password' => 'required|min:8',
-          'avatar_image_path' => 'nullable',
-     );    
-      $messages = array(
-          'authority.required' => trans('messages.authority.required'),
-          'authority.in' => trans('messages.authority.in'),
-          'rink_id.required_if' => trans('messages.rink_id.required'),
-          'rink_id.numeric' => trans('messages.rink_id.numeric'),
-          'name.required' => trans('messages.name.required'),
-          'name.max' => trans('messages.name.max'),
-          'email.required' => trans('messages.email.required'),
-          'email.string' => trans('messages.email.string'),
-          'email.email' => trans('messages.email.email'),
-          'email.max' => trans('messages.email.max'),
-          'password.required' => trans('messages.password.required'),
-          'password.min' => trans('messages.password.min')
-        
-      );
-      $validator = Validator::make( $data, $rules, $messages );
-
-      if ( $validator->fails() ) 
-      {
-        
-          Toastr::warning('Error occured',$validator->errors()->all()[0]);
-          return redirect()->back()->withInput()->withErrors($validator);
-      }
-      else
-      {
-        
-          $data['is_verified'] = true;
-          $user = User::create($data);
-          $user->rink_id = !empty($rink) ? $rink->id : null;
-        
-          if($request->file('avatar_image_path'))
-          {
-              $image = $request->file('avatar_image_path');
-              $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
-              $image->move(public_path('user_photo'), $new_name);
-              $user->avatar_image_path = $new_name;
-          }
-          if (!$user->save()) {
-              return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
-          }
-          if ($user->authority==User::ACCESS_LEVEL_RINK) {
-            \Mail::to($user->email)->send(new VerifyMail($user));
-          }
-          Toastr::success(trans('global.A new User has been created'),'Success');
-          return back();
-      }
-  }
-
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  \App\Models\User  $id
-   */
-  public function update(Request $request, $id=null)
-  {
-    $data = $request->all();
-    $Authuser = $request->user();
-    $user = User::find($id);
-    if (!$user) {
-        return back();
-    }
-
-    $userExists = null;
-
-    if (isset($data['email'])) {
-        $userExists = User::where([
-                                  ['id', '<>', $user->id],
-                                  ['email', $data['email']],
-                                  ['deleted_at', null],
-                              ])->first();
-    }
-  
-    if ($userExists) {
-        return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
-    }
-
-    if (!empty($data['password'])) {
-        $data['password'] = $data['password'];
-    }else{
-        unset($data['password']);
-    }
-    $rules = array(
-        'authority' => 'required|in:SUPER_ADMIN,RINK_USER',
-        'rink_id' => 'required_if:authority,RINK_USER|numeric',
-        'name'   => 'filled|string|max:50',
-        'email' => 'filled|string|email|max:255',
-        'avatar_image_path' => 'nullable',
-    );    
-    $messages = array(
-        'authority.required' => trans('messages.authority.required'),
-        'authority.in' => trans('messages.authority.in'),
-        'rink_id.required_if' => trans('messages.rink_id.required'),
-        'rink_id.numeric' => trans('messages.rink_id.numeric'),
-    
-        'name.filled' => trans('messages.name.required'),
-        'name.max' => trans('messages.name.max'),
-        'email.required' => trans('messages.email.required'),
-        'email.string' => trans('messages.email.string'),
-        'email.email' => trans('messages.email.email'),
-        'email.max' => trans('messages.email.max')
-    );
-    $validator = Validator::make( $data, $rules, $messages );
-
-    if ( $validator->fails() ) 
-    {
-      
-        Toastr::warning('Error occured',$validator->errors()->all()[0]);
-        return redirect()->back()->withInput()->withErrors($validator);
-    }
-    else
-    {
-
-        if (!$user->update($data)) {
-          return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
-        }
-
-        Toastr::success(trans('global.User has been updated'),'Success');
-        return back();
-    }
-    
-  }
-
  
 
-
-
+  
   private function uniqueString()
   {
       $m = explode(' ', microtime());
@@ -424,24 +137,48 @@ class ProfileController extends Controller
         return back();
       }
       if ($request->isMethod('post')) {
-          if (array_key_exists('authority', $data)) {
-              unset($data['authority']);
-          }
+
+        $rules = array(
+          'name'   => 'filled|string|max:50',
+          'avatar_image_path' => 'nullable',
+        );    
+        $messages = array(
+          'name.filled' => trans('messages.name.required'),
+          'name.max' => trans('messages.name.max')
           
-          if (array_key_exists('email', $data)) {
-              unset($data['email']);
-          }
+        );
+        if (array_key_exists('authority', $data)) {
+            unset($data['authority']);
+        }
+        
+        if (array_key_exists('email', $data)) {
+            unset($data['email']);
+        }
 
           
-          if (array_key_exists('current_password', $data)) {
-              if(!Hash::check($data['current_password'], $authUser->password)){
-                  throw new HttpResponseException(response()->error(trans('messages.password.current'), Response::HTTP_BAD_REQUEST));
-              }            
-          }
+        if (array_key_exists('current_password', $data)) {
+            if(!Hash::check($data['current_password'], $authUser->password)){
+                throw new HttpResponseException(response()->error(trans('messages.password.current'), Response::HTTP_BAD_REQUEST));
+            }            
+        }
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
 
           if (!$authUser->update($data)) {
-              throw new HttpResponseException(response()->error(trans('messages.error_message'), Response::HTTP_BAD_REQUEST));
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
           }
+
+          Toastr::success(trans('oauth.success_message'),'Success');
+          return back();
+        }
       }
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
       $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");

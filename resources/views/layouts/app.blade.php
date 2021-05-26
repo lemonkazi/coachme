@@ -18,6 +18,10 @@
     <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <meta name="_token" content="{{ csrf_token() }}">
+    <script type="text/javascript">
+      
+    </script>
   </head>
 <body>
     <!-- Header section -->

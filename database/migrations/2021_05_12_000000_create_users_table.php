@@ -28,13 +28,22 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('language_id')->nullable();
             $table->foreign('language_id')->references('id')->on('languages');
             $table->string('family_name', 50)->nullable();
-            $table->string('name', 50);
+            $table->string('name', 50)->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->text('about')->nullable();
-            $table->string('province', 50)->nullable();
-            $table->string('city', 50)->nullable();
+            $table->unsignedBigInteger('province_id')->nullable();
+            
+            $table->foreign('province_id')
+                ->references('id')
+                ->on('provinces');
+
+            $table->unsignedBigInteger('city_id')->nullable();
+            
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('locations');
             $table->string('phone_number', 25)->nullable();
             $table->string('whatsapp', 25)->nullable();
             $table->text('avatar_image_path')->nullable();

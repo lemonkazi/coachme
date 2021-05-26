@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRinkTable extends Migration
+class CreateProgramPeriodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateRinkTable extends Migration
      */
     public function up()
     {
-        Schema::create('rinks', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('program_periods', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->text('address')->nullable();
+            $table->datetime('start_date')->nullable();
+            $table->datetime('end_date')->nullable();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });
@@ -29,6 +30,6 @@ class CreateRinkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rinks');
+        Schema::dropIfExists('program_periods');
     }
 }
