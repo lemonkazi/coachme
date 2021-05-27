@@ -176,6 +176,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\HelperServiceProvider::class,
 
+        /*
+         * Custom Service Providers...
+         */
+        App\Providers\ResponseMacroServiceProvider::class,
+
     ],
 
     /*
