@@ -128,6 +128,9 @@ return [
     'search_error'                       => 'Error in retrieving data.',
 
     'KEY'  => 'Value',
+    'LABEL_SUPER_ADMIN' => 'Super Admin',
+    'LABEL_RINK_USER' => 'Rink',
+    'LABEL_COACH_USER' => 'Coach',
     'LABEL_DESCRIPTION'  => 'Description',
     'LABEL_EMAIL'  => 'Email',
     'LABEL_REMEMBER_ME'  => 'Remember Me',

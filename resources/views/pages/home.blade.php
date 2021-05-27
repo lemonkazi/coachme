@@ -12,7 +12,7 @@
               </button>
               <h3 class="text-center mb-2">Log in</h3>
               <h5 class="mb-3">Welcome back to Coach me solutions!</h5>
-              <div class="alert alert-danger" style="display:none"></div>
+              <div class="alert alert-danger login" style="display:none"></div>
               <form method="POST" action="{{ url('user/login') }}" class="login-form">
                 @csrf
                 @if(session()->has('error'))
@@ -56,30 +56,54 @@
               <h1 class="a">or</h1>
               <h3 class="text-center mb-2">Sign up</h3>
               <h5 class="mb-3">Sign up to join Coach me solutions!</h5>
-              <form action="#" class="registration-form">
+              <div class="alert alert-danger registration" style="display:none"></div>
+              <form method="POST" action="{{ url('user/register') }}" class="registration-form">
+                @csrf
+                @if(session()->has('error'))
+                    <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+                @endif
+                @if (session('status'))
+                  <div class="alert alert-success">
+                    {{ session('status') }}
+                  </div>
+                @endif
+                @if (session('warning'))
+                  <div class="alert alert-warning">
+                    {{ session('warning') }}
+                  </div>
+                @endif
                 <div class="form-group">
                   <label for="sign-email">Email</label>
-                  <input type="text" class="form-control rounded-left" placeholder="email" id="sign-email">
+                  <input type="text" class="form-control rounded-left @error('email') is-invalid @enderror" name="email" placeholder="email" id="sign-email" value="{{ old('email') }}" required autocomplete="email">
+                  @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                 </div>
                 <div class="form-group">
                   <label for="userSelect">Type of user</label>
-                  <select class="form-control" id="userSelect">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select class="form-control" name="authority" id="userSelect">
+                    <option value="">Select</option>
+                    @foreach($authority as $id => $value)
+                        <option value="{{ $id }}" {{ (old('authority') ? old('authority') : $data['user']->authority ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="reg-password">Password</label>
                   <div class="icon-input mb-3">
-                    <input type="password" class="form-control rounded-left" placeholder="at least 8 symbols" id="reg-password">
+                    <input type="password" class="form-control rounded-left @error('password') is-invalid @enderror" placeholder="at least 8 symbols" name="password" id="reg-password" required autocomplete="new-password">
                     <i class="bi bi-eye-slash-fill"></i>
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                   </div>
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                  <button type="submit" class="form-control btn btn-primary submit px-3" id="userRegister">Sign Up</button>
                 </div>
               </form>
             </div>
@@ -88,7 +112,19 @@
       </div>
       </section>
       <!-- /modal-->
-
+      @if(session()->has('error'))
+          <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+      @endif
+      @if (session('status'))
+        <div class="alert alert-success">
+          {{ session('status') }}
+        </div>
+      @endif
+      @if (session('warning'))
+        <div class="alert alert-warning">
+          {{ session('warning') }}
+        </div>
+      @endif
       <!-- /hero section start -->
     <section class="hero-banner">
         <div class="container">
