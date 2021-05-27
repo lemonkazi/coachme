@@ -65,7 +65,13 @@
                         <a class="nav-link" href="#">Programs</a>
                         </li>
                         <li>
-                        <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Log in</a>
+                            @if (Route::has('logout'))
+                                @auth
+                                    <a href="{{ url('/logout') }}" class="btn btn-custom">Logout</a>
+                                @else
+                                   <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Log in</a>
+                                @endauth
+                            @endif
                         </li>
                     </ul>
                     </div>
@@ -197,7 +203,8 @@
                         email: $('#sign-email').val(),
                         password: $('#reg-password').val(),
                         authority: $('#userSelect').val(),
-                        _token:csrfToken
+                        //_token:csrfToken
+                        _token: "{{ csrf_token() }}",
                     };
 
                     $.ajax({
@@ -221,13 +228,13 @@
                           else
                           {
 
-                            //$('.alert-danger.registration').hide();
+                            $('.alert-danger.registration').hide();
                             //$('#exampleModalCenter').removeClass('show');
                             if(result.success)
                             {
-                                $('.alert-danger.registration').html('');
-                                $('.alert-danger.registration').show();
-                                $('.alert-danger.registration').append('<li>'+result.result+'</li>');
+                                $('.alert-success.registration').html('');
+                                $('.alert-success.registration').show();
+                                $('.alert-success.registration').append('<li>'+result.result+'</li>');
                                 //window.location = result.url;  
                             }
                                 
