@@ -113,27 +113,28 @@ class UserController extends Controller
       );
 
       // If export parameter true, it will return csv file
-    if ($export) { 
-      // It maps model property (key) to column header (value)
-      $headPropertyMapper = [
-          'id' => 'ID', 
-          'family_name' => 'Family Name',
-          'email' => 'Email',
-          'rink_name' => 'Rink',
-          'authority' => 'Authority',
-          'created_at' => 'Created At',
-          'updated_at' => 'Updated At',
-      ];
+      if ($export) { 
+        // It maps model property (key) to column header (value)
+        $headPropertyMapper = [
+            'id' => 'ID', 
+            'family_name' => 'Family Name',
+            'email' => 'Email',
+            'rink_name' => 'Rink',
+            'authority' => 'Authority',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
 
-      $data = $user->dataProcessor($headPropertyMapper, $response);
-      $headings = array_values($headPropertyMapper);
-      
-      // Create CollectionExport instance by passing file headers and data
-      $collectionExportInstance = new CollectionExport($headings, $data);
-      $fileName = date('Ymd_His').'_users.csv';
+        $data = $user->dataProcessor($headPropertyMapper, $response);
+        $headings = array_values($headPropertyMapper);
+        
+        // Create CollectionExport instance by passing file headers and data
+        $collectionExportInstance = new CollectionExport($headings, $data);
+        $fileName = date('Ymd_His').'_users.csv';
 
-      return Excel::download($collectionExportInstance, $fileName);
-    } else {
+        return Excel::download($collectionExportInstance, $fileName);
+      } 
+      else {
         if (isset($params['page'])) {
           $page = !empty($params['page']) ? $params['page'] : 1;
         } else {
@@ -301,6 +302,7 @@ class UserController extends Controller
               $image->move(public_path('user_photo'), $new_name);
               $user->avatar_image_path = $new_name;
           }
+          $user->token = sha1(time());
           if (!$user->save()) {
               return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
           }

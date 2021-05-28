@@ -1,0 +1,21 @@
+#pageloader {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    background-color: rgba(0, 0, 0, 0.7);    
+    overflow: auto;    
+}
+
+#pageloader img {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+}

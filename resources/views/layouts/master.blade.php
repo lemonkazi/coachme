@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/front.css') }}">
         <title>@yield('title')</title>
         <!-- external JS-->
         <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
@@ -64,7 +66,13 @@
                         <a class="nav-link" href="#">Programs</a>
                         </li>
                         <li>
-                        <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Log in</a>
+                            @if (Route::has('logout'))
+                                @auth
+                                    <a href="{{ url('/logout') }}" class="btn btn-custom">Logout</a>
+                                @else
+                                   <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Log in</a>
+                                @endauth
+                            @endif
                         </li>
                     </ul>
                     </div>
@@ -116,6 +124,9 @@
 
             </div>
         </footer>
+        <div id="pageloader">
+            <img src="{{ asset ('img/loading.gif') }}" alt="processing..." />
+        </div>
 
         <!-- Optional JavaScript -->
         <script type="text/javascript" src="{{ asset('js/index.js') }}"></script>
@@ -137,6 +148,7 @@
                 
                 $('#userLogin').click(function(e){
                     e.preventDefault();
+                    var loader = $('#pageloader');
                     var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
                     var data_controller = controller;
                     var data = {
@@ -151,19 +163,22 @@
                         url: baseUrl + '/user/login',
                         data: data,
                         dataType: 'json',
+                        beforeSend: function (xhr) {
+                            loader.show();
+                        },
                         success: function (result) {
                           if(result.errors)
                           {
-                              $('.alert-danger').html('');
+                              $('.alert-danger.login').html('');
 
                               $.each(result.errors, function(key, value){
-                                  $('.alert-danger').show();
-                                  $('.alert-danger').append('<li>'+value+'</li>');
+                                  $('.alert-danger.login').show();
+                                  $('.alert-danger.login').append('<li>'+value+'</li>');
                               });
                           }
                           else
                           {
-                            $('.alert-danger').hide();
+                            $('.alert-danger.login').hide();
                             $('#exampleModalCenter').removeClass('show');
                             if(result.success)
                             {
@@ -173,7 +188,63 @@
 
                           }
                         },
-                        complete: function () {}
+                        complete: function() {
+                            loader.hide();
+                        }
+                    });
+                });
+
+                $('#userRegister').click(function(e){
+                    e.preventDefault();
+                    var loader = $('#pageloader');
+                    var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+                    var data_controller = controller;
+                    var data = {
+                        controller: data_controller,
+                        email: $('#sign-email').val(),
+                        password: $('#reg-password').val(),
+                        authority: $('#userSelect').val(),
+                        //_token:csrfToken
+                        _token: "{{ csrf_token() }}",
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: baseUrl + '/user/register',
+                        data: data,
+                        dataType: 'json',
+                        beforeSend: function (xhr) {
+                            loader.show();
+                        },
+                        success: function (result) {
+                          if(result.errors)
+                          {
+                              $('.alert-danger.registration').html('');
+
+                              $.each(result.errors, function(key, value){
+                                  $('.alert-danger.registration').show();
+                                  $('.alert-danger.registration').append('<li>'+value+'</li>');
+                              });
+                          }
+                          else
+                          {
+
+                            $('.alert-danger.registration').hide();
+                            //$('#exampleModalCenter').removeClass('show');
+                            if(result.success)
+                            {
+                                $('.alert-success.registration').html('');
+                                $('.alert-success.registration').show();
+                                $('.alert-success.registration').append('<li>'+result.result+'</li>');
+                                //window.location = result.url;  
+                            }
+                                
+
+                          }
+                        },
+                        complete: function() {
+                            loader.hide();
+                        }
                     });
                 });
             });
