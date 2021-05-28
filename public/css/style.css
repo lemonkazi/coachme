@@ -121,6 +121,14 @@ header nav ul li.active a {
   appearance: revert;
 }
 
+.registration-modal a {
+  font-size: 12px;
+  font-family: Raleway;
+  letter-spacing: 1.28px;
+  color: #8AC8DC;
+  text-decoration: none;
+}
+
 .registration-modal button[type='submit'] {
   background: #233C50 0% 0% no-repeat padding-box;
   border-radius: 29px;
@@ -184,11 +192,20 @@ header nav ul li.active a {
   right: 8px;
 }
 
+.drop-arrow {
+  text-align: center;
+  background-color: #f3f6fb;
+}
+
+.drop-arrow i {
+  color: #A7DAE9;
+  font-size: 60px;
+}
+
 .hero-banner {
-  height: 720px;
   background-color: #f3f6fb;
   background-image: url(../img/Group76@1X.png);
-  background-size: cover;
+  background-size: 100%;
   background-repeat: no-repeat;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -197,6 +214,7 @@ header nav ul li.active a {
   display: -ms-flexbox;
   display: flex;
   position: relative;
+  padding: 5%;
 }
 
 .hero-banner .text-content h1 {
@@ -358,6 +376,7 @@ header nav ul li.active a {
 .card-section .card .card-body .card-title {
   color: #233c50;
   padding-bottom: 20px;
+  font: normal normal bold 32px/40px Raleway;
 }
 
 .card-section .card:hover {
