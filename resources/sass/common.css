@@ -18,6 +18,10 @@
   border-color: #d2d6de;
 }
 
+.input-required {
+  color: red;
+}
+
 .result-top-buttons, .result-top-elements {
   display: inline;
   float: left;

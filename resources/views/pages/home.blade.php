@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                   <label for="log-password">Password</label>
-                  <div class="icon-input mb-3">
+                  <div class="icon-input mb-1">
                     <input id="password" type="password" class="form-control rounded-left @error('password') is-invalid @enderror" placeholder="Password" id="log-password" name="password" required autocomplete="password">
                     <i class="bi bi-eye-slash-fill"></i>
                     @error('password')
@@ -47,8 +47,10 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
-                  </div>
-                  
+                </div>
+                <div class="form-froup mb-2">
+                  <a href="#">Forgot your password?</a>
+                </div>         
                 <div class="form-group">
                   <button type="submit" id="userLogin" class="form-control btn btn-primary submit px-3">Login</button>
                 </div>
@@ -103,50 +105,55 @@
                 </div>
                 <div class="col-md-5">
                 <div class="hero-image">
-                    <img src="{{ asset('img/Mask Group 21.png') }}" alt="">
+                    <img src="{{ asset('img/top-img.png') }}" alt="">
                 </div>
                 </div>
             </div>
         </div>
     </section>
+    <section class="drop-arrow">
+      <i class="fas fa-angle-down"></i>
+    </section>
+    
     <!-- /card section -->
     <section class="card-section">
       <div class="content">
 
-      <h1>Steps For Your Great Sports Experience</h1>
-      <p>Connecting you to professionally trained coaches, is what we strive to do.</p>
-      </div>
+        <h1>Steps For Your Great Sports Experience</h1>
+        <p>Connecting you to professionally trained coaches, is what we strive to do.</p>
+        </div>
 
-      <div class="container">
-        <div class="row">
-       <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
-              <div class="card-img-overlay d-flex flex-column">
-               <div class="card-body">
-                  <h4 class="card-title mt-0 "><a herf="#">Step 1</a></h4>
-                 <img class="card-img" src="{{ asset('img/purpose.png') }}" alt="">
-                </div>
-                <div class="card-footer">
-                 <div class="media">
-           <div class="media-body">
-          <h6 class="my-0 d-block">Go on the coach, camp 
-            or program tab and look for what you need</h6>     
+        <div class="container">
+          <div class="row">
+        <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
+                <div class="card-img-overlay d-flex flex-column">
+                <div class="card-body">
+                    <h4 class="card-title mt-0 "><a herf="#">Step 1</a></h4>
+                  <img class="card-img" src="{{ asset('img/purpose.png') }}" alt="">
+                  </div>
+                  <div class="card-footer">
+                  <div class="media">
+            <div class="media-body">
+            <h6 class="my-0 d-block">Go on the coach, camp 
+              or program tab and look for what you need</h6>     
+          </div>
         </div>
       </div>
-                </div>
               </div>
             </div></div>
 
             <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
               <div class="card-img-overlay d-flex flex-column">
                <div class="card-body">
-                  <h4 class="card-title mt-0 "><a herf="#">Step 1</a></h4>
+                  <h4 class="card-title mt-0 "><a herf="#">Step 2</a></h4>
                  <img class="card-img" src="{{ asset('img/tutorial.png') }}" alt="">
                 </div>
                 <div class="card-footer">
                  <div class="media">
            <div class="media-body">
-          <h6 class="my-0 d-block">Go on the coach, camp 
-            or program tab and look for what you need</h6>     
+          <h6 class="my-0 d-block">
+            Click on the coach, the program or the camp to know more
+          </h6>     
         </div>
       </div>
                 </div>
@@ -157,14 +164,15 @@
             <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
               <div class="card-img-overlay d-flex flex-column">
                <div class="card-body">
-                  <h4 class="card-title mt-0 "><a herf="#">Step 1</a></h4>
+                  <h4 class="card-title mt-0 "><a herf="#">Step 3</a></h4>
                  <img class="card-img" src="{{ asset('img/trust.png') }}" alt="">
                 </div>
                 <div class="card-footer">
                  <div class="media">
            <div class="media-body">
-          <h6 class="my-0 d-block">Go on the coach, camp 
-            or program tab and look for what you need</h6>     
+          <h6 class="my-0 d-block">
+            Choose the best way for you to contact them
+          </h6>     
         </div>
       </div>
                 </div>
@@ -175,7 +183,9 @@
         
       </div>
       </section>
-
+      <section class="drop-arrow">
+        <i class="fas fa-angle-down"></i>
+      </section>
       <!-- /carosel section -->
       <section class="carousel-section">
         <h1>Here's what famous coaches say

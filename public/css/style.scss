@@ -102,6 +102,13 @@ header {
         -moz-appearance: revert;
         appearance: revert;
     }
+    a{
+        font-size: 12px;
+        font-family: Raleway;
+        letter-spacing: 1.28px;
+        color: #8AC8DC;
+        text-decoration: none;
+    }
     button[type='submit']{
         background: #233C50 0% 0% no-repeat padding-box;
         border-radius: 29px;
@@ -158,17 +165,27 @@ header {
             right: 8px;
         }
     }
+
+}
+//drop arrow
+.drop-arrow{
+    text-align: center;
+    background-color: #f3f6fb;
+    i{
+        color: #A7DAE9;
+        font-size: 60px;
+    }
 }
 
 .hero-banner {
-    height: 720px;
     background-color: #f3f6fb;
     background-image: url(../img/Group76@1X.png);
-    background-size: cover;
+    background-size: 100%;
     background-repeat: no-repeat;
     align-items: center;
     display: flex;
     position: relative;
+    padding: 5%;
     .text-content {
         h1 {
             font-size: 45px;
@@ -302,6 +319,7 @@ header {
             .card-title {
                 color: #233c50;
                 padding-bottom: 20px;
+                font: normal normal bold 32px/40px Raleway;
             }
         }
         &:hover {
