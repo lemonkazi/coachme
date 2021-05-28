@@ -9,8 +9,8 @@ $('.slider').slick({
     focusOnSelect: true,
     cssEase: 'linear',
     touchMove: true,
-    prevArrow:'<button class="slick-prev"> < </button>',
-    nextArrow:'<button class="slick-next"> > </button>',
+    prevArrow:'<i class="bi bi-arrow-left"></i>',
+    nextArrow:'<i class="bi bi-arrow-right"></i>',
     
     responsive: [                        
         {

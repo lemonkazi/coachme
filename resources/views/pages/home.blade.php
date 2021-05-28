@@ -290,27 +290,84 @@
             </div>
           </div>
       </section>
-
+      <section class="drop-arrow">
+        <i class="fas fa-angle-down"></i>
+      </section>
       <section class="map-section">
         <div class="container">
-        <div class="col-6">
-          <div class="card card_map text-center">
-            <div class="title">
-              <h2>Find Rinks A Rinks Around You</h2>
-            </div>
-            <p>"An idea that can really help parents find the right 
-              coach or program for their kids, we all know the hassle 
-              it can be to make the right decisions not knowing the skating world"</p>
-              
-              
-              <div class="polaroid">
-                <div class="container">
-                  <div id="map"></div>
+          <div class="col-md-12 ">
+            <div class="card p-3">
+              <div class="row">
+              <div class="col-md-8">
+                <div class="title">
+                  <h2>Find Rinks A Rinks Around You</h2>
+                  
+                  <div class="search-div mb-2">
+                    <button type="button" class="btn green-btn">Use my location</button>
+                    <input type="text" placeholder="Search" class="search-btn"><i class="bi bi-search"></i>
+                  </div>
+                </div>
+                <div class="polaroid">                 
+                    <div id="map"></div>                 
                 </div>
               </div>
-              <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl_3j4BivMuCGpS5DS73Rkt7SNvy29eBQ&callback=initMap" async defer></script>
+              <div class="col-md-4">
+                <div class="address-group">
+                  <div class="address">
+                    <div class="number">
+                      <img src="{{ asset('img/Ellipse 17.png') }}" alt="" srcset="">
+                      <span>1</span>
+                    </div>
+                    <div class="description">
+                      <h5>Kitsilano FSC</h5>
+                      <a href="">info@kitsfsc.ca</a>
+                      <p>
+                        2690 Larch Street Vancouver, BC V6K4K9 604-737-6000
+                      </p>
+                      <a href="">www.kitsfsc.ca</a>
+                      <h6>3,79 kilometers</h6>
+                      <p class="gray">Directions</p>
+                    </div>
+                  </div>
+                  <div class="address">
+                    <div class="number">
+                      <img src="{{ asset('img/Ellipse 17.png') }}" alt="" srcset="">
+                      <span>2</span>
+                    </div>
+                    <div class="description">
+                      <h5>Kitsilano FSC</h5>
+                      <a href="">info@kitsfsc.ca</a>
+                      <p>
+                        2690 Larch Street Vancouver, BC V6K4K9 604-737-6000
+                      </p>
+                      <a href="">www.kitsfsc.ca</a>
+                      <h6>3,79 kilometers</h6>
+                      <p class="gray">Directions</p>
+                    </div>
+                  </div>
+                  <div class="address">
+                    <div class="number">
+                      <img src="{{ asset('img/Ellipse 17.png') }}" alt="" srcset="">
+                      <span>3</span>
+                    </div>
+                    <div class="description">
+                      <h5>Kitsilano FSC</h5>
+                      <a href="">info@kitsfsc.ca</a>
+                      <p>
+                        2690 Larch Street Vancouver, BC V6K4K9 604-737-6000
+                      </p>
+                      <a href="">www.kitsfsc.ca</a>
+                      <h6>3,79 kilometers</h6>
+                      <p class="gray">Directions</p>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              </div>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl_3j4BivMuCGpS5DS73Rkt7SNvy29eBQ&callback=initMap" async defer></script>
+            </div>
           </div>
-        </div>
         </div>
       </section>
 

@@ -356,7 +356,6 @@ header {
         position: relative;
         z-index: 100;
         width: 100%;
-        height: 100%;
         padding: 0 60px;
         overflow: hidden;
     }
@@ -383,26 +382,30 @@ header {
     .slick-arrow {
         position: absolute;
         top: 50%;
-        width: 40px;
+        width: 50px;
         height: 50px;
         margin: 0 -40px;
         line-height: 50px;
         margin-top: -25px;
         border: none;
-        background: transparent;
-        color: #d0e6a5;
-        font-family: monospace;
-        font-size: 5rem;
+        /* background: transparent; */
+        color: #fff;
+        /* font-family: monospace; */
+        /* font-size: 5rem; */
         z-index: 300;
         outline: none;
+        background: #D0E6A5;
+        border-radius: 50%;
+        padding: 0 14px;
+        font-size: 23px;
     }
 
-    .slick-prev {
+    .bi-arrow-left {
         left: -50px;
         text-align: left;
     }
 
-    .slick-next {
+    .bi-arrow-right {
         right: -50px;
         text-align: right;
     }
@@ -555,7 +558,6 @@ header {
 
 //map-section
 .map-section {
-    height: 420px;
     background-color: #f3f6fb;
     background-image: url(../img/);
     text-align: left;
@@ -563,24 +565,90 @@ header {
     h2 {
         color: #233c50;
         font-weight: bold;
+        text-align: left;
     }
     .card_map {
         border-radius: 10px;
         padding: 30px;
         width: 200%;
     }
+    .title{
+        .green-btn{
+            background: #A7BE79 0% 0% no-repeat padding-box;
+            border-radius: 29px;
+            color: #fff;
+        }
+        .search-div{
+            .search-btn{
+                background: #FFFFFF 0% 0% no-repeat padding-box;
+                border: 3px solid #A7BE79;
+                border-radius: 29px;
+                font: normal normal medium 16px Raleway;
+                padding: 4px 10px;
+            }
+            i{
+                position: relative;
+                left: -25px;
+            }
+        }
+        
+        
+    }
     .polaroid {
-        width: 650px;
         text-align: center;
     }
-
+    
     .container {
         padding: 10px;
         background: rgba(242, 246, 248, 1);
     }
     #map {
-        width: 100%;
-        height: 200px;
+        
+        height: 567px;
+    }
+    .address-group{
+        margin-top: 54px;
+        .address{   
+            display: flex;
+            border-bottom: 1px solid #DBEFF6;  
+            margin-bottom: 10px;
+            .number{
+                width: 60px;
+                img{
+                    width: 25px;
+                    border-radius: 50%;
+                }
+                span{
+                    position: relative;
+                    left: -19px;
+                    color: #fff;
+                }
+            }
+            h5{
+                font: normal normal 600 20px Raleway;
+                margin-bottom: 10px;
+            }
+            a{
+                font: normal normal normal 16px Raleway;
+                color: #3191B3;
+                margin-bottom: 10px;
+                text-decoration: none;
+            }
+            p{
+                font: normal normal normal 18px Raleway;
+                margin-bottom: 10px;
+            }
+            h6{
+                text-decoration: underline;
+                font: normal normal normal 16px Raleway;
+                margin-bottom: 10px;
+            }
+            p.gray{
+                color: #A7BE79;
+                margin-bottom: 10px;
+            }
+            
+        }
     }
 }
 
