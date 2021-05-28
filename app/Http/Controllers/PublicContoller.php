@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Testimonial;
 use View;
 use Auth;
 use App\Mail\VerifyMail;
@@ -41,20 +42,20 @@ class PublicContoller extends Controller
      */
     public function index()
     {
-        $authority = array(
-            'COACH_USER' => trans('global.LABEL_COACH_USER'),
-            'RINK_USER' => trans('global.LABEL_RINK_USER')
-        );
-        return view('pages.home')
-        ->with(compact('authority'));
+      $testimonials = Testimonial::get()->sortByDesc('id')->take(4);
 
-        //return View::make('pages.home');
+      $authority = array(
+          'COACH_USER' => trans('global.LABEL_COACH_USER'),
+          'RINK_USER' => trans('global.LABEL_RINK_USER')
+      );
+      return view('pages.home')
+      ->with(compact('authority','testimonials'));
     }
 
 
     public function verifyUser($token)
     {
-        $user = User::where('token', $token)->first();
+      $user = User::where('token', $token)->first();
 
 
       if(isset($user) ){
@@ -130,10 +131,10 @@ class PublicContoller extends Controller
             if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
                 
                 if ($user->isSuperAdmin()) {
-                  return response()->json(['success'=>true,'result'=>trans('messages.success_message'),'url'=> route('home')]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> route('home')]);
                   
                 } elseif (!$user->isSuperAdmin()) {
-                  return response()->json(['success'=>true,'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
                 }
                 
             }
@@ -218,4 +219,7 @@ class PublicContoller extends Controller
     {
         return 'email';
     }
+
+
+
 }

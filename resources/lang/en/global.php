@@ -202,6 +202,15 @@ return [
     'A new Experience has been created' => 'A new Experience has been created',
     'Experience has been updated' => 'Experience has been updated',
 
+    'All Testimonials' => 'All Testimonials',
+    'Testimonial Detail' => 'Testimonial Detail',
+    'Testimonial List' => 'Testimonial List',
+    'Edit Testimonial' => 'Edit Testimonial',
+    'Add Testimonial' => 'Add Testimonial',
+    'A new Testimonial has been created' => 'A new Testimonial has been created',
+    'Testimonial has been updated' => 'Testimonial has been updated',
+
+    
     'All Languages' => 'All Languages',
     'Language Detail' => 'Language Detail',
     'Language List' => 'Language List',
