@@ -229,61 +229,22 @@
           <div class="wrap">  
             <div class="slider">
               
-              <div class="item">
-                <div class="card card_red text-center">
-                  <div class="title">
-                    <img class="pic" src="{{ asset('img/patrick_chan.png') }}" alt="PAT">
-                    <h2>Patrick Chan</h2>
+
+              @foreach($testimonials as $testimonial)
+                
+
+                <div class="item">
+                  <div class="card card_red text-center">
+                    <div class="title">
+
+                      <img class="pic" src="{{$BASE_URL}}/testimonial_photo/{{$testimonial->image_path}}" alt="PAT">
+                      <h2>{{ $testimonial->name }}</h2>
+                    </div>
+                    <p>"{!! nl2br(e($testimonial->comment)) !!}"</p>
                   </div>
-                  <p>"An idea that can really help parents find the right 
-                    coach or program for their kids, we all know the hassle 
-                    it can be to make the right decisions not knowing the skating world"</p>
                 </div>
-               </div>
-              <div class="item">
-                <div class="card card_three text-center">
-                  <div class="title">
-                    <img class="pic" src="{{ asset('img/patrick_chan.png') }}" alt="PAT">
-                    <h2>Patrick Chan</h2>
-                  </div>
-                  <p>"An idea that can really help parents find the right 
-                    coach or program for their kids, we all know the hassle 
-                    it can be to make the right decisions not knowing the skating world"</p>
-                </div>
-              </div>
-              <div class="item">
-                <div class="card card_three text-center">
-                  <div class="title">
-                    <img class="pic" src="{{ asset('img/patrick_chan.png') }}" alt="PAT">
-                    <h2>Patrick Chan</h2>
-                  </div>
-                  <p>"An idea that can really help parents find the right 
-                    coach or program for their kids, we all know the hassle 
-                    it can be to make the right decisions not knowing the skating world"</p>
-                </div>
-              </div>
-              <div class="item">
-                <div class="card card_three text-center">
-                  <div class="title">
-                    <img class="pic" src="{{ asset('img/patrick_chan.png') }}" alt="PAT">
-                    <h2>Patrick Chan</h2>
-                  </div>
-                  <p>"An idea that can really help parents find the right 
-                    coach or program for their kids, we all know the hassle 
-                    it can be to make the right decisions not knowing the skating world"</p>
-                </div>
-              </div>
-              <div class="item">
-                <div class="card card_three text-center">
-                  <div class="title">
-                    <img class="pic" src="{{ asset('img/patrick_chan.png') }}" alt="PAT">
-                    <h2>Patrick Chan</h2>
-                  </div>
-                  <p>"An idea that can really help parents find the right 
-                    coach or program for their kids, we all know the hassle 
-                    it can be to make the right decisions not knowing the skating world"</p>
-                </div>
-              </div>
+              @endforeach
+              
               
               
               
