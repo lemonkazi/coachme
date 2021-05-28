@@ -130,10 +130,10 @@ class PublicContoller extends Controller
             if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
                 
                 if ($user->isSuperAdmin()) {
-                  return response()->json(['success'=>true,'result'=>trans('messages.success_message'),'url'=> route('home')]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> route('home')]);
                   
                 } elseif (!$user->isSuperAdmin()) {
-                  return response()->json(['success'=>true,'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
                 }
                 
             }

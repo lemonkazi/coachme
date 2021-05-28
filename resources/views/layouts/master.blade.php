@@ -154,8 +154,15 @@
                         controller: data_controller,
                         email: $('#email').val(),
                         password: $('#password').val(),
+                        //_token: "{{ csrf_token() }}",
                         _token:csrfToken
                     };
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    });
 
                     $.ajax({
                         type: 'POST',
@@ -181,7 +188,8 @@
                             $('#exampleModalCenter').removeClass('show');
                             if(result.success)
                             {
-                              window.location = result.url;  
+                               //$('#token').val(response.token);
+                               window.location = result.url;  
                             }
                                 
 
@@ -203,10 +211,14 @@
                         email: $('#sign-email').val(),
                         password: $('#reg-password').val(),
                         authority: $('#userSelect').val(),
-                        //_token:csrfToken
-                        _token: "{{ csrf_token() }}",
+                        _token:csrfToken
+                       // _token: "{{ csrf_token() }}",
                     };
-
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    });
                     $.ajax({
                         type: 'POST',
                         url: baseUrl + '/user/register',
