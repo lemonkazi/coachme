@@ -246,6 +246,30 @@
             </li>
           </ul>
         </li>
+
+        <li class="nav-item <?php if ($controller == 'testimonialcontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'testimonialcontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Testimonials
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'testimonialcontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('testimonials')}}" class="nav-link <?php if ($controller == 'testimonialcontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Testimonials</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'testimonialcontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/testimonial/add')}}" class="nav-link <?php if ($controller == 'testimonialcontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Testimonial</p>
+              </a>
+            </li>
+          </ul>
+        </li>
       
        <!--  <li class="nav-item">
           <a href="#" class="nav-link">
