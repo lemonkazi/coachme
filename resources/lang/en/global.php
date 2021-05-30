@@ -219,6 +219,23 @@ return [
     'A new Language has been created' => 'A new Language has been created',
     'Language has been updated' => 'Language has been updated',
 
+    'All Provinces' => 'All Provinces',
+    'Province Detail' => 'Province Detail',
+    'Province List' => 'Province List',
+    'Edit Province' => 'Edit Province',
+    'Add Province' => 'Add Province',
+    'A new Province has been created' => 'A new Province has been created',
+    'Province has been updated' => 'Province has been updated',
+
+    'All Locations' => 'All Locations',
+    'Location Detail' => 'Location Detail',
+    'Location List' => 'Location List',
+    'Edit Location' => 'Edit Location',
+    'Add Location' => 'Add Location',
+    'A new Location has been created' => 'A new Location has been created',
+    'Location has been updated' => 'Location has been updated',
+
+
     'All Prices' => 'All Prices',
     'Price Detail' => 'Price Detail',
     'Price List' => 'Price List',

@@ -162,6 +162,33 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
   	});
 
 
+  	//province route
+  	Route::get('provinces',[App\Http\Controllers\Admin\ProvinceController::class, 'show']);
+	Route::get('provinces/{province}',[App\Http\Controllers\Admin\ProvinceController::class, 'show']);
+	
+	Route::group(['prefix' =>'province', 'as'=>'province.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\ProvinceController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\ProvinceController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\ProvinceController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\ProvinceController@update']);
+  	});
+
+  	//location route
+  	Route::get('locations',[App\Http\Controllers\Admin\LocationController::class, 'show']);
+	Route::get('locations/{location}',[App\Http\Controllers\Admin\LocationController::class, 'show']);
+	
+	Route::group(['prefix' =>'location', 'as'=>'location.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\LocationController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\LocationController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\LocationController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\LocationController@update']);
+  	});
+
+
   	//testimonial route
   	Route::get('testimonials',[App\Http\Controllers\Admin\TestimonialController::class, 'show']);
 	Route::get('testimonials/{testimonial}',[App\Http\Controllers\Admin\TestimonialController::class, 'show']);
