@@ -52,6 +52,9 @@ class PublicContoller extends Controller
       ->with(compact('authority','testimonials'));
     }
 
+    public function coach_edit(){
+      return view('pages.coach.edit');
+    }
 
     public function verifyUser($token)
     {
