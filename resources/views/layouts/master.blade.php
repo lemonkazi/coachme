@@ -13,6 +13,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">   
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.min.css">
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <!-- CSS -->
@@ -140,6 +141,7 @@
         <!-- jQuery UI 1.11.4 -->
         <script src="{{ asset ('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
         <script>
           $.widget.bridge('uibutton', $.ui.button)
         </script>

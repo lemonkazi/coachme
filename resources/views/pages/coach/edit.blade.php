@@ -1,26 +1,29 @@
 @extends('layouts.master')
-@section('title','Home')
+@section('title','Coach Edit')
 @section('content')
     <div class="coach-edit">
       <form action="">
-        <div class="img-upload">
-          <input type="file" >
-        </div>
+        
         <div class="container">
           <div class="row">
             <div class="col-md-10">
               <div class="row">
+                <div class="img-upload mb-4">
+                  <input accept="image/*" type='file' id="imgInp" />
+                  <img id="blah" src="{{ asset('/img/download.png')}}" alt="your image" />
+                  <i class="bi bi-plus-lg"></i>
+                </div>
                 <h2>Basic information</h2>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="email" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="name">Family name</label>
-                    <input type="email" class="form-control" id="family" aria-describedby="emailHelp" placeholder="Enter email">
+                    <label for="family">Family name</label>
+                    <input type="text" class="form-control" id="family" aria-describedby="emailHelp">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -61,13 +64,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="speciality">Speciality</label>
-                    <select class="form-control" id="speciality" multiple>
+                    <select class="form-control" id="speciality" multiple="multiple">
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                       <option>4</option>
                       <option>5</option>
                     </select>
+                    <i class="bi bi-plus-lg"></i>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -80,6 +84,7 @@
                       <option>4</option>
                       <option>5</option>
                     </select>
+                    <i class="bi bi-chevron-compact-down"></i>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -92,30 +97,33 @@
                       <option>4</option>
                       <option>5</option>
                     </select>
+                    <i class="bi bi-chevron-compact-down"></i>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="rinks">Rinks</label>
-                    <select class="form-control" id="rinks" multiple>
+                    <select class="form-control" id="rinks" multiple="multiple" >
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                       <option>4</option>
                       <option>5</option>
                     </select>
+                    <i class="bi bi-plus-lg"></i>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="language">Language spoken</label>
-                    <select class="form-control" id="language" multiple>
+                    <select class="form-control" id="language" multiple="multiple">
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                       <option>4</option>
                       <option>5</option>
                     </select>
+                    <i class="bi bi-plus-lg"></i>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -128,6 +136,7 @@
                       <option>4</option>
                       <option>5</option>
                     </select>
+                    <i class="bi bi-chevron-compact-down"></i>
                   </div>
                 </div>
                 <h2>Contact</h2>
@@ -149,12 +158,14 @@
                     <input type="email" class="form-control" id="email">
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <button type="submit" id="userLogin" class="form-control btn btn-primary submit px-3">Create a camp</button>
+                <div class="col-md-4 mb-4">
+                  <button type="submit" id="create-camp" class="form-control btn btn-primary submit px-3">Create a camp</button>
                 </div>
-                <div class="col-md-8">
-                <button type="submit" id="userLogin" class="form-control btn btn-primary submit px-3">Cancel</button>
-                <button type="submit" id="userLogin" class="form-control btn btn-primary submit px-3">Save</button>
+                <div class="offset-md-4 col-md-4 mb-4">
+                  <div class="btn-group">
+                    <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
+                    <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                  </div>
                 </div>
               </div>
             </div>
