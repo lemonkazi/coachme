@@ -185,15 +185,15 @@ class PublicContoller extends Controller
             }
           }
           
-          $user->authority = User::ACCESS_LEVEL_COACH;
-          $user->token = sha1(time());
+          $data['token'] = sha1(time());
           
           if($request->file('avatar_image_path'))
           {
             $image = $request->file('avatar_image_path');
             $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('user_photo'), $new_name);
-            $user->avatar_image_path = $new_name;
+            
+            $image->move(public_path('coach_photo'), $new_name);
+            $data['avatar_image_path'] = $new_name;
           }
           if (!$user->update($data)) {
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
@@ -412,6 +412,16 @@ class PublicContoller extends Controller
     {
         return 'email';
     }
+
+    private function uniqueString()
+    {
+      $m = explode(' ', microtime());
+      list($totalSeconds, $extraMilliseconds) = array($m[1], (int)round($m[0] * 1000, 3));
+      $txID = date('YmdHis', $totalSeconds) . sprintf('%03d', $extraMilliseconds);
+      $txID = substr($txID, 2, 15);
+      return $txID;
+    }
+
 
 
 
