@@ -68,6 +68,146 @@ class PublicContoller extends Controller
       } else {
         $title=trans('global.Edit Coach');
       }
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+
+        //$user = $request->user();
+
+        $data['authority'] = User::ACCESS_LEVEL_COACH;
+
+
+
+        $rules = array(
+                'name'   => 'required|string|max:255',
+                'email'  => 'required|string|email|max:255',
+                'avatar_image_path' => 'nullable'
+              );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')                    
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          //Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+          if (isset($data['email'])) {
+              $userExists = User::where([
+                                          ['id', '<>', $user->id],
+                                          ['email', $data['email']]
+                                      ])->first();
+          }
+            
+          if ($userExists) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
+          }
+          
+          //$eMail = new CoachmeAppsMail();
+          //$eMail->resetPasswordMail($data['email'], $oauth_token, $userExists,$os);
+            
+          $data['is_verified'] = true;
+          //$user = User::create($data);
+          if (isset($data['rink_id'])) {
+            $rink = Rink::find($data['rink_id']);
+
+            if (!$rink) {
+               return redirect()->back()->withInput()->withErrors('rink not exist');
+            }            
+            $insert_arr = array();
+            $insert_arr['user_id'] = $user->id;
+            $insert_arr['content_id'] = $rink->id;
+            $insert_arr['content_type'] = 'RINK';
+            $insert_arr['content_name'] = $rink->name;
+
+            $userInfo = UserInfo::where('user_id',$user->id)
+                             ->where('content_id',$rink->id)
+                             ->where('content_type','RINK')
+                             ->first();
+            if (!$userInfo) {
+              $userInfo = UserInfo::firstOrCreate($insert_arr);
+            } else {
+              $userInfo->update($insert_arr);  
+            }
+            
+            
+          }
+
+          if (isset($data['speciality_id'])) {
+            $speciality = Speciality::find($data['speciality_id']);
+
+            if (!$speciality) {
+               return redirect()->back()->withInput()->withErrors('rink not exist');
+            }            
+            $insert_arr = array();
+            $insert_arr['user_id'] = $user->id;
+            $insert_arr['content_id'] = $speciality->id;
+            $insert_arr['content_type'] = 'SPECIALITY';
+            $insert_arr['content_name'] = $speciality->name;
+            $userInfo = UserInfo::where('user_id',$user->id)
+                             ->where('content_id',$speciality->id)
+                             ->where('content_type','SPECIALITY')
+                             ->first();
+            if (!$userInfo) {
+              $userInfo = UserInfo::firstOrCreate($insert_arr);
+            } else {
+              $userInfo->update($insert_arr);  
+            }
+          }
+          if (isset($data['language_id'])) {
+            $language = Language::find($data['speciality_id']);
+
+            if (!$language) {
+               return redirect()->back()->withInput()->withErrors('rink not exist');
+            }            
+            $insert_arr = array();
+            $insert_arr['user_id'] = $user->id;
+            $insert_arr['content_id'] = $language->id;
+            $insert_arr['content_type'] = 'LANGUAGE';
+            $insert_arr['content_name'] = $language->name;
+            $userInfo = UserInfo::where('user_id',$user->id)
+                             ->where('content_id',$language->id)
+                             ->where('content_type','LANGUAGE')
+                             ->first();
+            if (!$userInfo) {
+              $userInfo = UserInfo::firstOrCreate($insert_arr);
+            } else {
+              $userInfo->update($insert_arr);  
+            }
+          }
+          
+          $user->authority = User::ACCESS_LEVEL_COACH;
+          $user->token = sha1(time());
+          
+          if($request->file('avatar_image_path'))
+          {
+            $image = $request->file('avatar_image_path');
+            $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('user_photo'), $new_name);
+            $user->avatar_image_path = $new_name;
+          }
+          if (!$user->update($data)) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+          if (config('global.email_send') == 1) {
+            \Mail::to($user->email)->send(new VerifyMail($user));
+          }
+
+          
+          //Toastr::success(trans('global.A new Coach has been created'),'Success');
+          //return back();
+        }
+
+      }
 
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
       $province_all = Province::all()->pluck("name", "id")->sortBy("name");

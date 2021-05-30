@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Route::middleware(['auth', 'authority:coach_user'])->group(function () {
 	Route::get('my-account', 'PublicContoller@coach_edit');
-	Route::post('profile-update',['as' =>'profile-update','uses' =>'PublicContoller@coach_update']);
+	Route::post('profile-update',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
 });
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
