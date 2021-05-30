@@ -118,14 +118,22 @@ $('.slider').slick({
     }
   
   }
+
   $(function(){
+    //coach edit js
+    //multiselect 
     $('#language,#rinks,#speciality').multiselect();
+    //img preview
     imgInp.onchange = evt => {
       const [file] = imgInp.files
       if (file) {
         blah.src = URL.createObjectURL(file)
       }
     }
+    //file input trigger
+    $(".img-upload .bi-plus-lg").click(function(){
+      $(".img-upload input").trigger("click");
+    });
   });
 
   

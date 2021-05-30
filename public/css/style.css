@@ -849,6 +849,7 @@ footer ul li:first-child {
 
 .coach-edit .img-upload img {
   width: 218px;
+  height: 218px;
   border-radius: 50%;
 }
 
