@@ -13,6 +13,8 @@ use App\Models\Certificate;
 use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
+use App\Models\Province;
+use App\Models\Location;
 
 use App\Mail\CoachmeAppsMail;
 use App\Mail\VerifyMail;
@@ -197,6 +199,9 @@ class CoachController extends Controller
            'link'=>''
       );
     }
+    $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+    $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+
     $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
     $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
     $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
@@ -218,7 +223,7 @@ class CoachController extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all'));
+      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
   }
 
   /**

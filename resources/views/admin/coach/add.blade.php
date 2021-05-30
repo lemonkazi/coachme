@@ -100,21 +100,22 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="province">Province</label>
-                          <select name="province" class="form-control" style="width: 100%">
+                          <select name="province_id" class="form-control" style="width: 100%">
                             <option value="">Select</option>
-                            <option value="1" {{!empty($data['user']) ? (old('province', $data['user']->province) == 1 ? 'selected' : '') : (old('province') == 1 ? 'selected' : '')}} > aa
-                            </option>
-                            <option value="2">aaa</option>
+                            @foreach($province_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $data['user']->province_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
                           </select>
                         </div>
                       </div>
                       <div class="col-md-6">
                           <div class="form-group">
                             <label for="city">City</label>
-                            <select name="city" class="form-control" style="width: 100%">
+                            <select name="city_id" class="form-control" style="width: 100%">
                               <option value="">Select</option>
-                              <option value="1">aa</option>
-                              <option value="2">aaa</option>
+                              @foreach($city_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('city_id') ? old('city_id') : $data['user']->city_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
                             </select>
                           </div>
                       </div>

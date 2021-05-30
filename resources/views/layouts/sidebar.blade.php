@@ -247,6 +247,55 @@
           </ul>
         </li>
 
+        <li class="nav-item <?php if ($controller == 'provincecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'provincecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Provinces
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'provincecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('provinces')}}" class="nav-link <?php if ($controller == 'provincecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Provinces</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'provincecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/province/add')}}" class="nav-link <?php if ($controller == 'provincecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Province</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
+        <li class="nav-item <?php if ($controller == 'locationcontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'locationcontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Locations
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'locationcontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('locations')}}" class="nav-link <?php if ($controller == 'locationcontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Locations</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'locationcontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/location/add')}}" class="nav-link <?php if ($controller == 'locationcontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Location</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <li class="nav-item <?php if ($controller == 'testimonialcontroller') echo 'active menu-open' ?>"">
           <a href="#" class="nav-link <?php if ($controller == 'testimonialcontroller') echo 'active' ?>">
             <i class="nav-icon fas fa-th"></i>
