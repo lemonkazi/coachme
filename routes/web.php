@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // landing page
 Route::get('/', 'PublicContoller@index');
+Route::get('/coach/edit', 'PublicContoller@coach_edit');
 Route::get('ajax', function(){ return view('ajax'); });
 
 Route::post('/ajax_delete','AjaxController@delete');
