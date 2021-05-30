@@ -732,4 +732,73 @@ footer ul li:first-child {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: top;
+    padding-top: 48px;
+    .img-upload{
+        width: 220px;
+        position: relative;
+        input{
+            display: none;
+        }
+        img{
+            width: 218px;
+            border-radius: 50%;
+        }
+        .bi-plus-lg{
+            background: #233C50;
+            border-radius: 50%;
+            padding: 5px 10px;
+            color: #fff;
+            top: 176px;
+        }
+
+    }
+    h2{
+        font: normal normal bold 24px Raleway;
+        color: #8AC8DC;
+    }
+    label{
+        font: normal normal bold 18px Raleway;
+        letter-spacing: 1.6px;
+        color: #233C50;
+    }
+    input,select,textarea{
+        background: #D4E8F3 0% 0% no-repeat padding-box;
+        border-radius: 8px;
+    }
+    .btn-group, .btn-group-vertical{
+        width: 100%;
+    }
+    span.multiselect-native-select{
+        display: block;
+    }
+    .bi-plus-lg,.bi-chevron-compact-down{
+        position: absolute;
+        top: 37px;
+        right: 22px;
+    }
+    .custom-select{
+        background: #D4E8F3 0% 0% no-repeat padding-box;
+        border: none;
+        text-align: left;
+        border-radius: 8px;
+    }
+    #create-camp{
+        background: #233C50 0% 0% no-repeat padding-box;
+        border-radius: 29px;
+        width: 227px;
+    }
+    #cancel{
+        font: normal normal medium 20px/27px Raleway;
+        letter-spacing: 0px;
+        color: #7B8A96;
+        width: 150px;
+        background: none;
+        border: none;
+    }
+    #save{
+        background: #8AC8DC 0% 0% no-repeat padding-box;
+        border-radius: 29px;
+        width: 178px;
+        border: none;
+    }
 }
