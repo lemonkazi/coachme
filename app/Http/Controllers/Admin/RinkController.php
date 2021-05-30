@@ -160,7 +160,7 @@ class RinkController extends Controller
    * Show the form for creating a new resource.
    *
    */
-  public function create()
+  public function create($id=null)
   {
     $rink='';
     $title=trans('global.Add Rink');

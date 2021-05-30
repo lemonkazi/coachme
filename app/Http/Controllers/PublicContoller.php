@@ -8,6 +8,15 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Testimonial;
+use App\Models\UserInfo;
+use App\Models\Rink;
+use App\Models\Experience;
+use App\Models\Certificate;
+use App\Models\Language;
+use App\Models\Price;
+use App\Models\Speciality;
+use App\Models\Province;
+use App\Models\Location;
 use View;
 use Auth;
 use App\Mail\VerifyMail;
@@ -52,8 +61,33 @@ class PublicContoller extends Controller
       ->with(compact('authority','testimonials'));
     }
 
-    public function coach_edit(){
-      return view('pages.coach.edit');
+    public function coach_edit(Request $request){
+      $user = $request->user();
+      if (!$user) {
+        return back();
+      } else {
+        $title=trans('global.Edit Coach');
+      }
+
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
+      $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
+      $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $price_all = Price::all()->pluck("name", "id")->sortBy("name");
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      
+      return view('pages.coach.edit', [
+          'data'=>
+          [
+               'user'      =>  $user,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
+
     }
 
     public function verifyUser($token)
@@ -88,8 +122,15 @@ class PublicContoller extends Controller
           $user = Auth::user();
           if ($user->isSuperAdmin()) {
               return redirect()->intended(route('home'));
-          } elseif (!$user->isSuperAdmin()) {
-              return redirect(RouteServiceProvider::ROOT);
+          }
+          elseif ($user->isCoachUser()) {
+            return redirect(RouteServiceProvider::PROFILE);
+          }
+          elseif ($user->isRinkUser()) {
+            return redirect(RouteServiceProvider::ROOT);
+          } 
+          else{
+            return redirect(RouteServiceProvider::ROOT);
           }
       }
       return View::make('auth.publiclogin', ['title' => 'User Login','pageInfo'=>['siteTitle'=>'COACH ME']]);
@@ -136,7 +177,12 @@ class PublicContoller extends Controller
                 if ($user->isSuperAdmin()) {
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> route('home')]);
                   
-                } elseif (!$user->isSuperAdmin()) {
+                } elseif ($user->isCoachUser()) {
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::PROFILE]);
+                }
+                elseif ($user->isRinkUser()) {
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
+                } else{
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
                 }
                 
@@ -207,11 +253,15 @@ class PublicContoller extends Controller
           if (!$user) {
             return response()->json(['errors'=>['Registration failed, please try again!']]);
           }
-          
-          \Mail::to($user->email)->send(new VerifyMail($user));
+          if (config('global.email_send') == 1) {
+            \Mail::to($user->email)->send(new VerifyMail($user));
+            return response()->json(['success'=>true,'result'=>'We sent you an activation code. Check your email and click on the link to verify.','url'=> RouteServiceProvider::ROOT]);
+            
+          }
+          return response()->json(['success'=>true,'result'=>'Registration successfull','url'=> RouteServiceProvider::ROOT]);
+            
 
-          return response()->json(['success'=>true,'result'=>'We sent you an activation code. Check your email and click on the link to verify.','url'=> RouteServiceProvider::ROOT]);
-                
+              
           
           //Toastr::success(trans('global.A new User has been created'),'Success');
           //return back();

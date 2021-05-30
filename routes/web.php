@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // landing page
 Route::get('/', 'PublicContoller@index');
-Route::get('/coach/edit', 'PublicContoller@coach_edit');
+
 Route::get('ajax', function(){ return view('ajax'); });
 
 Route::post('/ajax_delete','AjaxController@delete');
@@ -41,6 +41,10 @@ Route::group(['middleware' => ['auth']], function () {
 	
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 
+});
+Route::middleware(['auth', 'authority:coach_user'])->group(function () {
+	Route::get('my-account', 'PublicContoller@coach_edit');
+	Route::post('profile-update',['as' =>'profile-update','uses' =>'PublicContoller@coach_update']);
 });
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -202,6 +206,8 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\TestimonialController@update']);
   	});
 });
+
+
 
 
 

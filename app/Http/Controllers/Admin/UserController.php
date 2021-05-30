@@ -307,7 +307,9 @@ class UserController extends Controller
               return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
           }
           if ($user->authority==User::ACCESS_LEVEL_RINK) {
-            \Mail::to($user->email)->send(new VerifyMail($user));
+            if (config('global.email_send') == 1) {
+              \Mail::to($user->email)->send(new VerifyMail($user));
+            }
           }
           Toastr::success(trans('global.A new User has been created'),'Success');
           return back();
