@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="img-upload mb-4">
+                <div class="img-upload mb-5">
                   <input accept="image/*" type='file' id="imgInp" />
                   <img id="blah" src="{{ asset('/img/download.png')}}" alt="your image" />
                   <i class="bi bi-plus-lg"></i>

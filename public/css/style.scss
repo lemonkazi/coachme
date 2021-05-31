@@ -728,20 +728,19 @@ footer ul li:first-child {
 
 //coach edit
 .coach-edit{
-    background-image: url(../img/Group_835.png);
+    background-image: url(../img/edit_coach.png);
     background-size: 100%;
     background-repeat: no-repeat;
-    background-position: top;
-    padding-top: 48px;
+    background-position: top center;
+    padding-top: 4.5%;
     .img-upload{
-        width: 220px;
+        width: 22%;
         position: relative;
         input{
             display: none;
         }
         img{
-            width: 218px;
-            height: 218px;
+            width: 100%;
             border-radius: 50%;
         }
         .bi-plus-lg{
@@ -749,7 +748,7 @@ footer ul li:first-child {
             border-radius: 50%;
             padding: 5px 10px;
             color: #fff;
-            top: 176px;
+            top: 76%;
         }
 
     }
