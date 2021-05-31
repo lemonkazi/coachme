@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use App\Models\UserInfo;
 use App\Models\Rink;
 use App\Models\Speciality;
 use App\Models\Price;
@@ -40,11 +41,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'family_name',
-        'rink_id',
-        'speciality_id',
+        //'rink_id',
+        //'speciality_id',
         'experience_id',
         'certificate_id',
-        'language_id',
+        //'language_id',
         'price_id',
         'email',
         'password',
@@ -78,12 +79,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     protected $appends = [
-        'speciality_name',
+        //'speciality_name',
         'experience_name',
         'certificate_name',
-        'rink_name',
-        'lang_name',
+        //'rink_name',
+        //'lang_name',
         'price_name',
+        'userinfos',
     ];
 
     /**
@@ -248,15 +250,15 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    /**
-     * Get the user's speciality name.
-     *
-     * @return string
-     */
-    public function getSpecialityNameAttribute()
-    {
-        return !empty($this->speciality) ? $this->speciality->name : null;
-    }
+    // /**
+    //  * Get the user's speciality name.
+    //  *
+    //  * @return string
+    //  */
+    // public function getSpecialityNameAttribute()
+    // {
+    //     return !empty($this->speciality) ? $this->speciality->name : null;
+    // }
 
     /**
      * Get the user's speciality name.
@@ -278,25 +280,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return !empty($this->experience) ? $this->experience->name : null;
     }
 
-    /**
-     * Get the user's rink name.
-     *
-     * @return string
-     */
-    public function getRinkNameAttribute()
-    {
-        return !empty($this->rink) ? $this->rink->name : null;
-    }
+    // /**
+    //  * Get the user's rink name.
+    //  *
+    //  * @return string
+    //  */
+    // public function getRinkNameAttribute()
+    // {
+    //     return !empty($this->rink) ? $this->rink->name : null;
+    // }
 
-    /**
-     * Get the user's rink name.
-     *
-     * @return string
-     */
-    public function getLangNameAttribute()
-    {
-        return !empty($this->language) ? $this->language->name : null;
-    }
+    // /**
+    //  * Get the user's rink name.
+    //  *
+    //  * @return string
+    //  */
+    // public function getLangNameAttribute()
+    // {
+    //     return !empty($this->language) ? $this->language->name : null;
+    // }
 
     /**
      * Get the user's rink name.
@@ -309,21 +311,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    /**
-     * Get the speciality for the user.
-     */
-    public function speciality()
-    {
-        return $this->belongsTo(Speciality::class);
-    }
-
-     /**
-     * Get the rinks for the user.
-     */
-    public function rink()
-    {
-        return $this->belongsTo(Rink::class);
-    }
 
      /**
      * Get the rinks for the user.
@@ -332,13 +319,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Price::class);
     }
-     /**
-     * Get the language for the user.
-     */
-    public function language()
-    {
-        return $this->belongsTo(Language::class);
-    }
+    
 
      /**
      * Get the experience for the user.
@@ -380,6 +361,65 @@ class User extends Authenticatable implements MustVerifyEmail
         //     $message->subject('Reset Password Request');
         //     $message->to($data[0]);
         // });
+    }
+
+    /** Get the favorites.
+     *
+     * @return string
+     */
+    // public function userinfoo()
+    // {
+    //     $result  = DB::table('user_infos')
+    //                  ->select('id', 'content_type', 'content_id')
+    //                  ->where('user_id', '=', $this->id)
+    //                  ->where('deleted_at', '=', null)
+    //                  ->get();
+    //     return $result;
+
+
+        
+    // }
+
+
+     /**
+     * Get user's favorite for the event.
+     */
+    public function userinfo()
+    {
+        //$userId = request()->user() ? request()->user()->id : null;
+        $userId = $this->id;
+        return $this->hasMany(UserInfo::class, 'user_id', 'id')->where(['user_id' => $userId]);
+    }
+
+
+    public function getUserinfosAttribute()
+    {
+        $info_array = array();
+        $info_array["speciality"] = array();
+        $info_array["rinks"] = array();
+        $info_array["languages"] = array();
+
+        //$userId = $this->id; //request()->user() ? request()->user()->id : null;
+        //$info = $this->hasMany(UserInfo::class)->where(['user_id' => $userId]);
+        //return $info;
+
+        // $info  = DB::table('user_infos')
+        //              ->select('id', 'content_type', 'content_id')
+        //              ->where('user_id', '=', $this->id)
+        //              ->where('deleted_at', '=', null)
+        //              ->get();
+        
+        foreach ($this->userinfo as $userinfo) {
+            if ($userinfo->content_type == "SPECIALITY") {
+                $info_array["speciality"][] = $userinfo;
+            } elseif ($userinfo->content_type == "RINK") {
+                $info_array["rinks"][] = $userinfo;
+            }
+            elseif ($userinfo->content_type == "LANGUAGE") {
+                $info_array["languages"][] = $userinfo;
+            }
+        }
+        return $info_array;
     }
 
 
