@@ -62,7 +62,14 @@ class LoginController extends Controller
             if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
                 if ($user->isSuperAdmin()) {
                     return redirect()->intended(route('home'));
-                } elseif (!$user->isSuperAdmin()) {
+                }
+                elseif ($user->isCoachUser()) {
+                    return redirect(RouteServiceProvider::PROFILE);
+                }
+                elseif ($user->isRinkUser()) {
+                    return redirect(RouteServiceProvider::ROOT);
+                } 
+                else{
                     return redirect(RouteServiceProvider::ROOT);
                 }
                 

@@ -115,7 +115,7 @@
                               <option value="">Select</option>
                               @foreach($city_all as $id => $value)
                                 <option value="{{ $id }}" {{ (old('city_id') ? old('city_id') : $data['user']->city_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                            @endforeach
+                              @endforeach
                             </select>
                           </div>
                       </div>
@@ -127,7 +127,7 @@
                           <select name="speciality_id" class="form-control" style="width: 100%">
                             <option value="">Select</option>
                             @foreach($speciality_all as $id => $value)
-                                <option value="{{ $id }}" {{ (old('speciality_id') ? old('speciality_id') : $data['user']->speciality_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                                <option value="{{ $id }}" {{ (old('speciality_id') ? old('speciality_id') : $data['user']->userinfos['speciality'][0]->content_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach
                           </select>
                         </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Models\UserInfo;
 use App\Models\User;
 use App\Models\Rink;
 use App\Models\Experience;
@@ -172,7 +173,7 @@ class CoachController extends Controller
    *
    * 
    */
-  public function create()
+  public function create($id=null)
   {
     $user='';
     $title=trans('global.Add Coach');
@@ -286,8 +287,67 @@ class CoachController extends Controller
 
         if (!$rink) {
            return redirect()->back()->withInput()->withErrors('rink not exist');
-        } 
-        $user->rink_id = !empty($rink) ? $rink->id : null;        
+        }            
+        $insert_arr = array();
+        $insert_arr['user_id'] = $user->id;
+        $insert_arr['content_id'] = $rink->id;
+        $insert_arr['content_type'] = 'RINK';
+        $insert_arr['content_name'] = $rink->name;
+
+        $userInfo = UserInfo::where('user_id',$user->id)
+                         ->where('content_id',$rink->id)
+                         ->where('content_type','RINK')
+                         ->first();
+        if (!$userInfo) {
+          $userInfo = UserInfo::firstOrCreate($insert_arr);
+        } else {
+          $userInfo->update($insert_arr);  
+        }
+        
+        
+      }
+
+      if (isset($data['speciality_id'])) {
+        $speciality = Speciality::find($data['speciality_id']);
+
+        if (!$speciality) {
+           return redirect()->back()->withInput()->withErrors('rink not exist');
+        }            
+        $insert_arr = array();
+        $insert_arr['user_id'] = $user->id;
+        $insert_arr['content_id'] = $speciality->id;
+        $insert_arr['content_type'] = 'SPECIALITY';
+        $insert_arr['content_name'] = $speciality->name;
+        $userInfo = UserInfo::where('user_id',$user->id)
+                         ->where('content_id',$speciality->id)
+                         ->where('content_type','SPECIALITY')
+                         ->first();
+        if (!$userInfo) {
+          $userInfo = UserInfo::firstOrCreate($insert_arr);
+        } else {
+          $userInfo->update($insert_arr);  
+        }
+      }
+      if (isset($data['language_id'])) {
+        $language = Language::find($data['speciality_id']);
+
+        if (!$language) {
+           return redirect()->back()->withInput()->withErrors('rink not exist');
+        }            
+        $insert_arr = array();
+        $insert_arr['user_id'] = $user->id;
+        $insert_arr['content_id'] = $language->id;
+        $insert_arr['content_type'] = 'LANGUAGE';
+        $insert_arr['content_name'] = $language->name;
+        $userInfo = UserInfo::where('user_id',$user->id)
+                         ->where('content_id',$language->id)
+                         ->where('content_type','LANGUAGE')
+                         ->first();
+        if (!$userInfo) {
+          $userInfo = UserInfo::firstOrCreate($insert_arr);
+        } else {
+          $userInfo->update($insert_arr);  
+        }
       }
       
       $user->authority = User::ACCESS_LEVEL_COACH;
@@ -304,30 +364,10 @@ class CoachController extends Controller
         
         return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
       }
-      \Mail::to($user->email)->send(new VerifyMail($user));
+      if (config('global.email_send') == 1) {
+        \Mail::to($user->email)->send(new VerifyMail($user));
+      }
 
-      // print_r($data);
-      // exit();
-      // $user = new User;
-      // $user->name = $request->name;
-      // $user->email = $request->email;
-      // $user->access_level = User::ACCESS_LEVEL_STAFF;
-      // $user->password = bcrypt($request->password);
-
-      // $user->save();
-      // $staff = new Staff;
-      // $staff->user_id = $user->id;
-      // $staff->phone = $request->phone;
-      // $staff->address = $request->address;
-      // if($request->post('type_staff') == 0)
-      // {
-      //    $staff->access_level = Staff::ACCESS_LEVEL_MARKET;
-      // }
-      // elseif($request->post('type_staff') == 1)
-      // {
-      //    $staff->access_level = Staff::ACCESS_LEVEL_ACCOUNT;
-      // }
-      // $staff->created_by = Auth::user()->id;
       
       Toastr::success(trans('global.A new Coach has been created'),'Success');
       return back();

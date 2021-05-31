@@ -32,7 +32,14 @@ class RedirectIfAuthenticated
                     //Auth::logout();
                         if ($user->isSuperAdmin()) {
                             return redirect(RouteServiceProvider::HOME);
-                        } elseif (!$user->isSuperAdmin()) {
+                        } 
+                        elseif ($user->isCoachUser()) {
+                            return redirect(RouteServiceProvider::PROFILE);
+                        }
+                        elseif ($user->isRinkUser()) {
+                            return redirect(RouteServiceProvider::ROOT);
+                        } 
+                        else{
                             return redirect(RouteServiceProvider::ROOT);
                         }
                 }

@@ -22,6 +22,8 @@ class RouteServiceProvider extends ServiceProvider
     public const ROOT = '/';
     public const LOGIN = '/login';
 
+    public const PROFILE = '/my-account';
+
     /**
      * The controller namespace for the application.
      *

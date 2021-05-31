@@ -52,6 +52,7 @@ class ProfileController extends Controller
       list($totalSeconds, $extraMilliseconds) = array($m[1], (int)round($m[0] * 1000, 3));
       $txID = date('YmdHis', $totalSeconds) . sprintf('%03d', $extraMilliseconds);
       $txID = substr($txID, 2, 15);
+      return $txID;
   }
 
   

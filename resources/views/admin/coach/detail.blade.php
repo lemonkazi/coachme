@@ -69,7 +69,7 @@
                   'speciality' => array(
                       'label' => __('speciality'),
                       'text' => '',
-                      'related' => 'speciality'
+                      'content_type' => 'userinfos'
                   ),
                   'experience' => array(
                       'label' => __('experience'),
@@ -79,7 +79,7 @@
                   'rink' => array(
                       'label' => __('rink'),
                       'text' => '',
-                      'related' => 'rink'
+                      'content_type' => 'userinfos'
                   ),
                   'certificate' => array(
                       'label' => __('certificate'),
@@ -89,7 +89,7 @@
                   'language' => array(
                       'label' => __('language'),
                       'text' => '',
-                      'related' => 'language'
+                      'content_type' => 'userinfos'
                   ),
                   'price' => array(
                       'label' => __('price'),
@@ -115,13 +115,13 @@
                       //'is_date_format' => 1
                   )
               );
-              // print_r($data['user']->lang_id);
-              // exit();
+              
+
               foreach ($result as $key => $value) {
-                if (!isset($data['user']->$key)) {
-                    continue;
-                }
-                if (!empty($data['user']->$key)) {
+                // if (!isset($data['user']->$key)) {
+                //     continue;
+                // }
+                if (isset($data['user']->$key) && !empty($data['user']->$key)) {
                     if (!empty($result[$key]['is_date_format'])) {
                         $result[$key]['text'] = date('Y年m月d日', $data['user']->$key);
                     } elseif (!empty($result[$key]['is_array'])) {
@@ -131,11 +131,44 @@
                       $result[$key]['text'] = $data['user']->$related->name;
                     } elseif ($key == "avatar_image_path") {
                       $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/user_photo/{$data['user']->$key}' />";
-                    } else {
+                    } 
+                    elseif (!empty($result[$key]['content_type']) && (string)$result[$key] =='speciality') {
+                      $related = (string)$result[$key];
+                      $ooo = $data['user']->userinfos['speciality'][0]->content_name;
+
+                      
+                    
+                      $result[$key]['text'] = $ooo;
+                    }
+
+
+                    else {
                         $result[$key]['text'] = $data['user']->$key;
                     }
                 } else {
+
+                  
+                  if (isset($result[$key]['content_type']) && $result[$key]['content_type'] =='userinfos') {
+                    $related = (string)$result[$key]['content_type'];
+                    if (isset($data['user']->userinfos[$key])) {
+                      $ooo = $data['user']->userinfos[$key];
+                      $specialityaa = '';
+                      foreach($ooo as $row){
+                          $specialityaa .=$row->content_name.',';
+                      }
+                      $speciality = trim($specialityaa,',');
+                      $result[$key]['text'] = $speciality;
+                    } else {
+                      $result[$key]['text'] = '-';
+                    }
+                    
+
+                  } else {
                     $result[$key]['text'] = '-';
+                  }
+                  
+
+                    
                 }
               }
               ?> 

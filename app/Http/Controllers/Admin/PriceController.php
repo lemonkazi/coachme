@@ -161,7 +161,7 @@ class PriceController extends Controller
    * Show the form for creating a new resource.
    *
    */
-  public function create()
+  public function create($id=null)
   {
     $price='';
     $title=trans('global.Add Price');
