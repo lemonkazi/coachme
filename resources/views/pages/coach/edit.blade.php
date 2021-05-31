@@ -20,15 +20,11 @@
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-<<<<<<< HEAD
-                <div class="img-upload mb-5">
-                  <input accept="image/*" type='file' id="imgInp" />
-                  <img id="blah" src="{{ asset('/img/download.png')}}" alt="your image" />
-=======
+
                 <div class="img-upload mb-4">
                   <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
                   <img id="blah" src="{{$BASE_URL}}/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
->>>>>>> cb2d8fd6273c4d4c9dfd09c0bb6e2d1c3835bfe8
+
                   <i class="bi bi-plus-lg"></i>
                 </div>
                 <h2>Basic information</h2>
