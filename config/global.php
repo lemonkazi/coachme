@@ -10,5 +10,5 @@
     'mail_reset_pass_sub' => env('MAIL_RESET_PASSWORD_SUBJECT'),   
     'support_page_url' => env('SUPPORT_PAGE_URL'),
     'password_reset_token_validity' => env('PASSWORD_RESET_TOKEN_VALIDITY'),
-    'email_send' => 0
+    'email_send' => 1
   ];

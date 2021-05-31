@@ -22,7 +22,7 @@
               <div class="row">
                 <div class="img-upload mb-4">
                   <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
-                  <img id="blah" src="{{ asset('/img/download.png')}}" alt="your image" />
+                  <img id="blah" src="{{$BASE_URL}}/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
                   <i class="bi bi-plus-lg"></i>
                 </div>
                 <h2>Basic information</h2>
@@ -74,12 +74,11 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="speciality">Speciality</label>
-                    <select class="form-control" id="speciality" multiple="multiple">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <select class="form-control" id="speciality" name="speciality_id[]" multiple="multiple">
+
+                      @foreach($speciality_all as $id => $value)
+                        <option value="{{$id}}" @foreach($data['user']->userinfos['speciality'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
+                      @endforeach
                     </select>
                     <i class="bi bi-plus-lg"></i>
                   </div>
@@ -111,12 +110,11 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="rinks">Rinks</label>
-                    <select class="form-control" id="rinks" multiple="multiple" >
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+
+                      @foreach($rink_all as $id => $value)
+                        <option value="{{$id}}" @foreach($data['user']->userinfos['rinks'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
+                      @endforeach
                     </select>
                     <i class="bi bi-plus-lg"></i>
                   </div>
@@ -124,12 +122,11 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="language">Language spoken</label>
-                    <select class="form-control" id="language" multiple="multiple">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <select class="form-control" id="language" name="language_id[]" multiple="multiple">
+
+                      @foreach($language_all as $id => $value)
+                        <option value="{{$id}}" @foreach($data['user']->userinfos['languages'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
+                      @endforeach
                     </select>
                     <i class="bi bi-plus-lg"></i>
                   </div>

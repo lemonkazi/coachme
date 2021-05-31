@@ -64,17 +64,16 @@ class PublicContoller extends Controller
     public function coach_edit(Request $request){
       $user = $request->user();
       if (!$user) {
-        return back();
+        return back(RouteServiceProvider::HOME);
       } else {
         $title=trans('global.Edit Coach');
       }
       if ($request->isMethod('post')) {
 
         $data = $request->all();
-
         //$user = $request->user();
 
-        $data['authority'] = User::ACCESS_LEVEL_COACH;
+        //$data['authority'] = User::ACCESS_LEVEL_COACH;
 
 
 
@@ -118,70 +117,80 @@ class PublicContoller extends Controller
           $data['is_verified'] = true;
           //$user = User::create($data);
           if (isset($data['rink_id'])) {
-            $rink = Rink::find($data['rink_id']);
+            foreach ($data['rink_id'] as $key => $rink_id) {
 
-            if (!$rink) {
-               return redirect()->back()->withInput()->withErrors('rink not exist');
-            }            
-            $insert_arr = array();
-            $insert_arr['user_id'] = $user->id;
-            $insert_arr['content_id'] = $rink->id;
-            $insert_arr['content_type'] = 'RINK';
-            $insert_arr['content_name'] = $rink->name;
+              $rink = Rink::find($rink_id);
 
-            $userInfo = UserInfo::where('user_id',$user->id)
-                             ->where('content_id',$rink->id)
-                             ->where('content_type','RINK')
-                             ->first();
-            if (!$userInfo) {
-              $userInfo = UserInfo::firstOrCreate($insert_arr);
-            } else {
-              $userInfo->update($insert_arr);  
+              if (!$rink) {
+                 return redirect()->back()->withInput()->withErrors('rink not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $rink->id;
+              $insert_arr['content_type'] = 'RINK';
+              $insert_arr['content_name'] = $rink->name;
+
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('content_id',$rink->id)
+                               ->where('content_type','RINK')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
             }
             
             
           }
 
           if (isset($data['speciality_id'])) {
-            $speciality = Speciality::find($data['speciality_id']);
+            foreach ($data['speciality_id'] as $key => $speciality_id) {
 
-            if (!$speciality) {
-               return redirect()->back()->withInput()->withErrors('rink not exist');
-            }            
-            $insert_arr = array();
-            $insert_arr['user_id'] = $user->id;
-            $insert_arr['content_id'] = $speciality->id;
-            $insert_arr['content_type'] = 'SPECIALITY';
-            $insert_arr['content_name'] = $speciality->name;
-            $userInfo = UserInfo::where('user_id',$user->id)
-                             ->where('content_id',$speciality->id)
-                             ->where('content_type','SPECIALITY')
-                             ->first();
-            if (!$userInfo) {
-              $userInfo = UserInfo::firstOrCreate($insert_arr);
-            } else {
-              $userInfo->update($insert_arr);  
+              $speciality = Speciality::find($speciality_id);
+
+              if (!$speciality) {
+                 return redirect()->back()->withInput()->withErrors('rink not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $speciality->id;
+              $insert_arr['content_type'] = 'SPECIALITY';
+              $insert_arr['content_name'] = $speciality->name;
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('content_id',$speciality->id)
+                               ->where('content_type','SPECIALITY')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
             }
+            
           }
           if (isset($data['language_id'])) {
-            $language = Language::find($data['speciality_id']);
+            foreach ($data['language_id'] as $key => $language_id) {
+            
+              $language = Language::find($language_id);
 
-            if (!$language) {
-               return redirect()->back()->withInput()->withErrors('rink not exist');
-            }            
-            $insert_arr = array();
-            $insert_arr['user_id'] = $user->id;
-            $insert_arr['content_id'] = $language->id;
-            $insert_arr['content_type'] = 'LANGUAGE';
-            $insert_arr['content_name'] = $language->name;
-            $userInfo = UserInfo::where('user_id',$user->id)
-                             ->where('content_id',$language->id)
-                             ->where('content_type','LANGUAGE')
-                             ->first();
-            if (!$userInfo) {
-              $userInfo = UserInfo::firstOrCreate($insert_arr);
-            } else {
-              $userInfo->update($insert_arr);  
+              if (!$language) {
+                 return redirect()->back()->withInput()->withErrors('rink not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $language->id;
+              $insert_arr['content_type'] = 'LANGUAGE';
+              $insert_arr['content_name'] = $language->name;
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('content_id',$language->id)
+                               ->where('content_type','LANGUAGE')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
             }
           }
           
@@ -192,15 +201,13 @@ class PublicContoller extends Controller
             $image = $request->file('avatar_image_path');
             $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
             
-            $image->move(public_path('coach_photo'), $new_name);
+            $image->move(public_path('user_photo'), $new_name);
             $data['avatar_image_path'] = $new_name;
           }
           if (!$user->update($data)) {
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
           }
-          if (config('global.email_send') == 1) {
-            \Mail::to($user->email)->send(new VerifyMail($user));
-          }
+          
 
           
           //Toastr::success(trans('global.A new Coach has been created'),'Success');
