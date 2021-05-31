@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.frontend')
 @section('title','Home')
 @section('content')
       <!-- MOdal Start-->

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.frondend')
 @section('title','Coach Edit')
 @section('content')
     <div class="coach-edit">

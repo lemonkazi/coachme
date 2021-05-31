@@ -106,17 +106,17 @@
 
                 </div>
                 <div class="col-md-3">
-                    <img src="img/logo.png" alt="">
+                    <img src="{{ asset('img/logo.png') }}" alt="">
                     <span></span>
                     <div class="image-part">
 
                     <ul>
 
 
-                        <li><img src="img/Group 86.png" alt=""></li>
-                        <li><img src="img/Group 87.png" alt=""></li>
-                        <li><img src="img/Group 88.png" alt=""></li>
-                        <li><img src="img/Group 782.png" alt=""></li>
+                        <li><img src="{{ asset('img/Group 86.png') }}" alt=""></li>
+                        <li><img src="{{ asset('img/Group 87.png') }}" alt=""></li>
+                        <li><img src="{{ asset('img/Group 88.png') }}" alt=""></li>
+                        <li><img src="{{ asset('img/Group 782.png') }}" alt=""></li>
 
                     </ul>
                     </div>
