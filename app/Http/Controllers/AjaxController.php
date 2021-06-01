@@ -8,6 +8,7 @@ use App\Models\Experience;
 use App\Models\Certificate;
 use App\Models\Price;
 use App\Models\Language;
+use App\Models\Location;
 
 class AjaxController extends Controller {
 
@@ -90,4 +91,19 @@ class AjaxController extends Controller {
 		
 		return response()->json($result);
    }
+
+   	public function citylist(Request $request){
+   		$data = $request->all();
+
+   		$response = '';
+   		$response .= '<select name="city_id" id ="city_id" class="form-control" style="width: 100%">';
+    	$response .= '<option value="">Select</option>';
+    	$city_all = Location::where('province_id',$data['province_id'])->pluck('name','id')->sortBy("name");
+    	
+      	foreach($city_all as $id => $value) {
+        	$response .= '<option value="' . $id  . '">' . $value  . '</option>';
+      	}
+      	$response .= '</select>';
+   		echo $response; exit;
+   	}
 }

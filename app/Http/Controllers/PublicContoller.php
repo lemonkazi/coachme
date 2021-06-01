@@ -72,7 +72,11 @@ class PublicContoller extends Controller
 
         $data = $request->all();
         //$user = $request->user();
-
+        if (isset($data['is_published']) && $data['is_published'] =='on') {
+          $data['is_published'] = 1;
+        } else {
+          $data['is_published'] = 0;
+        }
         //$data['authority'] = User::ACCESS_LEVEL_COACH;
 
 

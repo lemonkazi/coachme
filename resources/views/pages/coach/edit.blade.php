@@ -43,7 +43,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="province">Province</label>
-                    <select name="province_id" class="form-control" style="width: 100%">
+                    <select name="province_id" id ="province_id" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($province_all as $id => $value)
                           <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $data['user']->province_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
@@ -60,15 +60,21 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="city">City</label>
-                    <select name="city_id" class="form-control" style="width: 100%">
+                    <select name="city_id" id ="city_id" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($city_all as $id => $value)
-                        <option value="{{ $id }}" {{ (old('city_id') ? old('city_id') : $data['user']->city_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @if ($data['user']->city_id === $id || old('city_id') === $id)
+                            <option value="{{ $id }}" {{ (old('city_id') ? old('city_id') : $data['user']->city_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @endif
                       @endforeach
                     </select>
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                      @if ($data['user']->is_published === 1)
+                          <input type="checkbox" name="is_published" checked="" class="form-check-input" id="is_published">
+                      @else
+                          <input type="checkbox" name="is_published" {{ old('is_published') ? 'checked' : '' }} class="form-check-input" id="is_published">
+                      @endif
+                      <label class="form-check-label" for="is_published">Publish my account</label>
                     </div>
                   </div>
                 </div>
@@ -179,6 +185,48 @@
         </div>
       </form>
     </div>
+
+    <script type="text/javascript">
+
+      $(document).ready(function () {
+
+        // add logic change value of result top condition
+        $('#province_id').on('change', function(){
+            var name = $(this).attr('name');
+            $('#city_id').html('');
+            if (name == '') {
+                return false;
+            }
+
+            var value = $(this).val();
+            var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+          
+
+            var data = {
+                province_id: value,
+                _token:csrfToken
+            };
+
+
+            $.ajax({
+              type: 'POST',
+              url: baseUrl + '/ajax_citylist',
+              data: data,
+              //dataType: 'json',
+              success: function (response) {
+                console.log(response);
+                if (response) {
+                    $('#city_id').html(response);
+                } else {
+                    $('#city_id').html('');
+                }
+              },
+              complete: function () {}
+            });
+            return false;
+        });
+      });
+    </script>
     
 @endsection
   
