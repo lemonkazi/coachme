@@ -106,7 +106,7 @@
 
                 </div>
                 <div class="col-md-3">
-                    <img src="{{ asset('img/logo.png') }}" alt="">
+                    <img src="{{ asset('img/footer_logo.png') }}" alt="">
                     <span></span>
                     <div class="image-part">
 
