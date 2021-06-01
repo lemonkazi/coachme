@@ -6,7 +6,8 @@ Route::get('/', 'PublicContoller@index');
 
 Route::get('ajax', function(){ return view('ajax'); });
 
-Route::post('/ajax_delete','AjaxController@delete');
+
+Route::post('ajax_citylist','AjaxController@citylist');
 
 Route::get('/user/login', 'PublicContoller@login');
 //Route::get('login', [Auth\LoginController::class, 'index'])->name('login');
@@ -40,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
 	//
 	
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
-
+	Route::post('/ajax_delete','AjaxController@delete');
 });
 Route::middleware(['auth', 'authority:coach_user'])->group(function () {
 	Route::get('my-account', 'PublicContoller@coach_edit');
