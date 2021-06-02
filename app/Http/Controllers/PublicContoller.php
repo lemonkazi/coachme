@@ -62,33 +62,9 @@ class PublicContoller extends Controller
     }
 
 
-    public function camp_add(Request $request){
-
-      $user = $request->user();
-      if (!$user) {
-        return back(RouteServiceProvider::HOME);
-      } else {
-        $title=trans('global.Add Camp');
-      }
-      $camp ='';
-      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
-      
-
-      return view('pages.camp.edit', [
-          'data'=>
-          [
-               'camp'      =>  $camp,
-               'user'      =>  $user,
-               'Title' =>  $title
-          ]
-      ])
-      ->with(compact('city_all'));
-    }
-
-    public function camp_edit(Request $request){
+    public function camp_edit(){
       return view('pages.camp.edit');
     }
-
     public function coach_edit(Request $request){
       $user = $request->user();
       if (!$user) {
