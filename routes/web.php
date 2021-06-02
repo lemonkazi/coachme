@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // landing page
 Route::get('/', 'PublicContoller@index');
-Route::get('/camp/edit', 'PublicContoller@camp_edit');
+
 
 Route::get('ajax', function(){ return view('ajax'); });
 
@@ -39,7 +39,10 @@ Auth::routes();
 
 // auth
 Route::group(['middleware' => ['auth']], function () {
-	//
+	Route::get('camp/update/{camp}', 'PublicContoller@camp_edit');
+	Route::post('camp/update/{camp}',['as' =>'camp-update','uses' =>'PublicContoller@camp_edit']);
+	Route::get('camp/create', 'PublicContoller@camp_add');
+	Route::post('camp/create',['as' =>'camp-create','uses' =>'PublicContoller@camp_add']);
 	
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 	Route::post('/ajax_delete','AjaxController@delete');
