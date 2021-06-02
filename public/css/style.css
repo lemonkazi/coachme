@@ -830,7 +830,7 @@ footer ul li:first-child {
   margin-left: -136px;
 }
 
-.coach-edit {
+.coach-edit, .camp-edit {
   background-image: url(../img/edit_coach.png);
   background-size: 100%;
   background-repeat: no-repeat;
@@ -838,21 +838,21 @@ footer ul li:first-child {
   padding-top: 4.5%;
 }
 
-.coach-edit .img-upload {
+.coach-edit .img-upload, .camp-edit .img-upload {
   width: 22%;
   position: relative;
 }
 
-.coach-edit .img-upload input {
+.coach-edit .img-upload input, .camp-edit .img-upload input {
   display: none;
 }
 
-.coach-edit .img-upload img {
+.coach-edit .img-upload img, .camp-edit .img-upload img {
   width: 100%;
   border-radius: 50%;
 }
 
-.coach-edit .img-upload .bi-plus-lg {
+.coach-edit .img-upload .bi-plus-lg, .camp-edit .img-upload .bi-plus-lg {
   background: #233C50;
   border-radius: 50%;
   padding: 5px 10px;
@@ -860,50 +860,50 @@ footer ul li:first-child {
   top: 76%;
 }
 
-.coach-edit h2 {
+.coach-edit h2, .camp-edit h2 {
   font: normal normal bold 24px Raleway;
   color: #8AC8DC;
 }
 
-.coach-edit label {
+.coach-edit label, .camp-edit label {
   font: normal normal bold 18px Raleway;
   letter-spacing: 1.6px;
   color: #233C50;
 }
 
-.coach-edit input, .coach-edit select, .coach-edit textarea {
+.coach-edit input, .coach-edit select, .coach-edit textarea, .camp-edit input, .camp-edit select, .camp-edit textarea {
   background: #D4E8F3 0% 0% no-repeat padding-box;
   border-radius: 8px;
 }
 
-.coach-edit .btn-group, .coach-edit .btn-group-vertical {
+.coach-edit .btn-group, .coach-edit .btn-group-vertical, .camp-edit .btn-group, .camp-edit .btn-group-vertical {
   width: 100%;
 }
 
-.coach-edit span.multiselect-native-select {
+.coach-edit span.multiselect-native-select, .camp-edit span.multiselect-native-select {
   display: block;
 }
 
-.coach-edit .bi-plus-lg, .coach-edit .bi-chevron-compact-down {
+.coach-edit .bi-plus-lg, .coach-edit .bi-chevron-compact-down, .camp-edit .bi-plus-lg, .camp-edit .bi-chevron-compact-down {
   position: absolute;
   top: 37px;
   right: 22px;
 }
 
-.coach-edit .custom-select {
+.coach-edit .custom-select, .camp-edit .custom-select {
   background: #D4E8F3 0% 0% no-repeat padding-box;
   border: none;
   text-align: left;
   border-radius: 8px;
 }
 
-.coach-edit #create-camp {
+.coach-edit #create-camp, .camp-edit #create-camp {
   background: #233C50 0% 0% no-repeat padding-box;
   border-radius: 29px;
   width: 227px;
 }
 
-.coach-edit #cancel {
+.coach-edit #cancel, .camp-edit #cancel {
   font: normal normal medium 20px/27px Raleway;
   letter-spacing: 0px;
   color: #7B8A96;
@@ -912,10 +912,58 @@ footer ul li:first-child {
   border: none;
 }
 
-.coach-edit #save {
+.coach-edit #save, .camp-edit #save {
   background: #8AC8DC 0% 0% no-repeat padding-box;
   border-radius: 29px;
   width: 178px;
   border: none;
+}
+
+.camp-edit {
+  background: #F3F6FB;
+}
+
+.camp-edit .calender i {
+  position: absolute;
+  left: 22px;
+  top: 38px;
+}
+
+.camp-edit .calender input {
+  padding-left: 30px;
+}
+
+.camp-edit i {
+  color: #7AB7CC;
+}
+
+.camp-edit .fileUp {
+  display: none;
+}
+
+.camp-edit .fa-file-image {
+  font-size: 48px;
+}
+
+.camp-edit .bi-plus-circle {
+  color: #233C50;
+  position: relative;
+  left: -14px;
+  top: 10px;
+}
+
+.camp-edit .coachimg .img-upload {
+  width: 100%;
+}
+
+.camp-edit .coachimg p {
+  font: normal normal 600 14px Raleway;
+  letter-spacing: 0px;
+  color: #8AC8DC;
+  padding-top: 10px;
+}
+
+.camp-edit .pt-10 {
+  padding-top: 10%;
 }
 /*# sourceMappingURL=style.css.map */

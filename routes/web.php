@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // landing page
 Route::get('/', 'PublicContoller@index');
+Route::get('/camp/edit', 'PublicContoller@camp_edit');
 
 Route::get('ajax', function(){ return view('ajax'); });
 

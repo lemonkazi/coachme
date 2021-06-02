@@ -727,7 +727,7 @@ footer ul li:first-child {
 }
 
 //coach edit
-.coach-edit{
+.coach-edit,.camp-edit{
     background-image: url(../img/edit_coach.png);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -800,5 +800,48 @@ footer ul li:first-child {
         border-radius: 29px;
         width: 178px;
         border: none;
+    }
+}
+.camp-edit{
+    background: #F3F6FB;
+    .calender{
+        i{
+            position: absolute;
+            left: 22px;
+            top: 38px;
+        }
+        input{
+            padding-left: 30px;
+        }
+    }
+    i{
+        color: #7AB7CC;
+    }
+    .fileUp{
+        display: none;
+    }
+    .fa-file-image{
+       font-size: 48px;
+    }
+    .bi-plus-circle{
+        color: #233C50;
+        position: relative;
+        left: -14px;
+        top: 10px;
+    }
+    .coachimg{
+        .img-upload{
+            width: 100%;
+        }
+        p{
+            font: normal normal 600 14px Raleway;
+            letter-spacing: 0px;
+            color: #8AC8DC;
+            padding-top: 10px;
+        }
+
+    }
+    .pt-10{
+        padding-top: 10%;
     }
 }

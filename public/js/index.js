@@ -124,17 +124,32 @@ $('.slider').slick({
     //multiselect 
     $('#language,#rinks,#speciality').multiselect();
     //img preview
-    imgInp.onchange = evt => {
-      const [file] = imgInp.files
-      if (file) {
-        blah.src = URL.createObjectURL(file)
-      }
-    }
+    // imgInp.onchange = evt => {
+    //   const [file] = imgInp.files
+    //   if (file) {
+    //     blah.src = URL.createObjectURL(file)
+    //   }
+    // }
     //file input trigger
     $(".img-upload .bi-plus-lg").click(function(){
-      $(".img-upload input").trigger("click");
+      $(this).siblings('input').trigger("click");
+
     });
+    $('.upClick,.fa-file-image').click(function(){
+      $(this).prev().trigger('click');
+    });
+
+    //daterangepicker
+    $('input[name="dates"]').daterangepicker();
+
+
   });
 
-  
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
       
