@@ -1,6 +1,7 @@
 @extends('layouts.frontend')
 @section('title','camp edit')
 @section('content')
+
     <div class="camp-edit">
       <form action=""
        method="POST" enctype="multipart/form-data">

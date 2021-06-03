@@ -830,6 +830,16 @@ footer ul li:first-child {
   margin-left: -136px;
 }
 
+i {
+  color: #7AB7CC;
+}
+
+label {
+  font: normal normal bold 18px Raleway;
+  letter-spacing: 1.6px;
+  color: #233C50;
+}
+
 .coach-edit, .camp-edit, .program-edit {
   background-image: url(../img/edit_coach.png);
   background-size: 100%;
@@ -863,12 +873,6 @@ footer ul li:first-child {
 .coach-edit h2, .camp-edit h2, .program-edit h2 {
   font: normal normal bold 24px Raleway;
   color: #8AC8DC;
-}
-
-.coach-edit label, .camp-edit label, .program-edit label {
-  font: normal normal bold 18px Raleway;
-  letter-spacing: 1.6px;
-  color: #233C50;
 }
 
 .coach-edit input, .coach-edit select, .coach-edit textarea, .camp-edit input, .camp-edit select, .camp-edit textarea, .program-edit input, .program-edit select, .program-edit textarea {
@@ -949,10 +953,6 @@ footer ul li:first-child {
   padding-left: 30px;
 }
 
-.camp-edit i {
-  color: #7AB7CC;
-}
-
 .camp-edit .fileUp {
   display: none;
 }
@@ -1003,5 +1003,87 @@ footer ul li:first-child {
 
 .program-edit .calender input {
   padding-left: 30px;
+}
+
+.program-details {
+  background: #F3F6FB;
+  background-image: url(../img/edit_program.png);
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  padding-top: 4.5%;
+}
+
+.program-details p {
+  font: normal normal medium Raleway;
+  font-size: 16px;
+  letter-spacing: 0px;
+  color: #233C50;
+}
+
+.program-details .btn-custom {
+  background: #A7BE79;
+}
+
+.program-details h1 {
+  font: normal normal 800 50px/67px Raleway;
+  letter-spacing: 0px;
+  color: #233C50;
+}
+
+.program-details h4 {
+  font: normal normal 600 30px/40px Raleway;
+  letter-spacing: 0px;
+  color: #7AB7CC;
+}
+
+.program-details .gray {
+  color: #7B8A96;
+}
+
+.program-details .program-slider .slick-arrow {
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 0 -40px;
+  line-height: 50px;
+  margin-top: -25px;
+  border: none;
+  /* background: transparent; */
+  color: #fff;
+  /* font-family: monospace; */
+  /* font-size: 5rem; */
+  z-index: 300;
+  outline: none;
+  background: #D0E6A5;
+  border-radius: 50%;
+  padding: 0 14px;
+  font-size: 23px;
+}
+
+.program-details .program-slider img {
+  width: 100%;
+}
+
+.program-details .program-slider .bi-arrow-left {
+  left: 50px;
+  text-align: left;
+}
+
+.program-details .program-slider .bi-arrow-right {
+  right: 50px;
+  text-align: right;
+}
+
+.program-details .program-slider .slick-dots li button:before {
+  font-size: 10px;
+  opacity: .5;
+  color: #8AC8DC;
+}
+
+.program-details .program-slider .slick-dots li.slick-active button:before {
+  opacity: .75;
+  color: #8AC8DC;
 }
 /*# sourceMappingURL=style.css.map */
