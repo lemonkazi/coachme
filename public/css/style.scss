@@ -727,7 +727,7 @@ footer ul li:first-child {
 }
 
 //coach edit
-.coach-edit,.camp-edit{
+.coach-edit,.camp-edit,.program-edit{
     background-image: url(../img/edit_coach.png);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -802,6 +802,7 @@ footer ul li:first-child {
         border: none;
     }
 }
+//camp-edit
 .camp-edit{
     background: #F3F6FB;
     .calender{
@@ -844,4 +845,8 @@ footer ul li:first-child {
     .pt-10{
         padding-top: 10%;
     }
+}
+//program-edit
+.program-edit{
+    
 }
