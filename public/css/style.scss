@@ -801,12 +801,21 @@ footer ul li:first-child {
         width: 178px;
         border: none;
     }
+    .fa-file-image{
+        font-size: 48px;
+    }
+    .bi-plus-circle{
+        color: #233C50;
+        position: relative;
+        left: -14px;
+        top: 10px;
+    }
 }
 //camp-edit
 .camp-edit{
     background: #F3F6FB;
     background-image: url(../img/camp_edit.png);
-    background-size: 100%;
+    background-size: auto;
     background-repeat: no-repeat;
     background-position: bottom center;
     padding-top: 4.5%;
@@ -825,16 +834,7 @@ footer ul li:first-child {
     }
     .fileUp{
         display: none;
-    }
-    .fa-file-image{
-       font-size: 48px;
-    }
-    .bi-plus-circle{
-        color: #233C50;
-        position: relative;
-        left: -14px;
-        top: 10px;
-    }
+    } 
     .coachimg{
         .img-upload{
             width: 100%;
@@ -853,5 +853,31 @@ footer ul li:first-child {
 }
 //program-edit
 .program-edit{
-    
+    background: #F3F6FB;
+    background-image: url(../img/edit_program.png);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    padding-top: 4.5%;
+    i{
+        color: #7AB7CC;
+    } 
+    h6{
+        font: normal normal bold 18px Raleway;
+        letter-spacing: 1.6px;
+        color: #233C50;
+    }
+    .mt-37{
+        margin-top: 37px;
+    }
+    .calender{
+        i{
+            position: absolute;
+            left: 22px;
+            top: 38px;
+        }
+        input{
+            padding-left: 30px;
+        }
+    }
 }

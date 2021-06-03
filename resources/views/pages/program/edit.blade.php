@@ -38,7 +38,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="Price">Price <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="Price" name="dates" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="Price" name="" value="" required aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -49,9 +49,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="row">
-                <h6>Basic information</h6>
+            <div class="col-md-3 ">
+              <div class="row ">
+                <h6 class="mb-3">Schedule</h6>
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="name">Period <span class="input-required">*</span></label>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="location">Level</label>
+                    <label for="location">Location</label>
                     <select name="province_id" id ="location" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       <option value="">1</option>
@@ -70,14 +70,60 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="dates">Window of registration <span class="input-required">*</span></label>
-                    <div class="calender">
-                      <i class="fas fa-calendar-alt"></i>
-                      <input type="text" class="form-control" id="dates" name="dates" value="" required aria-describedby="emailHelp" >
-                    </div>
+                    <label for="dates">Starting age <span class="input-required">*</span></label>
+                    <select name="province_id" id ="location" class="form-control" style="width: 100%">
+                      <option value="">Select</option>
+                      <option value="">1</option>
+                    </select>
+                    <i class="bi bi-chevron-compact-down"></i>
                     
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="col-md-3 mt-37">
+              <div class="form-group">
+                <label for="name">Schedule <span class="input-required">*</span></label>
+                <textarea class="form-control" id="about" name ="about"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <h2>Contacts</h2>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="name">Phone <span class="input-required">*</span></label>
+                <input type="text" class="form-control" id="name" name="name" value="" required aria-describedby="emailHelp" >
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="name">WhatsApp <span class="input-required">*</span></label>
+                <input type="text" class="form-control" id="name" name="name" value="" required aria-describedby="emailHelp" >
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="name">Email <span class="input-required">*</span></label>
+                <input type="text" class="form-control" id="name" name="name" value="" required aria-describedby="emailHelp" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h2>Photos</h2>
+              <div class="img-upload mb-4">
+                <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
+                <i class="far fa-file-image"></i>
+                <i class="bi bi-plus-circle"></i>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="offset-md-8 col-md-4 mb-4">
+              <div class="btn-group">
+                <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
+                <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
               </div>
             </div>
           </div>

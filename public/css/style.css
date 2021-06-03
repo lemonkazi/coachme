@@ -919,10 +919,21 @@ footer ul li:first-child {
   border: none;
 }
 
+.coach-edit .fa-file-image, .camp-edit .fa-file-image, .program-edit .fa-file-image {
+  font-size: 48px;
+}
+
+.coach-edit .bi-plus-circle, .camp-edit .bi-plus-circle, .program-edit .bi-plus-circle {
+  color: #233C50;
+  position: relative;
+  left: -14px;
+  top: 10px;
+}
+
 .camp-edit {
   background: #F3F6FB;
   background-image: url(../img/camp_edit.png);
-  background-size: 100%;
+  background-size: auto;
   background-repeat: no-repeat;
   background-position: bottom center;
   padding-top: 4.5%;
@@ -946,17 +957,6 @@ footer ul li:first-child {
   display: none;
 }
 
-.camp-edit .fa-file-image {
-  font-size: 48px;
-}
-
-.camp-edit .bi-plus-circle {
-  color: #233C50;
-  position: relative;
-  left: -14px;
-  top: 10px;
-}
-
 .camp-edit .coachimg .img-upload {
   width: 100%;
 }
@@ -970,5 +970,38 @@ footer ul li:first-child {
 
 .camp-edit .pt-10 {
   padding-top: 10%;
+}
+
+.program-edit {
+  background: #F3F6FB;
+  background-image: url(../img/edit_program.png);
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  padding-top: 4.5%;
+}
+
+.program-edit i {
+  color: #7AB7CC;
+}
+
+.program-edit h6 {
+  font: normal normal bold 18px Raleway;
+  letter-spacing: 1.6px;
+  color: #233C50;
+}
+
+.program-edit .mt-37 {
+  margin-top: 37px;
+}
+
+.program-edit .calender i {
+  position: absolute;
+  left: 22px;
+  top: 38px;
+}
+
+.program-edit .calender input {
+  padding-left: 30px;
 }
 /*# sourceMappingURL=style.css.map */
