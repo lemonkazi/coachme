@@ -1,22 +1,11 @@
 @extends('layouts.frontend')
-@section('title',$data['Title'])
+@section('title','camp edit')
 @section('content')
-    <div class="camp-edit">
-      <form action="{{!empty($data['camp']) ? route('camp-update', ['camp' => $data['camp']->id]): route('camp-create')}}"
-       method="POST" enctype="multipart/form-data">
-       @csrf
-        <div class="container">
-          {{session('msg')}}
 
-          @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-          @endif
+    <div class="camp-edit">
+      <form action=""
+       method="POST" enctype="multipart/form-data">
+        <div class="container">
           <div class="row">
             <div class="col-md-10">
               <div class="row">
@@ -24,7 +13,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="name">Name of the camp <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{!empty($data['camp']) ? old('name', $data['camp']->name) : old('name')}}" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="name" name="name" value="" required aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -126,11 +115,11 @@
 
                 </div>
                 <div class="offset-md-8 col-md-4 mb-4">
-                    <div class="btn-group">
-                      <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
-                      <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
-                    </div>
+                  <div class="btn-group">
+                    <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
+                    <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
                   </div>
+                </div>
               </div>
             </div>
           </div>

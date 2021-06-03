@@ -725,9 +725,17 @@ footer ul li:first-child {
 .second-row {
     margin-left: -136px;
 }
-
+//common
+i{
+    color: #7AB7CC;
+}
+label{
+    font: normal normal bold 18px Raleway;
+    letter-spacing: 1.6px;
+    color: #233C50;
+}
 //coach edit
-.coach-edit,.camp-edit{
+.coach-edit,.camp-edit,.program-edit{
     background-image: url(../img/edit_coach.png);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -756,11 +764,7 @@ footer ul li:first-child {
         font: normal normal bold 24px Raleway;
         color: #8AC8DC;
     }
-    label{
-        font: normal normal bold 18px Raleway;
-        letter-spacing: 1.6px;
-        color: #233C50;
-    }
+
     input,select,textarea{
         background: #D4E8F3 0% 0% no-repeat padding-box;
         border-radius: 8px;
@@ -801,9 +805,24 @@ footer ul li:first-child {
         width: 178px;
         border: none;
     }
+    .fa-file-image{
+        font-size: 48px;
+    }
+    .bi-plus-circle{
+        color: #233C50;
+        position: relative;
+        left: -14px;
+        top: 10px;
+    }
 }
+//camp-edit
 .camp-edit{
     background: #F3F6FB;
+    background-image: url(../img/camp_edit.png);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    padding-top: 4.5%;
     .calender{
         i{
             position: absolute;
@@ -814,21 +833,9 @@ footer ul li:first-child {
             padding-left: 30px;
         }
     }
-    i{
-        color: #7AB7CC;
-    }
     .fileUp{
         display: none;
-    }
-    .fa-file-image{
-       font-size: 48px;
-    }
-    .bi-plus-circle{
-        color: #233C50;
-        position: relative;
-        left: -14px;
-        top: 10px;
-    }
+    } 
     .coachimg{
         .img-upload{
             width: 100%;
@@ -843,5 +850,109 @@ footer ul li:first-child {
     }
     .pt-10{
         padding-top: 10%;
+    }
+}
+//program-edit
+.program-edit{
+    background: #F3F6FB;
+    background-image: url(../img/edit_program.png);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    padding-top: 4.5%;
+    i{
+        color: #7AB7CC;
+    } 
+    h6{
+        font: normal normal bold 18px Raleway;
+        letter-spacing: 1.6px;
+        color: #233C50;
+    }
+    .mt-37{
+        margin-top: 37px;
+    }
+    .calender{
+        i{
+            position: absolute;
+            left: 22px;
+            top: 38px;
+        }
+        input{
+            padding-left: 30px;
+        }
+    }
+}
+//program details
+.program-details{
+    background: #F3F6FB;
+    background-image: url(../img/edit_program.png);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    padding-top: 4.5%;
+    p{
+        font: normal normal medium Raleway;
+        font-size: 16px;
+        letter-spacing: 0px;
+        color: #233C50;
+    }
+    .btn-custom{
+        background: #A7BE79;
+    }
+    h1{
+        font: normal normal 800 50px/67px Raleway;
+        letter-spacing: 0px;
+        color: #233C50;
+    }
+    h4{
+        font: normal normal 600 30px/40px Raleway;
+        letter-spacing: 0px;
+        color: #7AB7CC;
+    }
+    .gray{
+        color: #7B8A96;
+    }
+    .program-slider{
+        .slick-arrow {
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 50px;
+            margin: 0 -40px;
+            line-height: 50px;
+            margin-top: -25px;
+            border: none;
+            /* background: transparent; */
+            color: #fff;
+            /* font-family: monospace; */
+            /* font-size: 5rem; */
+            z-index: 300;
+            outline: none;
+            background: #D0E6A5;
+            border-radius: 50%;
+            padding: 0 14px;
+            font-size: 23px;
+        }
+        img{
+            width: 100%;
+        }
+        .bi-arrow-left {
+            left: 50px;
+            text-align: left;
+        }
+    
+        .bi-arrow-right {
+            right: 50px;
+            text-align: right;
+        }
+        .slick-dots li button:before {
+            font-size: 10px;
+            opacity: .5;
+            color: #8AC8DC;
+        }
+        .slick-dots li.slick-active button:before {
+            opacity: .75;
+            color: #8AC8DC;
+        }
     }
 }

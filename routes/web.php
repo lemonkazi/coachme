@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 // landing page
 Route::get('/', 'PublicContoller@index');
+Route::get('/program/edit', 'PublicContoller@program_edit');
+Route::get('/program/details', 'PublicContoller@program_details');
 
 
 
@@ -210,6 +212,21 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\TestimonialController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\TestimonialController@update']);
+  	});
+
+
+
+  	//campType route
+  	Route::get('camp-types',[App\Http\Controllers\Admin\CampTypeController::class, 'show']);
+	Route::get('camp-types/{campType}',[App\Http\Controllers\Admin\CampTypeController::class, 'show']);
+	
+	Route::group(['prefix' =>'camp-type', 'as'=>'camp-type.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\CampTypeController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\CampTypeController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CampTypeController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CampTypeController@update']);
   	});
 });
 
