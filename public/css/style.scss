@@ -805,6 +805,11 @@ footer ul li:first-child {
 //camp-edit
 .camp-edit{
     background: #F3F6FB;
+    background-image: url(../img/camp_edit.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    padding-top: 4.5%;
     .calender{
         i{
             position: absolute;
