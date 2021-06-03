@@ -267,6 +267,24 @@ return [
     'Add Speciality' => 'Add Speciality',
     'A new Speciality has been created' => 'A new Speciality has been created',
     'Speciality has been updated' => 'Speciality has been updated',
-    'LABEL_USER_CHANGE_PASSWORD' => 'Change Password'
+    'LABEL_USER_CHANGE_PASSWORD' => 'Change Password',
+
+
+    'All Camp Types' => 'All Camp Types',
+    'Camp Type Detail' => 'Camp Type Detail',
+    'Camp Type List' => 'Camp Type List',
+    'Edit Camp Type' => 'Edit Camp Type',
+    'Add Camp Type' => 'Add Camp Type',
+    'A new Camp Type has been created' => 'A new Camp Type has been created',
+    'Camp Type has been updated' => 'Camp Type has been updated',
+
+    'All Camps' => 'All Camps',
+    'Camp Detail' => 'Camp Detail',
+    'Camp List' => 'Camp List',
+    'Edit Camp' => 'Edit Camp',
+    'Add Camp' => 'Add Camp',
+    'A new Camp has been created' => 'A new Camp has been created',
+    'Camp has been updated' => 'Camp has been updated',
+
 
 ];

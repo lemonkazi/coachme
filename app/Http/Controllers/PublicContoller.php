@@ -17,6 +17,8 @@ use App\Models\Price;
 use App\Models\Speciality;
 use App\Models\Province;
 use App\Models\Location;
+use App\Models\CampType;
+use App\Models\Level;
 use View;
 use Auth;
 use App\Mail\VerifyMail;
@@ -71,8 +73,16 @@ class PublicContoller extends Controller
       } else {
         $title=trans('global.Add Camp');
       }
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        print_r($data);
+        exit();
+      }
       $camp ='';
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       
 
       return view('pages.camp.edit', [
@@ -83,7 +93,7 @@ class PublicContoller extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('city_all'));
+      ->with(compact('city_all','camp_type_all','level_all'));
     }
 
     public function camp_edit(Request $request){

@@ -1,11 +1,23 @@
 @extends('layouts.frontend')
-@section('title','camp edit')
+@section('title',$data['Title'])
 @section('content')
 
     <div class="camp-edit">
-      <form action=""
+       <form action="{{!empty($data['camp']) ? route('camp-update', ['camp' => $data['camp']->id]): route('camp-create')}}"
        method="POST" enctype="multipart/form-data">
+       @csrf
         <div class="container">
+          {{session('msg')}}
+
+          @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+          @endif
           <div class="row">
             <div class="col-md-10">
               <div class="row">
@@ -13,15 +25,17 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="name">Name of the camp <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="name" name="name" value="{{!empty($data['camp']) ? old('name', $data['camp']->name) : old('name')}}" required aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="location">Location</label>
-                    <select name="province_id" id ="location" class="form-control" style="width: 100%">
+                    <select name="location_id" id ="location" class="form-control" style="width: 100%">
                       <option value="">Select</option>
-                      <option value="">1</option>
+                      @foreach($city_all as $id => $value)
+                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $data['camp']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                      @endforeach
                     </select>
                     <i class="bi bi-chevron-compact-down"></i>
                   </div>
@@ -29,13 +43,29 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="level">Level</label>
-                    <select name="province_id" id ="level" class="form-control" style="width: 100%">
+                    <select name="level_id" id ="level" class="form-control" style="width: 100%">
                       <option value="">Select</option>
-                      <option value="">1</option>
+                      @foreach($level_all as $id => $value)
+                        <option value="{{ $id }}" {{ (old('level_id') ? old('level_id') : $data['camp']->level_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                      @endforeach
                     </select>
                     <i class="bi bi-chevron-compact-down"></i>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="camp-type">Camp Type</label>
+                      <select name="camp_type_id" id ="camp_type_id" class="form-control" style="width: 100%">
+                        <option value="">Select</option>
+                        @foreach($camp_type_all as $id => $value)
+                          <option value="{{ $id }}" {{ (old('camp_type_id') ? old('camp_type_id') : $data['camp']->camp_type_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                      </select>
+                      <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                  </div>
+                </div> 
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Dates <span class="input-required">*</span></label>
@@ -43,19 +73,22 @@
                       <i class="fas fa-calendar-alt"></i>
                       <input type="text" class="form-control" id="dates" name="dates" value="" required aria-describedby="emailHelp" >
                     </div>
+
+                    <input type="hidden" name="start_date">
+                    <input type="hidden" name="end_date">
                     
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Price <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="dates" name="name" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="price" name="price" value="{{!empty($data['camp']) ? old('price', $data['camp']->price) : old('price')}}"  required aria-describedby="emailHelp" >
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="dates">Schedule <span class="input-required">*</span></label>
+                    <label for="dates">Schedule</label>
                     <input accept="application/pdf,application/vnd.ms-excel" name="avatar_image_path" type='file' class="fileUp" />
                     <div class="upClick">
                       <i class="bi bi-file-earmark-arrow-up-fill"></i> <span>Upload a PDF</span>
@@ -74,26 +107,26 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Phone <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="dates" name="name" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="contacts" name="contacts" value="{{!empty($data['camp']) ? old('contacts', $data['camp']->contacts) : old('contacts')}}" required aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">WhatsApp <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="dates" name="name" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{!empty($data['camp']) ? old('whatsapp', $data['camp']->whatsapp) : old('whatsapp')}}" required aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Email <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="dates" name="name" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="email" name="email" value="{{!empty($data['camp']) ? old('email', $data['camp']->email) : old('email')}}" required aria-describedby="emailHelp" >
                   </div>
                 </div>
 
                 <div class="col-md-8">
                   <div class="form-group">
                   <label for="about">About camp</label>
-                    <textarea class="form-control" id="about" name ="about"></textarea>
+                    <textarea class="form-control" id="about" name ="about">{{!empty($data['camp']) ? old('about', $data['camp']->about) : old('about')}}</textarea>
                   </div>
                   <label>Coaches</label>
                   <div class="col-md-10 coachimg">
@@ -106,7 +139,7 @@
                         </div>
                       </div>
                       <div class="col-md-8 pt-10">
-                        <input type="text" class="form-control" id="dates" name="name" value="" required aria-describedby="emailHelp" >
+                        <input type="text" class="form-control" name="name" value="" required aria-describedby="emailHelp" >
                         <p>Link to an existing coach account</p>
                       </div>
                     </div>

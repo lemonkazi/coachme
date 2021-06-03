@@ -145,7 +145,20 @@ $('.program-slider').slick({
     });
 
     //daterangepicker
-    $('input[name="dates"]').daterangepicker();
+    $('input[name="dates"]').daterangepicker({
+      locale: {
+        format: 'YYYY-MM-DD'
+      }
+    });
+
+    $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
+      console.log(picker.startDate.format('YYYY-MM-DD'));
+      console.log(picker.endDate.format('YYYY-MM-DD'));
+
+      //[startDate, endDate] = $('.date_range').val().split(' - ');
+      $('input[name="start_date"]').val(picker.startDate.format('YYYY-MM-DD'));
+      $('input[name="end_date"]').val(picker.endDate.format('YYYY-MM-DD'));
+    });
 
 
   });
