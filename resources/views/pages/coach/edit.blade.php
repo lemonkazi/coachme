@@ -171,7 +171,7 @@
                   </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                  <button type="submit" id="create-camp" class="form-control btn btn-primary submit px-3">Create a camp</button>
+                  <a href="{{route('camp-create')}}" id="create-camp" class="form-control btn btn-primary submit px-3">Create a camp</a>
                 </div>
                 <div class="offset-md-4 col-md-4 mb-4">
                   <div class="btn-group">

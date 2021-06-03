@@ -61,6 +61,7 @@ class PublicContoller extends Controller
       ->with(compact('authority','testimonials'));
     }
 
+
     public function camp_edit(){
       return view('pages.camp.edit');
     }
