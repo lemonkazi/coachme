@@ -144,8 +144,13 @@ $('.program-slider').slick({
       $(this).prev().trigger('click');
     });
 
+    var today = $('input[name="start_date"]').val();
+    var endDate = $('input[name="end_date"]').val();
+
     //daterangepicker
     $('input[name="dates"]').daterangepicker({
+      startDate: today, // after open picker you'll see this dates as picked
+      endDate: endDate,
       locale: {
         format: 'YYYY-MM-DD'
       }

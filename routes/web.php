@@ -46,7 +46,7 @@ Auth::routes();
 
 // auth
 Route::group(['middleware' => ['auth']], function () {
-	Route::get('camp/update/{camp}', 'PublicContoller@camp_edit');
+	Route::get('camp/update/{camp}',['as' =>'camp-update','uses' =>'PublicContoller@camp_edit']);
 	Route::post('camp/update/{camp}',['as' =>'camp-update','uses' =>'PublicContoller@camp_edit']);
 	Route::get('camp/create', 'PublicContoller@camp_add');
 	Route::post('camp/create',['as' =>'camp-create','uses' =>'PublicContoller@camp_add']);

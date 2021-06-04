@@ -281,7 +281,7 @@
             });
 
             ;(function($){
-                $('#coach_chosen').chosen({});
+                $('#coach_chosen').chosen({width: '100%'});
                 $('.chosen-search input').autocomplete({
                     minLength: 3,
                     source: function( request, response ) {
@@ -295,11 +295,12 @@
                             dataType: "json",
                             beforeSend: function(){ $('ul.chosen-results').empty(); $("#coach_chosen").empty(); }
                         }).done(function( data ) {
-                            
-                                response( $.map( data, function( item ) {
+                            $('#coach_chosen').append('<option value=""></option>');
+                                response( $.map( data, function( item, index ) {
                                     //console.log(item);
-                                    $('#coach_chosen').append('<option value="' + item + '">' + item + '</option>');
+                                    $('#coach_chosen').append('<option data-src="'+item.avatar_image_path+'" value="' + item.id + '">' + item.name + '</option>');
                                 }));
+
 
                                $("#coach_chosen").trigger("chosen:updated");
                                //$("#coach_chosen").chosen();
@@ -308,56 +309,27 @@
                 });
 
                 $(document).on("change", "#coach_chosen", function () {
-                    //console.log($(this).parent().remove());
-                    // $('<p><label for="p_scnts"><input type="text" id="p_scnt" size="20" name="p_scnt_' + i +'" value="" placeholder="Input Value" /></label> <a href="#" id="remScnt">Remove</a></p>').appendTo(scntDiv);
-                    //$('.coachimg').append('<div class="row"><div class="col-md-4"><div class="img-upload mb-4"><input accept="image/*" name="avatar_image_path" type="file" id="imgInp" onchange="loadFile(event)"/><img id="output" src="img/patrick_chan.png" alt="PAT"><i class="bi bi-plus-lg"></i></div></div><div class="col-md-8 pt-10"><select data-placeholder="Choose a Coach..." id="coach_chosen1" name="coaches[]" class="chosen-select" style="width:350px;" tabindex="4"><option value=""></option></select>  <p>Link to an existing coach account</p></div></div>');
-                        console.log('aaa');
-                    
-                    var newSelect = $("#coachimg").clone();
+                    console.log($(this).find('option').filter(':selected').attr('data-src'));
 
+                    var newSelect = $("#coachimg").clone();
+                    var src = $(this).find('option').filter(':selected').attr('data-src');
+                    var selectedValue = $(this).find('option').filter(':selected').attr('value');
+                    var src ="<img id='output' src='"+baseUrl+"/user_photo/"+src+"' />";
+                    src+="<input type='hidden' name='coaches[]' value='"+selectedValue+"'/>";
+                    newSelect.find('.output').html(src);
+                    //document.getElementById("output").src = src;
                     $("#coachimg-wrapper").append(newSelect);
                     $('#coach_chosen').val("");
-                    $('#coach_chosen').chosen({});
+                    $('#coach_chosen').chosen({width: '100%'});
                     $("#coach_chosen").trigger("chosen:updated");
 
-                    
-                    //$('#coach_chosen1').chosen({});
-
-
-                    // $('.chosen-search input').autocomplete({
-                    //     minLength: 3,
-                    //     source: function( request, response ) {
-
-                    //         //var items="";
-                    //         //items+="<option value='aaaa'>aaaa</option>";
-                    //         console.log('sss');
-                    //         $.ajax({
-                    //             url: baseUrl + '/filter_coach',
-                    //             data: {param:request.term},
-                    //             dataType: "json",
-                    //             beforeSend: function(){ $('ul.chosen-results').empty(); $("#coach_chosen").empty(); }
-                    //         }).done(function( data ) {
-                                
-                    //                 response( $.map( data, function( item ) {
-                    //                     //console.log(item);
-                    //                     $('#coach_chosen1').append('<option value="' + item + '">' + item + '</option>');
-                    //                 }));
-
-                    //                $("#coach_chosen1").trigger("chosen:updated");
-                    //                //$("#coach_chosen").chosen();
-                    //         });
-                    //     }
-                    // });
                 });
 
-                // $("#addMore").click(function(e) {
-                //     var newSelect = $("#coachimg").clone();
-
-                //     $("#coachimg-wrapper").append(newSelect);
-                //     $('#coach_chosen').val("");
-                //     $('#coach_chosen').chosen({});
-                //     $("#coach_chosen").trigger("chosen:updated");
-                // });
+                $(document).on("click", ".remove", function () {
+                    //$('#coachimg').on('click', '.remove', function() {
+                    $(this).parent().remove();
+                    return false; //prevent form submission
+                });
                 
             })(jQuery);
         </script>

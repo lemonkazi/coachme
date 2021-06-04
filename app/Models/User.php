@@ -424,6 +424,54 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
+    /**
+     * Search user based request parameters
+     * 
+     * @param array $params
+     * @return $query
+     */
+    public function coach_filter($params)
+    {
+        $query = $this->newQuery();
+
+        $authUser = request()->user();
+
+        // if ($authUser) {
+        //     $query->whereNotIn('id', [$authUser->id]);
+        //     if ($authUser->isRinkUser()) {
+        //         $query->where('rink_id', '=', $authUser->rink_id);
+        //     }
+        // }
+
+        
+
+        
+        $list_authority = array(self::ACCESS_LEVEL_COACH);
+        
+        $query->whereIn('authority', $list_authority);
+        if (empty($params) || !is_array($params)) {
+            return $query;
+        }
+
+        
+
+        if (isset($params['is_varified'])) {
+            $params['is_verified'] = $params['is_varified'];
+            unset($params['is_varified']);
+        }
+        
+        foreach ($params as $key => $value) { 
+            if ($value != "") {
+                if (in_array($key, $this->partialFilterable)) { 
+                    $query->where($key, 'LIKE', "%{$value}%");
+                } elseif (in_array($key, $this->exactFilterable)) {
+                    $query->where($key, '=', $value);
+                }
+            }
+        }
+        return $query;
+    }
+
 
     /**
      * Search user based request parameters

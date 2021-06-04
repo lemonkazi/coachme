@@ -18,6 +18,7 @@ use App\Models\Speciality;
 use App\Models\Province;
 use App\Models\Location;
 use App\Models\CampType;
+use App\Models\Camp;
 use App\Models\Level;
 use View;
 use Auth;
@@ -68,18 +69,22 @@ class PublicContoller extends Controller
   public function filter_coach(Request $request){
       $data = $request->all();
       if (isset($data["param"])) {// check is the param is set
-        $param = $data["param"]; // get the value of the param
-        $array  = array('JKL' => 'jkl' , 'MNO'=>'mno', 'PQR'=>'pqr','STU'=>'stu','VWX'=>'vwx','YZ'=>'yz' );//array of values
-        $matches = array();//array of matches
-            foreach($array as $key=>$value){//loop to check the values
-                //check for match.
-                if(strpos($value, $param) !== false){
-                    //add to matches array.
-                    $matches[]= array ("key"=> $key,"value"=>$value);
-                }
-            }
+        $params['name'] = $param = $data["param"]; // get the value of the param
+        
+        $params['name'] = 'a';
+        $user = User::first();
+        $query = $user->coach_filter($params);
+        $response = $query->orderBy('id', 'asc')->get(['name', 'avatar_image_path', 'id']);
+        
+        foreach ($response as $key=>$item) {
+            $plucked[] = array (
+                              'id' => $item->id,
+                              'name'=> $item->name,
+                              'avatar_image_path' => $item->avatar_image_path
+                                );
+        }
         //send the response using json format
-        echo json_encode($array);
+        echo json_encode($plucked);
       }
   }
 
@@ -96,8 +101,40 @@ class PublicContoller extends Controller
       if ($request->isMethod('post')) {
 
         $data = $request->all();
-        print_r($data);
-        exit();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+          $data['coaches'] = json_encode(array_unique($data['coaches']));
+          $data['user_id'] = $user->id;
+          $camp = Camp::create($data);
+          if (!$camp) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+          //return redirect('/camp')->with('status', $status);
+          return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+          print_r($data);
+          exit();
+        }
+        
       }
       $camp ='';
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
@@ -117,8 +154,44 @@ class PublicContoller extends Controller
       ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
     }
 
-    public function camp_edit(Request $request){
-      return view('pages.camp.edit');
+    public function camp_edit(Request $request, Camp $camp){
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Update Camp');
+      }
+
+      //$camp ='';
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      $coaches =array();
+      if(!empty($camp) && !empty($camp->coaches)){
+        
+        $coaches_data = json_decode($camp->coaches);
+        foreach ($coaches_data as $key=>$coach) {
+
+
+          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+        }
+        //print_r($coaches);
+        
+        
+      }
+      return view('pages.camp.edit', [
+          'data'=>
+          [
+               'camp'      =>  $camp,
+               'coaches'   => $coaches,
+               'user'      =>  $user,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
     }
     public function camp_details(){
       return view('pages.camp.details');

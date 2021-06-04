@@ -8,7 +8,19 @@
        @csrf
         <div class="container">
           {{session('msg')}}
-
+          @if(session()->has('error'))
+              <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+          @endif
+          @if (session('status'))
+            <div class="alert alert-success">
+              {{ session('status') }}
+            </div>
+          @endif
+          @if (session('warning'))
+            <div class="alert alert-warning">
+              {{ session('warning') }}
+            </div>
+          @endif
           @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -132,20 +144,40 @@
                   <div class="col-md-10 coachimg" id="coachimg-wrapper">
                     <div class="row coach1" id ="coachimg">
                       <div class="col-md-4">
-                        <div class="img-upload mb-4">
-                          <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" onchange="loadFile(event)"/>
+                        <div class="img-upload mb-4 output">
+                          
                           <img id="output" src="{{ asset('img/patrick_chan.png')}}" alt="PAT">
-                          <i class="bi bi-plus-lg"></i>
+                          
                         </div>
                       </div>
-                      <div class="col-md-8 pt-10">
-                        <select data-placeholder="Choose a Coach..." id="coach_chosen" name="coaches[]" class="chosen-select" style="width:350px;" tabindex="4" id="skills_chosen">
+                      <div class="col-md-7 pt-10">
+                        <select data-placeholder="Choose a Coach..." id="coach_chosen" class="chosen-select" style="width:350px;" tabindex="4">
                           <option value=""></option>
                         </select>  
                         <p>Link to an existing coach account</p>
                       </div>
+
+                      <button class="remove form-control btn btn-primary submit px-3">x</button>
                       
                     </div>
+                    @foreach ($data['coaches'] as $coach)
+                        <div class="row coach1" id ="coachimg">
+                          <div class="col-md-4">
+                            <div class="img-upload mb-4 output">
+                              <img id="output" src="{{$BASE_URL}}/user_photo/{{$coach['avatar_image_path']}}" />
+                              
+                              
+                            </div>
+                          </div>
+                          <div class="col-md-7 pt-10">
+                            <input type="text" disabled class="form-control" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
+                            <p>Link to an existing coach account</p>
+                          </div>
+
+                          <button class="remove form-control btn btn-primary submit px-3">x</button>
+                          
+                        </div>
+                    @endforeach
 
                   </div>
                  <!--  <div class="row">
