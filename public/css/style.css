@@ -1023,6 +1023,7 @@ label {
 
 .program-details .btn-custom {
   background: #A7BE79;
+  color: #fff;
 }
 
 .program-details h1 {
@@ -1043,6 +1044,13 @@ label {
 
 .program-details .gray {
   color: #7B8A96;
+}
+
+.program-details a {
+  font: normal normal 600 14px Raleway;
+  letter-spacing: 0px;
+  color: #8AC8DC;
+  text-decoration: none;
 }
 
 .program-details .program-slider .slick-arrow {
@@ -1088,5 +1096,9 @@ label {
 .program-details .program-slider .slick-dots li.slick-active button:before {
   opacity: .75;
   color: #8AC8DC;
+}
+
+.program-details .address i {
+  padding-right: 10px;
 }
 /*# sourceMappingURL=style.css.map */

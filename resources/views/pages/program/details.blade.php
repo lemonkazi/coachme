@@ -8,7 +8,7 @@
               <h1>Victoria rink CanSkate program <i class="fas fa-share-alt"></i></h1>
               <h4>From September 15 to January 1</h4>
               <p class="gray">Window of registration: June to august</p>
-              <a href="#" class="btn btn-custom">Register here</a>
+              <a href="#" class="btn btn-custom mb-3">Register here</a>
               <div class="row">
                 <div class="col-md-4">
                   <label for="">Level</label>
@@ -64,7 +64,7 @@
                       <img class="pic" src="https://via.placeholder.com/500x300.png" alt="PAT">
                     </div>
                   </div>
-                  <div class="address text-center">
+                  <div class="address text-center mt-5">
                     <label for="">Contact</label>
                     <h5><i class="bi bi-telephone-fill"></i>+1-613-555-0146</h5>
                     <h5><i class="fas fa-at"></i>patrick_chan@gmail.com</h5>

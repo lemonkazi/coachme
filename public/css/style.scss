@@ -898,6 +898,7 @@ label{
     }
     .btn-custom{
         background: #A7BE79;
+        color: #fff;
     }
     h1{
         font: normal normal 800 50px/67px Raleway;
@@ -914,6 +915,12 @@ label{
     }
     .gray{
         color: #7B8A96;
+    }
+    a{
+        font: normal normal 600 14px Raleway;
+        letter-spacing: 0px;
+        color: #8AC8DC;
+        text-decoration: none;
     }
     .program-slider{
         .slick-arrow {
@@ -956,6 +963,11 @@ label{
         .slick-dots li.slick-active button:before {
             opacity: .75;
             color: #8AC8DC;
+        }
+    }
+    .address{
+        i{
+            padding-right: 10px;
         }
     }
 }
