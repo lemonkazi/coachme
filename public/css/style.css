@@ -1118,6 +1118,14 @@ label {
   padding-right: 10px;
 }
 
+.rink-list {
+  background: #F3F6FB;
+  background-image: url(../img/edit_program.png);
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+}
+
 .rink-list .green {
   background: #A7BE79;
 }
