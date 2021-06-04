@@ -883,7 +883,7 @@ label{
     }
 }
 //program details
-.program-details{
+.program-details,.coach-details{
     background: #F3F6FB;
     background-image: url(../img/edit_program.png);
     background-size: auto;
@@ -969,5 +969,20 @@ label{
         i{
             padding-right: 10px;
         }
+    }
+    //coach_details
+    h2{
+        font: normal normal 800 40px Raleway;
+    }
+}
+.coach-details{
+    img{
+        width: 100%;
+    }
+    h5{
+        font: normal normal normal 18px Raleway;
+    }
+    i{
+        padding-right: 10px;
     }
 }

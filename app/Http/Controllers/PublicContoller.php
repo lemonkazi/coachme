@@ -74,6 +74,9 @@ class PublicContoller extends Controller
     public function program_details(){
       return view('pages.program.details');
     }
+    public function coach_details(){
+      return view('pages.coach.details');
+    }
     public function coach_edit(Request $request){
       $user = $request->user();
       if (!$user) {

@@ -1005,7 +1005,7 @@ label {
   padding-left: 30px;
 }
 
-.program-details {
+.program-details, .coach-details {
   background: #F3F6FB;
   background-image: url(../img/edit_program.png);
   background-size: auto;
@@ -1014,46 +1014,46 @@ label {
   padding-top: 4.5%;
 }
 
-.program-details p {
+.program-details p, .coach-details p {
   font: normal normal medium Raleway;
   font-size: 16px;
   letter-spacing: 0px;
   color: #233C50;
 }
 
-.program-details .btn-custom {
+.program-details .btn-custom, .coach-details .btn-custom {
   background: #A7BE79;
   color: #fff;
 }
 
-.program-details h1 {
+.program-details h1, .coach-details h1 {
   font: normal normal 800 50px/67px Raleway;
   letter-spacing: 0px;
   color: #233C50;
 }
 
-.program-details h1 i {
+.program-details h1 i, .coach-details h1 i {
   font-size: 26px;
 }
 
-.program-details h4 {
+.program-details h4, .coach-details h4 {
   font: normal normal 600 30px/40px Raleway;
   letter-spacing: 0px;
   color: #7AB7CC;
 }
 
-.program-details .gray {
+.program-details .gray, .coach-details .gray {
   color: #7B8A96;
 }
 
-.program-details a {
+.program-details a, .coach-details a {
   font: normal normal 600 14px Raleway;
   letter-spacing: 0px;
   color: #8AC8DC;
   text-decoration: none;
 }
 
-.program-details .program-slider .slick-arrow {
+.program-details .program-slider .slick-arrow, .coach-details .program-slider .slick-arrow {
   position: absolute;
   top: 50%;
   width: 50px;
@@ -1073,32 +1073,48 @@ label {
   font-size: 23px;
 }
 
-.program-details .program-slider img {
+.program-details .program-slider img, .coach-details .program-slider img {
   width: 100%;
 }
 
-.program-details .program-slider .fa-chevron-left {
+.program-details .program-slider .fa-chevron-left, .coach-details .program-slider .fa-chevron-left {
   left: 50px;
   text-align: left;
 }
 
-.program-details .program-slider .fa-chevron-right {
+.program-details .program-slider .fa-chevron-right, .coach-details .program-slider .fa-chevron-right {
   right: 50px;
   text-align: right;
 }
 
-.program-details .program-slider .slick-dots li button:before {
+.program-details .program-slider .slick-dots li button:before, .coach-details .program-slider .slick-dots li button:before {
   font-size: 10px;
   opacity: .5;
   color: #8AC8DC;
 }
 
-.program-details .program-slider .slick-dots li.slick-active button:before {
+.program-details .program-slider .slick-dots li.slick-active button:before, .coach-details .program-slider .slick-dots li.slick-active button:before {
   opacity: .75;
   color: #8AC8DC;
 }
 
-.program-details .address i {
+.program-details .address i, .coach-details .address i {
+  padding-right: 10px;
+}
+
+.program-details h2, .coach-details h2 {
+  font: normal normal 800 40px Raleway;
+}
+
+.coach-details img {
+  width: 100%;
+}
+
+.coach-details h5 {
+  font: normal normal normal 18px Raleway;
+}
+
+.coach-details i {
   padding-right: 10px;
 }
 /*# sourceMappingURL=style.css.map */
