@@ -5,7 +5,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              <h1>Victoria rink CanSkate program</h1>
+              <h1>Victoria rink CanSkate program <i class="fas fa-share-alt"></i></h1>
               <h4>From September 15 to January 1</h4>
               <p class="gray">Window of registration: June to august</p>
               <a href="#" class="btn btn-custom">Register here</a>
