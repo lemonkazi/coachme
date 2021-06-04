@@ -735,7 +735,7 @@ label{
     color: #233C50;
 }
 //coach edit
-.coach-edit,.camp-edit,.program-edit{
+.coach-edit,.camp-edit,.program-edit,.rink-list{
     background-image: url(../img/edit_coach.png);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -984,5 +984,54 @@ label{
     }
     i{
         padding-right: 10px;
+    }
+}
+//rink list
+.rink-list{
+    .green{
+        background: #A7BE79;
+    }
+    .blue{
+        background: #8AC8DC;
+    }
+    .card {
+        border: none;
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        overflow: hidden;
+        border-radius: 20px;
+        min-height: 250px;
+        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+    }
+    h3{
+        font: normal normal bold 22px/30px Raleway;
+        color: #233C50;
+    }
+    h6{
+        font: normal normal 600 18px Raleway;
+        letter-spacing: 0px;
+        color: #7AB7CC;
+    }
+    h5{
+        font: normal normal medium Raleway;
+        font-size: 16px;
+        letter-spacing: 0px;
+        color: #233C50;
+        opacity: .6;
+        i{
+            padding-right: 5px;
+        }
+    }
+    img{
+        width: 100%;
+    }
+    .card-body{
+        position: relative;
+    }
+    .learn-more{
+        a{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
     }
 }
