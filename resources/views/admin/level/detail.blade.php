@@ -48,23 +48,23 @@
                       //'is_date_format' => 1
                   )
               );
-              //print_r($campType);
+              //print_r($level);
               foreach ($result as $key => $value) {
-                if (!isset($data['campType']->$key)) {
+                if (!isset($data['level']->$key)) {
                     continue;
                 }
-                if (!empty($data['campType']->$key)) {
+                if (!empty($data['level']->$key)) {
                     if (!empty($result[$key]['is_date_format'])) {
-                        $result[$key]['text'] = date('Y年m月d日', $data['campType']->$key);
+                        $result[$key]['text'] = date('Y年m月d日', $data['level']->$key);
                     } elseif (!empty($result[$key]['is_array'])) {
-                        $result[$key]['text'] = implode (", ", $data['campType']->$key);
+                        $result[$key]['text'] = implode (", ", $data['level']->$key);
                     } elseif (!empty($result[$key]['related'])) {
                       $related = (string)$result[$key]['related'];
-                      $result[$key]['text'] = $data['campType']->$related->name;
+                      $result[$key]['text'] = $data['level']->$related->name;
                     } elseif ($key == "avatar_image_path") {
-                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/campType_photo/{$data['campType']->$key}' />";
+                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/level_photo/{$data['level']->$key}' />";
                     } else {
-                        $result[$key]['text'] = $data['campType']->$key;
+                        $result[$key]['text'] = $data['level']->$key;
                     }
                 } else {
                     $result[$key]['text'] = '-';
@@ -80,7 +80,7 @@
             </div>
             <div class="card-footer text-center">
                 
-                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/camp-type/edit/' . $data['campType']->id ?>"><?php echo trans('global.LABEL_UPDATE') ?></a>
+                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/level/edit/' . $data['level']->id ?>"><?php echo trans('global.LABEL_UPDATE') ?></a>
             
             </div>
           </div>

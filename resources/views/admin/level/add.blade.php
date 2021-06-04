@@ -15,7 +15,7 @@
 
         <!--  @php
              echo "<pre>";
-               print_r($data['campType']);
+               print_r($data['level']);
              echo "</pre>";
             @endphp -->
         
@@ -46,13 +46,13 @@
                       </div>
                   @endif
                   <!-- form start -->
-                  <form action="{{!empty($data['campType']) ? route('camp-type.update',[$data['campType']->id]): route('camp-type.store')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{!empty($data['level']) ? route('level.update',[$data['level']->id]): route('level.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="name">Name <span class="input-required">*</span></label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['campType']) ? old('name', $data['campType']->name) : old('name')}}" required>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['level']) ? old('name', $data['level']->name) : old('name')}}" required>
                         </div>
                       </div>
                       

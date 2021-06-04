@@ -6,6 +6,7 @@ Route::get('/', 'PublicContoller@index');
 Route::get('/program/edit', 'PublicContoller@program_edit');
 Route::get('/program/details', 'PublicContoller@program_details');
 
+Route::get('/filter_coach', 'PublicContoller@filter_coach');
 
 
 Route::get('ajax', function(){ return view('ajax'); });
@@ -157,6 +158,20 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\PriceController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\PriceController@update']);
+  	});
+
+
+  	//level route
+  	Route::get('levels',[App\Http\Controllers\Admin\LevelController::class, 'show']);
+	Route::get('levels/{level}',[App\Http\Controllers\Admin\LevelController::class, 'show']);
+	
+	Route::group(['prefix' =>'level', 'as'=>'level.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\LevelController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\LevelController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\LevelController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\LevelController@update']);
   	});
 
 

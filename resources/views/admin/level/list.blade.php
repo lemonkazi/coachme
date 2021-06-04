@@ -81,7 +81,7 @@
                     <div class="form-group button-group result-top">
                       <div class="result-top-buttons">
                         <div class="form-group">
-                          <a href="{{ url('/camp-type/add')}}" class="btn btn-primary btn-addnew">Add New</a> 
+                          <a href="{{ url('/level/add')}}" class="btn btn-primary btn-addnew">Add New</a> 
                         </div>
                       </div>
                       <div class="result-top-elements">
@@ -114,19 +114,19 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($data['campTypes'] as $campType)
+                          @foreach($data['levels'] as $level)
                             <tr>
-                              <td>{{$campType->id}}</td>
-                              <td>{{$campType->name}}</td>
+                              <td>{{$level->id}}</td>
+                              <td>{{$level->name}}</td>
                               <td> 
                                 <div class="btn-group">
-                                  <a href="{{url('camp-types').'/'.$campType->id}}" class="btn btn-primary">
+                                  <a href="{{url('levels').'/'.$level->id}}" class="btn btn-primary">
                                     <i class="fas fa-eye"></i>
                                   </a>
-                                  <a href="<?php echo $BASE_URL . '/camp-type/edit/' . $campType->id ?>" class="btn btn-warning" title="Edit">
+                                  <a href="<?php echo $BASE_URL . '/level/edit/' . $level->id ?>" class="btn btn-warning" title="Edit">
                                     <i class="fas fa-edit"></i>
                                   </a> 
-                                  <a href="javascript:;" data-id="{{$campType->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
+                                  <a href="javascript:;" data-id="{{$level->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
                                     <i class="fa fa-trash" aria-hidden="true"></i>   
                                   </a>             
                                 </div>
@@ -136,14 +136,14 @@
                         </tbody>
                       </table>
                     </div>
+
                     <input type="hidden" name="action" class="form-control" id="action">
                     <input type="hidden" name="actionId" class="form-control" id="actionId">
                   </form>
                 </div>
-
                 <div class="dataTables_paginate paging_bootstrap fr">
                   <div class="paging_sumary">{{$data['sumary']}}</div>
-                  {{ $data['campTypes']->links('pagination.default') }}
+                  {{ $data['levels']->links('pagination.default') }}
                 </div>
               </div>
               <!-- /.card-body -->

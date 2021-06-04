@@ -47,7 +47,7 @@ class CampTypeController extends Controller
       $breadcrumb = array(
         array(
            'name'=>trans('global.All CampTypes'),
-           'link'=>'/campTypes'
+           'link'=>'/camp-types'
         ),
         array(
            'name'=>trans('global.CampType Detail'),
@@ -101,7 +101,7 @@ class CampTypeController extends Controller
     $breadcrumb = array(
         array(
            'name'=>trans('global.All CampTypes'),
-           'link'=>'/campTypes'
+           'link'=>'/camp-types'
         )
     );
     // If export parameter true, it will return csv file
@@ -168,7 +168,7 @@ class CampTypeController extends Controller
     $breadcrumb = array(
         array(
            'name'=>trans('global.All CampType'),
-           'link'=>'/campTypes'
+           'link'=>'/camp-types'
         )
       );
     if (!empty($id)) {

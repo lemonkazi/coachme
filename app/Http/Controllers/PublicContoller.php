@@ -21,6 +21,7 @@ use App\Models\CampType;
 use App\Models\Level;
 use View;
 use Auth;
+use Carbon\Carbon;
 use App\Mail\VerifyMail;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +65,25 @@ class PublicContoller extends Controller
     }
 
 
+  public function filter_coach(Request $request){
+      $data = $request->all();
+      if (isset($data["param"])) {// check is the param is set
+        $param = $data["param"]; // get the value of the param
+        $array  = array('JKL' => 'jkl' , 'MNO'=>'mno', 'PQR'=>'pqr','STU'=>'stu','VWX'=>'vwx','YZ'=>'yz' );//array of values
+        $matches = array();//array of matches
+            foreach($array as $key=>$value){//loop to check the values
+                //check for match.
+                if(strpos($value, $param) !== false){
+                    //add to matches array.
+                    $matches[]= array ("key"=> $key,"value"=>$value);
+                }
+            }
+        //send the response using json format
+        echo json_encode($array);
+      }
+  }
+
+
 
     public function camp_add(Request $request){
 
@@ -84,7 +104,8 @@ class PublicContoller extends Controller
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       
-
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
       return view('pages.camp.edit', [
           'data'=>
           [
@@ -93,7 +114,7 @@ class PublicContoller extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('city_all','camp_type_all','level_all'));
+      ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
     }
 
     public function camp_edit(Request $request){

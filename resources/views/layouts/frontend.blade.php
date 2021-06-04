@@ -25,6 +25,9 @@
         <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
+
         <meta name="_token" content="{{ csrf_token() }}">
         <script type="text/javascript">
           var baseUrl = '{{ $BASE_URL }}';
@@ -140,10 +143,15 @@
         <script src="https://kit.fontawesome.com/104c8dfbc6.js" crossorigin="anonymous"></script>
         <!-- jQuery -->
         <script src="{{ asset ('plugins/jquery/jquery.min.js') }}"></script>
+        
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
+        
         <!-- jQuery UI 1.11.4 -->
         <script src="{{ asset ('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
         <script>
@@ -265,7 +273,110 @@
                         }
                     });
                 });
+
+
+
+                
+                
             });
+
+            ;(function($){
+                $('#coach_chosen').chosen({});
+                $('.chosen-search input').autocomplete({
+                    minLength: 3,
+                    source: function( request, response ) {
+
+                        //var items="";
+                        //items+="<option value='aaaa'>aaaa</option>";
+                        console.log('sss');
+                        $.ajax({
+                            url: baseUrl + '/filter_coach',
+                            data: {param:request.term},
+                            dataType: "json",
+                            beforeSend: function(){ $('ul.chosen-results').empty(); $("#coach_chosen").empty(); }
+                        }).done(function( data ) {
+                            
+                                response( $.map( data, function( item ) {
+                                    //console.log(item);
+                                    $('#coach_chosen').append('<option value="' + item + '">' + item + '</option>');
+                                }));
+
+                               $("#coach_chosen").trigger("chosen:updated");
+                               //$("#coach_chosen").chosen();
+                        });
+                    }
+                });
+
+                $('#coach_chosen').on('change', function() {
+                    //console.log($(this).parent().remove());
+                    // $('<p><label for="p_scnts"><input type="text" id="p_scnt" size="20" name="p_scnt_' + i +'" value="" placeholder="Input Value" /></label> <a href="#" id="remScnt">Remove</a></p>').appendTo(scntDiv);
+                    $('.coachimg').append('<div class="row"><div class="col-md-4"><div class="img-upload mb-4"><input accept="image/*" name="avatar_image_path" type="file" id="imgInp" onchange="loadFile(event)"/><img id="output" src="img/patrick_chan.png" alt="PAT"><i class="bi bi-plus-lg"></i></div></div><div class="col-md-8 pt-10"><select data-placeholder="Choose a Coach..." id="coach_chosen1" name="coaches[]" class="chosen-select" style="width:350px;" tabindex="4"><option value=""></option></select>  <p>Link to an existing coach account</p></div></div>');
+                        console.log('aaa');
+                    
+                    $('#coach_chosen1').chosen({});
+
+
+                    $('.chosen-search input').autocomplete({
+                        minLength: 3,
+                        source: function( request, response ) {
+
+                            //var items="";
+                            //items+="<option value='aaaa'>aaaa</option>";
+                            console.log('sss');
+                            $.ajax({
+                                url: baseUrl + '/filter_coach',
+                                data: {param:request.term},
+                                dataType: "json",
+                                beforeSend: function(){ $('ul.chosen-results').empty(); $("#coach_chosen").empty(); }
+                            }).done(function( data ) {
+                                
+                                    response( $.map( data, function( item ) {
+                                        //console.log(item);
+                                        $('#coach_chosen1').append('<option value="' + item + '">' + item + '</option>');
+                                    }));
+
+                                   $("#coach_chosen1").trigger("chosen:updated");
+                                   //$("#coach_chosen").chosen();
+                            });
+                        }
+                    });
+                });
+                $(document).on("change", "#coach_chosen1", function () {
+                //$('#coach_chosen1').on('change', function() {
+                    console.log($(this).parent().remove());
+                    // $('<p><label for="p_scnts"><input type="text" id="p_scnt" size="20" name="p_scnt_' + i +'" value="" placeholder="Input Value" /></label> <a href="#" id="remScnt">Remove</a></p>').appendTo(scntDiv);
+                    $('.coachimg').append('<div class="row"><div class="col-md-4"><div class="img-upload mb-4"><input accept="image/*" name="avatar_image_path" type="file" id="imgInp" onchange="loadFile(event)"/><img id="output" src="img/patrick_chan.png" alt="PAT"><i class="bi bi-plus-lg"></i></div></div><div class="col-md-8 pt-10"><select data-placeholder="Choose a Coach..." id="coach_chosen2" name="coaches[]" class="chosen-select" style="width:350px;" tabindex="4"><option value=""></option></select>  <p>Link to an existing coach account</p></div></div>');
+                        console.log('aaa');
+                    
+                    $('#coach_chosen2').chosen({});
+
+
+                    $('.chosen-search input').autocomplete({
+                        minLength: 3,
+                        source: function( request, response ) {
+
+                            //var items="";
+                            //items+="<option value='aaaa'>aaaa</option>";
+                            console.log('sss');
+                            $.ajax({
+                                url: baseUrl + '/filter_coach',
+                                data: {param:request.term},
+                                dataType: "json",
+                                beforeSend: function(){ $('ul.chosen-results').empty(); $("#coach_chosen").empty(); }
+                            }).done(function( data ) {
+                                
+                                    response( $.map( data, function( item ) {
+                                        //console.log(item);
+                                        $('#coach_chosen2').append('<option value="' + item + '">' + item + '</option>');
+                                    }));
+
+                                   $("#coach_chosen2").trigger("chosen:updated");
+                                   //$("#coach_chosen").chosen();
+                            });
+                        }
+                    });
+                });
+            })(jQuery);
         </script>
     </body>
 </html>

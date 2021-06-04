@@ -74,8 +74,8 @@
                       <input type="text" class="form-control" id="dates" name="dates" value="" required aria-describedby="emailHelp" >
                     </div>
 
-                    <input type="hidden" name="start_date">
-                    <input type="hidden" name="end_date">
+                    <input type="hidden" name="start_date" value="{{!empty($data['camp']) ? old('start_date', $data['camp']->start_date) : $formatedDate}}">
+                    <input type="hidden" name="end_date" value="{{!empty($data['camp']) ? old('end_date', $data['camp']->end_date) : $formatedDate}}">
                     
                   </div>
                 </div>
@@ -130,7 +130,7 @@
                   </div>
                   <label>Coaches</label>
                   <div class="col-md-10 coachimg">
-                    <div class="row">
+                    <div class="row coach1">
                       <div class="col-md-4">
                         <div class="img-upload mb-4">
                           <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" onchange="loadFile(event)"/>
@@ -139,7 +139,9 @@
                         </div>
                       </div>
                       <div class="col-md-8 pt-10">
-                        <input type="text" class="form-control" name="name" value="" required aria-describedby="emailHelp" >
+                        <select data-placeholder="Choose a Coach..." id="coach_chosen" name="coaches[]" class="chosen-select" style="width:350px;" tabindex="4" id="skills_chosen">
+                          <option value=""></option>
+                        </select>  
                         <p>Link to an existing coach account</p>
                       </div>
                     </div>
