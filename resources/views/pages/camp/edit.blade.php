@@ -129,8 +129,8 @@
                     <textarea class="form-control" id="about" name ="about">{{!empty($data['camp']) ? old('about', $data['camp']->about) : old('about')}}</textarea>
                   </div>
                   <label>Coaches</label>
-                  <div class="col-md-10 coachimg">
-                    <div class="row coach1">
+                  <div class="col-md-10 coachimg" id="coachimg-wrapper">
+                    <div class="row coach1" id ="coachimg">
                       <div class="col-md-4">
                         <div class="img-upload mb-4">
                           <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" onchange="loadFile(event)"/>
@@ -144,9 +144,15 @@
                         </select>  
                         <p>Link to an existing coach account</p>
                       </div>
+                      
                     </div>
 
                   </div>
+                 <!--  <div class="row">
+                    <div class="col-md-4 mb-4">
+                      <button id="addMore" class="form-control btn btn-primary submit px-3">Add More</button>
+                    </div>
+                  </div> -->
 
                 </div>
                 <div class="offset-md-8 col-md-4 mb-4">
