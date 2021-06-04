@@ -6,6 +6,7 @@ Route::get('/', 'PublicContoller@index');
 Route::get('/camp/edit', 'PublicContoller@camp_edit');
 Route::get('/program/edit', 'PublicContoller@program_edit');
 Route::get('/program/details', 'PublicContoller@program_details');
+Route::get('/camp/details', 'PublicContoller@camp_details');
 
 
 Route::get('ajax', function(){ return view('ajax'); });

@@ -65,6 +65,9 @@ class PublicContoller extends Controller
     public function camp_edit(){
       return view('pages.camp.edit');
     }
+    public function camp_details(){
+      return view('pages.camp.details');
+    }
     public function program_edit(){
       return view('pages.program.edit');
     }
