@@ -160,22 +160,28 @@
 
         <div class="container">
           <div class="row">
-        <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
+            <div class="col-sm-4">
+              <div class="card text-white card-has-bg click-col">        
                 <div class="card-img-overlay d-flex flex-column">
-                <div class="card-body">
-                    <h4 class="card-title mt-0 "><a herf="#">Step 1</a></h4>
-                  <img class="card-img" src="{{ asset('img/purpose.png') }}" alt="">
+                  <div class="card-body">
+                    <h4 class="card-title mt-0 ">
+                      <a herf="#">Step 1</a>
+                    </h4>
+                    <img class="card-img" src="{{ asset('img/purpose.png') }}" alt="">
                   </div>
                   <div class="card-footer">
-                  <div class="media">
-            <div class="media-body">
-            <h6 class="my-0 d-block">Go on the coach, camp 
-              or program tab and look for what you need</h6>     
-          </div>
-        </div>
-      </div>
+                    <div class="media">
+                      <div class="media-body">
+                        <h6 class="my-0 d-block">
+                          Go on the coach, camp 
+                          or program tab and look for what you need
+                        </h6>     
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div></div>
+            </div>
 
             <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
               <div class="card-img-overlay d-flex flex-column">

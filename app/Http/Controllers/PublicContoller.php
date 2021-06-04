@@ -120,11 +120,20 @@ class PublicContoller extends Controller
     public function camp_edit(Request $request){
       return view('pages.camp.edit');
     }
+    public function camp_details(){
+      return view('pages.camp.details');
+    }
     public function program_edit(){
       return view('pages.program.edit');
     }
     public function program_details(){
       return view('pages.program.details');
+    }
+    public function coach_details(){
+      return view('pages.coach.details');
+    }
+    public function rink_list(){
+      return view('pages.rink.list');
     }
     public function coach_edit(Request $request){
       $user = $request->user();

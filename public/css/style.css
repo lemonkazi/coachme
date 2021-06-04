@@ -840,7 +840,7 @@ label {
   color: #233C50;
 }
 
-.coach-edit, .camp-edit, .program-edit {
+.coach-edit, .camp-edit, .program-edit, .rink-list {
   background-image: url(../img/edit_coach.png);
   background-size: 100%;
   background-repeat: no-repeat;
@@ -848,21 +848,21 @@ label {
   padding-top: 4.5%;
 }
 
-.coach-edit .img-upload, .camp-edit .img-upload, .program-edit .img-upload {
+.coach-edit .img-upload, .camp-edit .img-upload, .program-edit .img-upload, .rink-list .img-upload {
   width: 22%;
   position: relative;
 }
 
-.coach-edit .img-upload input, .camp-edit .img-upload input, .program-edit .img-upload input {
+.coach-edit .img-upload input, .camp-edit .img-upload input, .program-edit .img-upload input, .rink-list .img-upload input {
   display: none;
 }
 
-.coach-edit .img-upload img, .camp-edit .img-upload img, .program-edit .img-upload img {
+.coach-edit .img-upload img, .camp-edit .img-upload img, .program-edit .img-upload img, .rink-list .img-upload img {
   width: 100%;
   border-radius: 50%;
 }
 
-.coach-edit .img-upload .bi-plus-lg, .camp-edit .img-upload .bi-plus-lg, .program-edit .img-upload .bi-plus-lg {
+.coach-edit .img-upload .bi-plus-lg, .camp-edit .img-upload .bi-plus-lg, .program-edit .img-upload .bi-plus-lg, .rink-list .img-upload .bi-plus-lg {
   background: #233C50;
   border-radius: 50%;
   padding: 5px 10px;
@@ -870,44 +870,44 @@ label {
   top: 76%;
 }
 
-.coach-edit h2, .camp-edit h2, .program-edit h2 {
+.coach-edit h2, .camp-edit h2, .program-edit h2, .rink-list h2 {
   font: normal normal bold 24px Raleway;
   color: #8AC8DC;
 }
 
-.coach-edit input, .coach-edit select, .coach-edit textarea, .camp-edit input, .camp-edit select, .camp-edit textarea, .program-edit input, .program-edit select, .program-edit textarea {
+.coach-edit input, .coach-edit select, .coach-edit textarea, .camp-edit input, .camp-edit select, .camp-edit textarea, .program-edit input, .program-edit select, .program-edit textarea, .rink-list input, .rink-list select, .rink-list textarea {
   background: #D4E8F3 0% 0% no-repeat padding-box;
   border-radius: 8px;
 }
 
-.coach-edit .btn-group, .coach-edit .btn-group-vertical, .camp-edit .btn-group, .camp-edit .btn-group-vertical, .program-edit .btn-group, .program-edit .btn-group-vertical {
+.coach-edit .btn-group, .coach-edit .btn-group-vertical, .camp-edit .btn-group, .camp-edit .btn-group-vertical, .program-edit .btn-group, .program-edit .btn-group-vertical, .rink-list .btn-group, .rink-list .btn-group-vertical {
   width: 100%;
 }
 
-.coach-edit span.multiselect-native-select, .camp-edit span.multiselect-native-select, .program-edit span.multiselect-native-select {
+.coach-edit span.multiselect-native-select, .camp-edit span.multiselect-native-select, .program-edit span.multiselect-native-select, .rink-list span.multiselect-native-select {
   display: block;
 }
 
-.coach-edit .bi-plus-lg, .coach-edit .bi-chevron-compact-down, .camp-edit .bi-plus-lg, .camp-edit .bi-chevron-compact-down, .program-edit .bi-plus-lg, .program-edit .bi-chevron-compact-down {
+.coach-edit .bi-plus-lg, .coach-edit .bi-chevron-compact-down, .camp-edit .bi-plus-lg, .camp-edit .bi-chevron-compact-down, .program-edit .bi-plus-lg, .program-edit .bi-chevron-compact-down, .rink-list .bi-plus-lg, .rink-list .bi-chevron-compact-down {
   position: absolute;
   top: 37px;
   right: 22px;
 }
 
-.coach-edit .custom-select, .camp-edit .custom-select, .program-edit .custom-select {
+.coach-edit .custom-select, .camp-edit .custom-select, .program-edit .custom-select, .rink-list .custom-select {
   background: #D4E8F3 0% 0% no-repeat padding-box;
   border: none;
   text-align: left;
   border-radius: 8px;
 }
 
-.coach-edit #create-camp, .camp-edit #create-camp, .program-edit #create-camp {
+.coach-edit #create-camp, .camp-edit #create-camp, .program-edit #create-camp, .rink-list #create-camp {
   background: #233C50 0% 0% no-repeat padding-box;
   border-radius: 29px;
   width: 227px;
 }
 
-.coach-edit #cancel, .camp-edit #cancel, .program-edit #cancel {
+.coach-edit #cancel, .camp-edit #cancel, .program-edit #cancel, .rink-list #cancel {
   font: normal normal medium 20px/27px Raleway;
   letter-spacing: 0px;
   color: #7B8A96;
@@ -916,18 +916,18 @@ label {
   border: none;
 }
 
-.coach-edit #save, .camp-edit #save, .program-edit #save {
+.coach-edit #save, .camp-edit #save, .program-edit #save, .rink-list #save {
   background: #8AC8DC 0% 0% no-repeat padding-box;
   border-radius: 29px;
   width: 178px;
   border: none;
 }
 
-.coach-edit .fa-file-image, .camp-edit .fa-file-image, .program-edit .fa-file-image {
+.coach-edit .fa-file-image, .camp-edit .fa-file-image, .program-edit .fa-file-image, .rink-list .fa-file-image {
   font-size: 48px;
 }
 
-.coach-edit .bi-plus-circle, .camp-edit .bi-plus-circle, .program-edit .bi-plus-circle {
+.coach-edit .bi-plus-circle, .camp-edit .bi-plus-circle, .program-edit .bi-plus-circle, .rink-list .bi-plus-circle {
   color: #233C50;
   position: relative;
   left: -14px;
@@ -1005,7 +1005,7 @@ label {
   padding-left: 30px;
 }
 
-.program-details {
+.program-details, .coach-details {
   background: #F3F6FB;
   background-image: url(../img/edit_program.png);
   background-size: auto;
@@ -1014,34 +1014,46 @@ label {
   padding-top: 4.5%;
 }
 
-.program-details p {
+.program-details p, .coach-details p {
   font: normal normal medium Raleway;
   font-size: 16px;
   letter-spacing: 0px;
   color: #233C50;
 }
 
-.program-details .btn-custom {
+.program-details .btn-custom, .coach-details .btn-custom {
   background: #A7BE79;
+  color: #fff;
 }
 
-.program-details h1 {
+.program-details h1, .coach-details h1 {
   font: normal normal 800 50px/67px Raleway;
   letter-spacing: 0px;
   color: #233C50;
 }
 
-.program-details h4 {
+.program-details h1 i, .coach-details h1 i {
+  font-size: 26px;
+}
+
+.program-details h4, .coach-details h4 {
   font: normal normal 600 30px/40px Raleway;
   letter-spacing: 0px;
   color: #7AB7CC;
 }
 
-.program-details .gray {
+.program-details .gray, .coach-details .gray {
   color: #7B8A96;
 }
 
-.program-details .program-slider .slick-arrow {
+.program-details a, .coach-details a {
+  font: normal normal 600 14px Raleway;
+  letter-spacing: 0px;
+  color: #8AC8DC;
+  text-decoration: none;
+}
+
+.program-details .program-slider .slick-arrow, .coach-details .program-slider .slick-arrow {
   position: absolute;
   top: 50%;
   width: 50px;
@@ -1056,34 +1068,117 @@ label {
   /* font-size: 5rem; */
   z-index: 300;
   outline: none;
-  background: #D0E6A5;
   border-radius: 50%;
   padding: 0 14px;
   font-size: 23px;
 }
 
-.program-details .program-slider img {
+.program-details .program-slider img, .coach-details .program-slider img {
   width: 100%;
 }
 
-.program-details .program-slider .bi-arrow-left {
+.program-details .program-slider .fa-chevron-left, .coach-details .program-slider .fa-chevron-left {
   left: 50px;
   text-align: left;
 }
 
-.program-details .program-slider .bi-arrow-right {
+.program-details .program-slider .fa-chevron-right, .coach-details .program-slider .fa-chevron-right {
   right: 50px;
   text-align: right;
 }
 
-.program-details .program-slider .slick-dots li button:before {
+.program-details .program-slider .slick-dots li button:before, .coach-details .program-slider .slick-dots li button:before {
   font-size: 10px;
   opacity: .5;
   color: #8AC8DC;
 }
 
-.program-details .program-slider .slick-dots li.slick-active button:before {
+.program-details .program-slider .slick-dots li.slick-active button:before, .coach-details .program-slider .slick-dots li.slick-active button:before {
   opacity: .75;
   color: #8AC8DC;
+}
+
+.program-details .address i, .coach-details .address i {
+  padding-right: 10px;
+}
+
+.program-details h2, .coach-details h2 {
+  font: normal normal 800 40px Raleway;
+}
+
+.coach-details img {
+  width: 100%;
+}
+
+.coach-details h5 {
+  font: normal normal normal 18px Raleway;
+}
+
+.coach-details i {
+  padding-right: 10px;
+}
+
+.rink-list {
+  background: #F3F6FB;
+  background-image: url(../img/edit_program.png);
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+}
+
+.rink-list .green {
+  background: #A7BE79;
+}
+
+.rink-list .blue {
+  background: #8AC8DC;
+}
+
+.rink-list .card {
+  border: none;
+  -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  overflow: hidden;
+  border-radius: 20px;
+  min-height: 250px;
+  -webkit-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+}
+
+.rink-list h3 {
+  font: normal normal bold 22px/30px Raleway;
+  color: #233C50;
+}
+
+.rink-list h6 {
+  font: normal normal 600 18px Raleway;
+  letter-spacing: 0px;
+  color: #7AB7CC;
+}
+
+.rink-list h5 {
+  font: normal normal medium Raleway;
+  font-size: 16px;
+  letter-spacing: 0px;
+  color: #233C50;
+  opacity: .6;
+}
+
+.rink-list h5 i {
+  padding-right: 5px;
+}
+
+.rink-list img {
+  width: 100%;
+}
+
+.rink-list .card-body {
+  position: relative;
+}
+
+.rink-list .learn-more a {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 /*# sourceMappingURL=style.css.map */

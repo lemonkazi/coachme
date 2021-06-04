@@ -7,46 +7,45 @@
             <div class="col-md-6">
               <h1>Victoria rink CanSkate program <i class="fas fa-share-alt"></i></h1>
               <h4>From September 15 to January 1</h4>
-              <p class="gray">Window of registration: June to august</p>
-              <a href="#" class="btn btn-custom mb-3">Register here</a>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <label for="">Level</label>
                   <p>Advanced level</p>
                 </div>
-                <div class="col-md-4">
-                  <label for="">Price</label>
-                  <p>1,500$</p>
+                <div class="col-md-6">
+                  <label for="">Location</label>
+                  <p>Vancouver island, Canada</p>
                 </div>
-                <div class="col-md-4">
-                  <label for="">Starting age</label>
-                  <p>12+</p>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="">Schedule</label>
+                  <div class="upClick">
+                    <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="">Rink</label>
+                  <p>Jhonny's rink</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4">
-                  <label for="">Schedule</label>
-                  <p>10am. - 5pm.<br/>3h on ice & 2h off ice</p>
-                </div>
-                <div class="col-md-8">
-                  <label for="">Location</label>
-                  <p>Vancouver island, Canada.<a href="">Victoria rink</a></p>
+                  <label for="">Price</label>
+                  <p>
+                    550$
+                  </p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label for="">About canskate</label>
-                  <p>
-                    CanSkate is Skate Canada's flagship learn-to-skate program, designed for
-                    beginners of all ages. When you sign up for CanSkate you will be in a program
-                    that focuses on fun, participation and basic skill development. You will earn
-                    badges and other incentives as you learn fundamental skating skills. Lessons
-                    are given in a group format and led by our NCCP certified professional 
-                    coaches. Professional coaches are assisted by trained Program Assistants.
-                    Skaters progress at their own rate and coaches make sessions active using
-                    teaching aids, music and a wide variety of activities that create a fun
-                    environment and promote learning.
-                  </p>
+                  <label for="">Coach</label>
+                  <div class="row">
+                    <div class="col-md-3 text-center">
+                      <img src="{{ asset('img/patrick_chan.png') }}" alt="">
+                      <p>Patrick Chan</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -66,9 +65,12 @@
                   </div>
                   <div class="address text-center mt-5">
                     <label for="">Contact</label>
-                    <h5><i class="bi bi-telephone-fill"></i>+1-613-555-0146</h5>
-                    <h5><i class="fas fa-at"></i>patrick_chan@gmail.com</h5>
-                    <h5><i class="bi bi-telephone-fill"></i>+1-613-345-0865</h5>
+                    <p>
+                      We have collected the best international practices and the classic Canadian
+                      school in order to achieve the best results for our participants and instill
+                      in them an even greater love for our favorite sport. We see the success and
+                      joy of our children and are proud of the work done.
+                    </p>
                   </div>
                 </div>
               </div> 
