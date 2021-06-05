@@ -56,7 +56,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Schedule <span class="input-required">*</span></label>
-                    <input accept="application/pdf,application/vnd.ms-excel" name="avatar_image_path" type='file' class="fileUp" />
+                    <input accept="application/pdf,application/vnd.ms-excel" name="pdf_file" type='file' class="fileUp" onchange="file_name();"  />
                     <div class="upClick">
                       <i class="bi bi-file-earmark-arrow-up-fill"></i> <span>Upload a PDF</span>
                     </div>
@@ -65,10 +65,13 @@
                 </div>
                 
                 <h2>Photos</h2>
-                <div class="img-upload mb-4">
-                  <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
-                  <i class="far fa-file-image"></i>
-                  <i class="bi bi-plus-circle"></i>
+                <div class="col-md-12 img-upload mb-4">
+                  <div id="image_preview"></div>
+                  <div>
+                    <input accept="image/*" name="avatar_image_path[]" type='file' id="imgInp" onchange="preview_image();" multiple />
+                    <i class="far fa-file-image"></i>
+                    <i class="bi bi-plus-circle"></i>
+                  </div>
                 </div>
                 <h2>Contacts</h2>
                 <div class="col-md-4">
@@ -166,7 +169,20 @@
             });
             return false;
         });
+        
       });
+      function preview_image() 
+      {
+        var total_file=document.getElementById("imgInp").files.length;
+        for(var i=0;i<total_file;i++)
+        {
+          $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'><br>");
+        }
+      }
+
+      function file_name(){
+        $('.upClick span').html(event.target.files[0].name);
+      }
     </script>
     
 @endsection
