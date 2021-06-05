@@ -175,4 +175,42 @@ $('.program-slider').slick({
       URL.revokeObjectURL(output.src) // free memory
     }
   };
+
+  /**
+   * Download PDF file
+   */
+  function downloadPDF(url) {
+      download_file(url,'schedule');
+      return false;
+  }
+  /* Helper function */
+  function download_file(fileURL, fileName) {
+      // for non-IE
+      if (!window.ActiveXObject) {
+          var save = document.createElement('a');
+          save.href = fileURL;
+          save.target = '_blank';
+          var filename = fileURL.substring(fileURL.lastIndexOf('/')+1);
+          save.download = fileName || filename;
+             if ( navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
+                  document.location = save.href;
+              }else{
+                  var evt = new MouseEvent('click', {
+                      'view': window,
+                      'bubbles': true,
+                      'cancelable': false
+                  });
+                  save.dispatchEvent(evt);
+                  (window.URL || window.webkitURL).revokeObjectURL(save.href);
+              }   
+      }
+
+      // for IE < 11
+      else if ( !! window.ActiveXObject && document.execCommand)     {
+          var _window = window.open(fileURL, '_blank');
+          _window.document.close();
+          _window.document.execCommand('SaveAs', true, fileName || fileURL)
+          _window.close();
+      }
+  }
       
