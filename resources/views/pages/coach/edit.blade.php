@@ -23,7 +23,7 @@
 
                 <div class="img-upload mb-4">
                   <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
-                  <img id="blah" src="{{$BASE_URL}}/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
+                  <img id="blah" src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
 
                   <i class="bi bi-plus-lg"></i>
                 </div>

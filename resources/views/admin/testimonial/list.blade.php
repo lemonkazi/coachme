@@ -119,7 +119,7 @@
                           @foreach($data['testimonials'] as $testimonial)
                             <tr>
                               <td>{{$testimonial->id}}</td>
-                              <td><img style="max-width:80px;" src="{{$BASE_URL}}/testimonial_photo/{{$testimonial->image_path}}" /></td>
+                              <td><img style="max-width:80px;" src="{{$BASE_URL}}/photo/testimonial_photo/{{$testimonial->image_path}}" /></td>
                               <td>{{$testimonial->name}}</td>
                               <td>{{$testimonial->comment}}</td>
                               <td> 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Testimonial;
 use App\Models\UserInfo;
+use App\Models\AttachedFile;
 use App\Models\Rink;
 use App\Models\Experience;
 use App\Models\Certificate;
@@ -71,7 +72,7 @@ class PublicContoller extends Controller
       if (isset($data["param"])) {// check is the param is set
         $params['name'] = $param = $data["param"]; // get the value of the param
         
-        $params['name'] = 'a';
+        //$params['name'] = 'a';
         $user = User::first();
         $query = $user->coach_filter($params);
         $response = $query->orderBy('id', 'asc')->get(['name', 'avatar_image_path', 'id']);
@@ -123,11 +124,54 @@ class PublicContoller extends Controller
         }
         else
         {
-          $data['coaches'] = json_encode(array_unique($data['coaches']));
+
+          if (isset($data['coaches'])) {
+           $data['coaches'] = json_encode(array_unique($data['coaches']));
+          }
+
+          
           $data['user_id'] = $user->id;
           $camp = Camp::create($data);
           if (!$camp) {
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+
+          $files = $request->file('schedule_pdf_path');
+
+          if($request->hasFile('schedule_pdf_path'))
+          {
+            $attached_file =array();
+              foreach ($files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('files/camp_schedule'), $new_name);
+                $attached_file['content_type'] = 'CAMP';
+                $attached_file['content_id'] = $camp->id;
+                $attached_file['type'] = 'SCHEDULE';
+                $attached_file['user_id'] = $user->id;
+                $attached_file['name'] = $new_name;
+                $attached_file['path'] = 'files/camp_schedule/'.$new_name;
+                $attached_file = AttachedFile::create($attached_file);
+              }
+          }
+
+
+          $image_files = $request->file('camp_image_path');
+
+          if($request->hasFile('camp_image_path'))
+          {
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/camp_photo'), $new_name);
+                $attached_files['content_type'] = 'CAMP';
+                $attached_files['content_id'] = $camp->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/camp_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
           }
           //return redirect('/camp')->with('status', $status);
           return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
@@ -162,6 +206,99 @@ class PublicContoller extends Controller
         $title=trans('global.Update Camp');
       }
 
+
+      if (!$camp) {
+        return back();
+      }
+
+
+
+
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+          if (!empty($data['coaches'])) {
+            $data['coaches'] = json_encode(array_unique($data['coaches']));
+          }else{
+            unset($data['coaches']);
+          }
+
+          
+          $data['user_id'] = $user->id;
+
+          if (!$camp->update($data)) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+
+          $files = $request->file('schedule_pdf_path');
+
+          if($request->hasFile('schedule_pdf_path'))
+          {
+            $attached_file =array();
+              foreach ($files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('files/camp_schedule'), $new_name);
+                $attached_file['content_type'] = 'CAMP';
+                $attached_file['content_id'] = $camp->id;
+                $attached_file['type'] = 'SCHEDULE';
+                $attached_file['user_id'] = $user->id;
+                $attached_file['name'] = $new_name;
+                $attached_file['path'] = 'files/camp_schedule/'.$new_name;
+                $attached_file = AttachedFile::create($attached_file);
+              }
+          }
+
+
+          $image_files = $request->file('camp_image_path');
+
+          if($request->hasFile('camp_image_path'))
+          {
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/camp_photo'), $new_name);
+                $attached_files['content_type'] = 'CAMP';
+                $attached_files['content_id'] = $camp->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/camp_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
+          }
+          //return redirect('/camp')->with('status', $status);
+          return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+          print_r($data);
+          exit();
+        }
+        
+      }
+
+
       //$camp ='';
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
@@ -171,21 +308,39 @@ class PublicContoller extends Controller
       $formatedDate = $date->format('Y-m-d');
       $coaches =array();
       if(!empty($camp) && !empty($camp->coaches)){
-        
         $coaches_data = json_decode($camp->coaches);
         foreach ($coaches_data as $key=>$coach) {
-
-
           $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
         }
-        //print_r($coaches);
-        
-        
       }
+
+
+
+
+       $camp_photo = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       $camp_schedule = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'SCHEDULE'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       
+
+
+
       return view('pages.camp.edit', [
           'data'=>
           [
                'camp'      =>  $camp,
+               'camp_photo'      =>  $camp_photo,
+               'camp_schedule'      =>  $camp_schedule,
                'coaches'   => $coaches,
                'user'      =>  $user,
                'Title' =>  $title
@@ -352,7 +507,7 @@ class PublicContoller extends Controller
             $image = $request->file('avatar_image_path');
             $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
             
-            $image->move(public_path('user_photo'), $new_name);
+            $image->move(public_path('photo/user_photo'), $new_name);
             $data['avatar_image_path'] = $new_name;
           }
           if (!$user->update($data)) {

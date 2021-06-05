@@ -101,7 +101,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Schedule</label>
-                    <input accept="application/pdf,application/vnd.ms-excel" name="avatar_image_path" type='file' class="fileUp" />
+                    <input accept="application/pdf,application/vnd.ms-excel" name="schedule_pdf_path[]" type='file' multiple class="fileUp" />
                     <div class="upClick">
                       <i class="bi bi-file-earmark-arrow-up-fill"></i> <span>Upload a PDF</span>
                     </div>
@@ -111,7 +111,7 @@
                 
                 <h2>Photos</h2>
                 <div class="img-upload mb-4">
-                  <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
+                  <input accept="image/*" name="camp_image_path[]" type='file' id="imgInp" multiple/>
                   <i class="far fa-file-image"></i>
                   <i class="bi bi-plus-circle"></i>
                 </div>
@@ -160,24 +160,26 @@
                       <button class="remove form-control btn btn-primary submit px-3">x</button>
                       
                     </div>
-                    @foreach ($data['coaches'] as $coach)
-                        <div class="row coach1" id ="coachimg">
-                          <div class="col-md-4">
-                            <div class="img-upload mb-4 output">
-                              <img id="output" src="{{$BASE_URL}}/user_photo/{{$coach['avatar_image_path']}}" />
-                              
-                              
+                    @if(isset($data['coaches']))
+                      @foreach ($data['coaches'] as $coach)
+                          <div class="row coach1" id ="coachimg">
+                            <div class="col-md-4">
+                              <div class="img-upload mb-4 output">
+                                <img id="output" src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" />
+                                
+                                
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-md-7 pt-10">
-                            <input type="text" disabled class="form-control" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
-                            <p>Link to an existing coach account</p>
-                          </div>
+                            <div class="col-md-7 pt-10">
+                              <input type="text" disabled class="form-control" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
+                              <p>Link to an existing coach account</p>
+                            </div>
 
-                          <button class="remove form-control btn btn-primary submit px-3">x</button>
-                          
-                        </div>
-                    @endforeach
+                            <button class="remove form-control btn btn-primary submit px-3">x</button>
+                            
+                          </div>
+                      @endforeach
+                    @endif
 
                   </div>
                  <!--  <div class="row">

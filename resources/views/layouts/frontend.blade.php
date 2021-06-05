@@ -314,7 +314,7 @@
                     var newSelect = $("#coachimg").clone();
                     var src = $(this).find('option').filter(':selected').attr('data-src');
                     var selectedValue = $(this).find('option').filter(':selected').attr('value');
-                    var src ="<img id='output' src='"+baseUrl+"/user_photo/"+src+"' />";
+                    var src ="<img id='output' src='"+baseUrl+"/photo/user_photo/"+src+"' />";
                     src+="<input type='hidden' name='coaches[]' value='"+selectedValue+"'/>";
                     newSelect.find('.output').html(src);
                     //document.getElementById("output").src = src;
