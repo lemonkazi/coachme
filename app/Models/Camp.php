@@ -37,7 +37,14 @@ class Camp extends Model
      *
      * @var array
      */
-    protected $appends = [];
+
+
+    protected $appends = [
+        'location_name',
+        'level_name',
+        'rink_name',
+        'camp_type_name'
+    ];
 
     /**
      * The attributes that should be casted to native types.
@@ -83,22 +90,75 @@ class Camp extends Model
     /**
      * The coupons that belong to the city.
      */
-    public function locations()
+    public function location()
     {
-        return $this->belongsToMany(Location::class);
+        return $this->belongsTo(Location::class);
     }
 
     /**
-     * The news that belong to the city.
+     * The coupons that belong to the city.
      */
-    public function location()
+    public function level()
     {
-        return $this->hasMany(Location::class);
+        return $this->belongsTo(Level::class);
     }
+
+    /**
+     * The coupons that belong to the city.
+     */
+    public function rink()
+    {
+        return $this->belongsTo(Rink::class);
+    }
+    /**
+     * The coupons that belong to the city.
+     */
+    public function camp_type()
+    {
+        return $this->belongsTo(CampType::class);
+    }
+
 
     
 
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getLocationNameAttribute()
+    {
+        return !empty($this->location) ? $this->location->name : null;
+    }
 
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getLevelNameAttribute()
+    {
+        return !empty($this->level) ? $this->level->name : null;
+    }
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getRinkNameAttribute()
+    {
+        return !empty($this->rink) ? $this->rink->name : null;
+    }
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getCampTypeNameAttribute()
+    {
+        return !empty($this->camp_type) ? $this->camp_type->name : null;
+    }
    
    
 

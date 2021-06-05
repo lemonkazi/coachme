@@ -41,11 +41,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'family_name',
-        //'rink_id',
-        //'speciality_id',
         'experience_id',
         'certificate_id',
-        //'language_id',
         'price_id',
         'email',
         'password',
@@ -80,11 +77,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     protected $appends = [
-        //'speciality_name',
         'experience_name',
         'certificate_name',
-        //'rink_name',
-        //'lang_name',
         'price_name',
         'userinfos',
     ];
@@ -225,19 +219,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->authority === self::ACCESS_LEVEL_RINK;
     }
 
-    /**
-     * Check user has USER authority
-     * @param  integer  $buildingId
-     * @return boolean
-     */
-    public function isUser($cityId = null)
-    {
-        if ($cityId) {
-            return $this->city_id === $cityId && $this->authority === 'RINK_USER';
-        }
-
-        return $this->authority === self::ACCESS_LEVEL_RINK;
-    }
+   
 
     /**
      * Check user has specified authority

@@ -5,9 +5,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'PublicContoller@index');
 Route::get('/program/edit', 'PublicContoller@program_edit');
 Route::get('/program/details', 'PublicContoller@program_details');
-Route::get('/camp/details', 'PublicContoller@camp_details');
+//Route::get('/camp/details', 'PublicContoller@camp_details');
 Route::get('/coach/details', 'PublicContoller@coach_details');
 Route::get('/rink/list', 'PublicContoller@rink_list');
+
+
+Route::get('/camp/details/{camp}',['as' =>'camp-details','uses' =>'PublicContoller@camp_details']);
 
 Route::get('/filter_coach', 'PublicContoller@filter_coach');
 

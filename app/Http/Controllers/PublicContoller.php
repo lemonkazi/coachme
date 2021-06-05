@@ -67,27 +67,27 @@ class PublicContoller extends Controller
     }
 
 
-  public function filter_coach(Request $request){
-      $data = $request->all();
-      if (isset($data["param"])) {// check is the param is set
-        $params['name'] = $param = $data["param"]; // get the value of the param
-        
-        //$params['name'] = 'a';
-        $user = User::first();
-        $query = $user->coach_filter($params);
-        $response = $query->orderBy('id', 'asc')->get(['name', 'avatar_image_path', 'id']);
-        
-        foreach ($response as $key=>$item) {
-            $plucked[] = array (
-                              'id' => $item->id,
-                              'name'=> $item->name,
-                              'avatar_image_path' => $item->avatar_image_path
-                                );
+    public function filter_coach(Request $request){
+        $data = $request->all();
+        if (isset($data["param"])) {// check is the param is set
+          $params['name'] = $param = $data["param"]; // get the value of the param
+          
+          //$params['name'] = 'a';
+          $user = User::first();
+          $query = $user->coach_filter($params);
+          $response = $query->orderBy('id', 'asc')->get(['name', 'avatar_image_path', 'id']);
+          
+          foreach ($response as $key=>$item) {
+              $plucked[] = array (
+                                'id' => $item->id,
+                                'name'=> $item->name,
+                                'avatar_image_path' => $item->avatar_image_path
+                                  );
+          }
+          //send the response using json format
+          echo json_encode($plucked);
         }
-        //send the response using json format
-        echo json_encode($plucked);
-      }
-  }
+    }
 
 
 
@@ -348,8 +348,58 @@ class PublicContoller extends Controller
       ])
       ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
     }
-    public function camp_details(){
-      return view('pages.camp.details');
+
+
+    public function camp_details(Request $request, Camp $camp){
+      
+      if (!$camp) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Camp Details');
+      }
+
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      $coaches =array();
+      if(!empty($camp) && !empty($camp->coaches)){
+        $coaches_data = json_decode($camp->coaches);
+        foreach ($coaches_data as $key=>$coach) {
+          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+        }
+      }
+
+
+
+
+       $camp_photo = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       $camp_schedule = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'SCHEDULE'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       
+       
+
+
+      return view('pages.camp.details', [
+          'data'=>
+          [
+               'camp'      =>  $camp,
+               'camp_photo'      =>  $camp_photo,
+               'camp_schedule'      =>  $camp_schedule,
+               'coaches'   => $coaches,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate'));
     }
     public function program_edit(){
       return view('pages.program.edit');
