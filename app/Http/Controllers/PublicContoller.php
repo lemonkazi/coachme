@@ -386,13 +386,18 @@ class PublicContoller extends Controller
                     ])->get(['name', 'path', 'id'])->toArray();
 
        
-       
+      $start_date = strtotime($camp->start_date);
+      $end_date = strtotime($camp->end_date);
 
-
+      // echo date('m', $unixtime); //month
+      // echo date('d', $unixtime); 
+      // echo date('y', $unixtime );
       return view('pages.camp.details', [
           'data'=>
           [
                'camp'      =>  $camp,
+               'start_date'      =>  $start_date,
+               'end_date'      =>  $end_date,
                'camp_photo'      =>  $camp_photo,
                'camp_schedule'      =>  $camp_schedule,
                'coaches'   => $coaches,

@@ -7,7 +7,7 @@
             <div class="col-md-6">
               <h1> {{$data['camp']->name}}<i class="fas fa-share-alt"></i>
               </h1>
-              <h4>From September 15 to January 1</h4>
+              <h4>From {{date('F', $data['start_date'])}} {{date('d', $data['start_date'])}} to {{date('F', $data['end_date'])}} {{date('d', $data['end_date'])}}</h4>
               <div class="row">
                 <div class="col-md-6">
                   <label for="">Level</label>
@@ -21,8 +21,19 @@
               <div class="row">
                 <div class="col-md-6">
                   <label for="">Schedule</label>
+
+
                   <div class="upClick">
-                    <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                    @if(isset($data['camp_schedule']))
+                      @foreach ($data['camp_schedule'] as $schedule)
+                        <a href="javascript:void(0);" onclick='downloadPDF("{{$BASE_URL}}/{{$schedule['path']}}");'>
+                          <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                        </a>
+                        
+                      @endforeach
+                    @endif
+
+                    
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -62,7 +73,7 @@
                       @foreach ($data['camp_photo'] as $photo)
                         
                         <div class="item">
-                          <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="PAT">
+                          <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
                         </div>
                       @endforeach
                     @endif
