@@ -4,15 +4,15 @@ namespace App\Models;
 
 use App\Models\BaseModel as Model;
 use App\Models\User;
-use App\Models\Camp;
+use App\Models\Program;
 
-class CampType extends Model
+class ProgramType extends Model
 {
 
-    protected $table = 'camp_types';
+    protected $table = 'program_types';
 
     protected $cascadeDeletes = [
-        'camps'
+        'programs'
     ];
     
     protected $fillable= [
@@ -62,9 +62,9 @@ class CampType extends Model
     /**
      * Get the users for the building.
      */
-    public function camps()
+    public function programs()
     {
-        return $this->hasMany(Camp::class);
+        return $this->hasMany(Program::class);
     }
 
     

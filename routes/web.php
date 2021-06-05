@@ -3,14 +3,15 @@
 use Illuminate\Support\Facades\Route;
 // landing page
 Route::get('/', 'PublicContoller@index');
-Route::get('/program/edit', 'PublicContoller@program_edit');
-Route::get('/program/details', 'PublicContoller@program_details');
+//Route::get('/program/edit', 'PublicContoller@program_edit');
+//Route::get('/program/details', 'PublicContoller@program_details');
 //Route::get('/camp/details', 'PublicContoller@camp_details');
 Route::get('/coach/details', 'PublicContoller@coach_details');
 Route::get('/rink/list', 'PublicContoller@rink_list');
 
 
 Route::get('/camp/details/{camp}',['as' =>'camp-details','uses' =>'PublicContoller@camp_details']);
+Route::get('/program/details/{program}',['as' =>'program-details','uses' =>'PublicContoller@program_details']);
 
 Route::get('/filter_coach', 'PublicContoller@filter_coach');
 
@@ -54,13 +55,30 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('camp/create', 'PublicContoller@camp_add');
 	Route::post('camp/create',['as' =>'camp-create','uses' =>'PublicContoller@camp_add']);
 	
+
+
+	Route::get('program/update/{program}',['as' =>'program-update','uses' =>'PublicContoller@program_edit']);
+	Route::post('program/update/{program}',['as' =>'program-update','uses' =>'PublicContoller@program_edit']);
+	Route::get('program/create', 'PublicContoller@program_add');
+	Route::post('program/create',['as' =>'program-create','uses' =>'PublicContoller@program_add']);
+	
+
+
+
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 	Route::post('/ajax_delete','AjaxController@delete');
 });
+
+
+
 Route::middleware(['auth', 'authority:coach_user'])->group(function () {
 	Route::get('my-account', 'PublicContoller@coach_edit');
 	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
 });
+
+
+
+
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 	
@@ -248,6 +266,20 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CampTypeController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CampTypeController@update']);
+  	});
+
+
+  	//programType route
+  	Route::get('program-types',[App\Http\Controllers\Admin\ProgramTypeController::class, 'show']);
+	Route::get('program-types/{programType}',[App\Http\Controllers\Admin\ProgramTypeController::class, 'show']);
+	
+	Route::group(['prefix' =>'program-type', 'as'=>'program-type.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\ProgramTypeController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\ProgramTypeController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\ProgramTypeController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\ProgramTypeController@update']);
   	});
 });
 

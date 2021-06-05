@@ -134,18 +134,19 @@ class BaseModel extends Model
         $authUser = $request->user();
         
         if ($authUser) {
-            if ($authUser->isRinkUser()) { 
-                if (in_array('rink_id', $this->fillable)) {
-                    $query->where('rink_id', '=', $authUser->rink_id);
-                }
-            } elseif ($authUser->isUser()) { 
+            // if ($authUser->isRinkUser()) { 
+            //     if (in_array('rink_id', $this->fillable)) {
+            //         $query->where('rink_id', '=', $authUser->rink_id);
+            //     }
+            // } 
+            // elseif ($authUser->isUser()) { 
                 
-                if (in_array('rink_id', $this->fillable)) {
+            //     if (in_array('rink_id', $this->fillable)) {
                     
-                    $query->where('rink_id', '=', $authUser->rink_id);
+            //         $query->where('rink_id', '=', $authUser->rink_id);
                     
-                }
-            }
+            //     }
+            // }
         } else { 
             if ($request->hasHeader('CITY-ID') && $request->header('CITY-ID')) {
                 if (in_array('city_id', $this->fillable)) {

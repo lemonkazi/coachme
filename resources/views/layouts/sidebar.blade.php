@@ -345,6 +345,30 @@
         </li>
 
 
+        <li class="nav-item <?php if ($controller == 'programtypecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'programtypecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Program Type
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'programtypecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('program-types')}}" class="nav-link <?php if ($controller == 'programtypecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Program Type</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'programtypecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/program-types/add')}}" class="nav-link <?php if ($controller == 'programtypecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Program Type</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <li class="nav-item <?php if ($controller == 'levelcontroller') echo 'active menu-open' ?>"">
           <a href="#" class="nav-link <?php if ($controller == 'levelcontroller') echo 'active' ?>">
             <i class="nav-icon fas fa-th"></i>

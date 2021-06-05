@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Models\BaseModel as Model;
 use App\Models\User;
-use App\Models\CampType;
+use App\Models\ProgramType;
 use App\Models\Level;
 use App\Models\Rink;
 use App\Models\Location;
 
 
-class Camp extends Model
+class Program extends Model
 {
 
     protected $cascadeDeletes = [
@@ -22,17 +22,20 @@ class Camp extends Model
         'location_id',
         'level_id',
         'rink_id',
-        'camp_type_id',
+        'program_type_id',
         'web_site_url',
-        'start_date',
-        'end_date',
+        'reg_start_date',
+        'reg_end_date',
         'price',
         'about',
         'contacts',
         'whatsapp',
-        'coaches',
         'user_id',
-        'email'
+        'email',
+        'starting_age',
+        'schedule_start_date',
+        'schedule_end_date',
+        'schedule_log'
     ];
 
     /**
@@ -46,7 +49,7 @@ class Camp extends Model
         'location_name',
         'level_name',
         'rink_name',
-        'camp_type_name'
+        'program_type_name'
     ];
 
     /**
@@ -116,9 +119,9 @@ class Camp extends Model
     /**
      * The coupons that belong to the city.
      */
-    public function camp_type()
+    public function program_type()
     {
-        return $this->belongsTo(CampType::class);
+        return $this->belongsTo(ProgramType::class);
     }
 
 
@@ -158,9 +161,9 @@ class Camp extends Model
      *
      * @return string
      */
-    public function getCampTypeNameAttribute()
+    public function getProgramTypeNameAttribute()
     {
-        return !empty($this->camp_type) ? $this->camp_type->name : null;
+        return !empty($this->program_type) ? $this->program_type->name : null;
     }
    
    

@@ -166,6 +166,25 @@ $('.program-slider').slick({
     });
 
 
+    //daterangepicker
+    $('input[name="reg_dates"]').daterangepicker({
+      startDate: today, // after open picker you'll see this reg_dates as picked
+      endDate: endDate,
+      locale: {
+        format: 'YYYY-MM-DD'
+      }
+    });
+
+    $('input[name="reg_dates"]').on('apply.daterangepicker', function(ev, picker) {
+      console.log(picker.startDate.format('YYYY-MM-DD'));
+      console.log(picker.endDate.format('YYYY-MM-DD'));
+
+      //[startDate, endDate] = $('.date_range').val().split(' - ');
+      $('input[name="reg_start_date"]').val(picker.startDate.format('YYYY-MM-DD'));
+      $('input[name="reg_end_date"]').val(picker.endDate.format('YYYY-MM-DD'));
+    });
+
+
   });
 
   var loadFile = function(event) {

@@ -19,7 +19,9 @@ use App\Models\Speciality;
 use App\Models\Province;
 use App\Models\Location;
 use App\Models\CampType;
+use App\Models\ProgramType;
 use App\Models\Camp;
+use App\Models\Program;
 use App\Models\Level;
 use View;
 use Auth;
@@ -258,6 +260,14 @@ class PublicContoller extends Controller
 
           if($request->hasFile('schedule_pdf_path'))
           {
+
+            AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'SCHEDULE'],
+                        ['deleted_at', null],
+                    ])->delete();
+
             $attached_file =array();
               foreach ($files as $file) {
                 $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
@@ -277,6 +287,12 @@ class PublicContoller extends Controller
 
           if($request->hasFile('camp_image_path'))
           {
+            AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->delete();
             $attached_files =array();
               foreach ($image_files as $file) {
                 $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
@@ -292,8 +308,7 @@ class PublicContoller extends Controller
           }
           //return redirect('/camp')->with('status', $status);
           return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
-          print_r($data);
-          exit();
+          
         }
         
       }
@@ -406,11 +421,277 @@ class PublicContoller extends Controller
       ])
       ->with(compact('formatedDate'));
     }
-    public function program_edit(){
-      return view('pages.program.edit');
+
+    public function program_add(Request $request){
+
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Add Program');
+      }
+
+
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+          // if (isset($data['coaches'])) {
+          //  $data['coaches'] = json_encode(array_unique($data['coaches']));
+          // }
+
+          
+          $data['user_id'] = $user->id;
+          // print_r($data);
+          // exit();
+          $program = Program::create($data);
+          if (!$program) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+
+          
+
+          $image_files = $request->file('program_image_path');
+
+          if($request->hasFile('program_image_path'))
+          {
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $program->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/program_photo'), $new_name);
+                $attached_files['content_type'] = 'PROGRAM';
+                $attached_files['content_id'] = $program->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/program_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
+          }
+          //return redirect('/program')->with('status', $status);
+          return redirect()->intended(route('program-update', ['program' => $program->id]));
+          print_r($data);
+          exit();
+        }
+        
+      }
+
+      $program ='';
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+      return view('pages.program.edit', [
+          'data'=>
+          [
+               'program'      =>  $program,
+               'user'      =>  $user,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','program_type_all','level_all'));
+
     }
-    public function program_details(){
-      return view('pages.program.details');
+
+    public function program_edit(Request $request, Program $program){
+      
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Update Program');
+      }
+
+
+      if (!$program) {
+        return back();
+      }
+
+
+
+
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+         
+
+          
+          $data['user_id'] = $user->id;
+
+          if (!$program->update($data)) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+
+
+          $image_files = $request->file('program_image_path');
+
+          if($request->hasFile('program_image_path'))
+          {
+            AttachedFile::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->delete();
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $program->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/program_photo'), $new_name);
+                $attached_files['content_type'] = 'PROGRAM';
+                $attached_files['content_id'] = $program->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/program_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
+          }
+          //return redirect('/program')->with('status', $status);
+          return redirect()->intended(route('program-update', ['program' => $program->id]));
+          
+        }
+        
+      }
+
+
+      //$program ='';
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $program_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      $coaches =array();
+      if(!empty($program) && !empty($program->coaches)){
+        $coaches_data = json_decode($program->coaches);
+        foreach ($coaches_data as $key=>$coach) {
+          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+        }
+      }
+
+
+
+
+       $program_photo = AttachedFile::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       $program_schedule = AttachedFile::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'SCHEDULE'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+      
+
+      return view('pages.program.edit', [
+          'data'=>
+          [
+               'program'      =>  $program,
+               'program_photo'      =>  $program_photo,
+               'program_schedule'      =>  $program_schedule,
+               'coaches'   => $coaches,
+               'user'      =>  $user,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','program_type_all','level_all'));
+    }
+
+    public function program_details(Request $request, Program $program){
+      
+       if (!$program) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Program Details');
+      }
+
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      
+
+
+
+
+       $program_photo = AttachedFile::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       
+      $start_date = strtotime($program->start_date);
+      $end_date = strtotime($program->end_date);
+
+      // echo date('m', $unixtime); //month
+      // echo date('d', $unixtime); 
+      // echo date('y', $unixtime );
+      return view('pages.program.details', [
+          'data'=>
+          [
+               'program'      =>  $program,
+               'start_date'      =>  $start_date,
+               'end_date'      =>  $end_date,
+               'program_photo'      =>  $program_photo,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate'));
     }
     public function coach_details(){
       return view('pages.coach.details');

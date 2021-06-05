@@ -101,6 +101,14 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Schedule <span class="input-required">*</span></label>
+                    @if(isset($data['camp_schedule']))
+                      @foreach ($data['camp_schedule'] as $schedule)
+                        <a href="javascript:void(0);" onclick='downloadPDF("{{$BASE_URL}}/{{$schedule['path']}}");'>
+                          <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                        </a>
+                        
+                      @endforeach
+                    @endif
                     <input accept="application/pdf,application/vnd.ms-excel" name="schedule_pdf_path[]" type='file' class="fileUp" onchange="file_name();"  />
 
                     <div class="upClick">
@@ -113,8 +121,20 @@
                 <h2>Photos</h2>
 
                 <div class="col-md-12 img-upload mb-4">
-                  <div id="image_preview"></div>
-                  <div>
+                  <div id="image_preview">
+                    @if(isset($data['camp_photo']))
+                      @foreach ($data['camp_photo'] as $photo)
+                        
+                        
+                          <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
+                        
+                      @endforeach
+                    @endif
+                  </div>
+                  <input type="hidden" class="form-control" id="imagePath" name="image_path">
+                    
+                  <div id="aaa">
+                    
                     <input accept="image/*" name="camp_image_path[]" type='file' id="imgInp" onchange="preview_image();" multiple />
                     <i class="far fa-file-image"></i>
                     <i class="bi bi-plus-circle"></i>
@@ -248,14 +268,43 @@
         });
         
       });
-      function preview_image() 
-      {
-        var total_file=document.getElementById("imgInp").files.length;
-        for(var i=0;i<total_file;i++)
-        {
-          $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'><br>");
-        }
-      }
+      //$("#imgInp").on('change',function(){
+      $(document).on("change", "#imgInp", function () {
+        //var total_file=document.getElementById("imgInp").files.length;
+        $("#image_preview").empty();//you can remove this code if you want previous user input
+        imagesPreview(this, '#image_preview');
+        
+      });
+
+      let files = [];
+        // Multiple images preview in browser
+      var imagesPreview = function(input, placeToInsertImagePreview) {
+
+          if (input.files) {
+              var filesAmount = input.files.length;
+
+              for (i = 0; i < filesAmount; i++) {
+                  var reader = new FileReader();
+
+                  reader.onload = function(event) {
+                      $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                  }
+
+                  reader.readAsDataURL(input.files[i]);
+                  files.push(input.files[i]);
+              }
+          }
+          console.log(files);
+
+          // files.forEach(file => {
+          //    here I just put file as file[] so now in submitting it will send all 
+          //   files 
+          //   $('#image_preview').append('file[]', file);
+          // });
+          $("#imagePath").val(files);
+      
+
+      };
 
       function file_name(){
         $('.upClick span').html(event.target.files[0].name);

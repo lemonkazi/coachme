@@ -287,4 +287,14 @@ return [
     'Camp has been updated' => 'Camp has been updated',
 
 
+
+    'All Program Types' => 'All Program Types',
+    'Program Type Detail' => 'Program Type Detail',
+    'Program Type List' => 'Program Type List',
+    'Edit Program Type' => 'Edit Program Type',
+    'Add Program Type' => 'Add Program Type',
+    'A new Program Type has been created' => 'A new Program Type has been created',
+    'Program Type has been updated' => 'Program Type has been updated',
+
+
 ];
