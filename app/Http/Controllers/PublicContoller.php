@@ -493,8 +493,7 @@ class PublicContoller extends Controller
           }
           //return redirect('/program')->with('status', $status);
           return redirect()->intended(route('program-update', ['program' => $program->id]));
-          print_r($data);
-          exit();
+          
         }
         
       }
@@ -611,28 +610,14 @@ class PublicContoller extends Controller
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
-      $coaches =array();
-      if(!empty($program) && !empty($program->coaches)){
-        $coaches_data = json_decode($program->coaches);
-        foreach ($coaches_data as $key=>$coach) {
-          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
-        }
-      }
-
+      
 
 
 
        $program_photo = AttachedFile::where([
                         ['content_id', $program->id],
-                        ['content_type', 'CAMP'],
+                        ['content_type', 'PROGRAM'],
                         ['type', 'PHOTO'],
-                        ['deleted_at', null],
-                    ])->get(['name', 'path', 'id'])->toArray();
-
-       $program_schedule = AttachedFile::where([
-                        ['content_id', $program->id],
-                        ['content_type', 'CAMP'],
-                        ['type', 'SCHEDULE'],
                         ['deleted_at', null],
                     ])->get(['name', 'path', 'id'])->toArray();
 
@@ -643,8 +628,6 @@ class PublicContoller extends Controller
           [
                'program'      =>  $program,
                'program_photo'      =>  $program_photo,
-               'program_schedule'      =>  $program_schedule,
-               'coaches'   => $coaches,
                'user'      =>  $user,
                'Title' =>  $title
           ]
@@ -677,6 +660,8 @@ class PublicContoller extends Controller
        
       $reg_start_date = strtotime($program->reg_start_date);
       $reg_end_date = strtotime($program->reg_end_date);
+      $schedule_start_date = strtotime($program->schedule_start_date);
+      $schedule_end_date = strtotime($program->schedule_end_date);
 
       // echo date('m', $unixtime); //month
       // echo date('d', $unixtime); 
@@ -687,6 +672,8 @@ class PublicContoller extends Controller
                'program'      =>  $program,
                'reg_start_date'      =>  $reg_start_date,
                'reg_end_date'      =>  $reg_end_date,
+               'schedule_start_date'      =>  $schedule_start_date,
+               'schedule_end_date'      =>  $schedule_end_date,
                'program_photo'      =>  $program_photo,
                'Title' =>  $title
           ]

@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-md-6">
               <h1>{{$data['program']->name}}<i class="fas fa-share-alt"></i></h1>
-              <h4>From {{date('F', $data['reg_start_date'])}} {{date('d', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}} {{date('d', $data['reg_end_date'])}}</h4>
+              <h4>From {{date('F', $data['schedule_start_date'])}} {{date('d', $data['schedule_start_date'])}} to {{date('F', $data['schedule_end_date'])}} {{date('d', $data['schedule_end_date'])}}</h4>
               <p class="gray">Window of registration: {{date('F', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}}</p>
               <a href="#" class="btn btn-custom mb-3">Register here</a>
               <div class="row">
@@ -58,7 +58,7 @@
                   </div>
                   <div class="address text-center mt-5">
                     <label for="">Contact</label>
-                    <h5><i class="bi bi-telephone-fill"></i>+{{$data['program']->contact}}</h5>
+                    <h5><i class="bi bi-telephone-fill"></i>+{{$data['program']->contacts}}</h5>
                     <h5><i class="fas fa-at"></i>{{$data['program']->email}}</h5>
                     <h5><i class="bi bi-telephone-fill"></i>+{{$data['program']->whatsapp}}</h5>
                   </div>

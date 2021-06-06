@@ -85,11 +85,11 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="name">Period <span class="input-required">*</span></label>
-<<<<<<< HEAD
+
                     <input type="text" class="form-control" id="schedule_period" name="schedule_period" value="" required aria-describedby="emailHelp" >
-=======
-                    <input type="text" class="form-control" id="name" name="period" value="" required aria-describedby="emailHelp" >
->>>>>>> 91dbd3967d00ca0e86fedc6a93279d7056d1210f
+                    <input type="hidden" name="schedule_start_date" value="{{!empty($data['program']) ? old('schedule_start_date', $data['program']->schedule_start_date) : $formatedDate}}">
+                    <input type="hidden" name="schedule_end_date" value="{{!empty($data['program']) ? old('schedule_end_date', $data['program']->schedule_end_date) : $formatedDate}}">
+                    
                   </div>
                 </div>
                 <div class="col-md-12">
