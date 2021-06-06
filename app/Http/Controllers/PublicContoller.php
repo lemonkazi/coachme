@@ -654,7 +654,7 @@ class PublicContoller extends Controller
 
     public function program_details(Request $request, Program $program){
       
-       if (!$program) {
+      if (!$program) {
         return back(RouteServiceProvider::HOME);
       } else {
         $title=trans('global.Program Details');
@@ -675,8 +675,8 @@ class PublicContoller extends Controller
                     ])->get(['name', 'path', 'id'])->toArray();
 
        
-      $start_date = strtotime($program->start_date);
-      $end_date = strtotime($program->end_date);
+      $reg_start_date = strtotime($program->reg_start_date);
+      $reg_end_date = strtotime($program->reg_end_date);
 
       // echo date('m', $unixtime); //month
       // echo date('d', $unixtime); 
@@ -685,8 +685,8 @@ class PublicContoller extends Controller
           'data'=>
           [
                'program'      =>  $program,
-               'start_date'      =>  $start_date,
-               'end_date'      =>  $end_date,
+               'reg_start_date'      =>  $reg_start_date,
+               'reg_end_date'      =>  $reg_end_date,
                'program_photo'      =>  $program_photo,
                'Title' =>  $title
           ]

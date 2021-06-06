@@ -1,51 +1,43 @@
 @extends('layouts.frontend')
-@section('title','Program Details')
+@section('title',$data['Title'])
 @section('content')
     <div class="program-details">
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              <h1>Victoria rink CanSkate program <i class="fas fa-share-alt"></i></h1>
-              <h4>From September 15 to January 1</h4>
-              <p class="gray">Window of registration: June to august</p>
+              <h1>{{$data['program']->name}}<i class="fas fa-share-alt"></i></h1>
+              <h4>From {{date('F', $data['reg_start_date'])}} {{date('d', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}} {{date('d', $data['reg_end_date'])}}</h4>
+              <p class="gray">Window of registration: {{date('F', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}}</p>
               <a href="#" class="btn btn-custom mb-3">Register here</a>
               <div class="row">
                 <div class="col-md-4">
                   <label for="">Level</label>
-                  <p>Advanced level</p>
+                  <p>{{$data['program']->level_name}}</p>
                 </div>
                 <div class="col-md-4">
                   <label for="">Price</label>
-                  <p>1,500$</p>
+                  <p>{{$data['program']->price}}$</p>
                 </div>
                 <div class="col-md-4">
                   <label for="">Starting age</label>
-                  <p>12+</p>
+                  <p>{{$data['program']->starting_age}}+</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4">
                   <label for="">Schedule</label>
-                  <p>10am. - 5pm.<br/>3h on ice & 2h off ice</p>
+                  <p>{{$data['program']->schedule_log}}</p>
                 </div>
                 <div class="col-md-8">
                   <label for="">Location</label>
-                  <p>Vancouver island, Canada.<a href="">Victoria rink</a></p>
+                  <p>{{$data['program']->location_name}}<a href="">{{$data['program']->rink_name}}</a></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <label for="">About canskate</label>
                   <p>
-                    CanSkate is Skate Canada's flagship learn-to-skate program, designed for
-                    beginners of all ages. When you sign up for CanSkate you will be in a program
-                    that focuses on fun, participation and basic skill development. You will earn
-                    badges and other incentives as you learn fundamental skating skills. Lessons
-                    are given in a group format and led by our NCCP certified professional 
-                    coaches. Professional coaches are assisted by trained Program Assistants.
-                    Skaters progress at their own rate and coaches make sessions active using
-                    teaching aids, music and a wide variety of activities that create a fun
-                    environment and promote learning.
+                    {{$data['program']->about}}
                   </p>
                 </div>
               </div>
@@ -54,21 +46,21 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="program-slider">
-                    <div class="item">
-                      <img class="pic" src="https://via.placeholder.com/500x300.png" alt="PAT">
-                    </div>
-                    <div class="item">
-                      <img class="pic" src="https://via.placeholder.com/500x300.png" alt="PAT">
-                    </div>
-                    <div class="item">
-                      <img class="pic" src="https://via.placeholder.com/500x300.png" alt="PAT">
-                    </div>
+                    @if(isset($data['program_photo']))
+                      @foreach ($data['program_photo'] as $photo)
+                        
+                        <div class="item">
+                          <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
+                        </div>
+                      @endforeach
+                    @endif
+                    
                   </div>
                   <div class="address text-center mt-5">
                     <label for="">Contact</label>
-                    <h5><i class="bi bi-telephone-fill"></i>+1-613-555-0146</h5>
-                    <h5><i class="fas fa-at"></i>patrick_chan@gmail.com</h5>
-                    <h5><i class="bi bi-telephone-fill"></i>+1-613-345-0865</h5>
+                    <h5><i class="bi bi-telephone-fill"></i>+{{$data['program']->contact}}</h5>
+                    <h5><i class="fas fa-at"></i>{{$data['program']->email}}</h5>
+                    <h5><i class="bi bi-telephone-fill"></i>+{{$data['program']->whatsapp}}</h5>
                   </div>
                 </div>
               </div> 
