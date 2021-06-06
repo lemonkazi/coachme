@@ -184,6 +184,8 @@ $('.program-slider').slick({
       $('input[name="reg_end_date"]').val(picker.endDate.format('YYYY-MM-DD'));
     });
 
+    $('input[name="period"]').daterangepicker();
+
 
   });
 

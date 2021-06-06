@@ -699,6 +699,9 @@ class PublicContoller extends Controller
     public function rink_list(){
       return view('pages.rink.list');
     }
+    public function program_list(){
+      return view('pages.program.list');
+    }
     public function coach_edit(Request $request){
       $user = $request->user();
       if (!$user) {
