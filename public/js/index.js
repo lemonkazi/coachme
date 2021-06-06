@@ -158,5 +158,12 @@ $('.program-slider').slick({
     }
   };
 
-
+  function preview_image() 
+  {
+    var total_file=document.getElementById("imgInp").files.length;
+    for(var i=0;i<total_file;i++)
+    {
+      $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'><br>");
+    }
+  }
       

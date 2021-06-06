@@ -18,6 +18,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="location">Level</label>
+                    
                     <select name="province_id" id ="location" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       <option value="">1</option>
@@ -60,7 +61,7 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="location">Location</label>
+                    <label for="location">Location</label><span><a href="" >+Add link to my Rink</a></span>
                     <select name="province_id" id ="location" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       <option value="">1</option>
@@ -113,9 +114,12 @@
             <div class="col-md-12">
               <h2>Photos</h2>
               <div class="img-upload mb-4">
-                <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
-                <i class="far fa-file-image"></i>
-                <i class="bi bi-plus-circle"></i>
+                <div id="image_preview"></div>
+                <div>
+                  <input accept="image/*" name="avatar_image_path[]" type='file' id="imgInp" onchange="preview_image();" multiple />
+                  <i class="far fa-file-image"></i>
+                  <i class="bi bi-plus-circle"></i>
+                </div>
               </div>
             </div>
           </div>

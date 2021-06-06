@@ -171,14 +171,7 @@
         });
         
       });
-      function preview_image() 
-      {
-        var total_file=document.getElementById("imgInp").files.length;
-        for(var i=0;i<total_file;i++)
-        {
-          $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'><br>");
-        }
-      }
+      
 
       function file_name(){
         $('.upClick span').html(event.target.files[0].name);
