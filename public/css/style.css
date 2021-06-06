@@ -1195,7 +1195,7 @@ label {
   padding-right: 10px;
 }
 
-.rink-list {
+.rink-list, .program_list {
   background: #F3F6FB;
   background-image: url(../img/edit_program.png);
   background-size: auto;
@@ -1203,11 +1203,11 @@ label {
   background-position: bottom center;
 }
 
-.rink-list .green {
+.rink-list .green, .program_list .green {
   background: #A7BE79;
 }
 
-.rink-list .card {
+.rink-list .card, .program_list .card {
   border: none;
   -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -1218,18 +1218,18 @@ label {
           box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
 }
 
-.rink-list h3 {
+.rink-list h3, .program_list h3 {
   font: normal normal bold 22px/30px Raleway;
   color: #233C50;
 }
 
-.rink-list h6 {
+.rink-list h6, .program_list h6 {
   font: normal normal 600 18px Raleway;
   letter-spacing: 0px;
   color: #7AB7CC;
 }
 
-.rink-list h5 {
+.rink-list h5, .program_list h5 {
   font: normal normal medium Raleway;
   font-size: 16px;
   letter-spacing: 0px;
@@ -1237,19 +1237,19 @@ label {
   opacity: .6;
 }
 
-.rink-list h5 i {
+.rink-list h5 i, .program_list h5 i {
   padding-right: 5px;
 }
 
-.rink-list img {
+.rink-list img, .program_list img {
   width: 100%;
 }
 
-.rink-list .card-body {
+.rink-list .card-body, .program_list .card-body {
   position: relative;
 }
 
-.rink-list .learn-more a {
+.rink-list .learn-more a, .program_list .learn-more a {
   position: absolute;
   bottom: 0;
   right: 0;

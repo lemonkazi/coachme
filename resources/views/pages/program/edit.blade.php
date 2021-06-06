@@ -56,7 +56,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="name">Period <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="name" name="period" value="" required aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-12">

@@ -145,7 +145,7 @@ $('.program-slider').slick({
     });
 
     //daterangepicker
-    $('input[name="dates"]').daterangepicker();
+    $('input[name="dates"],input[name="period"]').daterangepicker();
 
 
   });
