@@ -12,6 +12,7 @@ use App\Models\Rink;
 use App\Models\Speciality;
 use App\Models\Price;
 use App\Models\Language;
+use App\Models\City;
 use App\Models\Experience;
 use App\Models\Certificate;
 
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Carbon\Carbon;
-//use App\Notifications\PasswordReset; // Or the location that you store your notifications (this is default).
+//use App\Notifications\PasswordReset; // Or the city that you store your notifications (this is default).
 
 
 use App\Traits\ModelTrait;
@@ -44,6 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'experience_id',
         'certificate_id',
         'price_id',
+        'province_id',
+        'city_id',
         'email',
         'password',
         'about',
@@ -81,6 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'certificate_name',
         'price_name',
         'userinfos',
+        'city_name'
     ];
 
     /**
@@ -263,6 +267,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return !empty($this->experience) ? $this->experience->name : null;
     }
 
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getCityNameAttribute()
+    {
+        return !empty($this->city) ? $this->city->name : null;
+    }
+
     // /**
     //  * Get the user's rink name.
     //  *
@@ -301,6 +316,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function price()
     {
         return $this->belongsTo(Price::class);
+    }
+
+     /**
+     * Get the rinks for the user.
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
     
 

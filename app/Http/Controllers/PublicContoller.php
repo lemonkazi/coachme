@@ -680,19 +680,56 @@ class PublicContoller extends Controller
       ])
       ->with(compact('formatedDate'));
     }
-    public function coach_details(){
-      return view('pages.coach.details');
+    public function coach_details(Request $request, User $user){
+      if (!$user) {
+         return redirect(RouteServiceProvider::ROOT);
+      } else {
+        $title=trans('global.Program Details');
+      }
+
+      if ($user->is_published !=1) {
+         return redirect(RouteServiceProvider::ROOT);
+      } 
+      $ooo = $user->userinfos['speciality'];
+      $specialityaa = '';
+      foreach($ooo as $row){
+          $specialityaa .=$row->content_name.',';
+      }
+      $speciality = trim($specialityaa,',');
+
+
+      $rink = $user->userinfos['rinks'];
+      $specialityaa = '';
+      foreach($rink as $row){
+          $specialityaa .=$row->content_name.',';
+      }
+      $rink = trim($specialityaa,',');
+
+      $language = $user->userinfos['languages'];
+      $specialityaa = '';
+      foreach($language as $row){
+          $specialityaa .=$row->content_name.',';
+      }
+      $language = trim($specialityaa,',');
+
+      return view('pages.coach.details', [
+          'data'=>
+          [
+               'user'      =>  $user,
+               'Title' =>  $title,
+               'speciality' => $speciality,
+               'rink' => $rink,
+               'language' => $language
+          ]
+      ]);
+      //->with(compact('formatedDate'));
+      //return view('pages.coach.details');
     }
-    public function rink_list(){
-      return view('pages.rink.list');
-    }
-    public function program_list(){
-      return view('pages.program.list');
-    }
+
     public function coach_edit(Request $request){
       $user = $request->user();
       if (!$user) {
-        return back(RouteServiceProvider::HOME);
+         return redirect(RouteServiceProvider::ROOT);
       } else {
         $title=trans('global.Edit Coach');
       }
@@ -704,6 +741,9 @@ class PublicContoller extends Controller
           $data['is_published'] = 1;
         } else {
           $data['is_published'] = 0;
+        }
+        if (isset($data['location_id']) && !empty($data['location_id'])) {
+          $data['city_id'] = $data['location_id'];
         }
         //$data['authority'] = User::ACCESS_LEVEL_COACH;
 
@@ -868,6 +908,13 @@ class PublicContoller extends Controller
       ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
 
     }
+    public function rink_list(){
+      return view('pages.rink.list');
+    }
+    public function program_list(){
+      return view('pages.program.list');
+    }
+    
 
     public function verifyUser($token)
     {
