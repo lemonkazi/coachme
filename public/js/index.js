@@ -233,4 +233,13 @@ $('.program-slider').slick({
       }
   }
 
+  function preview_image() 
+  {
+    $("#image_preview").empty();//you can remove this code if you want previous user input
+    var total_file=document.getElementById("imgInp").files.length;
+    for(var i=0;i<total_file;i++)
+    {
+      $('#image_preview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'><br>");
+    }
+  }
       

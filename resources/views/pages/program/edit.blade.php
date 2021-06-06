@@ -43,6 +43,7 @@
                   <div class="form-group">
                     <label for="location">Level</label>
                     <select name="level_id" id ="level_id" class="form-control" style="width: 100%">
+
                       <option value="">Select</option>
                       @foreach($level_all as $id => $value)
                         <option value="{{ $id }}" {{ (old('level_id') ? old('level_id') : $data['program']->level_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
@@ -89,7 +90,8 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="location">Location</label>
+
+                    <label for="location">Location</label><span><a href="" >+Add link to my Rink</a></span>
                     <select name="location_id" id ="location_id" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($city_all as $id => $value)
@@ -176,7 +178,8 @@
                 </div>
                 <input type="hidden" class="form-control" id="imagePath" name="image_path">
                 <div id="aaa">    
-                  <input accept="image/*" name="program_image_path[]" type='file' id="imgInp" multiple/>
+                  <input accept="image/*" name="program_image_path[]" type='file' id="imgInp"  onchange="preview_image();" multiple/>
+
                   <i class="far fa-file-image"></i>
                   <i class="bi bi-plus-circle"></i>
                 </div>
