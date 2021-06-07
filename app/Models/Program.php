@@ -8,6 +8,7 @@ use App\Models\ProgramType;
 use App\Models\Level;
 use App\Models\Rink;
 use App\Models\Location;
+use App\Models\AttachedFile;
 
 
 class Program extends Model
@@ -49,7 +50,8 @@ class Program extends Model
         'location_name',
         'level_name',
         'rink_name',
-        'program_type_name'
+        'program_type_name',
+        'program_photo'
     ];
 
     /**
@@ -164,6 +166,27 @@ class Program extends Model
     public function getProgramTypeNameAttribute()
     {
         return !empty($this->program_type) ? $this->program_type->name : null;
+    }
+
+
+    /**
+    * Get the user's City name.
+    *
+    * @return string
+    */
+    public function getProgramPhotoAttribute()
+    {
+       
+        $program_photo = AttachedFile::where([
+                        ['content_id', $this->id],
+                        ['content_type', 'PROGRAM'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       
+        return !empty($program_photo) ? $program_photo : null;
+
     }
    
    

@@ -24,6 +24,8 @@ class RouteServiceProvider extends ServiceProvider
 
     public const PROFILE = '/my-account';
 
+    public const RINKLIST = 'rink/list';
+
     /**
      * The controller namespace for the application.
      *

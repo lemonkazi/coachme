@@ -131,6 +131,13 @@ class PublicContoller extends Controller
            $data['coaches'] = json_encode(array_unique($data['coaches']));
           }
 
+          if (isset($_COOKIE[$data['cookieRink']])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE[$data['cookieWebURL']])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+
           
           $data['user_id'] = $user->id;
           $camp = Camp::create($data);
@@ -246,6 +253,12 @@ class PublicContoller extends Controller
             $data['coaches'] = json_encode(array_unique($data['coaches']));
           }else{
             unset($data['coaches']);
+          }
+          if (isset($_COOKIE[$data['cookieRink']])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE[$data['cookieWebURL']])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
           }
 
           
@@ -462,6 +475,13 @@ class PublicContoller extends Controller
           //  $data['coaches'] = json_encode(array_unique($data['coaches']));
           // }
 
+          if (isset($_COOKIE[$data['cookieRink']])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE[$data['cookieWebURL']])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+
           
           $data['user_id'] = $user->id;
           // print_r($data);
@@ -562,7 +582,12 @@ class PublicContoller extends Controller
         {
 
          
-
+          if (isset($_COOKIE[$data['cookieRink']])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE[$data['cookieWebURL']])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
           
           $data['user_id'] = $user->id;
 
@@ -908,8 +933,31 @@ class PublicContoller extends Controller
       ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
 
     }
-    public function rink_list(){
-      return view('pages.rink.list');
+    public function rink_list(Request $request){
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Rink List');
+      }
+      if ($request->isMethod('post')) {
+        $data = $request->all();
+      }
+      $programs = Program::where([
+                        ['user_id', $user->id],
+                        ['deleted_at', null],
+                    ])->get()->toArray();
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      return view('pages.rink.list', [
+          'data'=>
+          [
+              'user'      =>  $user,
+              'Title' =>  $title,
+              'programs' => $programs
+          ]
+      ])
+      ->with(compact('rink_all'));
+
     }
     public function program_list(){
       return view('pages.program.list');
@@ -953,7 +1001,7 @@ class PublicContoller extends Controller
             return redirect(RouteServiceProvider::PROFILE);
           }
           elseif ($user->isRinkUser()) {
-            return redirect(RouteServiceProvider::ROOT);
+            return redirect(RouteServiceProvider::RINKLIST);
           } 
           else{
             return redirect(RouteServiceProvider::ROOT);
@@ -1007,7 +1055,7 @@ class PublicContoller extends Controller
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::PROFILE]);
                 }
                 elseif ($user->isRinkUser()) {
-                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::RINKLIST]);
                 } else{
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
                 }

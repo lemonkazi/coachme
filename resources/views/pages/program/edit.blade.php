@@ -95,7 +95,10 @@
                 <div class="col-md-12">
                   <div class="form-group">
 
-                    <label for="location">Location</label><span><a href="" >+Add link to my Rink</a></span>
+                    <label for="location">Location</label><span>
+                      <?php $rink = ''; if (isset($_COOKIE['cookieRink'])) { $rink = $_COOKIE['cookieRink']; } ?>
+                      <a href="../rink/{{$rink}}" >+Add link to my Rink</a>
+                    </span>
                     <select name="location_id" id ="location_id" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($city_all as $id => $value)

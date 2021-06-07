@@ -67,7 +67,7 @@ class LoginController extends Controller
                     return redirect(RouteServiceProvider::PROFILE);
                 }
                 elseif ($user->isRinkUser()) {
-                    return redirect(RouteServiceProvider::ROOT);
+                    return redirect(RouteServiceProvider::RINKLIST);
                 } 
                 else{
                     return redirect(RouteServiceProvider::ROOT);

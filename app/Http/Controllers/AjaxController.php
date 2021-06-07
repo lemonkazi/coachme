@@ -9,6 +9,8 @@ use App\Models\Certificate;
 use App\Models\Price;
 use App\Models\Language;
 use App\Models\Location;
+use Illuminate\Http\Response;
+use Cookie;
 
 class AjaxController extends Controller {
 
@@ -106,4 +108,37 @@ class AjaxController extends Controller {
       	$response .= '</select>';
    		echo $response; exit;
    	}
+
+
+
+   	public function set_Cookie(Request $request){
+   		$data = $request->all();
+   		
+   		//cookieWebURL
+   		//cookieRink
+   		if (isset($_COOKIE[$data['cookieName']])) {
+		    unset($_COOKIE[$data['cookieName']]); 
+		    $cookieValue = $data['value'];
+		    $cookieName = $data['cookieName'];
+
+		    $cookiePath = "/";
+			$cookieExpire = time()+(60*60*1);//one day -> seconds*minutes*hours
+			setcookie($cookieName,$cookieValue,$cookieExpire,$cookiePath);
+		    //echo $_COOKIE['cookieRink'];
+		    //print_r($_COOKIE);
+		} else {
+		    $cookieValue = $data['value'];
+		    $cookieName = $data['cookieName'];
+
+		    $cookiePath = "/";
+			$cookieExpire = time()+(60*60*1);//one day -> seconds*minutes*hours
+			setcookie($cookieName,$cookieValue,$cookieExpire,$cookiePath);
+		    //echo $_COOKIE['cookieRink'];
+		    //print_r($_COOKIE);
+		}
+		echo $cookieValue;
+		exit();
+   	}
+
+   
 }

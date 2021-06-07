@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title','Coach Details')
+@section('title',$data['Title'])
 @section('content')
     <div class="rink-list">
         <div class="container">
@@ -10,9 +10,11 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="location">Select your rink</label>
-                    <select name="province_id" id ="location" class="form-control" style="width: 100%">
+                    <select name="cookieRink" id="set_rink_id" class="set_cookie form-control" style="width: 100%">
                       <option value="">Select</option>
-                      <option value="">1</option>
+                      @foreach($rink_all as $id => $value)
+                          <option value="{{ $id }}" {{ (old('rink_id') ? old('rink_id') : '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                      @endforeach
                     </select>
                     <i class="bi bi-chevron-compact-down"></i>
                   </div>
@@ -20,13 +22,13 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="location">Website link</label>
-                    <input type="text" class="form-control" id="name" name="name" value="" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control set_cookie" id="set_web_site_url" name="cookieWebURL" value="" required aria-describedby="emailHelp" >
                   </div>
                 </div>
               </div>
               
-              <a href="" class="btn btn-custom mb-2 green col-md-3">Create a camp</a><br/>
-              <a href="" class="btn btn-custom mb-4 blue col-md-3">Create a program</a>
+              <a href="{{route('camp-create')}}" class="btn btn-custom mb-2 green col-md-3">Create a camp</a><br/>
+              <a href="{{route('program-create')}}" class="btn btn-custom mb-4 blue col-md-3">Create a program</a>
               <div class="row">
                 <div class="col-md-12">
                   <h2>Rink basic information</h2>
@@ -70,40 +72,41 @@
       $(document).ready(function () {
 
         // add logic change value of result top condition
-        $('#province_id').on('change', function(){
+        $('.set_cookie').on('change', function(){
             var name = $(this).attr('name');
-            $('#city_id').html('');
             if (name == '') {
                 return false;
             }
 
             var value = $(this).val();
             var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
-          
 
             var data = {
-                province_id: value,
+                value: value,
+                cookieName: name,
                 _token:csrfToken
             };
-
-
             $.ajax({
               type: 'POST',
-              url: baseUrl + '/ajax_citylist',
+              url: baseUrl + '/ajax_set_cookie',
               data: data,
               //dataType: 'json',
               success: function (response) {
                 console.log(response);
-                if (response) {
-                    $('#city_id').html(response);
-                } else {
-                    $('#city_id').html('');
-                }
+                // if (response) {
+                //     $('#city_id').html(response);
+                // } else {
+                //     $('#city_id').html('');
+                // }
               },
               complete: function () {}
             });
             return false;
         });
+
+
+
+       
       });
     </script>
     

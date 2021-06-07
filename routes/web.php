@@ -7,7 +7,7 @@ Route::get('/', 'PublicContoller@index');
 //Route::get('/program/details', 'PublicContoller@program_details');
 //Route::get('/camp/details', 'PublicContoller@camp_details');
 
-Route::get('/rink/list', 'PublicContoller@rink_list');
+
 Route::get('/program/list', 'PublicContoller@program_list');
 
 
@@ -20,9 +20,9 @@ Route::get('/filter_coach', 'PublicContoller@filter_coach');
 
 
 Route::get('ajax', function(){ return view('ajax'); });
-
-
 Route::post('ajax_citylist','AjaxController@citylist');
+Route::post('ajax_set_cookie','AjaxController@set_Cookie');
+
 
 Route::get('/user/login', 'PublicContoller@login');
 //Route::get('login', [Auth\LoginController::class, 'index'])->name('login');
@@ -67,6 +67,9 @@ Route::group(['middleware' => ['auth']], function () {
 	
 
 
+	Route::get('rink/list', 'PublicContoller@rink_list');
+	Route::post('rink/list',['as' =>'rink-list','uses' =>'PublicContoller@rink_list']);
+	
 
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 	Route::post('/ajax_delete','AjaxController@delete');
