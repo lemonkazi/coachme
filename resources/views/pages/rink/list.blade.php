@@ -31,78 +31,41 @@
               <a href="{{route('program-create')}}" class="btn btn-custom mb-4 blue col-md-3">Create a program</a>
               <div class="row">
                 <div class="col-md-12">
-                  <h2>Rink basic information</h2>
+                  <h2>Your Programs</h2>
                   <div class="row">
                   <div class="col-sm-12">
-                    <div class="card text-white card-has-bg click-col mb-4">        
-                      <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-3">
-                                <img src="https://via.placeholder.com/150x150" alt="">
-                            </div>
-                            <div class="col-md-6">
-                              <h3>Your programs</h3>
-                              <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                              <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                              <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                              <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                            </div> 
-                            <div class="col-md-3 learn-more">
-                              <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                            </div>
-                            
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card text-white card-has-bg click-col mb-4">        
-                      <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-3">
-                                <img src="https://via.placeholder.com/150x150" alt="">
-                            </div>
-                            <div class="col-md-6">
-                              <h3>Your programs</h3>
-                              <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                              <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                              <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                              <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                            </div> 
-                            <div class="col-md-3 learn-more">
-                              <a href="" class="btn btn-custom mb-2 green">Learn more</a>
+                    @if(isset($data['programs']))
+                      @foreach ($data['programs'] as $program)
+
+                        <div class="card text-white card-has-bg click-col mb-4">        
+                          <div class="card-img-overlay d-flex flex-column">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-md-3">
+                                  @if(isset($program['program_photo'][0]))
+                                    <img src="{{$BASE_URL}}/{{$program['program_photo'][0]['path']}}" alt="">
+                                  @endif
+                               </div>
+                                <div class="col-md-6">
+                                  <h3>{{$program['name']}}</h3>
+                                  <h6>{{$program['schedule_log']}}</h6>
+                                  <h5><i class="fas fa-map-marker-alt"></i>+{{$program['contacts']}}</h5>
+                                  <h5><i class="fas fa-clock"></i>{{$program['email']}}</h5>
+                                  <h5><i class="fas fa-road"></i>+{{$program['whatsapp']}}</h5>
+                                </div> 
+                                <div class="col-md-3 learn-more">
+                                  <a href="{{!empty($program['id']) ? route('program-details', ['program' => $program['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                                </div>
+                                
+                              </div>
                             </div>
                             
                           </div>
                         </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card text-white card-has-bg click-col mb-4">        
-                      <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                          <div class="row">
-                            <div class="col-md-3">
-                                <img src="https://via.placeholder.com/150x150" alt="">
-                            </div>
-                            <div class="col-md-6">
-                              <h3>Your programs</h3>
-                              <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                              <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                              <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                              <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                            </div> 
-                            <div class="col-md-3 learn-more">
-                              <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                            </div>
-                            
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
+                       
+                      @endforeach
+                    @endif
+                    
                   </div>
                   </div>
                 </div>
