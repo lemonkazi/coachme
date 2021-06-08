@@ -5,15 +5,57 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4">
-                <div class="card text-white card-has-bg click-col">        
-                  <div class="card-img-overlay d-flex flex-column">
-                    <div class="card-body">
-                      <div class="row">
-                        
-                        
+                <div class=" text-white">        
+                  <div class="card-body">
+                    <div class="row">
+                      <h1>Filters</h1>
+                      <label for="">Type of program</label>
+                      <div class="check-section">
+                        <div>
+                          <label class="box">One
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <div>
+                          <label class="box">One
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <div>
+                          <label class="box">One
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                      </div>
+                      <label for="">Levels</label>
+                      <div class="check-section">
+                        <div>
+                          <label class="box">One
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <div>
+                          <label class="box">One
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <div>
+                          <label class="box">One
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="name">Period <span class="input-required">*</span></label>
+                        <input type="text" class="form-control" id="name" name="period" value="" required aria-describedby="emailHelp" >
                       </div>
                     </div>
-                    
                   </div>
                 </div>
             </div>
