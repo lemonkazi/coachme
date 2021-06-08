@@ -844,6 +844,65 @@ label {
   background: #8AC8DC;
 }
 
+/* Customize the label (the container) */
+.box {
+  display: block;
+  position: relative;
+  padding-left: 23px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 15px;
+}
+
+/* Hide the browser's default checkbox */
+.box input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 2px solid #A7BE79;
+  border-radius: 6px;
+}
+
+/* On mouse-over, add a grey background color */
+.box:hover input ~ .checkmark {
+  background-color: #fff;
+}
+
+/* When the checkbox is checked, add a blue background */
+.box input:checked ~ .checkmark {
+  background-color: #A7BE79;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.box input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
 .coach-edit, .camp-edit, .program-edit, .rink-list {
   background-image: url(../img/edit_coach.png);
   background-size: 100%;
@@ -1195,7 +1254,7 @@ label {
   padding-right: 10px;
 }
 
-.rink-list, .program_list {
+.rink-list, .program-list {
   background: #F3F6FB;
   background-image: url(../img/edit_program.png);
   background-size: auto;
@@ -1203,11 +1262,11 @@ label {
   background-position: bottom center;
 }
 
-.rink-list .green, .program_list .green {
+.rink-list .green, .program-list .green {
   background: #A7BE79;
 }
 
-.rink-list .card, .program_list .card {
+.rink-list .card, .program-list .card {
   border: none;
   -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -1218,18 +1277,18 @@ label {
           box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
 }
 
-.rink-list h3, .program_list h3 {
+.rink-list h3, .program-list h3 {
   font: normal normal bold 22px/30px Raleway;
   color: #233C50;
 }
 
-.rink-list h6, .program_list h6 {
+.rink-list h6, .program-list h6 {
   font: normal normal 600 18px Raleway;
   letter-spacing: 0px;
   color: #7AB7CC;
 }
 
-.rink-list h5, .program_list h5 {
+.rink-list h5, .program-list h5 {
   font: normal normal medium Raleway;
   font-size: 16px;
   letter-spacing: 0px;
@@ -1237,21 +1296,59 @@ label {
   opacity: .6;
 }
 
-.rink-list h5 i, .program_list h5 i {
+.rink-list h5 i, .program-list h5 i {
   padding-right: 5px;
 }
 
-.rink-list img, .program_list img {
+.rink-list img, .program-list img {
   width: 100%;
 }
 
-.rink-list .card-body, .program_list .card-body {
+.rink-list .card-body, .program-list .card-body {
   position: relative;
 }
 
-.rink-list .learn-more a, .program_list .learn-more a {
+.rink-list .learn-more a, .program-list .learn-more a {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+.rink-list .check-section, .program-list .check-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.rink-list .check-section div, .program-list .check-section div {
+  -webkit-box-flex: 50%;
+      -ms-flex: 50%;
+          flex: 50%;
+  /* or - flex: 0 50% - or - flex-basis: 50% - */
+}
+
+.rink-list h1, .program-list h1 {
+  font: normal normal bold 32px Raleway;
+  letter-spacing: 0px;
+  color: #233C50;
+}
+
+.program-list {
+  background: #fff;
+  border-radius: 20px;
+}
+
+.program-list .card {
+  overflow: initial !important;
+  min-height: auto;
+}
+
+.program-list .card .card-body {
+  border-radius: 20px;
+  background: #fff;
+  -webkit-box-shadow: 0 0 12px 0 #000;
+          box-shadow: 0 0 12px 0 #000;
 }
 /*# sourceMappingURL=style.css.map */
