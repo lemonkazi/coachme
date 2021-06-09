@@ -9,9 +9,10 @@
                   <div class="card-body">
                     <div class="row">
                       <h1>
-                        Filters                    
+                        Filters  
+                        <a href="" class="btn btn-custom mb-2 green">View calendar</a>                
                       </h1>
-                      <label for="">Type of program <i class="fas fa-info-circle"></i></label>
+                      <label for="">Type of program</label>
                       <div class="check-section">
                         <div>
                           <label class="box">One
@@ -80,8 +81,15 @@
                           <span>max</span>
                         </div>
                       </div>
-                      
-                      <label for="">Period</label>
+                      <div class="form-group position-relative">
+                        <label for="name">Coach <span class="input-required">*</span></label>
+                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                          <option value="0">0</option>
+                          <option value="0">1</option>
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
+                      </div>
+                      <label for="">Duration</label>
                       <div class="check-section">
                         <div>
                           <label class="box">One
@@ -103,18 +111,10 @@
                         </div>
                       </div>
                       <div class="form-group position-relative">
-                        <label for="name">Starting age <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id">
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                        </select>
-                        <i class="bi bi-chevron-compact-down"></i>
-                      </div>
-                      <div class="form-group position-relative">
-                        <label for="name">Rink <span class="input-required">*</span></label>
+                        <label for="name">Date <span class="input-required">*</span></label>
                         <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
                           <option value="0">0</option>
-                          <option value="1">1</option>
+                          <option value="0">1</option>
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>

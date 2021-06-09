@@ -9,6 +9,7 @@ Route::get('/', 'PublicContoller@index');
 
 
 Route::get('/program/list', 'PublicContoller@program_list');
+Route::get('/camp/list', 'PublicContoller@camp_list');
 
 
 Route::get('/camp/details/{camp}',['as' =>'camp-details','uses' =>'PublicContoller@camp_details']);

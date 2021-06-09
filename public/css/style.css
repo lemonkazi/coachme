@@ -903,7 +903,7 @@ label {
 }
 
 /* Style the checkmark/indicator */
-.coach-edit, .camp-edit, .program-edit, .rink-list {
+.coach-edit, .camp-edit, .program-edit, .rink-list, .program-list {
   background-image: url(../img/edit_coach.png);
   background-size: 100%;
   background-repeat: no-repeat;
@@ -911,21 +911,21 @@ label {
   padding-top: 4.5%;
 }
 
-.coach-edit .img-upload, .camp-edit .img-upload, .program-edit .img-upload, .rink-list .img-upload {
+.coach-edit .img-upload, .camp-edit .img-upload, .program-edit .img-upload, .rink-list .img-upload, .program-list .img-upload {
   width: 22%;
   position: relative;
 }
 
-.coach-edit .img-upload input, .camp-edit .img-upload input, .program-edit .img-upload input, .rink-list .img-upload input {
+.coach-edit .img-upload input, .camp-edit .img-upload input, .program-edit .img-upload input, .rink-list .img-upload input, .program-list .img-upload input {
   display: none;
 }
 
-.coach-edit .img-upload img, .camp-edit .img-upload img, .program-edit .img-upload img, .rink-list .img-upload img {
+.coach-edit .img-upload img, .camp-edit .img-upload img, .program-edit .img-upload img, .rink-list .img-upload img, .program-list .img-upload img {
   width: 100%;
   border-radius: 50%;
 }
 
-.coach-edit .img-upload .bi-plus-lg, .camp-edit .img-upload .bi-plus-lg, .program-edit .img-upload .bi-plus-lg, .rink-list .img-upload .bi-plus-lg {
+.coach-edit .img-upload .bi-plus-lg, .camp-edit .img-upload .bi-plus-lg, .program-edit .img-upload .bi-plus-lg, .rink-list .img-upload .bi-plus-lg, .program-list .img-upload .bi-plus-lg {
   background: #233C50;
   border-radius: 50%;
   padding: 5px 10px;
@@ -933,44 +933,44 @@ label {
   top: 76%;
 }
 
-.coach-edit h2, .camp-edit h2, .program-edit h2, .rink-list h2 {
+.coach-edit h2, .camp-edit h2, .program-edit h2, .rink-list h2, .program-list h2 {
   font: normal normal bold 24px Raleway;
   color: #8AC8DC;
 }
 
-.coach-edit input, .coach-edit select, .coach-edit textarea, .camp-edit input, .camp-edit select, .camp-edit textarea, .program-edit input, .program-edit select, .program-edit textarea, .rink-list input, .rink-list select, .rink-list textarea {
+.coach-edit input, .coach-edit select, .coach-edit textarea, .camp-edit input, .camp-edit select, .camp-edit textarea, .program-edit input, .program-edit select, .program-edit textarea, .rink-list input, .rink-list select, .rink-list textarea, .program-list input, .program-list select, .program-list textarea {
   background: #D4E8F3 0% 0% no-repeat padding-box;
   border-radius: 8px;
 }
 
-.coach-edit .btn-group, .coach-edit .btn-group-vertical, .camp-edit .btn-group, .camp-edit .btn-group-vertical, .program-edit .btn-group, .program-edit .btn-group-vertical, .rink-list .btn-group, .rink-list .btn-group-vertical {
+.coach-edit .btn-group, .coach-edit .btn-group-vertical, .camp-edit .btn-group, .camp-edit .btn-group-vertical, .program-edit .btn-group, .program-edit .btn-group-vertical, .rink-list .btn-group, .rink-list .btn-group-vertical, .program-list .btn-group, .program-list .btn-group-vertical {
   width: 100%;
 }
 
-.coach-edit span.multiselect-native-select, .camp-edit span.multiselect-native-select, .program-edit span.multiselect-native-select, .rink-list span.multiselect-native-select {
+.coach-edit span.multiselect-native-select, .camp-edit span.multiselect-native-select, .program-edit span.multiselect-native-select, .rink-list span.multiselect-native-select, .program-list span.multiselect-native-select {
   display: block;
 }
 
-.coach-edit .bi-plus-lg, .coach-edit .bi-chevron-compact-down, .camp-edit .bi-plus-lg, .camp-edit .bi-chevron-compact-down, .program-edit .bi-plus-lg, .program-edit .bi-chevron-compact-down, .rink-list .bi-plus-lg, .rink-list .bi-chevron-compact-down {
+.coach-edit .bi-plus-lg, .coach-edit .bi-chevron-compact-down, .camp-edit .bi-plus-lg, .camp-edit .bi-chevron-compact-down, .program-edit .bi-plus-lg, .program-edit .bi-chevron-compact-down, .rink-list .bi-plus-lg, .rink-list .bi-chevron-compact-down, .program-list .bi-plus-lg, .program-list .bi-chevron-compact-down {
   position: absolute;
   top: 37px;
   right: 22px;
 }
 
-.coach-edit .custom-select, .camp-edit .custom-select, .program-edit .custom-select, .rink-list .custom-select {
+.coach-edit .custom-select, .camp-edit .custom-select, .program-edit .custom-select, .rink-list .custom-select, .program-list .custom-select {
   background: #D4E8F3 0% 0% no-repeat padding-box;
   border: none;
   text-align: left;
   border-radius: 8px;
 }
 
-.coach-edit #create-camp, .camp-edit #create-camp, .program-edit #create-camp, .rink-list #create-camp {
+.coach-edit #create-camp, .camp-edit #create-camp, .program-edit #create-camp, .rink-list #create-camp, .program-list #create-camp {
   background: #233C50 0% 0% no-repeat padding-box;
   border-radius: 29px;
   width: 227px;
 }
 
-.coach-edit #cancel, .camp-edit #cancel, .program-edit #cancel, .rink-list #cancel {
+.coach-edit #cancel, .camp-edit #cancel, .program-edit #cancel, .rink-list #cancel, .program-list #cancel {
   font: normal normal medium 20px/27px Raleway;
   letter-spacing: 0px;
   color: #7B8A96;
@@ -979,18 +979,18 @@ label {
   border: none;
 }
 
-.coach-edit #save, .camp-edit #save, .program-edit #save, .rink-list #save {
+.coach-edit #save, .camp-edit #save, .program-edit #save, .rink-list #save, .program-list #save {
   background: #8AC8DC 0% 0% no-repeat padding-box;
   border-radius: 29px;
   width: 178px;
   border: none;
 }
 
-.coach-edit .fa-file-image, .camp-edit .fa-file-image, .program-edit .fa-file-image, .rink-list .fa-file-image {
+.coach-edit .fa-file-image, .camp-edit .fa-file-image, .program-edit .fa-file-image, .rink-list .fa-file-image, .program-list .fa-file-image {
   font-size: 48px;
 }
 
-.coach-edit .bi-plus-circle, .camp-edit .bi-plus-circle, .program-edit .bi-plus-circle, .rink-list .bi-plus-circle {
+.coach-edit .bi-plus-circle, .camp-edit .bi-plus-circle, .program-edit .bi-plus-circle, .rink-list .bi-plus-circle, .program-list .bi-plus-circle {
   color: #233C50;
   position: relative;
   left: -14px;
@@ -1336,19 +1336,105 @@ label {
 }
 
 .program-list {
+  background: #F3F6FB !important;
+  background-image: url(../img/edit_program.png);
   background: #fff;
   border-radius: 20px;
+}
+
+.program-list .learn-more a {
+  right: 10px;
+}
+
+.program-list h1 a {
+  float: right;
 }
 
 .program-list .card {
   overflow: initial !important;
   min-height: auto;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background: none;
 }
 
 .program-list .card .card-body {
+  margin-bottom: 10px;
+}
+
+.program-list .card-body {
   border-radius: 20px;
   background: #fff;
-  -webkit-box-shadow: 0 0 12px 0 #000;
-          box-shadow: 0 0 12px 0 #000;
+  -webkit-box-shadow: 4px 4px 12px #00000021;
+          box-shadow: 4px 4px 12px #00000021;
+}
+
+.program-list .custom-select {
+  background: #D0E6A5 0% 0% no-repeat padding-box;
+}
+
+.program-list i {
+  color: #A7BE79;
+}
+
+.program-list .card i {
+  color: #7AB7CC;
+}
+
+.program-list .without-label i {
+  top: 8px;
+}
+
+.program-list .range span {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #EBEEF7;
+  color: #233C50;
+  padding: 5px;
+}
+
+.program-list .range label {
+  display: block;
+}
+
+.program-list .range div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.program-list .range div:last-child span {
+  border: none;
+}
+
+.program-list .slider.slider-horizontal {
+  width: 96%;
+  height: 32px;
+}
+
+.program-list .slider-handle {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#A7BE79), to(#A7BE79));
+  background-image: linear-gradient(to bottom, #A7BE79, #A7BE79);
+  width: 30px;
+  height: 30px;
+}
+
+.program-list .slider-track {
+  background-color: #D0E6A5;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#D0E6A5), to(#D0E6A5));
+  background-image: linear-gradient(to bottom, #D0E6A5, #D0E6A5);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D0E6A5', endColorstr='#D0E6A5',GradientType=0);
+}
+
+.program-list .slider-selection {
+  background-color: #D0E6A5;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#D0E6A5), to(#D0E6A5));
+  background-image: linear-gradient(to bottom, #D0E6A5, #D0E6A5);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D0E6A5', endColorstr='#D0E6A5',GradientType=0);
 }
 /*# sourceMappingURL=style.css.map */
