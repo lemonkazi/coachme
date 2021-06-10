@@ -81,7 +81,7 @@
                     <div class="form-group button-group result-top">
                       <div class="result-top-buttons">
                         <div class="form-group">
-                          <a href="{{ url('/location/add')}}" class="btn btn-primary btn-addnew">Add New</a> 
+                          <a href="{{ url('/city_location/add')}}" class="btn btn-primary btn-addnew">Add New</a> 
                         </div>
                       </div>
                       <div class="result-top-elements">
@@ -114,19 +114,19 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($data['locations'] as $location)
+                          @foreach($data['city'] as $city)
                             <tr>
-                              <td>{{$location->id}}</td>
-                              <td>{{$location->name}}</td>
+                              <td>{{$city->id}}</td>
+                              <td>{{$city->name}}</td>
                               <td> 
                                 <div class="btn-group">
-                                  <a href="{{url('locations').'/'.$location->id}}" class="btn btn-primary">
+                                  <a href="{{url('city').'/'.$city->id}}" class="btn btn-primary">
                                     <i class="fas fa-eye"></i>
                                   </a>
-                                  <a href="<?php echo $BASE_URL . '/location/edit/' . $location->id ?>" class="btn btn-warning" title="Edit">
+                                  <a href="<?php echo $BASE_URL . '/city_location/edit/' . $city->id ?>" class="btn btn-warning" title="Edit">
                                     <i class="fas fa-edit"></i>
                                   </a> 
-                                  <a href="javascript:;" data-id="{{$location->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
+                                  <a href="javascript:;" data-id="{{$city->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
                                     <i class="fa fa-trash" aria-hidden="true"></i>   
                                   </a>             
                                 </div>
@@ -143,7 +143,7 @@
 
                 <div class="dataTables_paginate paging_bootstrap fr">
                   <div class="paging_sumary">{{$data['sumary']}}</div>
-                  {{ $data['locations']->links('pagination.default') }}
+                  {{ $data['city']->links('pagination.default') }}
                 </div>
               </div>
               <!-- /.card-body -->

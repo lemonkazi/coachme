@@ -15,7 +15,7 @@
 
         <!--  @php
              echo "<pre>";
-               print_r($data['location']);
+               print_r($data['city']);
              echo "</pre>";
             @endphp -->
         
@@ -46,7 +46,7 @@
                       </div>
                   @endif
                   <!-- form start -->
-                  <form action="{{!empty($data['location']) ? route('location.update',[$data['location']->id]): route('location.store')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{!empty($data['city']) ? route('city_location.update',[$data['city']->id]): route('city_location.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                       <div class="col-md-6">
@@ -55,7 +55,7 @@
                           <select name="province_id" class="form-control" style="width: 100%">
                             <option value="">Select</option>
                             @foreach($province_all as $id => $value)
-                                <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $data['location']->province_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                                <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $data['city']->province_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -65,7 +65,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="name">Name <span class="input-required">*</span></label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['location']) ? old('name', $data['location']->name) : old('name')}}" required>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['city']) ? old('name', $data['city']->name) : old('name')}}" required>
                         </div>
                       </div>
                       

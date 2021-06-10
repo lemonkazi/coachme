@@ -81,7 +81,10 @@ class Program extends Model
      * @var array
      */
     protected $exactFilterable = [
-        'id'
+        'id',
+        'program_type_id',
+        'level_id',
+        
     ];
 
     
@@ -208,5 +211,41 @@ class Program extends Model
         }
 
         //return $this->hasMany(DailyCouponUsageDetail::class)->whereBetween('report_date', [$fromDate, $toDate]);
+    }
+
+
+    /**
+     * Search user based request parameters
+     * 
+     * @param array $params
+     * @return $query
+     */
+    public function filter($params)
+    {
+        $query = $this->newQuery();
+
+        
+        
+        if (empty($params) || !is_array($params)) {
+            return $query;
+        }
+
+        
+      
+        if (isset($params['is_varified'])) {
+            $params['is_verified'] = $params['is_varified'];
+            unset($params['is_varified']);
+        }
+        
+        foreach ($params as $key => $value) { 
+            if ($value != "") {
+                if (in_array($key, $this->partialFilterable)) { 
+                    $query->where($key, 'LIKE', "%{$value}%");
+                } elseif (in_array($key, $this->exactFilterable)) {
+                    $query->where($key, '=', $value);
+                }
+            }
+        }
+        return $query;
     }
 }

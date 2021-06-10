@@ -233,17 +233,17 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\ProvinceController@update']);
   	});
 
-  	//location route
-  	Route::get('locations',[App\Http\Controllers\Admin\LocationController::class, 'show']);
-	Route::get('locations/{location}',[App\Http\Controllers\Admin\LocationController::class, 'show']);
+  	//city route
+  	Route::get('city',[App\Http\Controllers\Admin\CityController::class, 'show']);
+	Route::get('city/{city}',[App\Http\Controllers\Admin\CityController::class, 'show']);
 	
-	Route::group(['prefix' =>'location', 'as'=>'location.'], function(){
+	Route::group(['prefix' =>'city_location', 'as'=>'city_location.'], function(){
 
-	    Route::get('add',[App\Http\Controllers\Admin\LocationController::class, 'create']);
-	    Route::post('store',['as' =>'store','uses' =>'Admin\LocationController@store' ]);
+	    Route::get('add',[App\Http\Controllers\Admin\CityController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\CityController@store' ]);
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
-	    Route::get('edit/{id}',[App\Http\Controllers\Admin\LocationController::class, 'create']);
-	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\LocationController@update']);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CityController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CityController@update']);
   	});
 
 

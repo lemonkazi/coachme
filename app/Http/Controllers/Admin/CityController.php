@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Province;
-use App\Models\Location;
+use App\Models\City;
 
 use App\Exports\CollectionExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class LocationController extends Controller
+class CityController extends Controller
 {
     
 
@@ -29,7 +29,7 @@ class LocationController extends Controller
    *
    * @param  \Illuminate\Http\Request  $request
    */
-  public function index(Request $request, Location $location)
+  public function index(Request $request, City $city)
   {
     //
   }
@@ -37,25 +37,25 @@ class LocationController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\Location  $locations
+   * @param  \App\Models\City  $citys
    * @param  \Illuminate\Http\Request  $request
    */
-  public function show(Request $request, Location $location)
+  public function show(Request $request, City $city)
   {
     $params = $request->all();
     
-    if (!empty($location->id)) {
+    if (!empty($city->id)) {
       $breadcrumb = array(
         array(
-           'name'=>trans('global.All Locations'),
-           'link'=>'/locations'
+           'name'=>trans('global.All Citys'),
+           'link'=>'/city'
         ),
         array(
-           'name'=>trans('global.Location Detail'),
+           'name'=>trans('global.City Detail'),
            'link'=>''
         )
       );
-      return view('admin.location.detail', [
+      return view('admin.city.detail', [
         'pageInfo'=>
          [
           'siteTitle'        =>'Manage Users',
@@ -65,13 +65,13 @@ class LocationController extends Controller
           ,
           'data'=>
           [
-             'location' => Location::find($location->id),
+             'city' => City::find($city->id),
              'breadcrumb' =>  $breadcrumb,
-             'Title' =>  trans('global.Location Detail')
+             'Title' =>  trans('global.City Detail')
           ]
         ]);
     }
-    $query = $location->filter($params);
+    $query = $city->filter($params);
 
     $export = filter_var($request->input('export', false), FILTER_VALIDATE_BOOLEAN);
     
@@ -101,8 +101,8 @@ class LocationController extends Controller
 
     $breadcrumb = array(
         array(
-           'name'=>trans('global.All Locations'),
-           'link'=>'/locations'
+           'name'=>trans('global.All Citys'),
+           'link'=>'/city'
         )
     );
     // If export parameter true, it will return csv file
@@ -135,7 +135,7 @@ class LocationController extends Controller
         $content = ($page - 1) * $limit + 1;
         $sumary = "Total ".$total." Displaying ".$content."～".min($page * $limit, $total);
       }
-      return view('admin.location.list', [
+      return view('admin.city.list', [
           'pageInfo'=>
            [
             'siteTitle'        =>'Manage Users',
@@ -145,9 +145,9 @@ class LocationController extends Controller
             ,
             'data'=>
             [
-               'locations'      =>  $response->appends(request()->except('page')),
+               'city'      =>  $response->appends(request()->except('page')),
                'breadcrumb' =>  $breadcrumb,
-               'Title' =>  trans('global.Location List'),
+               'Title' =>  trans('global.City List'),
                'sumary' => $sumary,
                'request' => $params,
                'sort' => $sort,
@@ -164,34 +164,34 @@ class LocationController extends Controller
    */
   public function create($id=null)
   {
-    $location='';
-    $title='Add Location';
+    $city='';
+    $title='Add City';
     $breadcrumb = array(
         array(
-           'name'=>trans('global.All Location'),
-           'link'=>'/locations'
+           'name'=>trans('global.All City'),
+           'link'=>'/city'
         )
       );
     if (!empty($id)) {
-      $location = Location::find($id);
-      if (!$location) {
+      $city = City::find($id);
+      if (!$city) {
         return back();
       } else {
         $breadcrumb[] = array(
-           'name'=>trans('global.Edit Location'),
+           'name'=>trans('global.Edit City'),
            'link'=>''
         );
-        $title=trans('global.Edit Location');
+        $title=trans('global.Edit City');
       }
     } else {
       $breadcrumb[] = array(
-           'name'=>trans('global.Add Location'),
+           'name'=>trans('global.Add City'),
            'link'=>''
       );
     }
     $province_all = Province::all()->pluck("name", "id")->sortBy("name");
    
-    return view('admin.location.add', [
+    return view('admin.city.add', [
       'pageInfo'=>
       [
         'siteTitle'        =>'Manage Users',
@@ -200,7 +200,7 @@ class LocationController extends Controller
       ],
       'data'=>
       [
-           'location'      =>  $location,
+           'city'      =>  $city,
            'breadcrumb' =>  $breadcrumb,
            'Title' =>  $title
       ]
@@ -235,10 +235,10 @@ class LocationController extends Controller
     else
     {
         
-      if (!Location::create($data)) {
+      if (!City::create($data)) {
         return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
       }
-      Toastr::success(trans('global.A new Location has been created'),'Success');
+      Toastr::success(trans('global.A new City has been created'),'Success');
       return back();
     }
 
@@ -255,8 +255,8 @@ class LocationController extends Controller
 
     $data = $request->all();
     $Authuser = $request->user();
-    $location = Location::find($id);
-    if (!$location) {
+    $city = City::find($id);
+    if (!$city) {
       return back();
     }
 
@@ -278,11 +278,11 @@ class LocationController extends Controller
     else
     {
 
-      if (!$location->update($data)) {
+      if (!$city->update($data)) {
         return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
       }
 
-      Toastr::success(trans('global.Location has been updated'),'Success');
+      Toastr::success(trans('global.City has been updated'),'Success');
       return back();
     }
     
@@ -294,9 +294,9 @@ class LocationController extends Controller
    * @param  \App\Models\City  $city
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Location $location)
+  public function destroy(City $city)
   {
-    $location->delete();
+    $city->delete();
     return response()->success(false, trans('messages.success_message'), Response::HTTP_OK);
   }
 

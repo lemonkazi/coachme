@@ -962,14 +962,43 @@ class PublicContoller extends Controller
       ->with(compact('rink_all'));
 
     }
-    public function program_list(Request $request){
+    public function program_list(Request $request, Program $program){
 
-      
+      $params = $request->all();
+      $query = $program->filter($params);
+
+     
+      try {
+          $limit = (int) $request->input('limit', 20);
+      } catch (\Exception $e) {
+          $limit = 20;
+      }
+
+      if (!is_int($limit) || $limit <= 0) {
+          $limit = 20;
+      }
+
+      if (isset($params['with'])) { 
+          $with = explode(',', $params['with']);
+
+          $query->with($with);
+      }
+      if (isset($params['sort']) && !empty($params['sort'])) {
+        $sort = $params['sort'];
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+      } else {
+        $sort = 'id-desc'; 
+        $query->orderBy('id', 'desc');
+      }
+      //$programs = $query->paginate($limit);
+      $programs = $query->get()->toArray();
+
       $title=trans('global.Add Program');
       
-      $programs = Program::where([
-                        ['deleted_at', null],
-                    ])->get()->toArray();
+      // $programs = Program::where([
+      //                   ['deleted_at', null],
+      //               ])->get()->toArray();
 
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
       $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
