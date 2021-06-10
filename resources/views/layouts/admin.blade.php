@@ -253,6 +253,46 @@
         });
       });
 
+
+      $(document).ready(function () {
+
+        // add logic change value of result top condition
+        $('#province_id').on('change', function(){
+            var name = $(this).attr('name');
+            $('#city_id').html('');
+            if (name == '') {
+                return false;
+            }
+
+            var value = $(this).val();
+            var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+          
+
+            var data = {
+                province_id: value,
+                _token:csrfToken
+            };
+
+
+            $.ajax({
+              type: 'POST',
+              url: baseUrl + '/ajax_citylist',
+              data: data,
+              //dataType: 'json',
+              success: function (response) {
+                console.log(response);
+                if (response) {
+                    $('#city_id').html(response);
+                } else {
+                    $('#city_id').html('');
+                }
+              },
+              complete: function () {}
+            });
+            return false;
+        });
+      });
+
       /**
        * Show alert using bootstrap modal
        * @param {string} message

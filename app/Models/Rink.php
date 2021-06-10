@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\BaseModel as Model;
 use App\Models\User;
+use App\Models\Location;
+use App\Models\Province;
 
 class Rink extends Model
 {
@@ -13,15 +15,11 @@ class Rink extends Model
     ];
     
     protected $fillable= [
-        'name'
+        'name',
+        'province_id',
+        'location_id',
+        'address'
     ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [];
 
     /**
      * The attributes that should be casted to native types.
@@ -40,7 +38,8 @@ class Rink extends Model
      * @var array
      */
     protected $partialFilterable = [
-        'name'
+        'name',
+        'address'
 
     ];
 
@@ -50,12 +49,45 @@ class Rink extends Model
      * @var array
      */
     protected $exactFilterable = [
-        'id'
+        'id',
+        'province_id',
+        'location_id'
+    ];
+
+    protected $dates = ['deleted_at'];
+
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+
+
+    protected $appends = [
+        'city_name',
+        'province_name'
     ];
 
     
 
-    
+
+     /**
+     * Get the experience for the user.
+     */
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+     /**
+     * Get the certificate for the user.
+     */
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+
     /**
      * Get the users for the building.
      */
@@ -64,11 +96,28 @@ class Rink extends Model
         return $this->hasMany(User::class);
     }
 
+
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getCityNameAttribute()
+    {
+        return !empty($this->location) ? $this->location->name : null;
+    }
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getProvinceNameAttribute()
+    {
+        return !empty($this->province) ? $this->province->name : null;
+    }
     
-
-
-   
-   
 
     /**
      * Get the daily coupon usage details for the city

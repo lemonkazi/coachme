@@ -38,6 +38,18 @@
                       'label' => __('Name'),
                       'text' => '',
                   ),
+                  'province_name' => array(
+                      'label' => __('Province'),
+                      'text' => '',
+                  ),
+                  'city_name' => array(
+                      'label' => __('City'),
+                      'text' => '',
+                  ),
+                  'address' => array(
+                      'label' => __('Address'),
+                      'text' => '',
+                  ),
                   'created_at' => array(
                       'label' => trans('global.LABEL_CREATED'),
                       'text' => '',
