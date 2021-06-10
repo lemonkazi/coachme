@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('title','Coach Details')
 @section('content')
-    <div class="program-list">
+    <div class="program-list coach-list">
         <div class="container">
           <div class="row">
             <div class="col-md-4">
@@ -11,7 +11,7 @@
                       <h1>
                         Filters                    
                       </h1>
-                      <label for="">Type of program <i class="fas fa-info-circle"></i></label>
+                      <label for="">Speciality</label>
                       <div class="check-section">
                         <div>
                           <label class="box">One
@@ -32,7 +32,7 @@
                           </label>
                         </div>
                       </div>
-                      <label for="">Levels</label>
+                      <label for="">Coaching certificate</label>
                       <div class="check-section">
                         <div>
                           <label class="box">One
@@ -68,20 +68,8 @@
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
-                      <div class="form-group range">
-                        <label for="">Price Range</label>
-                        <div>
-                          <span>$0</span>
-                          <span>$1000+</span>
-                        </div>
-                          <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]"/>
-                        <div>
-                          <span>min</span>
-                          <span>max</span>
-                        </div>
-                      </div>
                       
-                      <label for="">Period</label>
+                      <label for="">Price</label>
                       <div class="check-section">
                         <div>
                           <label class="box">One
@@ -103,15 +91,15 @@
                         </div>
                       </div>
                       <div class="form-group position-relative">
-                        <label for="name">Starting age <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id">
+                        <label for="name">Rinks <span class="input-required">*</span></label>
+                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
                           <option value="0">0</option>
                           <option value="1">1</option>
                         </select>
-                        <i class="bi bi-chevron-compact-down"></i>
+                        <i class="bi bi-plus-lg"></i>
                       </div>
                       <div class="form-group position-relative">
-                        <label for="name">Rink <span class="input-required">*</span></label>
+                        <label for="name">Language <span class="input-required">*</span></label>
                         <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
                           <option value="0">0</option>
                           <option value="1">1</option>
@@ -124,57 +112,18 @@
             </div>
             <div class="col-md-8">
               <div class="row">
-              <div class="col-sm-12">
-                <div class="card card-has-bg click-col">           
+              <div class="col-sm-4 mb-2">
+                <div class="card profile">           
                     <div class="card-body">
                       <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12">
                             <img src="https://via.placeholder.com/150x150" alt="">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
+                          <h4>Vancouver, CAD</h4>
                         </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
-                        </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
-                        </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
+                        <div class="col-md-12 learn-more">
                           <a href="" class="btn btn-custom mb-2 green">Learn more</a>
                         </div>
                         
@@ -182,6 +131,83 @@
                     </div>
                 </div>
               </div>
+              <div class="col-sm-4 mb-2">
+                <div class="card profile">           
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <img src="https://via.placeholder.com/150x150" alt="">
+                        </div>
+                        <div class="col-md-12">
+                          <h3>Your programs</h3>
+                          <h4>Vancouver, CAD</h4>
+                        </div> 
+                        <div class="col-md-12 learn-more">
+                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm-4 mb-2">
+                <div class="card profile">           
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <img src="https://via.placeholder.com/150x150" alt="">
+                        </div>
+                        <div class="col-md-12">
+                          <h3>Your programs</h3>
+                          <h4>Vancouver, CAD</h4>
+                        </div> 
+                        <div class="col-md-12 learn-more">
+                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm-4 mb-2">
+                <div class="card profile">           
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <img src="https://via.placeholder.com/150x150" alt="">
+                        </div>
+                        <div class="col-md-12">
+                          <h3>Your programs</h3>
+                          <h4>Vancouver, CAD</h4>
+                        </div> 
+                        <div class="col-md-12 learn-more">
+                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm-4 mb-2">
+                <div class="card profile">           
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <img src="https://via.placeholder.com/150x150" alt="">
+                        </div>
+                        <div class="col-md-12">
+                          <h3>Your programs</h3>
+                          <h4>Vancouver, CAD</h4>
+                        </div> 
+                        <div class="col-md-12 learn-more">
+                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
+                        </div>
+                        
+                      </div>
+                    </div>
+                </div>
+              </div>
+             
               </div>
             </div>
           </div>

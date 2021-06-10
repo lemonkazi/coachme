@@ -11,6 +11,7 @@ Route::get('/coach/details', 'PublicContoller@coach_details');
 Route::get('/rink/list', 'PublicContoller@rink_list');
 Route::get('/program/list', 'PublicContoller@program_list');
 Route::get('/camp/list', 'PublicContoller@camp_list');
+Route::get('/coach/list', 'PublicContoller@coach_list');
 
 
 Route::get('ajax', function(){ return view('ajax'); });

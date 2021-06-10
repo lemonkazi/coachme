@@ -1279,3 +1279,26 @@ label{
 
     }
 }
+.coach-list{
+    .profile{
+        .card-body{
+            padding: 10% 15%;
+            text-align: center;
+            .learn-more{
+                a{
+                    position: relative;
+                    right: 0;
+                }
+            }
+            img{
+                border-radius: 50%;
+            }
+            h4{
+                font: normal normal normal 20px Raleway;
+                letter-spacing: 0px;
+                color: #233C50;
+            }
+        }
+    }
+    
+}
