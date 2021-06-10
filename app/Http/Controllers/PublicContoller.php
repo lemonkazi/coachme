@@ -962,8 +962,33 @@ class PublicContoller extends Controller
       ->with(compact('rink_all'));
 
     }
-    public function program_list(){
-      return view('pages.program.list');
+    public function program_list(Request $request){
+
+      
+      $title=trans('global.Add Program');
+      
+      $programs = Program::where([
+                        ['deleted_at', null],
+                    ])->get()->toArray();
+
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+      return view('pages.program.list', [
+          'data'=>
+          [
+               'programs'      =>  $programs,
+               //'user'      =>  $user,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','program_type_all','level_all'));
+
+      //return view('pages.program.list');
     }
     
 
