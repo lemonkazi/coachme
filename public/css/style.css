@@ -1437,4 +1437,24 @@ label {
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D0E6A5', endColorstr='#D0E6A5',GradientType=0);
 }
+
+.coach-list .profile .card-body {
+  padding: 10% 15%;
+  text-align: center;
+}
+
+.coach-list .profile .card-body .learn-more a {
+  position: relative;
+  right: 0;
+}
+
+.coach-list .profile .card-body img {
+  border-radius: 50%;
+}
+
+.coach-list .profile .card-body h4 {
+  font: normal normal normal 20px Raleway;
+  letter-spacing: 0px;
+  color: #233C50;
+}
 /*# sourceMappingURL=style.css.map */
