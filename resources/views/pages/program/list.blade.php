@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title','Coach Details')
+@section('title',$data['Title'])
 @section('content')
     <div class="program-list">
         <div class="container">
@@ -144,9 +144,9 @@
                             <div class="col-md-6">
                               <h3>{{$program['name']}}</h3>
                               <h6>{{$program['schedule_log']}}</h6>
-                              <h5><i class="fas fa-map-marker-alt"></i>+{{$program['contacts']}}</h5>
+                              <h5><i class="fas fa-map-marker-alt"></i>{{$program['rink']['address']}}</h5>
                               <h5><i class="fas fa-clock"></i>{{$program['email']}}</h5>
-                              <h5><i class="fas fa-road"></i>+{{$program['whatsapp']}}</h5>
+                              <h5><i class="fas fa-road"></i>{{$program['level_name']}}</h5>
                             </div> 
                             <div class="col-md-3 learn-more">
                               <a href="{{!empty($program['id']) ? route('program-details', ['program' => $program['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>

@@ -780,8 +780,67 @@ class PublicContoller extends Controller
       //return view('pages.coach.details');
     }
 
-    public function camp_list(){
-      return view('pages.camp.list');
+    public function camp_list(Request $request, Camp $camp){
+
+      $params = $request->all();
+      //$params['period'] = 'spring';
+      $query = $camp->filter($params);
+
+     
+      try {
+          $limit = (int) $request->input('limit', 20);
+      } catch (\Exception $e) {
+          $limit = 20;
+      }
+
+      if (!is_int($limit) || $limit <= 0) {
+          $limit = 20;
+      }
+
+      if (isset($params['with'])) { 
+          $with = explode(',', $params['with']);
+
+          $query->with($with);
+      }
+      if (isset($params['sort']) && !empty($params['sort'])) {
+        $sort = $params['sort'];
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+      } else {
+        $sort = 'id-desc'; 
+        $query->orderBy('id', 'desc');
+      }
+      //$programs = $query->paginate($limit);
+      $camps = $query->get()->toArray();
+
+      $title=trans('global.Add Camp');
+
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+      $city_all =array();
+      if (isset($params['province_id']) && !empty($params['province_id'])) {
+        $city_all = Location::all()->where('province_id',$params['province_id'])->pluck('name','id')->sortBy("name");
+      }
+      $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      
+      $filtered_rink = array();
+      if (isset($_GET['rink_id'])) {
+        $filtered_rink = explode(',', $_GET['rink_id']);
+      }
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+
+      return view('pages.camp.list', [
+          'data'=>
+          [
+               'camps'      =>  $camps,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('filtered_rink','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+
     }
     public function coach_list(){
       return view('pages.coach.list');

@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title','Coach Details')
+@section('title',$data['Title'])
 @section('content')
     <div class="program-list">
         <div class="container">
@@ -14,60 +14,47 @@
                       </h1>
                       <label for="">Type of program</label>
                       <div class="check-section">
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
+                        @foreach($camp_type_all as $id => $value)
+                          <div>
+                            <label class="box">{{ $value }}
+                              <input name="camp_type_id" type="checkbox" value="{{ $id }}" {{ (old('camp_type_id') ? old('camp_type_id') : $_GET['camp_type_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        @endforeach
                       </div>
                       <label for="">Levels</label>
                       <div class="check-section">
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
+                        @foreach($level_all as $id => $value)
+                          <div>
+                            <label class="box">{{ $value }}
+                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (old('level_id') ? old('level_id') : $_GET['level_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        @endforeach
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Location <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-                            <option value="0">0</option>
-                            <option value="0">1</option>
+                        
+                        <select name="province_id" id ="province_id" class="location form-control">
+                          <option value="">Select</option>
+                          @foreach($province_all as $id => $value)
+                              <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $_GET['province_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                          @endforeach
                         </select>
-                        <i class="bi bi-plus-lg"></i>
+                        <i class="bi bi-chevron-compact-down"></i>
                       </div>
                       <div class="form-group position-relative without-label">
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-                            <option value="0">0</option>
-                            <option value="0">1</option>
+                        
+                        <select name="location_id" id ="city_id" class="form-control location">
+                          <option value="">Select</option>
+                          @foreach($city_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $_GET['location_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            
+                          @endforeach
                         </select>
-                        <i class="bi bi-plus-lg"></i>
+                        <i class="bi bi-chevron-compact-down"></i>
                       </div>
                       <div class="form-group range">
                         <label for="">Price Range</label>
@@ -125,61 +112,35 @@
             <div class="col-md-8">
               <div class="row">
               <div class="col-sm-12">
-                <div class="card card-has-bg click-col">           
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
+                <div class="card card-has-bg click-col">
+
+                    @if(isset($data['camps']))
+                      @foreach ($data['camps'] as $camp)
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-3">
+                              @if(isset($camp['camp_photo'][0]))
+                                <img src="{{$BASE_URL}}/{{$camp['camp_photo'][0]['path']}}" alt="">
+                              @endif
+                            </div>
+                            <div class="col-md-6">
+                              <h3>{{$camp['name']}}</h3>
+                              <h6>start {{$camp['start_date']}} end {{$camp['end_date']}}</h6>
+                              <h5><i class="fas fa-map-marker-alt"></i>{{$camp['rink']['address']}}</h5>
+                              <h5><i class="fas fa-clock"></i>{{$camp['email']}}</h5>
+                              <h5><i class="fas fa-road"></i>{{$camp['level_name']}}</h5>
+                            </div> 
+                            <div class="col-md-3 learn-more">
+                              <a href="{{!empty($camp['id']) ? route('camp-details', ['camp' => $camp['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                            </div>
+                            
+                          </div>
                         </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
-                        </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
-                        </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
-                      </div>
-                    </div>
+                       
+                      @endforeach
+                    @endif 
+                    
                 </div>
               </div>
               </div>
