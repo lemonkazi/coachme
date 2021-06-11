@@ -102,7 +102,7 @@
                     <select name="location_id" id ="location_id" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($city_all as $id => $value)
-                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $data['program']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $data['rink']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                       @endforeach
                     </select>
                     <i class="bi bi-chevron-compact-down"></i>

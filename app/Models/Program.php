@@ -9,6 +9,8 @@ use App\Models\Level;
 use App\Models\Rink;
 use App\Models\Location;
 use App\Models\AttachedFile;
+use Carbon\Carbon;
+
 
 
 class Program extends Model
@@ -84,7 +86,9 @@ class Program extends Model
         'id',
         'program_type_id',
         'level_id',
-        
+        'location_id',
+        'rink_id',
+        'starting_age'
     ];
 
     
@@ -222,6 +226,14 @@ class Program extends Model
      */
     public function filter($params)
     {
+
+        //$today = new DateTime();
+        $today = 'March 1';
+        $start      = strtotime($today);
+        $date_year = date('Y', $start);
+
+        
+
         $query = $this->newQuery();
 
         
@@ -236,6 +248,63 @@ class Program extends Model
             $params['is_verified'] = $params['is_varified'];
             unset($params['is_varified']);
         }
+
+
+
+        //$params['period'] = 'winter';
+        //$today =  now();
+       // echo 'Today is: ' . date('Y', $start) . '<br />';
+        if (isset($params['period'])) {
+            
+            if ($params['period'] == 'winter') {
+                
+                $dt =  now();
+                $query->where('reg_start_date', '<', $date_year.'-03-01')
+                               ->where(function($query) use ($date_year){
+                                    return $query
+                                    ->whereNull('reg_end_date')
+                                    ->orWhere('reg_end_date', '>=', $date_year.'-12-01');
+                                });
+                # code...
+            }
+            if ($params['period'] == 'spring') {
+                
+                $dt =  now();
+                $query->where('reg_start_date', '<', $date_year.'-06-01')
+                               ->where(function($query) use ($date_year){
+                                    return $query
+                                    ->whereNull('reg_end_date')
+                                    ->orWhere('reg_end_date', '>=', $date_year.'-03-01');
+                                });
+            }
+
+            if ($params['period'] == 'summer') {
+
+                
+                $dt =  now();
+                $query->where('reg_start_date', '<', $date_year.'-09-01')
+                               ->where(function($query) use ($date_year){
+                                    return $query
+                                    ->whereNull('reg_end_date')
+                                    ->orWhere('reg_end_date', '>=', $date_year.'-06-01');
+                                });
+            }
+
+            if ($params['period'] == 'fall') {
+                
+                $dt =  now();
+                $query->where('reg_start_date', '<', $date_year.'-12-01')
+                               ->where(function($query) use ($date_year){
+                                    return $query
+                                    ->whereNull('reg_end_date')
+                                    ->orWhere('reg_end_date', '>=',$date_year.'-09-01');
+                                });
+            }
+        }
+        //$data['start_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['start_date']);
+        //$data['end_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['end_date']);
+        //echo config('global.spring');
+        //exit();
         
         foreach ($params as $key => $value) { 
             if ($value != "") {

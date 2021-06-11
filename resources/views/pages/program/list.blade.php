@@ -13,58 +13,50 @@
                       </h1>
                       <label for="">Type of program <i class="fas fa-info-circle"></i></label>
                       <div class="check-section">
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
+
+                        @foreach($program_type_all as $id => $value)
+                          <div>
+                            <label class="box">{{ $value }}
+                              <input name="program_type_id" type="checkbox" value="{{ $id }}" {{ (old('program_type_id') ? old('program_type_id') : $_GET['program_type_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        @endforeach
+                        
                       </div>
                       <label for="">Levels</label>
                       <div class="check-section">
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
+
+                        @foreach($level_all as $id => $value)
+                          <div>
+                            <label class="box">{{ $value }}
+                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (old('level_id') ? old('level_id') : $_GET['level_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        @endforeach
+
+                        
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Location <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
+                        
+                        <select name="province_id" id ="province_id" class="location form-control">
+                          <option value="">Select</option>
+                          @foreach($province_all as $id => $value)
+                              <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $_GET['province_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                          @endforeach
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
                       <div class="form-group position-relative without-label">
-                        <select class="form-control" id="rinks" name="rink_id" >
-                            <option value="0">0</option>
-                            <option value="1">1</option>
+                        
+                        <select name="location_id" id ="city_id" class="form-control location">
+                          <option value="">Select</option>
+                          @foreach($city_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $_GET['location_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            
+                          @endforeach
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>

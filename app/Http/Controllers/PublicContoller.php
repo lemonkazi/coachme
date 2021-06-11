@@ -101,6 +101,11 @@ class PublicContoller extends Controller
       } else {
         $title=trans('global.Add Camp');
       }
+
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      } 
       if ($request->isMethod('post')) {
 
         $data = $request->all();
@@ -131,10 +136,10 @@ class PublicContoller extends Controller
            $data['coaches'] = json_encode(array_unique($data['coaches']));
           }
 
-          if (isset($_COOKIE[$data['cookieRink']])) {
+          if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
-          if (isset($_COOKIE[$data['cookieWebURL']])) {
+          if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
           }
 
@@ -201,7 +206,8 @@ class PublicContoller extends Controller
           [
                'camp'      =>  $camp,
                'user'      =>  $user,
-               'Title' =>  $title
+               'Title' =>  $title,
+               'rink' =>$rink
           ]
       ])
       ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
@@ -218,6 +224,14 @@ class PublicContoller extends Controller
 
       if (!$camp) {
         return back();
+      }
+
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      } 
+      if (!empty($camp->rink_id)) {
+        $rink = Rink::find($program->rink_id);
       }
 
 
@@ -254,10 +268,10 @@ class PublicContoller extends Controller
           }else{
             unset($data['coaches']);
           }
-          if (isset($_COOKIE[$data['cookieRink']])) {
+          if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
-          if (isset($_COOKIE[$data['cookieWebURL']])) {
+          if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
           }
 
@@ -371,7 +385,8 @@ class PublicContoller extends Controller
                'camp_schedule'      =>  $camp_schedule,
                'coaches'   => $coaches,
                'user'      =>  $user,
-               'Title' =>  $title
+               'Title' =>  $title,
+               'rink' => $rink
           ]
       ])
       ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
@@ -444,6 +459,11 @@ class PublicContoller extends Controller
         $title=trans('global.Add Program');
       }
 
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      }
+
 
       if ($request->isMethod('post')) {
 
@@ -475,10 +495,10 @@ class PublicContoller extends Controller
           //  $data['coaches'] = json_encode(array_unique($data['coaches']));
           // }
 
-          if (isset($_COOKIE[$data['cookieRink']])) {
+          if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
-          if (isset($_COOKIE[$data['cookieWebURL']])) {
+          if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
           }
 
@@ -531,7 +551,8 @@ class PublicContoller extends Controller
           [
                'program'      =>  $program,
                'user'      =>  $user,
-               'Title' =>  $title
+               'Title' =>  $title,
+               'rink' => $rink
           ]
       ])
       ->with(compact('formatedDate','city_all','program_type_all','level_all'));
@@ -550,6 +571,13 @@ class PublicContoller extends Controller
 
       if (!$program) {
         return back();
+      }
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      } 
+      if (!empty($program->rink_id)) {
+        $rink = Rink::find($program->rink_id);
       }
 
 
@@ -582,10 +610,10 @@ class PublicContoller extends Controller
         {
 
          
-          if (isset($_COOKIE[$data['cookieRink']])) {
+          if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
-          if (isset($_COOKIE[$data['cookieWebURL']])) {
+          if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
           }
           
@@ -654,7 +682,8 @@ class PublicContoller extends Controller
                'program'      =>  $program,
                'program_photo'      =>  $program_photo,
                'user'      =>  $user,
-               'Title' =>  $title
+               'Title' =>  $title,
+               'rink' => $rink
           ]
       ])
       ->with(compact('formatedDate','city_all','program_type_all','level_all'));
@@ -968,6 +997,7 @@ class PublicContoller extends Controller
     public function program_list(Request $request, Program $program){
 
       $params = $request->all();
+      //$params['period'] = 'spring';
       $query = $program->filter($params);
 
      
@@ -996,14 +1026,20 @@ class PublicContoller extends Controller
       }
       //$programs = $query->paginate($limit);
       $programs = $query->get()->toArray();
+      //print_r($programs);exit();
+
+      //echo $query->toSql();exit();
 
       $title=trans('global.Add Program');
       
       // $programs = Program::where([
       //                   ['deleted_at', null],
       //               ])->get()->toArray();
-
-      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+      $city_all =array();
+      if (isset($params['province_id']) && !empty($params['province_id'])) {
+        $city_all = Location::all()->where('province_id',$params['province_id'])->pluck('name','id')->sortBy("name");
+      }
       $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       
@@ -1014,11 +1050,10 @@ class PublicContoller extends Controller
           'data'=>
           [
                'programs'      =>  $programs,
-               //'user'      =>  $user,
                'Title' =>  $title
           ]
       ])
-      ->with(compact('formatedDate','city_all','program_type_all','level_all'));
+      ->with(compact('province_all','formatedDate','city_all','program_type_all','level_all'));
 
       //return view('pages.program.list');
     }

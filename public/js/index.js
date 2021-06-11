@@ -204,8 +204,117 @@ $('.program-slider').slick({
     });
 
 
+    var i = 0;
+    $(".check-section input:checkbox").on('change', function(){
+
+      var name = $(this).attr("name");
+      
+      var checkedVals = $('input:checkbox[name='+name+']:checked').map(function() {
+          return this.value;
+      }).get();
+
+      console.log(checkedVals);
+      var url = checkedVals; // get selected value
+      if (url.length != 0) { 
+        //if (url) { // require a URL
+        var newUrl = CURRENT_URL;
+        //var id = ['a', 'b'];
+        
+
+        if (url instanceof Array) {
+          var url = url.join(",");
+        } 
+        var newurl = replaceUrlParam(name,url,newUrl);
+        window.location = newurl; // redirect
+        
+      } else {
+        var newurl = removeParam(name,CURRENT_URL);
+        window.location = newurl; // redirect
+      }
+      return false;
+    });
+
+    $(".location").on('change', function(){
+
+      var name = $(this).attr("name");
+      
+      // var checkedVals = $('input:checkbox[name='+name+']:checked').map(function() {
+      //     return this.value;
+      // }).get();
+
+      //console.log(checkedVals);
+      var url = $(this).val(); // get selected value
+      if (url.length != 0) { 
+        //if (url) { // require a URL
+        var newUrl = CURRENT_URL;
+        //var id = ['a', 'b'];
+        
+
+        if (url instanceof Array) {
+          var url = url.join(",");
+        } 
+        var newurl = replaceUrlParam(name,url,newUrl);
+        window.location = newurl; // redirect
+        
+      } else {
+        var newurl = removeParam(name,CURRENT_URL);
+        window.location = newurl; // redirect
+      }
+      return false;
+    });
+
+
+
   });
 
+  function removeParam(parameter, url) {
+    var urlParts = url.split('?');
+
+    if (urlParts.length >= 2) {
+      // Get first part, and remove from array
+      var urlBase = urlParts.shift();
+
+      // Join it back up
+      var queryString = urlParts.join('?');
+
+      var prefix = encodeURIComponent(parameter) + '=';
+      var parts = queryString.split(/[&;]/g);
+
+      // Reverse iteration as may be destructive
+      for (var i = parts.length; i-- > 0; ) {
+        // Idiom for string.startsWith
+        if (parts[i].lastIndexOf(prefix, 0) !== -1) {
+          parts.splice(i, 1);
+        }
+      }
+
+      url = urlBase + '?' + parts.join('&');
+    }
+
+    //return url;
+    url = url.replace(/&amp/g, "");
+    url = url.replace(/amp/g, "");
+
+    return url;
+  }
+
+
+  function replaceUrlParam(paramName, paramValue,newUrl){
+    var url = newUrl;
+
+    if (paramValue == null) {
+        paramValue = '';
+    }
+
+    var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+    if (url.search(pattern)>=0) {
+        return url.replace(pattern,'$1' + paramValue + '$2');
+    }
+
+    url = url.replace(/[?#]$/,'');
+    url=url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+    return url = url.replace(/&amp;/g, "&");
+  }
   var loadFile = function(event) {
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);
