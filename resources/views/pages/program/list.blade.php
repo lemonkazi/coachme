@@ -75,38 +75,50 @@
                       
                       <label for="">Period</label>
                       <div class="check-section">
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
+
+                        <?php
+                        $period = [
+                                'spring'    => 'Spring',
+                                'summer'    => 'Summer',
+                                'fall'      => 'Fall',
+                                'winter'    => 'Winter'
+                            ];
+                        $myArray = array();
+                        if (isset($_GET['period'])) {
+                          $myArray = explode(',', $_GET['period']);
+                        }
+                        
+                        ?>
+                        <?php foreach ($period as $id => $value): ?>
+                          <div>
+                            <label class="box">{{ $value }}
+                              <input name="period" type="checkbox" value="{{ $id }}" {{ (in_array($id, $myArray)) ? 'checked="checked"' : '' }} >
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        <?php endforeach ?>
+                        
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Starting age <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id">
-                          <option value="0">0</option>
-                          <option value="1">1</option>
+                        <select class="form-control location" id="starting_age" name="starting_age">
+                          <option value="">Select</option>
+                          <?php 
+                          for($value = 1; $value <= 20; $value++){ 
+                            ?>
+                              <option value="{{$value}}" {{ (old('starting_age') ? old('starting_age') : $_GET['starting_age'] ?? '') == $value ? 'selected' : ''}}>{{$value}}</option>
+                            <?php
+                          }
+                          ?>
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Rink <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-                          <option value="0">0</option>
-                          <option value="1">1</option>
+                        <select class="form-control location" id="rinks" name="rink_id" multiple="multiple">
+                          @foreach($rink_all as $id => $value)
+                            <option value="{{$id}}" @foreach($filtered_rink as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>

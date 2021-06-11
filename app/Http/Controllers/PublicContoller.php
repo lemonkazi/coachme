@@ -1042,7 +1042,16 @@ class PublicContoller extends Controller
       }
       $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
       
+
+
+      $filtered_rink = array();
+      if (isset($_GET['rink_id'])) {
+        $filtered_rink = explode(',', $_GET['rink_id']);
+      }
+
+
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
 
@@ -1053,7 +1062,7 @@ class PublicContoller extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('province_all','formatedDate','city_all','program_type_all','level_all'));
+      ->with(compact('filtered_rink','rink_all','province_all','formatedDate','city_all','program_type_all','level_all'));
 
       //return view('pages.program.list');
     }

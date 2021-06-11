@@ -114,7 +114,7 @@
                     <select name="starting_age" id ="starting_age" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       <?php 
-                      for($value = 18; $value <= 100; $value++){ 
+                      for($value = 1; $value <= 20; $value++){ 
                         ?>
                           <option value="{{$value}}" {{ (old('starting_age') ? old('starting_age') : $data['program']->starting_age ?? '') == $value ? 'selected' : ''}}>{{$value}}</option>
                         <?php

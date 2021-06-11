@@ -294,6 +294,7 @@ $('.program-slider').slick({
     //return url;
     url = url.replace(/&amp/g, "");
     url = url.replace(/amp/g, "");
+    url = url.replace(/%2C/g,",");
 
     return url;
   }
@@ -313,7 +314,8 @@ $('.program-slider').slick({
 
     url = url.replace(/[?#]$/,'');
     url=url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
-    return url = url.replace(/&amp;/g, "&");
+    url = url.replace(/&amp;/g, "&");
+    return url = url.replace(/%2C/g,",");
   }
   var loadFile = function(event) {
     var output = document.getElementById('output');
