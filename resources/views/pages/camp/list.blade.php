@@ -56,16 +56,16 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Location <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                        <select class="form-control listdates" id="location" name="location[]" multiple="multiple">
                             <option value="0">0</option>
-                            <option value="0">1</option>
+                            <option value="1">1</option>
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>
                       <div class="form-group position-relative without-label">
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                        <select class="form-control listdates" id="location1" name="location1[]" multiple="multiple">
                             <option value="0">0</option>
-                            <option value="0">1</option>
+                            <option value="1">1</option>
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>
@@ -83,9 +83,9 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Coach <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                        <select class="form-control listdates" id="coach" name="coach[]" multiple="multiple">
                           <option value="0">0</option>
-                          <option value="0">1</option>
+                          <option value="1">1</option>
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>
@@ -112,9 +112,9 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Date <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                        <select class="form-control listdates" id="campdates" name="campdates[]" multiple="multiple">
                           <option value="0">0</option>
-                          <option value="0">1</option>
+                          <option value="1">1</option>
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>

@@ -127,7 +127,7 @@ $('.program-slider').slick({
   $(function(){
     //coach edit js
     //multiselect 
-    $('#language,#rinks,#speciality').multiselect();
+    $('#language,#rinks,#speciality,.listdates,.campdates').multiselect();
     //img preview
     // imgInp.onchange = evt => {
     //   const [file] = imgInp.files
