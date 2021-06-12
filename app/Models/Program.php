@@ -9,6 +9,7 @@ use App\Models\Level;
 use App\Models\Rink;
 use App\Models\Location;
 use App\Models\AttachedFile;
+use App\Models\Period;
 use Carbon\Carbon;
 
 
@@ -53,7 +54,8 @@ class Program extends Model
         'level_name',
         'rink_name',
         'program_type_name',
-        'program_photo'
+        'program_photo',
+        'program_period'
     ];
 
     /**
@@ -190,6 +192,28 @@ class Program extends Model
                         ['type', 'PHOTO'],
                         ['deleted_at', null],
                     ])->get(['name', 'path', 'id'])->toArray();
+
+       
+        return !empty($program_photo) ? $program_photo : null;
+
+    }
+
+
+
+    /**
+    * Get the user's City name.
+    *
+    * @return string
+    */
+    public function getProgramPeriodAttribute()
+    {
+       
+        $program_photo = Period::where([
+                        ['content_id', $this->id],
+                        ['content_type', 'PROGRAM'],
+                        //['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['start_date', 'end_date', 'id', 'type'])->toArray();
 
        
         return !empty($program_photo) ? $program_photo : null;

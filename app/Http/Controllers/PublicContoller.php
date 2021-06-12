@@ -516,10 +516,12 @@ class PublicContoller extends Controller
           foreach ($data['schedule_start_date'] as $key => $value) {
             $periods['content_type'] = 'PROGRAM';
             $periods['content_id'] = $program->id;
-            $periods['type'] = 'FALL';
+            $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
             $periods['user_id'] = $user->id;
             $periods['start_date'] = $value;
             $periods['end_date'] = $data['schedule_end_date'][$key];
+
+
             $attached_file = Period::create($periods);
           }
 
@@ -646,10 +648,12 @@ class PublicContoller extends Controller
           foreach ($data['schedule_start_date'] as $key => $value) {
             $periods['content_type'] = 'PROGRAM';
             $periods['content_id'] = $program->id;
-            $periods['type'] = 'FALL';
+            //$periods['type'] = 'FALL';
             $periods['user_id'] = $user->id;
             $periods['start_date'] = $value;
             $periods['end_date'] = $data['schedule_end_date'][$key];
+
+            $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
             $attached_file = Period::create($periods);
           }
 
@@ -1371,6 +1375,59 @@ class PublicContoller extends Controller
     }
 
 
+    public function season($period) 
+    {
+        $seasons    = array(
+            'SPRING'    => array('March 1'     , 'May 31'),
+            'SUMMER'    => array('June 1'      , 'August 31'),
+            'FALL'      => array('September 1' , 'November 30'),
+            'WINTER'    => array('December 1'  , 'February 28')
+        );
 
+        $seasonsYear = array();
+
+        $start      = strtotime($period[0]);
+        $end        = strtotime($period[1]);
+
+        $seasonsYear[date('Y', $start)] = array();
+
+        if (key(current($seasonsYear)) != date('Y', $end))
+            $seasonsYear[date('Y', $end)] = array();
+
+        foreach ($seasonsYear as $year => &$seasonYear)
+            foreach ($seasons as $season => $period)
+                $seasonYear[$season] = array(strtotime($period[0].' '.$year), strtotime($period[1].' '.($season != 'winter' ? $year : ($year+1))));
+
+        foreach ($seasonsYear as $year => &$seasons) {
+            foreach ($seasons as $season => &$period) {
+                if ($start >= $period[0] && $end <= $period[1])
+                    return ucFirst($season);
+
+                if ($start >= $period[0] && $start <= $period[1]) {
+                    if (date('Y', $end) != $year) 
+                        $seasons = $seasonsYear[date('Y', $end)];   
+                        $year = date('Y', $end);
+
+                    $nextSeason = key($seasons);
+                    $nextPeriod = current($seasons);                
+                    do {                    
+                        $findNext   = ($end >= $nextPeriod[0] && $end <= $nextPeriod[1]);
+
+                        $nextSeason = key($seasons);
+                        $nextPeriod = current($seasons);
+                    } while ($findNext = False);
+
+                    $diffCurr   = $period[1]-$start;
+                    $diffNext   = $end-$nextPeriod[0];
+
+                    if ($diffCurr > $diffNext)
+                        return ucFirst($season);
+                    else {
+                        return ucFirst($nextSeason);
+                    }
+                }
+            }
+        }
+    }
 
 }

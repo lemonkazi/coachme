@@ -5,8 +5,34 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
+              
               <h1>{{$data['program']->name}}<i class="fas fa-share-alt"></i></h1>
-              <h4>From {{date('F', $data['schedule_start_date'])}} {{date('d', $data['schedule_start_date'])}} to {{date('F', $data['schedule_end_date'])}} {{date('d', $data['schedule_end_date'])}}</h4>
+              <?php 
+              if(isset($data['program']->program_period)) {
+                
+                if(count($data['program']->program_period) >1) {
+                  $i=0;
+                  ?>
+                  <h4>
+                    @foreach ($data['program']->program_period as $key => $period)
+
+                      @php
+                        $period['start_date'] = date('F', strtotime($period['start_date']));
+                        $period['end_date'] = date('F', strtotime($period['end_date']));
+                      @endphp
+                      From {{ucwords(strtolower($period['type']))}} ({{date('F', strtotime($period['start_date']))}} {{date('d', strtotime($period['start_date']))}} to {{date('F', strtotime($period['end_date']))}} {{date('d', strtotime($period['end_date']))}})
+                      </br>
+                    @endforeach
+                  </h4>
+                  <?php
+                }
+                else {
+                  ?>
+                  <h4>From {{date('F', strtotime($data['program']->program_period[0]['start_date']))}} {{date('d', strtotime($data['program']->program_period[0]['start_date']))}} to {{date('F', strtotime($data['program']->program_period[0]['end_date']))}} {{date('d', strtotime($data['program']->program_period[0]['end_date']))}}</h4>
+                  <?php
+                }
+              }
+              ?>
               <p class="gray">Window of registration: {{date('F', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}}</p>
               <a href="#" class="btn btn-custom mb-3">Register here</a>
               <div class="row">
