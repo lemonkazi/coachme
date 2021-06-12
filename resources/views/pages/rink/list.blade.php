@@ -45,13 +45,36 @@
                                   @if(isset($program['program_photo'][0]))
                                     <img src="{{$BASE_URL}}/{{$program['program_photo'][0]['path']}}" alt="">
                                   @endif
-                               </div>
+                                </div>
+                                <?php
+
+                                //$today = new DateTime();
+                                $today      = strtotime('today');
+                                $date_year = date('Y', $today);
+
+                                $start_date      = strtotime($program['reg_start_date']);
+                                $start_year = date('Y', $start_date);
+                                if ($date_year == $start_year) {
+                                  $start_date = date('F d', $start_date);
+                                } else {
+                                  $start_date = date('F d, Y', $start_date);
+                                }
+                                
+
+                                $end_date      = strtotime($program['reg_end_date']);
+                                $end_year = date('Y', $end_date);
+                                if ($date_year == $end_year) {
+                                  $end_date = date('F d', $end_date);
+                                } else {
+                                  $end_date = date('F d, Y', $end_date);
+                                }
+                                ?>
                                 <div class="col-md-6">
                                   <h3>{{$program['name']}}</h3>
-                                  <h6>{{$program['schedule_log']}}</h6>
-                                  <h5><i class="fas fa-map-marker-alt"></i>+{{$program['contacts']}}</h5>
-                                  <h5><i class="fas fa-clock"></i>{{$program['email']}}</h5>
-                                  <h5><i class="fas fa-road"></i>+{{$program['whatsapp']}}</h5>
+                                  <h6>{{$start_date}}-{{$end_date}}</h6>
+                                  <h5><i class="fas fa-map-marker-alt"></i>{{$program['rink']['address']}}</h5>
+                                  <h5><i class="fas fa-clock"></i>Starting at {{$program['starting_age']}}</h5>
+                                  <h5><i class="fas fa-road"></i>{{$program['level_name']}}</h5>
                                 </div> 
                                 <div class="col-md-3 learn-more">
                                   <a href="{{!empty($program['id']) ? route('program-details', ['program' => $program['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>

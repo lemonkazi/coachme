@@ -185,22 +185,30 @@ $('.program-slider').slick({
       $('input[name="reg_end_date"]').val(picker.endDate.format('YYYY-MM-DD'));
     });
 
-    var todaySch = $('input[name="schedule_start_date"]').val();
-    var endDateSch = $('input[name="schedule_end_date"]').val();
+    var todaySch = $('input[name="schedule_start_date[]"]').val();
+    var endDateSch = $('input[name="schedule_end_date[]"]').val();
+    // $('input[name="schedule_period"]').daterangepicker({
+    //   startDate: $(this).parent().find('input[name="schedule_start_date[]"]').val(), // after open picker you'll see this reg_dates as picked
+    //   endDate: $(this).parent().find('input[name="schedule_end_date[]"]').val(),
+    //   locale: {
+    //     format: 'YYYY-MM-DD'
+    //   }
+    // });
+
     $('input[name="schedule_period"]').daterangepicker({
-      startDate: todaySch, // after open picker you'll see this reg_dates as picked
-      endDate: endDateSch,
-      locale: {
-        format: 'YYYY-MM-DD'
-      }
+        autoUpdateInput: true,
+        //startDate: this.element.parent().find('input[name="schedule_start_date[]"]').val(), // after open picker you'll see this reg_dates as picked
+        //endDate: this.element.parent().find('input[name="schedule_end_date[]"]').val(),
+        locale: {
+          format: 'YYYY-MM-DD'
+        }
     });
+
     $('input[name="schedule_period"]').on('apply.daterangepicker', function(ev, picker) {
       console.log(picker.startDate.format('YYYY-MM-DD'));
       console.log(picker.endDate.format('YYYY-MM-DD'));
-
-      //[startDate, endDate] = $('.date_range').val().split(' - ');
-      $('input[name="schedule_start_date"]').val(picker.startDate.format('YYYY-MM-DD'));
-      $('input[name="schedule_end_date"]').val(picker.endDate.format('YYYY-MM-DD'));
+      $(this).parent().find('input[name="schedule_start_date[]"]').val(picker.startDate.format('YYYY-MM-DD'));
+      $(this).parent().find('input[name="schedule_end_date[]"]').val(picker.endDate.format('YYYY-MM-DD'));
     });
 
 

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Testimonial;
 use App\Models\UserInfo;
 use App\Models\AttachedFile;
+use App\Models\Period;
 use App\Models\Rink;
 use App\Models\Experience;
 use App\Models\Certificate;
@@ -231,7 +232,7 @@ class PublicContoller extends Controller
           $rink = Rink::find($_COOKIE['cookieRink']);
       } 
       if (!empty($camp->rink_id)) {
-        $rink = Rink::find($program->rink_id);
+        $rink = Rink::find($camp->rink_id);
       }
 
 
@@ -504,11 +505,22 @@ class PublicContoller extends Controller
 
           
           $data['user_id'] = $user->id;
-          // print_r($data);
-          // exit();
+
+          
+          
           $program = Program::create($data);
           if (!$program) {
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+          $periods =array();
+          foreach ($data['schedule_start_date'] as $key => $value) {
+            $periods['content_type'] = 'PROGRAM';
+            $periods['content_id'] = $program->id;
+            $periods['type'] = 'FALL';
+            $periods['user_id'] = $user->id;
+            $periods['start_date'] = $value;
+            $periods['end_date'] = $data['schedule_end_date'][$key];
+            $attached_file = Period::create($periods);
           }
 
 
@@ -625,6 +637,22 @@ class PublicContoller extends Controller
 
 
 
+          Period::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        ['deleted_at', null],
+                    ])->delete();
+          $periods =array();
+          foreach ($data['schedule_start_date'] as $key => $value) {
+            $periods['content_type'] = 'PROGRAM';
+            $periods['content_id'] = $program->id;
+            $periods['type'] = 'FALL';
+            $periods['user_id'] = $user->id;
+            $periods['start_date'] = $value;
+            $periods['end_date'] = $data['schedule_end_date'][$key];
+            $attached_file = Period::create($periods);
+          }
+
           $image_files = $request->file('program_image_path');
 
           if($request->hasFile('program_image_path'))
@@ -674,13 +702,32 @@ class PublicContoller extends Controller
                         ['deleted_at', null],
                     ])->get(['name', 'path', 'id'])->toArray();
 
-      
+       $program_periods = Period::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        //['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['start_date', 'end_date', 'id'])->toArray();
+
+      // $periods = array();
+      // foreach ($program_periods as $key => $period) {
+      //   $periods[] = array (
+      //     'start_date' => date('Y-m-d', strtotime($period['start_date'])),
+      //     'end_date' => date('Y-m-d', strtotime($period['end_date']))
+      //   );
+                        
+      // }
+      // print_r($periods);
+      // exit();
+                        
 
       return view('pages.program.edit', [
           'data'=>
           [
                'program'      =>  $program,
                'program_photo'      =>  $program_photo,
+               'program_periods'      =>  $program_periods,
+               //'period' => $period,
                'user'      =>  $user,
                'Title' =>  $title,
                'rink' => $rink
@@ -813,7 +860,7 @@ class PublicContoller extends Controller
       //$programs = $query->paginate($limit);
       $camps = $query->get()->toArray();
 
-      $title=trans('global.Add Camp');
+      $title=trans('global.Camp List');
 
       $province_all = Province::all()->pluck("name", "id")->sortBy("name");
       $city_all =array();
@@ -832,11 +879,15 @@ class PublicContoller extends Controller
       $formatedDate = $date->format('Y-m-d');
 
 
+      $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
+
+
       return view('pages.camp.list', [
           'data'=>
           [
                'camps'      =>  $camps,
-               'Title' =>  $title
+               'Title' =>  $title,
+               'coaches' => $coaches
           ]
       ])
       ->with(compact('filtered_rink','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));

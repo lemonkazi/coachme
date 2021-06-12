@@ -82,15 +82,65 @@
             <div class="col-md-3 ">
               <div class="row ">
                 <h6 class="mb-3">Schedule</h6>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="name">Period <span class="input-required">*</span></label>
+                <div class="col-md-12" id="coachimg-wrapper">
+                  <button class="add_period form-control btn btn-primary px-3" style="width: 10px;float: left;margin-top: 10%;">+</button>
+                       
+                  
+                    <?php 
+                    if(isset($data['program_periods'])) {
+                      $i=0;
+                      ?>
+                      @foreach ($data['program_periods'] as $key => $period)
 
-                    <input type="text" class="form-control" id="schedule_period" name="schedule_period" value="" required aria-describedby="emailHelp" >
-                    <input type="hidden" name="schedule_start_date" value="{{!empty($data['program']) ? old('schedule_start_date', $data['program']->schedule_start_date) : $formatedDate}}">
-                    <input type="hidden" name="schedule_end_date" value="{{!empty($data['program']) ? old('schedule_end_date', $data['program']->schedule_end_date) : $formatedDate}}">
+                        <?php
+
+                        $period['start_date'] = date('Y-m-d', strtotime($period['start_date']));
+                        $period['end_date'] = date('Y-m-d', strtotime($period['end_date']));
+                        ?>
+                        <div class="form-group" id="coachimg" style="float: right;">
+                          <label for="name">Period <span class="input-required">*</span></label>
+
+                          
+                         
+                          <input type="text" class="form-control" id="schedule_period" value="{{$period['start_date']}} - {{$period['end_date']}}" name="schedule_period" value="" required aria-describedby="emailHelp" >
+                           
+                          <div class="schedule_start_date">
+                            <input type="hidden" name="schedule_start_date[]" value="{{!empty($period['start_date']) ? old('schedule_start_date', $period['start_date']) : $formatedDate}}">
+                          </div>
+                          <div class="schedule_end_date">
+                          <input type="hidden" name="schedule_end_date[]" value="{{!empty($period['end_date']) ? old('schedule_end_date', $period['end_date']) : $formatedDate}}">
+                          </div>
+                        </div>
+                        <?php 
+                        if ($i!=0) {
+                          ?>
+                          <!-- <button class="remove form-control btn btn-primary submit px-3" style="margin-top: 1%;">x</button> -->
+                          <?php
+                        }
+                        $i++; ?>
+                      @endforeach
+                      <?php
+                    }
+                    else {
+                      ?>
+                    <div class="form-group" id="coachimg" style="float: right;">
+                      <label for="name">Period <span class="input-required">*</span></label>
+
+                      <input type="text" class="form-control" id="schedule_period" name="schedule_period" value="" required aria-describedby="emailHelp" >
+                      <div class="schedule_start_date">
+                        <input type="hidden" name="schedule_start_date[]" value="{{!empty($data['program']) ? old('schedule_start_date', $data['program']->schedule_start_date) : $formatedDate}}">
+                      </div>
+                      <div class="schedule_end_date">
+                      <input type="hidden" name="schedule_end_date[]" value="{{!empty($data['program']) ? old('schedule_end_date', $data['program']->schedule_end_date) : $formatedDate}}">
+                      </div>
+                    </div>
+                      <?php
+                    }
+                    ?>
+
                     
-                  </div>
+                  
+
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">

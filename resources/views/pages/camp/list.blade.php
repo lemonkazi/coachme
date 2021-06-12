@@ -50,7 +50,7 @@
                         <select name="location_id" id ="city_id" class="form-control location">
                           <option value="">Select</option>
                           @foreach($city_all as $id => $value)
-                                <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $_GET['location_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $_GET['location_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                             
                           @endforeach
                         </select>
@@ -70,28 +70,37 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Coach <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-                          <option value="0">0</option>
-                          <option value="0">1</option>
+                        <select class="form-control" id="rinks" name="coach_id[]" multiple="multiple">
+                          @if(isset($data['coaches']))
+                            @foreach ($data['coaches'] as $id => $value)
+                              <option value="{{ $id }}" {{ (old('coach_id') ? old('coach_id') : $_GET['coach_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
+                          @endif
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>
                       <label for="">Duration</label>
                       <div class="check-section">
                         <div>
-                          <label class="box">One
+                          <label class="box">1-3 days
                             <input type="checkbox" checked="checked">
                             <span class="checkmark"></span>
                           </label>
                         </div>
                         <div>
-                          <label class="box">One
+                          <label class="box">4-7 days
                             <input type="checkbox" checked="checked">
                             <span class="checkmark"></span>
                           </label>
                         </div>
                         <div>
-                          <label class="box">One
+                          <label class="box">1-3 weeks
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                        <div>
+                          <label class="box">4* weeks
                             <input type="checkbox" checked="checked">
                             <span class="checkmark"></span>
                           </label>
@@ -100,8 +109,15 @@
                       <div class="form-group position-relative">
                         <label for="name">Date <span class="input-required">*</span></label>
                         <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-                          <option value="0">0</option>
-                          <option value="0">1</option>
+                          
+                          <?php
+
+                          for( $i = 0; $i < 12; $i++ )
+                          {
+                              $date_str = date('F', strtotime("+ $i months")); $new_i = $i+1; 
+                              echo "<option value=$new_i>".$date_str ."</option>";
+                          }
+                          ?>
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>
@@ -124,11 +140,34 @@
                                 <img src="{{$BASE_URL}}/{{$camp['camp_photo'][0]['path']}}" alt="">
                               @endif
                             </div>
+                            <?php
+
+                            //$today = new DateTime();
+                            $today      = strtotime('today');
+                            $date_year = date('Y', $today);
+
+                            $start_date      = strtotime($camp['start_date']);
+                            $start_year = date('Y', $start_date);
+                            if ($date_year == $start_year) {
+                              $start_date = date('F d', $start_date);
+                            } else {
+                              $start_date = date('F d, Y', $start_date);
+                            }
+                            
+
+                            $end_date      = strtotime($camp['end_date']);
+                            $end_year = date('Y', $end_date);
+                            if ($date_year == $end_year) {
+                              $end_date = date('F d', $end_date);
+                            } else {
+                              $end_date = date('F d, Y', $end_date);
+                            }
+                            ?>
                             <div class="col-md-6">
                               <h3>{{$camp['name']}}</h3>
-                              <h6>start {{$camp['start_date']}} end {{$camp['end_date']}}</h6>
+                              <h6>{{$start_date}}-{{$end_date}}</h6>
                               <h5><i class="fas fa-map-marker-alt"></i>{{$camp['rink']['address']}}</h5>
-                              <h5><i class="fas fa-clock"></i>{{$camp['email']}}</h5>
+                              <h5><i class="fas fa-clock"></i>{{$camp['camp_type_name']}}</h5>
                               <h5><i class="fas fa-road"></i>{{$camp['level_name']}}</h5>
                             </div> 
                             <div class="col-md-3 learn-more">
