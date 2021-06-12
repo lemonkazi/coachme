@@ -22,8 +22,8 @@
               <div class="row">
 
                 <div class="img-upload mb-4">
-                  <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" />
-                  <img id="blah" src="{{$BASE_URL}}/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
+                  <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" onchange="loadFile(event)" />
+                  <img id="output" src="{{$BASE_URL}}/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
 
                   <i class="bi bi-plus-lg"></i>
                 </div>
@@ -225,6 +225,8 @@
             });
             return false;
         });
+
+
       });
     </script>
     
