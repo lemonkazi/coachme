@@ -10,6 +10,7 @@ Route::get('/', 'PublicContoller@index');
 
 Route::get('/program/list', 'PublicContoller@program_list');
 Route::get('/camp/list', 'PublicContoller@camp_list');
+Route::get('/camp/filter', 'PublicContoller@camp_filter');
 Route::get('/coach/list', 'PublicContoller@coach_list');
 
 

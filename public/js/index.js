@@ -272,7 +272,13 @@ $('.program-slider').slick({
     });
 
 
+    //range
+    $("#ex2").bootstrapSlider({}).change(function(oldValue,newValue){
+      let val=oldValue.value.newValue;
+      $('.minVal').html('$'+val[0]);
+      $('.maxVal').html('$'+val[1]);
 
+    });
   });
 
   function removeParam(parameter, url) {

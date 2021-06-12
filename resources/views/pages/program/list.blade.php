@@ -63,8 +63,8 @@
                       <div class="form-group range">
                         <label for="">Price Range</label>
                         <div>
-                          <span>$0</span>
-                          <span>$1000+</span>
+                          <span class="minVal">$0</span>
+                          <span class="maxVal">$1000</span>
                         </div>
                           <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]"/>
                         <div>
