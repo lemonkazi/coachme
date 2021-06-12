@@ -9,9 +9,10 @@
                   <div class="card-body">
                     <div class="row">
                       <h1>
-                        Filters                    
+                        Filters  
+                        <a href="" class="btn btn-custom mb-2 green">View calendar</a>                
                       </h1>
-                      <label for="">Type of program <i class="fas fa-info-circle"></i></label>
+                      <label for="">Type of program</label>
                       <div class="check-section">
                         <div>
                           <label class="box">One
@@ -55,18 +56,18 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Location <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id">
+                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
                             <option value="0">0</option>
-                            <option value="1">1</option>
+                            <option value="0">1</option>
                         </select>
-                        <i class="bi bi-chevron-compact-down"></i>
+                        <i class="bi bi-plus-lg"></i>
                       </div>
                       <div class="form-group position-relative without-label">
-                        <select class="form-control" id="rinks" name="rink_id" >
+                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
                             <option value="0">0</option>
-                            <option value="1">1</option>
+                            <option value="0">1</option>
                         </select>
-                        <i class="bi bi-chevron-compact-down"></i>
+                        <i class="bi bi-plus-lg"></i>
                       </div>
                       <div class="form-group range">
                         <label for="">Price Range</label>
@@ -80,8 +81,15 @@
                           <span>max</span>
                         </div>
                       </div>
-                      
-                      <label for="">Period</label>
+                      <div class="form-group position-relative">
+                        <label for="name">Coach <span class="input-required">*</span></label>
+                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                          <option value="0">0</option>
+                          <option value="0">1</option>
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
+                      </div>
+                      <label for="">Duration</label>
                       <div class="check-section">
                         <div>
                           <label class="box">One
@@ -103,18 +111,10 @@
                         </div>
                       </div>
                       <div class="form-group position-relative">
-                        <label for="name">Starting age <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id">
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                        </select>
-                        <i class="bi bi-chevron-compact-down"></i>
-                      </div>
-                      <div class="form-group position-relative">
-                        <label for="name">Rink <span class="input-required">*</span></label>
+                        <label for="name">Date <span class="input-required">*</span></label>
                         <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
                           <option value="0">0</option>
-                          <option value="1">1</option>
+                          <option value="0">1</option>
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>
@@ -128,56 +128,9 @@
                 <div class="card card-has-bg click-col">           
                     <div class="card-body">
                       <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
+                        <div class="col-md-12">
+                          <div id='calendar'></div>
                         </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
-                        </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                            <img src="https://via.placeholder.com/150x150" alt="">
-                        </div>
-                        <div class="col-md-6">
-                          <h3>Your programs</h3>
-                          <h6>Fall (sep-dec), Winter (jan-mar), Spring (apr-jun), Summer (jul-oct)</h6>
-                          <h5><i class="fas fa-map-marker-alt"></i>+1-613-555-0146</h5>
-                          <h5><i class="fas fa-clock"></i>patrick_chan@gmail.com</h5>
-                          <h5><i class="fas fa-road"></i>+1-613-345-0865</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="" class="btn btn-custom mb-2 green">Learn more</a>
-                        </div>
-                        
                       </div>
                     </div>
                 </div>
@@ -191,7 +144,11 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
-        $("#ex2").bootstrapSlider({});
+        
+        console.log($('.min-slider-handle').attr('aria-valuenow'));
+        $('.min-slider-handle').on('change',function(){
+          console.log($(this).attr('aria-valuenow'))
+        })
         // add logic change value of result top condition
         $('#province_id').on('change', function(){
             var name = $(this).attr('name');
@@ -228,6 +185,9 @@
             return false;
         });
       });
+
+     
+
     </script>
     
 @endsection

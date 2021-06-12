@@ -17,6 +17,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.0/fullcalendar.min.css">
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <!-- CSS -->
@@ -131,8 +132,6 @@
         <div id="pageloader">
             <img src="{{ asset ('img/loading.gif') }}" alt="processing..." />
         </div>
-
-        <!-- Optional JavaScript -->
         <script type="text/javascript" src="{{ asset('js/index.js') }}"></script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -148,6 +147,9 @@
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.0/fullcalendar.min.js"></script>
+        <!-- Optional JavaScript -->
+
         <script>
           $.widget.bridge('uibutton', $.ui.button)
         </script>
@@ -267,7 +269,12 @@
                         }
                     });
                 });
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                })
             });
+
+           
         </script>
     </body>
 </html>

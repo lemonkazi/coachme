@@ -89,6 +89,9 @@ class PublicContoller extends Controller
     public function coach_list(){
       return view('pages.coach.list');
     }
+    public function camp_filter(){
+      return view('pages.camp.filter');
+    }
     public function coach_edit(Request $request){
       $user = $request->user();
       if (!$user) {

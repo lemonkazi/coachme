@@ -147,7 +147,13 @@ $('.program-slider').slick({
     //daterangepicker
     $('input[name="dates"],input[name="period"]').daterangepicker();
 
+    //range
+    $("#ex2").bootstrapSlider({}).change(function(oldValue,newValue){
+      let val=oldValue.value.newValue;
+      $('.minVal').html('$'+val[0]);
+      $('.maxVal').html('$'+val[1]);
 
+    });
   });
 
   var loadFile = function(event) {
