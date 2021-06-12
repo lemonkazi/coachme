@@ -35,9 +35,8 @@
                         @endforeach
                       </div>
                       <div class="form-group position-relative">
-                        <label for="name">Location <span class="input-required">*</span></label>
-                        
-                        <select name="province_id" id ="province_id" class="location form-control">
+                        <label for="name">Location <span class="input-required">*</span></label>        
+                        <select name="province_id" id ="province_id" class="location form-control listdates">
                           <option value="">Select</option>
                           @foreach($province_all as $id => $value)
                               <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $_GET['province_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
@@ -45,9 +44,8 @@
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
-                      <div class="form-group position-relative without-label">
-                        
-                        <select name="location_id" id ="city_id" class="form-control location">
+                      <div class="form-group position-relative without-label">                        
+                        <select name="location_id" id ="city_id" class="form-control location listdates">
                           <option value="">Select</option>
                           @foreach($city_all as $id => $value)
                             <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $_GET['location_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
@@ -70,7 +68,7 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Coach <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="coach_id[]" multiple="multiple">
+                        <select class="form-control listdates" id="coach" name="coach_id[]" multiple="multiple">
                           @if(isset($data['coaches']))
                             @foreach ($data['coaches'] as $id => $value)
                               <option value="{{ $id }}" {{ (old('coach_id') ? old('coach_id') : $_GET['coach_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
@@ -108,7 +106,7 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Date <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                        <select class="form-control listdates" id="campdates" name="campdates[]" multiple="multiple">
                           
                           <?php
 

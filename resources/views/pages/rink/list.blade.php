@@ -71,7 +71,53 @@
                                 ?>
                                 <div class="col-md-6">
                                   <h3>{{$program['name']}}</h3>
-                                  <h6>{{$start_date}}-{{$end_date}}</h6>
+                                  <?php 
+                                  if(isset($program['program_period'])) {
+                                    
+                                    if(count($program['program_period']) >1) {
+                                      $i=0;
+                                      ?>
+                                      <h6>
+                                        @foreach ($program['program_period'] as $key => $period)
+
+                                          @php
+                                            $period['start_date'] = date('F', strtotime($period['start_date']));
+                                            $period['end_date'] = date('F', strtotime($period['end_date']));
+                                          @endphp
+                                          {{ucwords(strtolower($period['type']))}} ({{$period['start_date']}} - {{$period['end_date']}})
+
+                                        @endforeach
+                                      </h6> 
+                                      <?php
+                                    }
+                                    else {
+
+                                      //$today = new DateTime();
+                                      $today      = strtotime('today');
+                                      $date_year = date('Y', $today);
+
+                                      $start_date      = strtotime($program['program_period'][0]['start_date']);
+                                      $start_year = date('Y', $start_date);
+                                      if ($date_year == $start_year) {
+                                        $start_date = date('F d', $start_date);
+                                      } else {
+                                        $start_date = date('F d, Y', $start_date);
+                                      }
+                                      
+
+                                      $end_date      = strtotime($program['program_period'][0]['end_date']);
+                                      $end_year = date('Y', $end_date);
+                                      if ($date_year == $end_year) {
+                                        $end_date = date('F d', $end_date);
+                                      } else {
+                                        $end_date = date('F d, Y', $end_date);
+                                      }
+                                      ?>
+                                      <h6>{{$start_date}}-{{$end_date}}</h6>
+                                      <?php
+                                    }
+                                  }
+                                  ?>
                                   <h5><i class="fas fa-map-marker-alt"></i>{{$program['rink']['address']}}</h5>
                                   <h5><i class="fas fa-clock"></i>Starting at {{$program['starting_age']}}</h5>
                                   <h5><i class="fas fa-road"></i>{{$program['level_name']}}</h5>
