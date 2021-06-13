@@ -903,8 +903,78 @@ class PublicContoller extends Controller
       ->with(compact('filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
 
     }
-    public function coach_list(){
-      return view('pages.coach.list');
+    public function coach_list(Request $request, User $user){
+
+      $params = $request->all();
+      $params['authority'] = 'COACH_USER';
+      $query = $user->filter_coach($params);
+
+     
+      try {
+          $limit = (int) $request->input('limit', 20);
+      } catch (\Exception $e) {
+          $limit = 20;
+      }
+
+      if (!is_int($limit) || $limit <= 0) {
+          $limit = 20;
+      }
+
+      if (isset($params['with'])) { 
+          $with = explode(',', $params['with']);
+
+          $query->with($with);
+      }
+      if (isset($params['sort']) && !empty($params['sort'])) {
+        $sort = $params['sort'];
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+      } else {
+        $sort = 'id-desc'; 
+        $query->orderBy('id', 'desc');
+      }
+      //$programs = $query->paginate($limit);
+      $coaches = $query->get()->toArray();
+
+      $title=trans('global.Coach List');
+
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+      $city_all =array();
+      if (isset($params['province_id']) && !empty($params['province_id'])) {
+        $city_all = Location::all()->where('province_id',$params['province_id'])->pluck('name','id')->sortBy("name");
+      }
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
+      
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+      $filtered_coach = array();
+      if (isset($_GET['coach_id'])) {
+        $filtered_coach = explode(',', $_GET['coach_id']);
+      }
+
+      $filtered_month = array();
+      if (isset($_GET['month'])) {
+        $filtered_month = explode(',', $_GET['month']);
+      }
+
+      //$coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
+
+
+      return view('pages.coach.list', [
+          'data'=>
+          [
+               'coaches'      =>  $coaches,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all'));
+
     }
     public function camp_filter(){
       return view('pages.camp.filter');

@@ -273,14 +273,6 @@ class Camp extends Model
                             $sq->whereRaw('extract(month from start_date) ='.$value)
                                 ->whereRaw('extract(month from end_date) ='.$value);
                         });
-
-                //$query->whereRaw('extract(month from start_date) = ?', [$value]);
-                // $query->orWhere('start_date', '<', $year.'-'.$params['month'].'-01')
-                //            ->where(function($query) use ($date_year){
-                //                 return $query
-                //                 ->whereNull('end_date')
-                //                 ->orWhere('end_date', '>=', $date_year.'-12-01');
-                //             });
             }
             
         }
@@ -295,25 +287,6 @@ class Camp extends Model
 
                 $duration = explode('-', $days);
                 $diff = $duration[1] - $duration[0];
-
-
-
-                // $filterParams = [];
-                // $filterParams['content_type'] = 'PROGRAM';
-                // $params['period'] = strtoupper($params['period']);
-
-                // $filterParams['type'] = $params['period'];
-                
-                // $newsQuery = (new Period())->filter($filterParams);
-
-                // $periods = $newsQuery->get(['content_id', 'start_date', 'end_date'])
-                //         ->toArray();
-                // $ids = array();
-                // foreach ($periods as $key => $value) {
-                //     $ids[]=$value['content_id'];
-                // }
-                // $params['id'] = $ids;
-
 
 
                 // $days = 200;
@@ -331,78 +304,34 @@ class Camp extends Model
                     $query->orWhereRaw('DATEDIFF(end_date,start_date) >='.$duration[0]);
                 }
                 
-                // if ($days==22) {
-                //     $query->whereRaw('DATEDIFF(end_date,start_date) >='.$days);
-                // } else {
-                //     $query->whereRaw('DATEDIFF(end_date,start_date) <='.$duration[0]);
-                // }
-                
-                //print_r($diff);
-                //$ids[]=$value['content_id'];
+              
             }
             
-            //exit();
-            // $filterParams = [];
-            // $filterParams['content_type'] = 'PROGRAM';
-            // $params['period'] = strtoupper($params['period']);
-
-            // $filterParams['type'] = $params['period'];
-            
-            // $newsQuery = (new Period())->filter($filterParams);
-
-            // $periods = $newsQuery->get(['content_id', 'start_date', 'end_date'])
-            //         ->toArray();
-            // $ids = array();
-            // foreach ($periods as $key => $value) {
-            //     $ids[]=$value['content_id'];
-            // }
-            // $params['id'] = $ids;
-            
-            // if ($params['period'] == 'winter') {
-                
-            //     $dt =  now();
-            //     $query->where('start_date', '<', $date_year.'-03-01')
-            //                    ->where(function($query) use ($date_year){
-            //                         return $query
-            //                         ->whereNull('end_date')
-            //                         ->orWhere('end_date', '>=', $date_year.'-12-01');
-            //                     });
-            //     # code...
-            // }
-            // if ($params['period'] == 'spring') {
-                
-            //     $dt =  now();
-            //     $query->where('start_date', '<', $date_year.'-06-01')
-            //                    ->where(function($query) use ($date_year){
-            //                         return $query
-            //                         ->whereNull('end_date')
-            //                         ->orWhere('end_date', '>=', $date_year.'-03-01');
-            //                     });
-            // }
-
-            // if ($params['period'] == 'summer') {
-
-                
-            //     $dt =  now();
-            //     $query->where('start_date', '<', $date_year.'-09-01')
-            //                    ->where(function($query) use ($date_year){
-            //                         return $query
-            //                         ->whereNull('end_date')
-            //                         ->orWhere('end_date', '>=', $date_year.'-06-01');
-            //                     });
-            // }
-
-            // if ($params['period'] == 'fall') {
-                
-            //     $dt =  now();
-            //     $query->where('start_date', '<', $date_year.'-12-01')
-            //                    ->where(function($query) use ($date_year){
-            //                         return $query
-            //                         ->whereNull('end_date')
-            //                         ->orWhere('end_date', '>=',$date_year.'-09-01');
-            //                     });
-            // }
+           
         }
+
+        if (isset($params['min']) && isset($params['max'])) {
+            $min_value = $params['min'];
+            $max_value = $params['max'];
+            // if none of them is null
+            if (! (is_null($min_value) && is_null($max_value))) {
+                // fetch all between min & max values
+                $query->whereBetween('price', [$min_value, $max_value]);
+            }
+            // if just min_value is available (is not null)
+            elseif (! is_null($min_value)) {
+                // fetch all greater than or equal to min_value
+                $query->where('price', '>=', $min_value);
+            }
+            // if just max_value is available (is not null)
+            elseif (! is_null($max_value)) {
+                // fetch all lesser than or equal to max_value
+                $query->where('price', '<=', $max_value);
+            }
+        }
+        
+
+
         //$data['start_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['start_date']);
         //$data['end_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['end_date']);
         //echo config('global.spring');

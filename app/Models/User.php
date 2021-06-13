@@ -13,6 +13,7 @@ use App\Models\Speciality;
 use App\Models\Price;
 use App\Models\Language;
 use App\Models\City;
+use App\Models\Province;
 use App\Models\Experience;
 use App\Models\Certificate;
 
@@ -84,7 +85,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'certificate_name',
         'price_name',
         'userinfos',
-        'city_name'
+        'city_name',
+        'province_name'
     ];
 
     /**
@@ -278,6 +280,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return !empty($this->city) ? $this->city->name : null;
     }
 
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getProvinceNameAttribute()
+    {
+        return !empty($this->province) ? $this->province->name : null;
+    }
+
     // /**
     //  * Get the user's rink name.
     //  *
@@ -324,6 +337,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+
+     /**
+     * Get the rinks for the user.
+     */
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
     }
     
 
@@ -548,6 +570,44 @@ class User extends Authenticatable implements MustVerifyEmail
 
             });
         } 
+
+        if (isset($params['is_varified'])) {
+            $params['is_verified'] = $params['is_varified'];
+            unset($params['is_varified']);
+        }
+        
+        foreach ($params as $key => $value) { 
+            if ($value != "") {
+                if (in_array($key, $this->partialFilterable)) { 
+                    $query->where($key, 'LIKE', "%{$value}%");
+                } elseif (in_array($key, $this->exactFilterable)) {
+                    $query->where($key, '=', $value);
+                }
+            }
+        }
+        return $query;
+    }
+
+
+
+    /**
+     * Search user based request parameters
+     * 
+     * @param array $params
+     * @return $query
+     */
+    public function filter_coach($params)
+    {
+        $query = $this->newQuery();
+
+        $authUser = request()->user();
+        if (empty($params) || !is_array($params)) {
+            return $query;
+        }
+
+       
+        
+
 
         if (isset($params['is_varified'])) {
             $params['is_verified'] = $params['is_varified'];

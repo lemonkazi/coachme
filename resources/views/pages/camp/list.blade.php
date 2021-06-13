@@ -118,17 +118,9 @@
                         <select class="form-control listdates location" id="campdates" name="month" multiple="multiple">
                           
                           <?php
-
-                          //for( $i = 0; $i < 12; $i++ )
-                          //{
                           foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $new_i => $date_str) {
-                              //$date_str = date('F', strtotime("$i months")); 
-                              //$date_str = date('M', strtotime("+ $i++ months"));
-
-                              //$time = strtotime(sprintf('%d months', $i));   
-                              //$date_str = date('F ', $time);
+                              
                               $new_i = $new_i+1; 
-                              //echo "<option value=$new_i>".$date_str ."</option>";
                               ?>
                               <option value="{{$new_i}}" @foreach($filtered_month as $aItemKey => $p) @if($new_i == $p)selected="selected"@endif @endforeach>{{$date_str}}</option>
                             <?php

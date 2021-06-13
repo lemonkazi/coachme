@@ -273,11 +273,6 @@ class Program extends Model
             unset($params['is_varified']);
         }
 
-
-
-        //$params['period'] = 'winter';
-        //$today =  now();
-       // echo 'Today is: ' . date('Y', $start) . '<br />';
         if (isset($params['period'])) {
 
             $filterParams = [];
@@ -311,39 +306,28 @@ class Program extends Model
             //                     });
             //     # code...
             // }
-            // if ($params['period'] == 'spring') {
-            //     $params['period'] = strtoupper($params['period']);
-            //     $dt =  now();
-            //     $query->where('reg_start_date', '<', $date_year.'-06-01')
-            //                    ->where(function($query) use ($date_year){
-            //                         return $query
-            //                         ->whereNull('reg_end_date')
-            //                         ->orWhere('reg_end_date', '>=', $date_year.'-03-01');
-            //                     });
-            // }
+            
+           
+        }
 
-            // if ($params['period'] == 'summer') {
-            //     $params['period'] = strtoupper($params['period']);
-                
-            //     $dt =  now();
-            //     $query->where('reg_start_date', '<', $date_year.'-09-01')
-            //                    ->where(function($query) use ($date_year){
-            //                         return $query
-            //                         ->whereNull('reg_end_date')
-            //                         ->orWhere('reg_end_date', '>=', $date_year.'-06-01');
-            //                     });
-            // }
-
-            // if ($params['period'] == 'fall') {
-            //     $params['period'] = strtoupper($params['period']);
-            //     $dt =  now();
-            //     $query->where('reg_start_date', '<', $date_year.'-12-01')
-            //                    ->where(function($query) use ($date_year){
-            //                         return $query
-            //                         ->whereNull('reg_end_date')
-            //                         ->orWhere('reg_end_date', '>=',$date_year.'-09-01');
-            //                     });
-            // }
+        if (isset($params['min']) && isset($params['max'])) {
+            $min_value = $params['min'];
+            $max_value = $params['max'];
+            // if none of them is null
+            if (! (is_null($min_value) && is_null($max_value))) {
+                // fetch all between min & max values
+                $query->whereBetween('price', [$min_value, $max_value]);
+            }
+            // if just min_value is available (is not null)
+            elseif (! is_null($min_value)) {
+                // fetch all greater than or equal to min_value
+                $query->where('price', '>=', $min_value);
+            }
+            // if just max_value is available (is not null)
+            elseif (! is_null($max_value)) {
+                // fetch all lesser than or equal to max_value
+                $query->where('price', '<=', $max_value);
+            }
         }
         //$data['start_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['start_date']);
         //$data['end_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['end_date']);
