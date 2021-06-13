@@ -56,11 +56,21 @@
                       </div>
                       <div class="form-group range">
                         <label for="">Price Range</label>
+                        <?php 
+                        $min = 0;
+                        $max = 1000;
+                        if (isset($_GET['min']) && !empty($_GET['min'])) {
+                          $min = $_GET['min'];
+                        }
+                        if (isset($_GET['max']) && !empty($_GET['max'])) {
+                          $max = $_GET['max'];
+                        }
+                        ?>
                         <div>
-                          <span class="minVal">$0</span>
-                          <span class="maxVal">$1000</span>
+                          <span class="minVal">${{$min}}</span>
+                          <span class="maxVal">${{$max}}</span>
                         </div>
-                          <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]"/>
+                          <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[{{$min}},{{$max}}]"/>
                         <div>
                           <span>min</span>
                           <span>max</span>
@@ -68,10 +78,11 @@
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Coach <span class="input-required">*</span></label>
-                        <select class="form-control listdates" id="coach" name="coach_id[]" multiple="multiple">
+                        <select class="form-control listdates location" id="coach" name="coach_id" multiple="multiple">
                           @if(isset($data['coaches']))
                             @foreach ($data['coaches'] as $id => $value)
-                              <option value="{{ $id }}" {{ (old('coach_id') ? old('coach_id') : $_GET['coach_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                              <option value="{{$id}}" @foreach($filtered_coach as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          
                             @endforeach
                           @endif
                         </select>
@@ -79,41 +90,48 @@
                       </div>
                       <label for="">Duration</label>
                       <div class="check-section">
-                        <div>
-                          <label class="box">1-3 days
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">4-7 days
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">1-3 weeks
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">4* weeks
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
+
+                        <?php
+                        $duration = [
+                                'day_0-3'    => '1-3 days',
+                                'day_4-7'    => '4-7 days',
+                                'day_8-21'      => '1-3 weeks',
+                                'day_22-100'    => '4* weeks'
+                            ];
+                        $myArray = array();
+                        if (isset($_GET['duration'])) {
+                          $myArray = explode(',', $_GET['duration']);
+                        }
+                        
+                        ?>
+                        <?php foreach ($duration as $id => $value): ?>
+                          <div>
+                            <label class="box">{{ $value }}
+                              <input name="duration" type="checkbox" value="{{ $id }}" {{ (in_array($id, $myArray)) ? 'checked="checked"' : '' }} >
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        <?php endforeach ?>
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Date <span class="input-required">*</span></label>
-                        <select class="form-control listdates" id="campdates" name="campdates[]" multiple="multiple">
+                        <select class="form-control listdates location" id="campdates" name="month" multiple="multiple">
                           
                           <?php
 
-                          for( $i = 0; $i < 12; $i++ )
-                          {
-                              $date_str = date('F', strtotime("+ $i months")); $new_i = $i+1; 
-                              echo "<option value=$new_i>".$date_str ."</option>";
+                          //for( $i = 0; $i < 12; $i++ )
+                          //{
+                          foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $new_i => $date_str) {
+                              //$date_str = date('F', strtotime("$i months")); 
+                              //$date_str = date('M', strtotime("+ $i++ months"));
+
+                              //$time = strtotime(sprintf('%d months', $i));   
+                              //$date_str = date('F ', $time);
+                              $new_i = $new_i+1; 
+                              //echo "<option value=$new_i>".$date_str ."</option>";
+                              ?>
+                              <option value="{{$new_i}}" @foreach($filtered_month as $aItemKey => $p) @if($new_i == $p)selected="selected"@endif @endforeach>{{$date_str}}</option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -189,7 +207,7 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
-        
+        $("#ex2").bootstrapSlider({});
         // add logic change value of result top condition
         $('#province_id').on('change', function(){
             var name = $(this).attr('name');

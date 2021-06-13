@@ -233,10 +233,12 @@ $('.program-slider').slick({
           var url = url.join(",");
         } 
         var newurl = replaceUrlParam(name,url,newUrl);
+        newurl = newurl.replace("&amp;", "&");
         window.location = newurl; // redirect
         
       } else {
         var newurl = removeParam(name,CURRENT_URL);
+        //console.log(newurl);
         window.location = newurl; // redirect
       }
       return false;
@@ -262,6 +264,7 @@ $('.program-slider').slick({
           var url = url.join(",");
         } 
         var newurl = replaceUrlParam(name,url,newUrl);
+        newurl = newurl.replace("&amp;", "&");
         window.location = newurl; // redirect
         
       } else {
@@ -272,11 +275,62 @@ $('.program-slider').slick({
     });
 
 
+    function getURLParameter(name, urlsearch) {
+
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(urlsearch || location.search) || [ , "" ])[1].replace(
+                /\+/g, '%20'))
+                || null;
+    }
+
+    function toNumber(str) {
+       return str*1;
+    }
+
+    // var url = window.location.href;
+    // //var recommand = getURLParameter('recommand', url);
+    // var min = getURLParameter('min', url);
+    // var max = getURLParameter('max', url);
+    // if (min == null) {
+    //     min = minDefault;        
+    // }
+    // if (max == null) {
+    //     max = maxDefault;
+    // }
+
+
+
     //range
     $("#ex2").bootstrapSlider({}).change(function(oldValue,newValue){
+      
+
+
       let val=oldValue.value.newValue;
       $('.minVal').html('$'+val[0]);
       $('.maxVal').html('$'+val[1]);
+      var href = window.location.href;
+
+      if (href.indexOf("min") > -1)
+      {
+          href = href.replace(/(min)=\w+((?=[&])|)/, "min="+val[0]);
+      }
+      else 
+      {
+          var char = (href.indexOf("?") == -1 ? "?" : "&");
+          
+          href+= char + "min=" + val[0];
+      }
+
+      if (href.indexOf("max") > -1)
+      {
+          href = href.replace(/(max)=\w+((?=[&])|)/, "max="+val[1]);
+      }
+      else 
+      {
+          var char = (href.indexOf("?") == -1 ? "?" : "&");
+          
+          href+= char + "max=" + val[1];
+      }
+      window.location=href;
 
     });
   });
@@ -307,9 +361,16 @@ $('.program-slider').slick({
 
     //return url;
     url = url.replace(/&amp/g, "");
-    url = url.replace(/amp/g, "");
+    if (url.indexOf('amp&') > -1)
+    {
+      url = url.replace(/amp&/g, "");
+      //url = url.replace(/amp/g, "");
+    } else {
+      //url = url.replace(/amp/g, "");
+    }
+    url = url.replace(/&amp;/g, "&");
+    
     url = url.replace(/%2C/g,",");
-
     return url;
   }
 
@@ -328,8 +389,14 @@ $('.program-slider').slick({
 
     url = url.replace(/[?#]$/,'');
     url=url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+    url = url.replace(/%2C/g,",");
     url = url.replace(/&amp;/g, "&");
-    return url = url.replace(/%2C/g,",");
+    return url = url.replace("&amp;", "&");
+    //var reg = new RegExp( '&', g );
+    //return url.replace( reg, '%26' );
+    //return encodeURL = encodeURIComponent( url );
+    console.log(url);
+    
   }
   var loadFile = function(event) {
     var output = document.getElementById('output');

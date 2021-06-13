@@ -46,29 +46,7 @@
                                     <img src="{{$BASE_URL}}/{{$program['program_photo'][0]['path']}}" alt="">
                                   @endif
                                 </div>
-                                <?php
-
-                                //$today = new DateTime();
-                                $today      = strtotime('today');
-                                $date_year = date('Y', $today);
-
-                                $start_date      = strtotime($program['reg_start_date']);
-                                $start_year = date('Y', $start_date);
-                                if ($date_year == $start_year) {
-                                  $start_date = date('F d', $start_date);
-                                } else {
-                                  $start_date = date('F d, Y', $start_date);
-                                }
                                 
-
-                                $end_date      = strtotime($program['reg_end_date']);
-                                $end_year = date('Y', $end_date);
-                                if ($date_year == $end_year) {
-                                  $end_date = date('F d', $end_date);
-                                } else {
-                                  $end_date = date('F d, Y', $end_date);
-                                }
-                                ?>
                                 <div class="col-md-6">
                                   <h3>{{$program['name']}}</h3>
                                   <?php 

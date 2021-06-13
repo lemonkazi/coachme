@@ -875,13 +875,19 @@ class PublicContoller extends Controller
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
       
-      $filtered_rink = array();
-      if (isset($_GET['rink_id'])) {
-        $filtered_rink = explode(',', $_GET['rink_id']);
-      }
+      
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
 
+      $filtered_coach = array();
+      if (isset($_GET['coach_id'])) {
+        $filtered_coach = explode(',', $_GET['coach_id']);
+      }
+
+      $filtered_month = array();
+      if (isset($_GET['month'])) {
+        $filtered_month = explode(',', $_GET['month']);
+      }
 
       $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
 
@@ -894,7 +900,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('filtered_rink','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
 
     }
     public function coach_list(){

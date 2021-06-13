@@ -62,11 +62,21 @@
                       </div>
                       <div class="form-group range">
                         <label for="">Price Range</label>
+                        <?php 
+                        $min = 0;
+                        $max = 1000;
+                        if (isset($_GET['min']) && !empty($_GET['min'])) {
+                          $min = $_GET['min'];
+                        }
+                        if (isset($_GET['max']) && !empty($_GET['max'])) {
+                          $max = $_GET['max'];
+                        }
+                        ?>
                         <div>
-                          <span class="minVal">$0</span>
-                          <span class="maxVal">$1000</span>
+                          <span class="minVal">${{$min}}</span>
+                          <span class="maxVal">${{$max}}</span>
                         </div>
-                          <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]"/>
+                          <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[{{$min}},{{$max}}]"/>
                         <div>
                           <span>min</span>
                           <span>max</span>

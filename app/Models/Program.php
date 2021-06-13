@@ -279,51 +279,71 @@ class Program extends Model
         //$today =  now();
        // echo 'Today is: ' . date('Y', $start) . '<br />';
         if (isset($params['period'])) {
+
+            $filterParams = [];
+            $filterParams['content_type'] = 'PROGRAM';
+            $params['period'] = strtoupper($params['period']);
+
+            $filterParams['type'] = $params['period'];
             
-            if ($params['period'] == 'winter') {
-                
-                $dt =  now();
-                $query->where('reg_start_date', '<', $date_year.'-03-01')
-                               ->where(function($query) use ($date_year){
-                                    return $query
-                                    ->whereNull('reg_end_date')
-                                    ->orWhere('reg_end_date', '>=', $date_year.'-12-01');
-                                });
-                # code...
-            }
-            if ($params['period'] == 'spring') {
-                
-                $dt =  now();
-                $query->where('reg_start_date', '<', $date_year.'-06-01')
-                               ->where(function($query) use ($date_year){
-                                    return $query
-                                    ->whereNull('reg_end_date')
-                                    ->orWhere('reg_end_date', '>=', $date_year.'-03-01');
-                                });
-            }
+            $newsQuery = (new Period())->filter($filterParams);
 
-            if ($params['period'] == 'summer') {
-
-                
-                $dt =  now();
-                $query->where('reg_start_date', '<', $date_year.'-09-01')
-                               ->where(function($query) use ($date_year){
-                                    return $query
-                                    ->whereNull('reg_end_date')
-                                    ->orWhere('reg_end_date', '>=', $date_year.'-06-01');
-                                });
+            $periods = $newsQuery->get(['content_id', 'start_date', 'end_date'])
+                    ->toArray();
+            $ids = array();
+            foreach ($periods as $key => $value) {
+                $ids[]=$value['content_id'];
             }
+            $params['id'] = $ids;
+            // print_r($params['id']);
+            // exit();
 
-            if ($params['period'] == 'fall') {
+
+            
+            // if ($params['period'] == 'winter') {
+            //     $params['period'] = strtoupper($params['period']);
+            //     $dt =  now();
+            //     $query->where('reg_start_date', '<', $date_year.'-03-01')
+            //                    ->where(function($query) use ($date_year){
+            //                         return $query
+            //                         ->whereNull('reg_end_date')
+            //                         ->orWhere('reg_end_date', '>=', $date_year.'-12-01');
+            //                     });
+            //     # code...
+            // }
+            // if ($params['period'] == 'spring') {
+            //     $params['period'] = strtoupper($params['period']);
+            //     $dt =  now();
+            //     $query->where('reg_start_date', '<', $date_year.'-06-01')
+            //                    ->where(function($query) use ($date_year){
+            //                         return $query
+            //                         ->whereNull('reg_end_date')
+            //                         ->orWhere('reg_end_date', '>=', $date_year.'-03-01');
+            //                     });
+            // }
+
+            // if ($params['period'] == 'summer') {
+            //     $params['period'] = strtoupper($params['period']);
                 
-                $dt =  now();
-                $query->where('reg_start_date', '<', $date_year.'-12-01')
-                               ->where(function($query) use ($date_year){
-                                    return $query
-                                    ->whereNull('reg_end_date')
-                                    ->orWhere('reg_end_date', '>=',$date_year.'-09-01');
-                                });
-            }
+            //     $dt =  now();
+            //     $query->where('reg_start_date', '<', $date_year.'-09-01')
+            //                    ->where(function($query) use ($date_year){
+            //                         return $query
+            //                         ->whereNull('reg_end_date')
+            //                         ->orWhere('reg_end_date', '>=', $date_year.'-06-01');
+            //                     });
+            // }
+
+            // if ($params['period'] == 'fall') {
+            //     $params['period'] = strtoupper($params['period']);
+            //     $dt =  now();
+            //     $query->where('reg_start_date', '<', $date_year.'-12-01')
+            //                    ->where(function($query) use ($date_year){
+            //                         return $query
+            //                         ->whereNull('reg_end_date')
+            //                         ->orWhere('reg_end_date', '>=',$date_year.'-09-01');
+            //                     });
+            // }
         }
         //$data['start_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['start_date']);
         //$data['end_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['end_date']);
@@ -335,7 +355,13 @@ class Program extends Model
                 if (in_array($key, $this->partialFilterable)) { 
                     $query->where($key, 'LIKE', "%{$value}%");
                 } elseif (in_array($key, $this->exactFilterable)) {
-                    $query->where($key, '=', $value);
+                    
+                    if (is_array($value)) {
+                        $query->whereIn($key, $value);
+                    } else {
+                        $query->where($key, '=', $value);
+                    }
+                    
                 }
             }
         }
