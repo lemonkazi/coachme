@@ -16,7 +16,7 @@
                         @foreach($speciality_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="speciality_id" type="checkbox" value="{{ $id }}" {{ (old('speciality_id') ? old('speciality_id') : $_GET['speciality_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="speciality" type="checkbox" value="{{ $id }}" {{ (old('speciality_id') ? old('speciality_id') : $_GET['speciality_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -57,38 +57,32 @@
                       
                       <label for="">Price</label>
                       <div class="check-section">
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                        <div>
-                          <label class="box">One
-                            <input type="checkbox" checked="checked">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
+
+                        @foreach($price_all as $id => $value)
+                          <div>
+                            <label class="box">{{ $value }}
+                              <input name="price_id" type="checkbox" value="{{ $id }}" {{ (old('price_id') ? old('price_id') : $_GET['price_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                        @endforeach
+                        
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Rinks <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-                          <option value="0">0</option>
-                          <option value="1">1</option>
+                        <select class="form-control location" id="rinks" name="rink" multiple="multiple">
+                          @foreach($rink_all as $id => $value)
+                            <option value="{{$id}}" @foreach($filtered_rink as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Language <span class="input-required">*</span></label>
-                        <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-                          <option value="0">0</option>
-                          <option value="1">1</option>
+                        <select class="form-control listdates location" id="campdates" name="language" multiple="multiple">
+                          @foreach($language_all as $id => $value)
+                            <option value="{{$id}}" @foreach($filtered_language as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
                         </select>
                         <i class="bi bi-plus-lg"></i>
                       </div>

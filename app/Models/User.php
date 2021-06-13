@@ -132,9 +132,10 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $exactFilterable = [
-        'rink_id',
-        'speciality_id',
-        'authority'
+        'authority',
+        'experience_id',
+        'certificate_id',
+        'price_id'
     ];
 
 
@@ -613,13 +614,72 @@ class User extends Authenticatable implements MustVerifyEmail
             $params['is_verified'] = $params['is_varified'];
             unset($params['is_varified']);
         }
+
+        if (isset($params['speciality'])) {
+
+            $filterParams = [];
+            //$filterParams['content_type'] = 'SPECIALITY';
+            $filterParams['content_type'] = strtoupper($params['speciality']);
+
+            //$filterParams['type'] = $params['period'];
+            
+            $newsQuery = (new UserInfo())->filter($filterParams);
+
+            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+                    ->toArray();
+            $ids = array();
+            foreach ($periods as $key => $value) {
+                $ids[]=$value['content_id'];
+            }
+            $params['id'] = $ids;
+        }
+        if (isset($params['rink'])) {
+
+            $filterParams = [];
+            //$filterParams['content_type'] = 'SPECIALITY';
+            $filterParams['content_type'] = strtoupper($params['rink']);
+
+            //$filterParams['type'] = $params['period'];
+            
+            $newsQuery = (new UserInfo())->filter($filterParams);
+
+            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+                    ->toArray();
+            $ids = array();
+            foreach ($periods as $key => $value) {
+                $ids[]=$value['content_id'];
+            }
+            $params['id'] = $ids;
+        }
+        if (isset($params['language'])) {
+
+            $filterParams = [];
+            //$filterParams['content_type'] = 'SPECIALITY';
+            $filterParams['content_type'] = strtoupper($params['language']);
+
+            //$filterParams['type'] = $params['period'];
+            
+            $newsQuery = (new UserInfo())->filter($filterParams);
+
+            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+                    ->toArray();
+            $ids = array();
+            foreach ($periods as $key => $value) {
+                $ids[]=$value['content_id'];
+            }
+            $params['id'] = $ids;
+        }
         
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
                     $query->where($key, 'LIKE', "%{$value}%");
                 } elseif (in_array($key, $this->exactFilterable)) {
-                    $query->where($key, '=', $value);
+                    if (is_array($value)) {
+                        $query->whereIn($key, $value);
+                    } else {
+                        $query->where($key, '=', $value);
+                    }
                 }
             }
         }

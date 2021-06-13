@@ -948,19 +948,21 @@ class PublicContoller extends Controller
       
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $price_all = Price::all()->pluck("name", "id")->sortBy("name");
       
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
 
-      $filtered_coach = array();
-      if (isset($_GET['coach_id'])) {
-        $filtered_coach = explode(',', $_GET['coach_id']);
+      $filtered_rink = array();
+      if (isset($_GET['rink'])) {
+        $filtered_rink = explode(',', $_GET['rink']);
       }
 
-      $filtered_month = array();
-      if (isset($_GET['month'])) {
-        $filtered_month = explode(',', $_GET['month']);
+      $filtered_language = array();
+      if (isset($_GET['language'])) {
+        $filtered_language = explode(',', $_GET['language']);
       }
 
       //$coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
@@ -973,7 +975,7 @@ class PublicContoller extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all'));
+      ->with(compact('filtered_language','filtered_rink','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all','language_all','price_all'));
 
     }
     public function camp_filter(){
