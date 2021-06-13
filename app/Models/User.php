@@ -132,6 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $exactFilterable = [
+        'id',
         'authority',
         'experience_id',
         'certificate_id',
