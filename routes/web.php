@@ -3,22 +3,29 @@
 use Illuminate\Support\Facades\Route;
 // landing page
 Route::get('/', 'PublicContoller@index');
-Route::get('/camp/edit', 'PublicContoller@camp_edit');
-Route::get('/program/edit', 'PublicContoller@program_edit');
-Route::get('/program/details', 'PublicContoller@program_details');
-Route::get('/camp/details', 'PublicContoller@camp_details');
-Route::get('/coach/details', 'PublicContoller@coach_details');
-Route::get('/rink/list', 'PublicContoller@rink_list');
+//Route::get('/program/edit', 'PublicContoller@program_edit');
+//Route::get('/program/details', 'PublicContoller@program_details');
+//Route::get('/camp/details', 'PublicContoller@camp_details');
+
+
 Route::get('/program/list', 'PublicContoller@program_list');
 Route::get('/camp/list', 'PublicContoller@camp_list');
 Route::get('/camp/filter', 'PublicContoller@camp_filter');
 Route::get('/coach/list', 'PublicContoller@coach_list');
 
 
+Route::get('/camp/details/{camp}',['as' =>'camp-details','uses' =>'PublicContoller@camp_details']);
+Route::get('/program/details/{program}',['as' =>'program-details','uses' =>'PublicContoller@program_details']);
+Route::get('/coach/details/{user}',['as' =>'coach-details','uses' =>'PublicContoller@coach_details']);
+
+
+Route::get('/filter_coach', 'PublicContoller@filter_coach');
+
+
 Route::get('ajax', function(){ return view('ajax'); });
-
-
 Route::post('ajax_citylist','AjaxController@citylist');
+Route::post('ajax_set_cookie','AjaxController@set_Cookie');
+
 
 Route::get('/user/login', 'PublicContoller@login');
 //Route::get('login', [Auth\LoginController::class, 'index'])->name('login');
@@ -49,18 +56,38 @@ Auth::routes();
 
 // auth
 Route::group(['middleware' => ['auth']], function () {
-	Route::get('camp/update/{camp}', 'PublicContoller@camp_edit');
+	Route::get('camp/update/{camp}',['as' =>'camp-update','uses' =>'PublicContoller@camp_edit']);
 	Route::post('camp/update/{camp}',['as' =>'camp-update','uses' =>'PublicContoller@camp_edit']);
 	Route::get('camp/create', 'PublicContoller@camp_add');
 	Route::post('camp/create',['as' =>'camp-create','uses' =>'PublicContoller@camp_add']);
 	
+
+
+	Route::get('program/update/{program}',['as' =>'program-update','uses' =>'PublicContoller@program_edit']);
+	Route::post('program/update/{program}',['as' =>'program-update','uses' =>'PublicContoller@program_edit']);
+	Route::get('program/create', 'PublicContoller@program_add');
+	Route::post('program/create',['as' =>'program-create','uses' =>'PublicContoller@program_add']);
+	
+
+
+	Route::get('rink/list', 'PublicContoller@rink_list');
+	Route::post('rink/list',['as' =>'rink-list','uses' =>'PublicContoller@rink_list']);
+	
+
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
 	Route::post('/ajax_delete','AjaxController@delete');
 });
+
+
+
 Route::middleware(['auth', 'authority:coach_user'])->group(function () {
 	Route::get('my-account', 'PublicContoller@coach_edit');
 	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
 });
+
+
+
+
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 	
@@ -167,6 +194,20 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
   	});
 
 
+  	//level route
+  	Route::get('levels',[App\Http\Controllers\Admin\LevelController::class, 'show']);
+	Route::get('levels/{level}',[App\Http\Controllers\Admin\LevelController::class, 'show']);
+	
+	Route::group(['prefix' =>'level', 'as'=>'level.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\LevelController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\LevelController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\LevelController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\LevelController@update']);
+  	});
+
+
   	//language route
   	Route::get('languages',[App\Http\Controllers\Admin\LanguageController::class, 'show']);
 	Route::get('languages/{language}',[App\Http\Controllers\Admin\LanguageController::class, 'show']);
@@ -194,17 +235,17 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\ProvinceController@update']);
   	});
 
-  	//location route
-  	Route::get('locations',[App\Http\Controllers\Admin\LocationController::class, 'show']);
-	Route::get('locations/{location}',[App\Http\Controllers\Admin\LocationController::class, 'show']);
+  	//city route
+  	Route::get('city',[App\Http\Controllers\Admin\CityController::class, 'show']);
+	Route::get('city/{city}',[App\Http\Controllers\Admin\CityController::class, 'show']);
 	
-	Route::group(['prefix' =>'location', 'as'=>'location.'], function(){
+	Route::group(['prefix' =>'city_location', 'as'=>'city_location.'], function(){
 
-	    Route::get('add',[App\Http\Controllers\Admin\LocationController::class, 'create']);
-	    Route::post('store',['as' =>'store','uses' =>'Admin\LocationController@store' ]);
+	    Route::get('add',[App\Http\Controllers\Admin\CityController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\CityController@store' ]);
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
-	    Route::get('edit/{id}',[App\Http\Controllers\Admin\LocationController::class, 'create']);
-	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\LocationController@update']);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CityController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CityController@update']);
   	});
 
 
@@ -219,6 +260,35 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
 	    Route::get('edit/{id}',[App\Http\Controllers\Admin\TestimonialController::class, 'create']);
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\TestimonialController@update']);
+  	});
+
+
+
+  	//campType route
+  	Route::get('camp-types',[App\Http\Controllers\Admin\CampTypeController::class, 'show']);
+	Route::get('camp-types/{campType}',[App\Http\Controllers\Admin\CampTypeController::class, 'show']);
+	
+	Route::group(['prefix' =>'camp-type', 'as'=>'camp-type.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\CampTypeController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\CampTypeController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\CampTypeController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\CampTypeController@update']);
+  	});
+
+
+  	//programType route
+  	Route::get('program-types',[App\Http\Controllers\Admin\ProgramTypeController::class, 'show']);
+	Route::get('program-types/{programType}',[App\Http\Controllers\Admin\ProgramTypeController::class, 'show']);
+	
+	Route::group(['prefix' =>'program-type', 'as'=>'program-type.'], function(){
+
+	    Route::get('add',[App\Http\Controllers\Admin\ProgramTypeController::class, 'create']);
+	    Route::post('store',['as' =>'store','uses' =>'Admin\ProgramTypeController@store' ]);
+	    //Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+	    Route::get('edit/{id}',[App\Http\Controllers\Admin\ProgramTypeController::class, 'create']);
+	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\ProgramTypeController@update']);
   	});
 });
 

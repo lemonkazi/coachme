@@ -48,23 +48,23 @@
                       //'is_date_format' => 1
                   )
               );
-              //print_r($location);
+              //print_r($programType);
               foreach ($result as $key => $value) {
-                if (!isset($data['location']->$key)) {
+                if (!isset($data['programType']->$key)) {
                     continue;
                 }
-                if (!empty($data['location']->$key)) {
+                if (!empty($data['programType']->$key)) {
                     if (!empty($result[$key]['is_date_format'])) {
-                        $result[$key]['text'] = date('Y年m月d日', $data['location']->$key);
+                        $result[$key]['text'] = date('Y年m月d日', $data['programType']->$key);
                     } elseif (!empty($result[$key]['is_array'])) {
-                        $result[$key]['text'] = implode (", ", $data['location']->$key);
+                        $result[$key]['text'] = implode (", ", $data['programType']->$key);
                     } elseif (!empty($result[$key]['related'])) {
                       $related = (string)$result[$key]['related'];
-                      $result[$key]['text'] = $data['location']->$related->name;
+                      $result[$key]['text'] = $data['programType']->$related->name;
                     } elseif ($key == "avatar_image_path") {
-                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/location_photo/{$data['location']->$key}' />";
+                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/photo/programType_photo/{$data['programType']->$key}' />";
                     } else {
-                        $result[$key]['text'] = $data['location']->$key;
+                        $result[$key]['text'] = $data['programType']->$key;
                     }
                 } else {
                     $result[$key]['text'] = '-';
@@ -80,7 +80,7 @@
             </div>
             <div class="card-footer text-center">
                 
-                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/location/edit/' . $data['location']->id ?>"><?php echo trans('global.LABEL_UPDATE') ?></a>
+                <a class="col-sm-2 btn bg-gradient-primary btn-sm text-center" href="<?php echo $BASE_URL . '/program-type/edit/' . $data['programType']->id ?>"><?php echo trans('global.LABEL_UPDATE') ?></a>
             
             </div>
           </div>

@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rink;
-
+use App\Models\Province;
+use App\Models\Location;
 use App\Exports\CollectionExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -109,11 +110,12 @@ class RinkController extends Controller
       $headPropertyMapper = [
           'id' => 'ID', 
           'name' => 'Name',
+          'address' => 'Address',
           'created_at' => 'Created At',
           'updated_at' => 'Updated At',
       ];
 
-      $data = $user->dataProcessor($headPropertyMapper, $response);
+      $data = $rink->dataProcessor($headPropertyMapper, $response);
       $headings = array_values($headPropertyMapper);
       
       // Create CollectionExport instance by passing file headers and data
@@ -187,8 +189,12 @@ class RinkController extends Controller
            'link'=>''
       );
     }
+
+    $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+    $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+
    
-    return view('admin.rink.add', [
+   return view('admin.rink.add', [
           'pageInfo'=>
           [
             'siteTitle'        =>'Manage Users',
@@ -201,7 +207,9 @@ class RinkController extends Controller
                'breadcrumb' =>  $breadcrumb,
                'Title' =>  $title
           ]
-      ]);
+      ])
+      ->with(compact('province_all','city_all'));
+
   }
   /**
    * Store a newly created resource in storage.
@@ -211,6 +219,9 @@ class RinkController extends Controller
   public function store(Request $request)
   {
     $data = $request->all();
+    if (isset($data['city_id']) && !empty($data['city_id'])) {
+      $data['location_id'] = $data['city_id'];
+    }
     $Authuser = $request->user();
     $rules = array(
             'name'   => 'required|string|max:255',
@@ -248,6 +259,9 @@ class RinkController extends Controller
   {
 
     $data = $request->all();
+    if (isset($data['city_id']) && !empty($data['city_id'])) {
+      $data['location_id'] = $data['city_id'];
+    }
     $Authuser = $request->user();
     $rink = Rink::find($id);
     if (!$rink) {

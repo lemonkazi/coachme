@@ -272,25 +272,25 @@
         </li>
 
 
-        <li class="nav-item <?php if ($controller == 'locationcontroller') echo 'active menu-open' ?>"">
-          <a href="#" class="nav-link <?php if ($controller == 'locationcontroller') echo 'active' ?>">
+        <li class="nav-item <?php if ($controller == 'citycontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'citycontroller') echo 'active' ?>">
             <i class="nav-icon fas fa-th"></i>
             <p>
-              Locations
+              City
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item <?php if ($controller == 'locationcontroller' && $action == 'show') echo 'active' ?>">
-              <a href="{{ url('locations')}}" class="nav-link <?php if ($controller == 'locationcontroller' && $action == 'show') echo 'active' ?>">
+            <li class="nav-item <?php if ($controller == 'citycontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('city')}}" class="nav-link <?php if ($controller == 'citycontroller' && $action == 'show') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>All Locations</p>
+                <p>All City</p>
               </a>
             </li>
-            <li class="nav-item <?php if ($controller == 'locationcontroller' && $action == 'create') echo 'active' ?>">
-              <a href="{{ url('/location/add')}}" class="nav-link <?php if ($controller == 'locationcontroller' && $action == 'create') echo 'active' ?>">
+            <li class="nav-item <?php if ($controller == 'citycontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/city_location/add')}}" class="nav-link <?php if ($controller == 'citycontroller' && $action == 'create') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Add Location</p>
+                <p>Add City</p>
               </a>
             </li>
           </ul>
@@ -315,6 +315,79 @@
               <a href="{{ url('/testimonial/add')}}" class="nav-link <?php if ($controller == 'testimonialcontroller' && $action == 'create') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Testimonial</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item <?php if ($controller == 'camptypecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'camptypecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Camp Type
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'camptypecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('camp-types')}}" class="nav-link <?php if ($controller == 'camptypecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Camp Type</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'camptypecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/camp-types/add')}}" class="nav-link <?php if ($controller == 'camptypecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Camp Type</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
+        <li class="nav-item <?php if ($controller == 'programtypecontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'programtypecontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Program Type
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'programtypecontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('program-types')}}" class="nav-link <?php if ($controller == 'programtypecontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Program Type</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'programtypecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/program-types/add')}}" class="nav-link <?php if ($controller == 'programtypecontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Program Type</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item <?php if ($controller == 'levelcontroller') echo 'active menu-open' ?>"">
+          <a href="#" class="nav-link <?php if ($controller == 'levelcontroller') echo 'active' ?>">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Level
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item <?php if ($controller == 'levelcontroller' && $action == 'show') echo 'active' ?>">
+              <a href="{{ url('levels')}}" class="nav-link <?php if ($controller == 'levelcontroller' && $action == 'show') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>All Level</p>
+              </a>
+            </li>
+            <li class="nav-item <?php if ($controller == 'levelcontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/levels/add')}}" class="nav-link <?php if ($controller == 'levelcontroller' && $action == 'create') echo 'active' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Level</p>
               </a>
             </li>
           </ul>

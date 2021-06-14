@@ -19,3 +19,11 @@
   left: 50%;
   transform: translate(-50%, -45%);
 }
+
+button.remove.form-control.btn.btn-primary.submit.px-3 {
+  float: right;
+  width: 40px;
+  margin-top: 9%;
+  padding: 6px;
+  padding-left: 1px;
+}

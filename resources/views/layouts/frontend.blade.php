@@ -27,6 +27,9 @@
         <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css">
+
         <meta name="_token" content="{{ csrf_token() }}">
         <script type="text/javascript">
           var baseUrl = '{{ $BASE_URL }}';
@@ -62,13 +65,13 @@
                         <a class="nav-link" href="#">About us</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link active" href="#">Coaches</a>
+                        <a class="nav-link active" href="{{ url('/coach/list') }}">Coaches</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Camps</a>
+                        <a class="nav-link" href="{{ url('/camp/list') }}">Camps</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Programs</a>
+                        <a class="nav-link" href="{{ url('/program/list') }}">Programs</a>
                         </li>
                         <li>
                             @if (Route::has('logout'))
@@ -99,8 +102,24 @@
 
                     <li>About</li>
                     <li>Term of use</li>
-                    <li>Sign-up as a coach</li>
-                    <li>Sign-as a rink</li>
+                    <li>
+                        @if (Route::has('logout'))
+                                @auth
+                                    <a href="{{ url('/logout') }}" class="btn btn-custom">Logout</a>
+                                @else
+                                   <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Sign-up as a coach</a>
+                                @endauth
+                            @endif
+                    </li>
+                    <li>
+                        @if (Route::has('logout'))
+                                @auth
+                                    <a href="{{ url('/logout') }}" class="btn btn-custom">Logout</a>
+                                @else
+                                   <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Sign-as a rink</a>
+                                @endauth
+                            @endif
+                    </li>
                     </ul>
                 </div>
                 <div class="col-md-3">
@@ -140,10 +159,15 @@
         <script src="https://kit.fontawesome.com/104c8dfbc6.js" crossorigin="anonymous"></script>
         <!-- jQuery -->
         <script src="{{ asset ('plugins/jquery/jquery.min.js') }}"></script>
+        
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js"></script>
+        
         <!-- jQuery UI 1.11.4 -->
         <script src="{{ asset ('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
@@ -272,9 +296,82 @@
                 $('#calendar').fullCalendar({
                     // put your options and callbacks here
                 })
+
+
+
+                
+                
             });
 
-           
+            ;(function($){
+                $('#coach_chosen').chosen({width: '100%'});
+                $('.chosen-search input').autocomplete({
+                    minLength: 3,
+                    source: function( request, response ) {
+
+                        //var items="";
+                        //items+="<option value='aaaa'>aaaa</option>";
+                        console.log('sss');
+                        $.ajax({
+                            url: baseUrl + '/filter_coach',
+                            data: {param:request.term},
+                            dataType: "json",
+                            beforeSend: function(){ $('ul.chosen-results').empty(); $("#coach_chosen").empty(); }
+                        }).done(function( data ) {
+                            $('#coach_chosen').append('<option value=""></option>');
+                                response( $.map( data, function( item, index ) {
+                                    //console.log(item);
+                                    $('#coach_chosen').append('<option data-src="'+item.avatar_image_path+'" value="' + item.id + '">' + item.name + '</option>');
+                                }));
+
+
+                               $("#coach_chosen").trigger("chosen:updated");
+                               //$("#coach_chosen").chosen();
+                        });
+                    }
+                });
+
+                $(document).on("change", "#coach_chosen", function () {
+                    console.log($(this).find('option').filter(':selected').attr('data-src'));
+
+                    var newSelect = $("#coachimg").clone();
+                    var src = $(this).find('option').filter(':selected').attr('data-src');
+                    var selectedValue = $(this).find('option').filter(':selected').attr('value');
+                    var src ="<img id='output' src='"+baseUrl+"/photo/user_photo/"+src+"' />";
+                    src+="<input type='hidden' name='coaches[]' value='"+selectedValue+"'/>";
+                    newSelect.find('.output').html(src);
+                    //document.getElementById("output").src = src;
+                    $("#coachimg-wrapper").append(newSelect);
+                    $('#coach_chosen').val("");
+                    $('#coach_chosen').chosen({width: '100%'});
+                    $("#coach_chosen").trigger("chosen:updated");
+
+                });
+
+                $(document).on("click", ".remove", function () {
+                    //$('#coachimg').on('click', '.remove', function() {
+                    $(this).parent().remove();
+                    return false; //prevent form submission
+                });
+
+                $(document).on("click", ".add_period", function () {
+                    var schedule_start_date = $('.schedule_start_date input').val();
+                    var schedule_end_date = $('.schedule_end_date input').val();
+                    
+                    //$('#coachimg').on('click', '.remove', function() {
+                    var newSelect = $("#coachimg").clone();
+                    var src ="<input type='hidden' name='schedule_start_date[]' value='"+schedule_start_date+"'/>";
+                    var src2 ="<input type='hidden' name='schedule_end_date[]' value='"+schedule_end_date+"'/>";
+                    
+                    newSelect.find('.schedule_start_date').html(src);
+                    newSelect.find('.schedule_end_date').html(src2);
+                    newSelect.append('<button class="remove form-control btn btn-primary submit px-3" style="margin-top: 1%;">x</button>');
+                            
+                    $("#coachimg-wrapper").append(newSelect);
+                    return false; //prevent form submission
+                });
+                
+            })(jQuery);
         </script>
     </body>
 </html>

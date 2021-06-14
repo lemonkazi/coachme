@@ -33,7 +33,7 @@ class CreateCampsTable extends Migration
             $table->datetime('end_date')->nullable();
             $table->string('price', 50)->nullable();
             $table->text('about')->nullable();
-
+            $table->string('email')->nullable();
             $table->string('contacts', 25)->nullable();
             $table->string('whatsapp', 25)->nullable();
             

@@ -57,6 +57,42 @@
                       </div>
                       
                     </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="province">Province</label>
+                          <select name="province_id" id ="province_id" class="form-control" style="width: 100%">
+                            <option value="">Select</option>
+                            @foreach($province_all as $id => $value)
+                                <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $data['rink']->province_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="city">City</label>
+                          <select name="city_id" id ="city_id" class="form-control" style="width: 100%">
+                            <option value="">Select</option>
+                            @foreach($city_all as $id => $value)
+                              <option value="{{ $id }}" {{ (old('city_id') ? old('city_id') : $data['rink']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="about">Address</label>
+                          <textarea class="form-control" id="address" name ="address" placeholder="address">{{!empty($data['rink']) ? old('address', $data['rink']->address) : old('address')}}</textarea>
+                        </div>
+                      </div>
+                    </div>
                       
                       <!-- /.card-body -->
 
@@ -89,4 +125,5 @@
   <!-- /.content -->
 
 </div>
+
 @endsection

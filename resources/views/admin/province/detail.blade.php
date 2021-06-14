@@ -62,7 +62,7 @@
                       $related = (string)$result[$key]['related'];
                       $result[$key]['text'] = $data['province']->$related->name;
                     } elseif ($key == "avatar_image_path") {
-                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/province_photo/{$data['province']->$key}' />";
+                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/photo/province_photo/{$data['province']->$key}' />";
                     } else {
                         $result[$key]['text'] = $data['province']->$key;
                     }

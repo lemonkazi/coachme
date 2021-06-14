@@ -16,6 +16,11 @@ class CreateRinkTable extends Migration
         Schema::create('rinks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->unsignedBigInteger('location_id')->nullable();
+            $table->foreign('location_id')->references('id')->on('locations');
+            
             $table->text('address')->nullable();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();

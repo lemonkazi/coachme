@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Testimonial;
 use App\Models\UserInfo;
+use App\Models\AttachedFile;
+use App\Models\Period;
 use App\Models\Rink;
 use App\Models\Experience;
 use App\Models\Certificate;
@@ -17,8 +19,14 @@ use App\Models\Price;
 use App\Models\Speciality;
 use App\Models\Province;
 use App\Models\Location;
+use App\Models\CampType;
+use App\Models\ProgramType;
+use App\Models\Camp;
+use App\Models\Program;
+use App\Models\Level;
 use View;
 use Auth;
+use Carbon\Carbon;
 use App\Mail\VerifyMail;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
@@ -62,32 +70,913 @@ class PublicContoller extends Controller
     }
 
 
-    public function camp_edit(){
-      return view('pages.camp.edit');
+    public function filter_coach(Request $request){
+        $data = $request->all();
+        if (isset($data["param"])) {// check is the param is set
+          $params['name'] = $param = $data["param"]; // get the value of the param
+          
+          //$params['name'] = 'a';
+          $user = User::first();
+          $query = $user->coach_filter($params);
+          $response = $query->orderBy('id', 'asc')->get(['name', 'avatar_image_path', 'id']);
+          
+          foreach ($response as $key=>$item) {
+              $plucked[] = array (
+                                'id' => $item->id,
+                                'name'=> $item->name,
+                                'avatar_image_path' => $item->avatar_image_path
+                                  );
+          }
+          //send the response using json format
+          echo json_encode($plucked);
+        }
     }
-    public function camp_details(){
-      return view('pages.camp.details');
+
+
+
+    public function camp_add(Request $request){
+
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Add Camp');
+      }
+
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      } 
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+          if (isset($data['coaches'])) {
+           $data['coaches'] = json_encode(array_unique($data['coaches']));
+          }
+
+          if (isset($_COOKIE['cookieRink'])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE['cookieWebURL'])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+
+          
+          $data['user_id'] = $user->id;
+          $camp = Camp::create($data);
+          if (!$camp) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+
+          $files = $request->file('schedule_pdf_path');
+
+          if($request->hasFile('schedule_pdf_path'))
+          {
+            $attached_file =array();
+              foreach ($files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('files/camp_schedule'), $new_name);
+                $attached_file['content_type'] = 'CAMP';
+                $attached_file['content_id'] = $camp->id;
+                $attached_file['type'] = 'SCHEDULE';
+                $attached_file['user_id'] = $user->id;
+                $attached_file['name'] = $new_name;
+                $attached_file['path'] = 'files/camp_schedule/'.$new_name;
+                $attached_file = AttachedFile::create($attached_file);
+              }
+          }
+
+
+          $image_files = $request->file('camp_image_path');
+
+          if($request->hasFile('camp_image_path'))
+          {
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/camp_photo'), $new_name);
+                $attached_files['content_type'] = 'CAMP';
+                $attached_files['content_id'] = $camp->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/camp_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
+          }
+          //return redirect('/camp')->with('status', $status);
+          return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+          print_r($data);
+          exit();
+        }
+        
+      }
+      $camp ='';
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      return view('pages.camp.edit', [
+          'data'=>
+          [
+               'camp'      =>  $camp,
+               'user'      =>  $user,
+               'Title' =>  $title,
+               'rink' =>$rink
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
     }
-    public function program_edit(){
-      return view('pages.program.edit');
+
+    public function camp_edit(Request $request, Camp $camp){
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Update Camp');
+      }
+
+
+      if (!$camp) {
+        return back();
+      }
+
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      } 
+      if (!empty($camp->rink_id)) {
+        $rink = Rink::find($camp->rink_id);
+      }
+
+
+
+
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+          if (!empty($data['coaches'])) {
+            $data['coaches'] = json_encode(array_unique($data['coaches']));
+          }else{
+            unset($data['coaches']);
+          }
+          if (isset($_COOKIE['cookieRink'])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE['cookieWebURL'])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+
+          
+          $data['user_id'] = $user->id;
+
+          if (!$camp->update($data)) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+
+          $files = $request->file('schedule_pdf_path');
+
+          if($request->hasFile('schedule_pdf_path'))
+          {
+
+            AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'SCHEDULE'],
+                        ['deleted_at', null],
+                    ])->delete();
+
+            $attached_file =array();
+              foreach ($files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('files/camp_schedule'), $new_name);
+                $attached_file['content_type'] = 'CAMP';
+                $attached_file['content_id'] = $camp->id;
+                $attached_file['type'] = 'SCHEDULE';
+                $attached_file['user_id'] = $user->id;
+                $attached_file['name'] = $new_name;
+                $attached_file['path'] = 'files/camp_schedule/'.$new_name;
+                $attached_file = AttachedFile::create($attached_file);
+              }
+          }
+
+
+          $image_files = $request->file('camp_image_path');
+
+          if($request->hasFile('camp_image_path'))
+          {
+            AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->delete();
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $camp->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/camp_photo'), $new_name);
+                $attached_files['content_type'] = 'CAMP';
+                $attached_files['content_id'] = $camp->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/camp_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
+          }
+          //return redirect('/camp')->with('status', $status);
+          return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+          
+        }
+        
+      }
+
+
+      //$camp ='';
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      $coaches =array();
+      if(!empty($camp) && !empty($camp->coaches)){
+        $coaches_data = json_decode($camp->coaches);
+        foreach ($coaches_data as $key=>$coach) {
+          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+        }
+      }
+
+
+
+
+       $camp_photo = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       $camp_schedule = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'SCHEDULE'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       
+
+
+
+      return view('pages.camp.edit', [
+          'data'=>
+          [
+               'camp'      =>  $camp,
+               'camp_photo'      =>  $camp_photo,
+               'camp_schedule'      =>  $camp_schedule,
+               'coaches'   => $coaches,
+               'user'      =>  $user,
+               'Title' =>  $title,
+               'rink' => $rink
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
     }
-    public function program_details(){
-      return view('pages.program.details');
+
+
+    public function camp_details(Request $request, Camp $camp){
+      
+      if (!$camp) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Camp Details');
+      }
+
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      $coaches =array();
+      if(!empty($camp) && !empty($camp->coaches)){
+        $coaches_data = json_decode($camp->coaches);
+        foreach ($coaches_data as $key=>$coach) {
+          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+        }
+      }
+
+
+
+
+       $camp_photo = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       $camp_schedule = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'SCHEDULE'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       
+      $start_date = strtotime($camp->start_date);
+      $end_date = strtotime($camp->end_date);
+
+      // echo date('m', $unixtime); //month
+      // echo date('d', $unixtime); 
+      // echo date('y', $unixtime );
+      return view('pages.camp.details', [
+          'data'=>
+          [
+               'camp'      =>  $camp,
+               'start_date'      =>  $start_date,
+               'end_date'      =>  $end_date,
+               'camp_photo'      =>  $camp_photo,
+               'camp_schedule'      =>  $camp_schedule,
+               'coaches'   => $coaches,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate'));
     }
-    public function coach_details(){
-      return view('pages.coach.details');
+
+    public function program_add(Request $request){
+
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Add Program');
+      }
+
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      }
+
+
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+          // if (isset($data['coaches'])) {
+          //  $data['coaches'] = json_encode(array_unique($data['coaches']));
+          // }
+
+          if (isset($_COOKIE['cookieRink'])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE['cookieWebURL'])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+
+          
+          $data['user_id'] = $user->id;
+
+          
+          
+          $program = Program::create($data);
+          if (!$program) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+          $periods =array();
+          foreach ($data['schedule_start_date'] as $key => $value) {
+            $periods['content_type'] = 'PROGRAM';
+            $periods['content_id'] = $program->id;
+            $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
+            $periods['user_id'] = $user->id;
+            $periods['start_date'] = $value;
+            $periods['end_date'] = $data['schedule_end_date'][$key];
+
+
+            $attached_file = Period::create($periods);
+          }
+
+
+          
+
+          $image_files = $request->file('program_image_path');
+
+          if($request->hasFile('program_image_path'))
+          {
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $program->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/program_photo'), $new_name);
+                $attached_files['content_type'] = 'PROGRAM';
+                $attached_files['content_id'] = $program->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/program_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
+          }
+          //return redirect('/program')->with('status', $status);
+          return redirect()->intended(route('program-update', ['program' => $program->id]));
+          
+        }
+        
+      }
+
+      $program ='';
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+      return view('pages.program.edit', [
+          'data'=>
+          [
+               'program'      =>  $program,
+               'user'      =>  $user,
+               'Title' =>  $title,
+               'rink' => $rink
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','program_type_all','level_all'));
+
     }
-    public function rink_list(){
-      return view('pages.rink.list');
+
+    public function program_edit(Request $request, Program $program){
+      
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Update Program');
+      }
+
+
+      if (!$program) {
+        return back();
+      }
+      $rink ='';
+      if (isset($_COOKIE['cookieRink'])) {
+          $rink = Rink::find($_COOKIE['cookieRink']);
+      } 
+      if (!empty($program->rink_id)) {
+        $rink = Rink::find($program->rink_id);
+      }
+
+
+
+
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        $rules = array(
+            'name'   => 'required|string|max:255',
+            'email'  => 'required|string|email|max:255'
+          );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+         
+          if (isset($_COOKIE['cookieRink'])) {
+              $data['rink_id'] = $_COOKIE['cookieRink'];
+          }
+          if (isset($_COOKIE['cookieWebURL'])) {
+              $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+          
+          $data['user_id'] = $user->id;
+
+          if (!$program->update($data)) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+
+
+          Period::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        ['deleted_at', null],
+                    ])->delete();
+          $periods =array();
+          foreach ($data['schedule_start_date'] as $key => $value) {
+            $periods['content_type'] = 'PROGRAM';
+            $periods['content_id'] = $program->id;
+            //$periods['type'] = 'FALL';
+            $periods['user_id'] = $user->id;
+            $periods['start_date'] = $value;
+            $periods['end_date'] = $data['schedule_end_date'][$key];
+
+            $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
+            $attached_file = Period::create($periods);
+          }
+
+          $image_files = $request->file('program_image_path');
+
+          if($request->hasFile('program_image_path'))
+          {
+            AttachedFile::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->delete();
+            $attached_files =array();
+              foreach ($image_files as $file) {
+                $new_name = $program->id . '_s_' . self::uniqueString() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('photo/program_photo'), $new_name);
+                $attached_files['content_type'] = 'PROGRAM';
+                $attached_files['content_id'] = $program->id;
+                $attached_files['type'] = 'PHOTO';
+                $attached_files['user_id'] = $user->id;
+                $attached_files['name'] = $new_name;
+                $attached_files['path'] = 'photo/program_photo/'.$new_name;
+                $attached_file = AttachedFile::create($attached_files);
+              }
+          }
+          //return redirect('/program')->with('status', $status);
+          return redirect()->intended(route('program-update', ['program' => $program->id]));
+          
+        }
+        
+      }
+
+
+      //$program ='';
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $program_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      
+
+
+
+       $program_photo = AttachedFile::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       $program_periods = Period::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        //['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['start_date', 'end_date', 'id'])->toArray();
+
+      // $periods = array();
+      // foreach ($program_periods as $key => $period) {
+      //   $periods[] = array (
+      //     'start_date' => date('Y-m-d', strtotime($period['start_date'])),
+      //     'end_date' => date('Y-m-d', strtotime($period['end_date']))
+      //   );
+                        
+      // }
+      // print_r($periods);
+      // exit();
+                        
+
+      return view('pages.program.edit', [
+          'data'=>
+          [
+               'program'      =>  $program,
+               'program_photo'      =>  $program_photo,
+               'program_periods'      =>  $program_periods,
+               //'period' => $period,
+               'user'      =>  $user,
+               'Title' =>  $title,
+               'rink' => $rink
+          ]
+      ])
+      ->with(compact('formatedDate','city_all','program_type_all','level_all'));
     }
-    public function program_list(){
-      return view('pages.program.list');
+
+    public function program_details(Request $request, Program $program){
+      
+      if (!$program) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Program Details');
+      }
+
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+      
+
+
+
+
+       $program_photo = AttachedFile::where([
+                        ['content_id', $program->id],
+                        ['content_type', 'PROGRAM'],
+                        ['type', 'PHOTO'],
+                        ['deleted_at', null],
+                    ])->get(['name', 'path', 'id'])->toArray();
+
+       
+      $reg_start_date = strtotime($program->reg_start_date);
+      $reg_end_date = strtotime($program->reg_end_date);
+      $schedule_start_date = strtotime($program->schedule_start_date);
+      $schedule_end_date = strtotime($program->schedule_end_date);
+
+      // echo date('m', $unixtime); //month
+      // echo date('d', $unixtime); 
+      // echo date('y', $unixtime );
+      return view('pages.program.details', [
+          'data'=>
+          [
+               'program'      =>  $program,
+               'reg_start_date'      =>  $reg_start_date,
+               'reg_end_date'      =>  $reg_end_date,
+               'schedule_start_date'      =>  $schedule_start_date,
+               'schedule_end_date'      =>  $schedule_end_date,
+               'program_photo'      =>  $program_photo,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('formatedDate'));
     }
-    public function camp_list(){
-      return view('pages.camp.list');
+    public function coach_details(Request $request, User $user){
+      if (!$user) {
+         return redirect(RouteServiceProvider::ROOT);
+      } else {
+        $title=trans('global.Program Details');
+      }
+
+      if ($user->is_published !=1) {
+         return redirect(RouteServiceProvider::ROOT);
+      } 
+      $ooo = $user->userinfos['speciality'];
+      $specialityaa = '';
+      foreach($ooo as $row){
+          $specialityaa .=$row->content_name.',';
+      }
+      $speciality = trim($specialityaa,',');
+
+
+      $rink = $user->userinfos['rinks'];
+      $specialityaa = '';
+      foreach($rink as $row){
+          $specialityaa .=$row->content_name.',';
+      }
+      $rink = trim($specialityaa,',');
+
+      $language = $user->userinfos['languages'];
+      $specialityaa = '';
+      foreach($language as $row){
+          $specialityaa .=$row->content_name.',';
+      }
+      $language = trim($specialityaa,',');
+
+      return view('pages.coach.details', [
+          'data'=>
+          [
+               'user'      =>  $user,
+               'Title' =>  $title,
+               'speciality' => $speciality,
+               'rink' => $rink,
+               'language' => $language
+          ]
+      ]);
+      //->with(compact('formatedDate'));
+      //return view('pages.coach.details');
     }
-    public function coach_list(){
-      return view('pages.coach.list');
+
+    public function camp_list(Request $request, Camp $camp){
+
+      $params = $request->all();
+      //$params['period'] = 'spring';
+      $query = $camp->filter($params);
+
+     
+      try {
+          $limit = (int) $request->input('limit', 20);
+      } catch (\Exception $e) {
+          $limit = 20;
+      }
+
+      if (!is_int($limit) || $limit <= 0) {
+          $limit = 20;
+      }
+
+      if (isset($params['with'])) { 
+          $with = explode(',', $params['with']);
+
+          $query->with($with);
+      }
+      if (isset($params['sort']) && !empty($params['sort'])) {
+        $sort = $params['sort'];
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+      } else {
+        $sort = 'id-desc'; 
+        $query->orderBy('id', 'desc');
+      }
+      //$programs = $query->paginate($limit);
+      $camps = $query->get()->toArray();
+
+      $title=trans('global.Camp List');
+
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+      $city_all =array();
+      if (isset($params['province_id']) && !empty($params['province_id'])) {
+        $city_all = Location::all()->where('province_id',$params['province_id'])->pluck('name','id')->sortBy("name");
+      }
+      $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+      $filtered_coach = array();
+      if (isset($_GET['coach_id'])) {
+        $filtered_coach = explode(',', $_GET['coach_id']);
+      }
+
+      $filtered_month = array();
+      if (isset($_GET['month'])) {
+        $filtered_month = explode(',', $_GET['month']);
+      }
+
+      $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
+
+
+      return view('pages.camp.list', [
+          'data'=>
+          [
+               'camps'      =>  $camps,
+               'Title' =>  $title,
+               'coaches' => $coaches
+          ]
+      ])
+      ->with(compact('filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+
+    }
+    public function coach_list(Request $request, User $user){
+
+      $params = $request->all();
+      $params['authority'] = 'COACH_USER';
+      $query = $user->filter_coach($params);
+
+     
+      try {
+          $limit = (int) $request->input('limit', 20);
+      } catch (\Exception $e) {
+          $limit = 20;
+      }
+
+      if (!is_int($limit) || $limit <= 0) {
+          $limit = 20;
+      }
+
+      if (isset($params['with'])) { 
+          $with = explode(',', $params['with']);
+
+          $query->with($with);
+      }
+      if (isset($params['sort']) && !empty($params['sort'])) {
+        $sort = $params['sort'];
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+      } else {
+        $sort = 'id-desc'; 
+        $query->orderBy('id', 'desc');
+      }
+      //$programs = $query->paginate($limit);
+      $coaches = $query->get()->toArray();
+
+      $title=trans('global.Coach List');
+
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+      $city_all =array();
+      if (isset($params['province_id']) && !empty($params['province_id'])) {
+        $city_all = Location::all()->where('province_id',$params['province_id'])->pluck('name','id')->sortBy("name");
+      }
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
+      
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $price_all = Price::all()->pluck("name", "id")->sortBy("name");
+      
+      
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+      $filtered_rink = array();
+      if (isset($_GET['rink'])) {
+        $filtered_rink = explode(',', $_GET['rink']);
+      }
+
+      $filtered_language = array();
+      if (isset($_GET['language'])) {
+        $filtered_language = explode(',', $_GET['language']);
+      }
+
+      //$coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
+
+
+      return view('pages.coach.list', [
+          'data'=>
+          [
+               'coaches'      =>  $coaches,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('filtered_language','filtered_rink','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all','language_all','price_all'));
+
     }
     public function camp_filter(){
       return view('pages.camp.filter');
@@ -95,7 +984,7 @@ class PublicContoller extends Controller
     public function coach_edit(Request $request){
       $user = $request->user();
       if (!$user) {
-        return back(RouteServiceProvider::HOME);
+         return redirect(RouteServiceProvider::ROOT);
       } else {
         $title=trans('global.Edit Coach');
       }
@@ -107,6 +996,9 @@ class PublicContoller extends Controller
           $data['is_published'] = 1;
         } else {
           $data['is_published'] = 0;
+        }
+        if (isset($data['location_id']) && !empty($data['location_id'])) {
+          $data['city_id'] = $data['location_id'];
         }
         //$data['authority'] = User::ACCESS_LEVEL_COACH;
 
@@ -236,7 +1128,7 @@ class PublicContoller extends Controller
             $image = $request->file('avatar_image_path');
             $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
             
-            $image->move(public_path('user_photo'), $new_name);
+            $image->move(public_path('photo/user_photo'), $new_name);
             $data['avatar_image_path'] = $new_name;
           }
           if (!$user->update($data)) {
@@ -271,6 +1163,105 @@ class PublicContoller extends Controller
       ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
 
     }
+    public function rink_list(Request $request){
+      $user = $request->user();
+      if (!$user) {
+        return back(RouteServiceProvider::HOME);
+      } else {
+        $title=trans('global.Rink List');
+      }
+      if ($request->isMethod('post')) {
+        $data = $request->all();
+      }
+      $programs = Program::where([
+                        ['user_id', $user->id],
+                        ['deleted_at', null],
+                    ])->get()->toArray();
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      return view('pages.rink.list', [
+          'data'=>
+          [
+              'user'      =>  $user,
+              'Title' =>  $title,
+              'programs' => $programs
+          ]
+      ])
+      ->with(compact('rink_all'));
+
+    }
+    public function program_list(Request $request, Program $program){
+
+      $params = $request->all();
+      //$params['period'] = 'spring';
+      $query = $program->filter($params);
+
+     
+      try {
+          $limit = (int) $request->input('limit', 20);
+      } catch (\Exception $e) {
+          $limit = 20;
+      }
+
+      if (!is_int($limit) || $limit <= 0) {
+          $limit = 20;
+      }
+
+      if (isset($params['with'])) { 
+          $with = explode(',', $params['with']);
+
+          $query->with($with);
+      }
+      if (isset($params['sort']) && !empty($params['sort'])) {
+        $sort = $params['sort'];
+        $sortExplode = explode('-', $params['sort']);
+        $query->orderBy($sortExplode[0],$sortExplode[1]);
+      } else {
+        $sort = 'id-desc'; 
+        $query->orderBy('id', 'desc');
+      }
+      //$programs = $query->paginate($limit);
+      $programs = $query->get()->toArray();
+      //print_r($programs);exit();
+
+      //echo $query->toSql();exit();
+
+      $title=trans('global.Add Program');
+      
+      // $programs = Program::where([
+      //                   ['deleted_at', null],
+      //               ])->get()->toArray();
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+      $city_all =array();
+      if (isset($params['province_id']) && !empty($params['province_id'])) {
+        $city_all = Location::all()->where('province_id',$params['province_id'])->pluck('name','id')->sortBy("name");
+      }
+      $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      
+
+
+      $filtered_rink = array();
+      if (isset($_GET['rink_id'])) {
+        $filtered_rink = explode(',', $_GET['rink_id']);
+      }
+
+
+      $date = Carbon::now();
+      $formatedDate = $date->format('Y-m-d');
+
+      return view('pages.program.list', [
+          'data'=>
+          [
+               'programs'      =>  $programs,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('filtered_rink','rink_all','province_all','formatedDate','city_all','program_type_all','level_all'));
+
+      //return view('pages.program.list');
+    }
+    
 
     public function verifyUser($token)
     {
@@ -309,7 +1300,7 @@ class PublicContoller extends Controller
             return redirect(RouteServiceProvider::PROFILE);
           }
           elseif ($user->isRinkUser()) {
-            return redirect(RouteServiceProvider::ROOT);
+            return redirect(RouteServiceProvider::RINKLIST);
           } 
           else{
             return redirect(RouteServiceProvider::ROOT);
@@ -363,7 +1354,7 @@ class PublicContoller extends Controller
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::PROFILE]);
                 }
                 elseif ($user->isRinkUser()) {
-                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::RINKLIST]);
                 } else{
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
                 }
@@ -465,6 +1456,59 @@ class PublicContoller extends Controller
     }
 
 
+    public function season($period) 
+    {
+        $seasons    = array(
+            'SPRING'    => array('March 1'     , 'May 31'),
+            'SUMMER'    => array('June 1'      , 'August 31'),
+            'FALL'      => array('September 1' , 'November 30'),
+            'WINTER'    => array('December 1'  , 'February 28')
+        );
 
+        $seasonsYear = array();
+
+        $start      = strtotime($period[0]);
+        $end        = strtotime($period[1]);
+
+        $seasonsYear[date('Y', $start)] = array();
+
+        if (key(current($seasonsYear)) != date('Y', $end))
+            $seasonsYear[date('Y', $end)] = array();
+
+        foreach ($seasonsYear as $year => &$seasonYear)
+            foreach ($seasons as $season => $period)
+                $seasonYear[$season] = array(strtotime($period[0].' '.$year), strtotime($period[1].' '.($season != 'winter' ? $year : ($year+1))));
+
+        foreach ($seasonsYear as $year => &$seasons) {
+            foreach ($seasons as $season => &$period) {
+                if ($start >= $period[0] && $end <= $period[1])
+                    return ucFirst($season);
+
+                if ($start >= $period[0] && $start <= $period[1]) {
+                    if (date('Y', $end) != $year) 
+                        $seasons = $seasonsYear[date('Y', $end)];   
+                        $year = date('Y', $end);
+
+                    $nextSeason = key($seasons);
+                    $nextPeriod = current($seasons);                
+                    do {                    
+                        $findNext   = ($end >= $nextPeriod[0] && $end <= $nextPeriod[1]);
+
+                        $nextSeason = key($seasons);
+                        $nextPeriod = current($seasons);
+                    } while ($findNext = False);
+
+                    $diffCurr   = $period[1]-$start;
+                    $diffNext   = $end-$nextPeriod[0];
+
+                    if ($diffCurr > $diffNext)
+                        return ucFirst($season);
+                    else {
+                        return ucFirst($nextSeason);
+                    }
+                }
+            }
+        }
+    }
 
 }
