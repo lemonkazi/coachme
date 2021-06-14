@@ -65,13 +65,13 @@
                         <a class="nav-link" href="#">About us</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link active" href="#">Coaches</a>
+                        <a class="nav-link active" href="{{ url('/coach/list') }}">Coaches</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Camps</a>
+                        <a class="nav-link" href="{{ url('/camp/list') }}">Camps</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">Programs</a>
+                        <a class="nav-link" href="{{ url('/program/list') }}">Programs</a>
                         </li>
                         <li>
                             @if (Route::has('logout'))
@@ -102,8 +102,24 @@
 
                     <li>About</li>
                     <li>Term of use</li>
-                    <li>Sign-up as a coach</li>
-                    <li>Sign-as a rink</li>
+                    <li>
+                        @if (Route::has('logout'))
+                                @auth
+                                    <a href="{{ url('/logout') }}" class="btn btn-custom">Logout</a>
+                                @else
+                                   <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Sign-up as a coach</a>
+                                @endauth
+                            @endif
+                    </li>
+                    <li>
+                        @if (Route::has('logout'))
+                                @auth
+                                    <a href="{{ url('/logout') }}" class="btn btn-custom">Logout</a>
+                                @else
+                                   <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Sign-as a rink</a>
+                                @endauth
+                            @endif
+                    </li>
                     </ul>
                 </div>
                 <div class="col-md-3">
