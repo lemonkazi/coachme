@@ -26,6 +26,7 @@ class Controller extends BaseController
     /** @var object $controller Controller name. */
     public $controller = null;
     public $action = null;
+    public $all_authority = null;
 
     public function __construct()
     {
@@ -37,6 +38,11 @@ class Controller extends BaseController
     	$this->controller = strtolower($controller);
         $this->action = strtolower($method);
         $this->CURRENT_URL = url()->full();
+
+        $this->all_authority = array(
+          'COACH_USER' => trans('global.LABEL_COACH_USER'),
+          'RINK_USER' => trans('global.LABEL_RINK_USER')
+        );
 
         $this->middleware(function ($request, $next) {
 
@@ -50,6 +56,7 @@ class Controller extends BaseController
                 'action' => $this->action,
                 'CURRENT_URL' => $this->CURRENT_URL,
                 'AppUI' => $this->AppUI,
+                'authority' => $this->all_authority
             );
             View::share($data);
             return $next($request);
