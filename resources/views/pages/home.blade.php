@@ -160,15 +160,17 @@
                   
                   <div class="search-div mb-2">
                     <button type="button" class="btn green-btn">Use my location</button>
-                    <input type="text" placeholder="Search" class="search-btn"><i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search" id="address" value="helsinki" class="search-btn"><i class="bi bi-search"></i>
+                    <input type="button" id="id_of_button" value="Submit" onclick="codeAddress();" />
+                    
                   </div>
                 </div>
                 <div class="polaroid">                 
                     <div id="map"></div>                 
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="address-group">
+              <div class="col-md-4" id="side_bar">
+                <!-- <div class="address-group">
                   <div class="address">
                     <div class="number">
                       <img src="{{ asset('img/Ellipse 17.png') }}" alt="" srcset="">
@@ -218,10 +220,11 @@
                     </div>
                   </div>
                   
-                </div>
+                </div> -->
               </div>
               </div>
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl_3j4BivMuCGpS5DS73Rkt7SNvy29eBQ&callback=initMap" async defer></script>
+                <script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&ext=.js"></script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl_3j4BivMuCGpS5DS73Rkt7SNvy29eBQ&libraries=places&callback=initMap" async defer></script>
             </div>
           </div>
         </div>
