@@ -4,13 +4,15 @@ namespace App\Models;
 
 use App\Models\BaseModel as Model;
 use App\Models\User;
+use App\Models\Camp;
 use App\Models\Province;
 
 class Location extends Model
 {
 
     protected $cascadeDeletes = [
-        'users'
+        'users',
+        'camps'
     ];
     
     protected $fillable= [
@@ -74,6 +76,13 @@ class Location extends Model
 
     
    
+    /**
+     * Get the camps for the building.
+     */
+    public function camps()
+    {
+        return $this->hasMany(Camp::class);
+    }
 
     /**
      * Get the users for the building.

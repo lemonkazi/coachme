@@ -12,6 +12,8 @@ use App\Models\Rink;
 use App\Models\Speciality;
 use App\Models\Price;
 use App\Models\Language;
+use App\Models\City;
+use App\Models\Province;
 use App\Models\Experience;
 use App\Models\Certificate;
 
@@ -19,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Carbon\Carbon;
-//use App\Notifications\PasswordReset; // Or the location that you store your notifications (this is default).
+//use App\Notifications\PasswordReset; // Or the city that you store your notifications (this is default).
 
 
 use App\Traits\ModelTrait;
@@ -41,12 +43,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'family_name',
-        //'rink_id',
-        //'speciality_id',
         'experience_id',
         'certificate_id',
-        //'language_id',
         'price_id',
+        'province_id',
+        'city_id',
         'email',
         'password',
         'about',
@@ -80,13 +81,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
 
     protected $appends = [
-        //'speciality_name',
         'experience_name',
         'certificate_name',
-        //'rink_name',
-        //'lang_name',
         'price_name',
         'userinfos',
+        'city_name',
+        'province_name'
     ];
 
     /**
@@ -132,9 +132,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $exactFilterable = [
-        'rink_id',
-        'speciality_id',
-        'authority'
+        'id',
+        'authority',
+        'experience_id',
+        'certificate_id',
+        'price_id'
     ];
 
 
@@ -225,19 +227,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->authority === self::ACCESS_LEVEL_RINK;
     }
 
-    /**
-     * Check user has USER authority
-     * @param  integer  $buildingId
-     * @return boolean
-     */
-    public function isUser($cityId = null)
-    {
-        if ($cityId) {
-            return $this->city_id === $cityId && $this->authority === 'RINK_USER';
-        }
-
-        return $this->authority === self::ACCESS_LEVEL_RINK;
-    }
+   
 
     /**
      * Check user has specified authority
@@ -281,6 +271,28 @@ class User extends Authenticatable implements MustVerifyEmail
         return !empty($this->experience) ? $this->experience->name : null;
     }
 
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getCityNameAttribute()
+    {
+        return !empty($this->city) ? $this->city->name : null;
+    }
+
+
+    /**
+     * Get the user's speciality name.
+     *
+     * @return string
+     */
+    public function getProvinceNameAttribute()
+    {
+        return !empty($this->province) ? $this->province->name : null;
+    }
+
     // /**
     //  * Get the user's rink name.
     //  *
@@ -319,6 +331,23 @@ class User extends Authenticatable implements MustVerifyEmail
     public function price()
     {
         return $this->belongsTo(Price::class);
+    }
+
+     /**
+     * Get the rinks for the user.
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+
+     /**
+     * Get the rinks for the user.
+     */
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
     }
     
 
@@ -424,6 +453,54 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
+    /**
+     * Search user based request parameters
+     * 
+     * @param array $params
+     * @return $query
+     */
+    public function coach_filter($params)
+    {
+        $query = $this->newQuery();
+
+        $authUser = request()->user();
+
+        // if ($authUser) {
+        //     $query->whereNotIn('id', [$authUser->id]);
+        //     if ($authUser->isRinkUser()) {
+        //         $query->where('rink_id', '=', $authUser->rink_id);
+        //     }
+        // }
+
+        
+
+        
+        $list_authority = array(self::ACCESS_LEVEL_COACH);
+        
+        $query->whereIn('authority', $list_authority);
+        if (empty($params) || !is_array($params)) {
+            return $query;
+        }
+
+        
+
+        if (isset($params['is_varified'])) {
+            $params['is_verified'] = $params['is_varified'];
+            unset($params['is_varified']);
+        }
+        
+        foreach ($params as $key => $value) { 
+            if ($value != "") {
+                if (in_array($key, $this->partialFilterable)) { 
+                    $query->where($key, 'LIKE', "%{$value}%");
+                } elseif (in_array($key, $this->exactFilterable)) {
+                    $query->where($key, '=', $value);
+                }
+            }
+        }
+        return $query;
+    }
+
 
     /**
      * Search user based request parameters
@@ -507,6 +584,103 @@ class User extends Authenticatable implements MustVerifyEmail
                     $query->where($key, 'LIKE', "%{$value}%");
                 } elseif (in_array($key, $this->exactFilterable)) {
                     $query->where($key, '=', $value);
+                }
+            }
+        }
+        return $query;
+    }
+
+
+
+    /**
+     * Search user based request parameters
+     * 
+     * @param array $params
+     * @return $query
+     */
+    public function filter_coach($params)
+    {
+        $query = $this->newQuery();
+
+        $authUser = request()->user();
+        if (empty($params) || !is_array($params)) {
+            return $query;
+        }
+
+       
+        
+
+
+        if (isset($params['is_varified'])) {
+            $params['is_verified'] = $params['is_varified'];
+            unset($params['is_varified']);
+        }
+
+        if (isset($params['speciality'])) {
+
+            $filterParams = [];
+            //$filterParams['content_type'] = 'SPECIALITY';
+            $filterParams['content_type'] = strtoupper($params['speciality']);
+
+            //$filterParams['type'] = $params['period'];
+            
+            $newsQuery = (new UserInfo())->filter($filterParams);
+
+            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+                    ->toArray();
+            $ids = array();
+            foreach ($periods as $key => $value) {
+                $ids[]=$value['content_id'];
+            }
+            $params['id'] = $ids;
+        }
+        if (isset($params['rink'])) {
+
+            $filterParams = [];
+            //$filterParams['content_type'] = 'SPECIALITY';
+            $filterParams['content_type'] = strtoupper($params['rink']);
+
+            //$filterParams['type'] = $params['period'];
+            
+            $newsQuery = (new UserInfo())->filter($filterParams);
+
+            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+                    ->toArray();
+            $ids = array();
+            foreach ($periods as $key => $value) {
+                $ids[]=$value['content_id'];
+            }
+            $params['id'] = $ids;
+        }
+        if (isset($params['language'])) {
+
+            $filterParams = [];
+            //$filterParams['content_type'] = 'SPECIALITY';
+            $filterParams['content_type'] = strtoupper($params['language']);
+
+            //$filterParams['type'] = $params['period'];
+            
+            $newsQuery = (new UserInfo())->filter($filterParams);
+
+            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+                    ->toArray();
+            $ids = array();
+            foreach ($periods as $key => $value) {
+                $ids[]=$value['content_id'];
+            }
+            $params['id'] = $ids;
+        }
+        
+        foreach ($params as $key => $value) { 
+            if ($value != "") {
+                if (in_array($key, $this->partialFilterable)) { 
+                    $query->where($key, 'LIKE', "%{$value}%");
+                } elseif (in_array($key, $this->exactFilterable)) {
+                    if (is_array($value)) {
+                        $query->whereIn($key, $value);
+                    } else {
+                        $query->where($key, '=', $value);
+                    }
                 }
             }
         }

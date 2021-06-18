@@ -38,6 +38,18 @@
                       'label' => __('Name'),
                       'text' => '',
                   ),
+                  'province_name' => array(
+                      'label' => __('Province'),
+                      'text' => '',
+                  ),
+                  'city_name' => array(
+                      'label' => __('City'),
+                      'text' => '',
+                  ),
+                  'address' => array(
+                      'label' => __('Address'),
+                      'text' => '',
+                  ),
                   'created_at' => array(
                       'label' => trans('global.LABEL_CREATED'),
                       'text' => '',
@@ -62,7 +74,7 @@
                       $related = (string)$result[$key]['related'];
                       $result[$key]['text'] = $data['rink']->$related->name;
                     } elseif ($key == "avatar_image_path") {
-                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/rink_photo/{$data['rink']->$key}' />";
+                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/photo/rink_photo/{$data['rink']->$key}' />";
                     } else {
                         $result[$key]['text'] = $data['rink']->$key;
                     }

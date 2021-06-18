@@ -23,8 +23,7 @@
 
                 <div class="img-upload mb-4">
                   <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" onchange="loadFile(event)" />
-                  <img id="output" src="{{$BASE_URL}}/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
-
+                  <img id="output" src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
                   <i class="bi bi-plus-lg"></i>
                 </div>
                 <h2>Basic information</h2>
@@ -63,9 +62,8 @@
                     <select name="city_id" id ="city_id" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($city_all as $id => $value)
-                        @if ($data['user']->city_id === $id || old('city_id') === $id)
                             <option value="{{ $id }}" {{ (old('city_id') ? old('city_id') : $data['user']->city_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                        @endif
+                        
                       @endforeach
                     </select>
                     <div class="form-check">

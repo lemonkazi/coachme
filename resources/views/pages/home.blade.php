@@ -132,7 +132,7 @@
                   <div class="card card_red text-center">
                     <div class="title">
 
-                      <img class="pic" src="{{$BASE_URL}}/testimonial_photo/{{$testimonial->image_path}}" alt="PAT">
+                      <img class="pic" src="{{$BASE_URL}}/photo/testimonial_photo/{{$testimonial->image_path}}" alt="PAT">
                       <h2>{{ $testimonial->name }}</h2>
                     </div>
                     <p>"{!! nl2br(e($testimonial->comment)) !!}"</p>

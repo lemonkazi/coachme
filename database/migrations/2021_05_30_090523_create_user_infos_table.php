@@ -20,7 +20,7 @@ class CreateUserInfosTable extends Migration
             $table->enum('content_type', ['SPECIALITY', 'RINK', 'LANGUAGE'])->nullable();
             $table->unsignedInteger('content_id')->nullable();
             $table->string('content_name');
-            $table->timestamps()->nullable();
+            $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });
     }

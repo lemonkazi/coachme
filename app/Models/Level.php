@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\BaseModel as Model;
 use App\Models\User;
+use App\Models\Camp;
 
 class Level extends Model
 {

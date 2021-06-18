@@ -299,7 +299,7 @@ class UserController extends Controller
           {
               $image = $request->file('avatar_image_path');
               $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
-              $image->move(public_path('user_photo'), $new_name);
+              $image->move(public_path('photo/user_photo'), $new_name);
               $user->avatar_image_path = $new_name;
           }
           $user->token = sha1(time());

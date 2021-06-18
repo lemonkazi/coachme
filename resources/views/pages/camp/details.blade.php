@@ -1,51 +1,67 @@
 @extends('layouts.frontend')
-@section('title','Program Details')
+@section('title',$data['Title'])
 @section('content')
     <div class="program-details">
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              <h1>Victoria rink CanSkate program <i class="fas fa-share-alt"></i></h1>
-              <h4>From September 15 to January 1</h4>
+              <h1> {{$data['camp']->name}}<i class="fas fa-share-alt"></i>
+              </h1>
+              <h4>From {{date('F', $data['start_date'])}} {{date('d', $data['start_date'])}} to {{date('F', $data['end_date'])}} {{date('d', $data['end_date'])}}</h4>
               <div class="row">
                 <div class="col-md-6">
                   <label for="">Level</label>
-                  <p>Advanced level</p>
+                  <p>{{$data['camp']->level_name}}</p>
                 </div>
                 <div class="col-md-6">
                   <label for="">Location</label>
-                  <p>Vancouver island, Canada</p>
+                  <p>{{$data['camp']->location_name}}</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <label for="">Schedule</label>
+
+
                   <div class="upClick">
-                    <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                    @if(isset($data['camp_schedule']))
+                      @foreach ($data['camp_schedule'] as $schedule)
+                        <a href="javascript:void(0);" onclick='downloadPDF("{{$BASE_URL}}/{{$schedule['path']}}");'>
+                          <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                        </a>
+                        
+                      @endforeach
+                    @endif
+
+                    
                   </div>
                 </div>
                 <div class="col-md-6">
                   <label for="">Rink</label>
-                  <p>Jhonny's rink</p>
+                  <p>{{$data['camp']->rink_name}}</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4">
                   <label for="">Price</label>
                   <p>
-                    550$
+                    {{$data['camp']->price}}$
                   </p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <label for="">Coach</label>
-                  <div class="row">
-                    <div class="col-md-3 text-center">
-                      <img src="{{ asset('img/patrick_chan.png') }}" alt="">
-                      <p>Patrick Chan</p>
-                    </div>
-                  </div>
+                  @if(isset($data['coaches']))
+                    @foreach ($data['coaches'] as $coach)
+                      <div class="row">
+                        <div class="col-md-3 text-center">
+                          <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" alt="">
+                          <p>{{!empty($coach) ? $coach['name'] : ''}}</p>
+                        </div>
+                      </div>
+                    @endforeach
+                  @endif
                 </div>
               </div>
             </div>
@@ -53,23 +69,20 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="program-slider">
-                    <div class="item">
-                      <img class="pic" src="https://via.placeholder.com/500x300.png" alt="PAT">
-                    </div>
-                    <div class="item">
-                      <img class="pic" src="https://via.placeholder.com/500x300.png" alt="PAT">
-                    </div>
-                    <div class="item">
-                      <img class="pic" src="https://via.placeholder.com/500x300.png" alt="PAT">
-                    </div>
+                    @if(isset($data['camp_photo']))
+                      @foreach ($data['camp_photo'] as $photo)
+                        
+                        <div class="item">
+                          <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
+                        </div>
+                      @endforeach
+                    @endif
+                    
                   </div>
                   <div class="address text-center mt-5">
                     <label for="">Contact</label>
                     <p>
-                      We have collected the best international practices and the classic Canadian
-                      school in order to achieve the best results for our participants and instill
-                      in them an even greater love for our favorite sport. We see the success and
-                      joy of our children and are proud of the work done.
+                      {{$data['camp']->about}}
                     </p>
                   </div>
                 </div>

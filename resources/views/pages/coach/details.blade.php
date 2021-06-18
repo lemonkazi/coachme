@@ -1,75 +1,70 @@
 @extends('layouts.frontend')
-@section('title','Coach Details')
+@section('title',$data['Title'])
 @section('content')
     <div class="coach-details">
         <div class="container">
           <div class="row">
             <div class="col-md-5">
-              <h2>Patrick Chan <i class="fas fa-share-alt"></i></h2>
+              <h2>{{$data['user']->name}} {{$data['user']->family_name}} <i class="fas fa-share-alt"></i></h2>
               <div class="row">
                 <div class="col-md-6">
                   <label for="">Experience</label>
-                  <p>Advanced level</p>
+                  <p>{{$data['user']->experience_name}}</p>
                 </div>
                 <div class="col-md-6">
                   <label for="">Coaching certificate</label>
-                  <p>Vancouver island, Canada</p>
+                  <p>{{$data['user']->certificate_name}}</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <label for="">Speciality</label>
-                  <div class="upClick">
-                    <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
-                  </div>
+                  <p>{{$data['speciality']}}</p>
                 </div>
                 <div class="col-md-6">
                   <label for="">Language spoken</label>
-                  <p>Jhonny's rink</p>
+                  <p>{{$data['language']}}</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <label for="">Price</label>
                   <p>
-                    550$
+                    {{$data['user']->price_name}}$
                   </p>
                 </div>
                 <div class="col-md-6">
                   <label for="">Rink</label>
                   <p>
-                    550$
+                    {{$data['rink']}}
                   </p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <label for="">Location</label>
-                  <p>Vancouver island, Canada</p>
+                  <p>{{$data['user']->city_name}}</p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <label for="">About me</label>
                   <p>
-                    Canadian former competitive figure skater. He is a 2018 Olympic gold
-                    medallist in the team event, 2014 Olympic silver medallist in the men's
-                    and team events, a three-time World champion, a two-time Grand Prix 
-                    Final champion.
+                    {{$data['user']->about}}
                   </p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <label for="">Contact</label>
-                  <h5><i class="bi bi-telephone-fill"></i>+1-613-555-0146</h5>
-                  <h5><i class="fas fa-at"></i>patrick_chan@gmail.com</h5>
-                  <h5><i class="fab fa-linkedin"></i>+1-613-345-0865</h5>
+                  <h5><i class="bi bi-telephone-fill"></i>+{{$data['user']->phone_number}}</h5>
+                  <h5><i class="fas fa-at"></i>{{$data['user']->email}}</h5>
+                  <h5><i class="fab fa-linkedin"></i>+{{$data['user']->whatsapp}}</h5>
                 </div>
               </div>
             </div>
             <div class="offset-md-3 col-md-4 ">
-              <img src="{{ asset('img/patrick_chan.png') }}" alt="" srcset="">
+              <img src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" />
             </div>
           </div>
 

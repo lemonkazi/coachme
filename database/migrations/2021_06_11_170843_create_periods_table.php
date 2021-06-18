@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProgramPeriodsTable extends Migration
+class CreatePeriodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateProgramPeriodsTable extends Migration
      */
     public function up()
     {
-        Schema::create('program_periods', function (Blueprint $table) {
+        Schema::create('periods', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->enum('content_type', ['CAMP', 'PROGRAM'])->nullable();
+            $table->unsignedInteger('content_id')->nullable();
+            $table->enum('type', ['FALL', 'SUMMER','SPRING','WINTER'])->nullable();
+            $table->unsignedBigInteger('user_id')->nullable()->comment = 'This attachment is reported by user_id';
+            $table->foreign('user_id')->references('id')->on('users');
             $table->datetime('start_date')->nullable();
             $table->datetime('end_date')->nullable();
             $table->timestamps();
@@ -30,6 +34,6 @@ class CreateProgramPeriodsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('program_periods');
+        Schema::dropIfExists('periods');
     }
 }

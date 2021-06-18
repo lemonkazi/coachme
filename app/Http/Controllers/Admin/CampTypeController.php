@@ -9,13 +9,12 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Province;
-use App\Models\Location;
+use App\Models\CampType;
 
 use App\Exports\CollectionExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class LocationController extends Controller
+class CampTypeController extends Controller
 {
     
 
@@ -29,7 +28,7 @@ class LocationController extends Controller
    *
    * @param  \Illuminate\Http\Request  $request
    */
-  public function index(Request $request, Location $location)
+  public function index(Request $request, CampType $campType)
   {
     //
   }
@@ -37,25 +36,25 @@ class LocationController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  \App\Models\Location  $locations
+   * @param  \App\Models\CampType  $campTypes
    * @param  \Illuminate\Http\Request  $request
    */
-  public function show(Request $request, Location $location)
+  public function show(Request $request, CampType $campType)
   {
     $params = $request->all();
     
-    if (!empty($location->id)) {
+    if (!empty($campType->id)) {
       $breadcrumb = array(
         array(
-           'name'=>trans('global.All Locations'),
-           'link'=>'/locations'
+           'name'=>trans('global.All CampTypes'),
+           'link'=>'/camp-types'
         ),
         array(
-           'name'=>trans('global.Location Detail'),
+           'name'=>trans('global.CampType Detail'),
            'link'=>''
         )
       );
-      return view('admin.location.detail', [
+      return view('admin.campType.detail', [
         'pageInfo'=>
          [
           'siteTitle'        =>'Manage Users',
@@ -65,13 +64,13 @@ class LocationController extends Controller
           ,
           'data'=>
           [
-             'location' => Location::find($location->id),
+             'campType' => CampType::find($campType->id),
              'breadcrumb' =>  $breadcrumb,
-             'Title' =>  trans('global.Location Detail')
+             'Title' =>  trans('global.CampType Detail')
           ]
         ]);
     }
-    $query = $location->filter($params);
+    $query = $campType->filter($params);
 
     $export = filter_var($request->input('export', false), FILTER_VALIDATE_BOOLEAN);
     
@@ -101,8 +100,8 @@ class LocationController extends Controller
 
     $breadcrumb = array(
         array(
-           'name'=>trans('global.All Locations'),
-           'link'=>'/locations'
+           'name'=>trans('global.All CampTypes'),
+           'link'=>'/camp-types'
         )
     );
     // If export parameter true, it will return csv file
@@ -135,7 +134,7 @@ class LocationController extends Controller
         $content = ($page - 1) * $limit + 1;
         $sumary = "Total ".$total." Displaying ".$content."～".min($page * $limit, $total);
       }
-      return view('admin.location.list', [
+      return view('admin.campType.list', [
           'pageInfo'=>
            [
             'siteTitle'        =>'Manage Users',
@@ -145,9 +144,9 @@ class LocationController extends Controller
             ,
             'data'=>
             [
-               'locations'      =>  $response->appends(request()->except('page')),
+               'campTypes'      =>  $response->appends(request()->except('page')),
                'breadcrumb' =>  $breadcrumb,
-               'Title' =>  trans('global.Location List'),
+               'Title' =>  trans('global.CampType List'),
                'sumary' => $sumary,
                'request' => $params,
                'sort' => $sort,
@@ -164,34 +163,33 @@ class LocationController extends Controller
    */
   public function create($id=null)
   {
-    $location='';
-    $title='Add Location';
+    $campType='';
+    $title='Add CampType';
     $breadcrumb = array(
         array(
-           'name'=>trans('global.All Location'),
-           'link'=>'/locations'
+           'name'=>trans('global.All CampType'),
+           'link'=>'/camp-types'
         )
       );
     if (!empty($id)) {
-      $location = Location::find($id);
-      if (!$location) {
+      $campType = CampType::find($id);
+      if (!$campType) {
         return back();
       } else {
         $breadcrumb[] = array(
-           'name'=>trans('global.Edit Location'),
+           'name'=>trans('global.Edit CampType'),
            'link'=>''
         );
-        $title=trans('global.Edit Location');
+        $title=trans('global.Edit CampType');
       }
     } else {
       $breadcrumb[] = array(
-           'name'=>trans('global.Add Location'),
+           'name'=>trans('global.Add CampType'),
            'link'=>''
       );
     }
-    $province_all = Province::all()->pluck("name", "id")->sortBy("name");
    
-    return view('admin.location.add', [
+    return view('admin.campType.add', [
       'pageInfo'=>
       [
         'siteTitle'        =>'Manage Users',
@@ -200,13 +198,11 @@ class LocationController extends Controller
       ],
       'data'=>
       [
-           'location'      =>  $location,
+           'campType'      =>  $campType,
            'breadcrumb' =>  $breadcrumb,
            'Title' =>  $title
       ]
-    ])
-    ->with(compact('province_all'));
-
+    ]);
   }
 
   /**
@@ -235,10 +231,10 @@ class LocationController extends Controller
     else
     {
         
-      if (!Location::create($data)) {
+      if (!CampType::create($data)) {
         return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
       }
-      Toastr::success(trans('global.A new Location has been created'),'Success');
+      Toastr::success(trans('global.A new CampType has been created'),'Success');
       return back();
     }
 
@@ -255,8 +251,8 @@ class LocationController extends Controller
 
     $data = $request->all();
     $Authuser = $request->user();
-    $location = Location::find($id);
-    if (!$location) {
+    $campType = CampType::find($id);
+    if (!$campType) {
       return back();
     }
 
@@ -278,11 +274,11 @@ class LocationController extends Controller
     else
     {
 
-      if (!$location->update($data)) {
+      if (!$campType->update($data)) {
         return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
       }
 
-      Toastr::success(trans('global.Location has been updated'),'Success');
+      Toastr::success(trans('global.CampType has been updated'),'Success');
       return back();
     }
     
@@ -294,9 +290,9 @@ class LocationController extends Controller
    * @param  \App\Models\City  $city
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Location $location)
+  public function destroy(CampType $campType)
   {
-    $location->delete();
+    $campType->delete();
     return response()->success(false, trans('messages.success_message'), Response::HTTP_OK);
   }
 

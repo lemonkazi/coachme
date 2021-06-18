@@ -69,7 +69,7 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             @if (!empty($data['testimonial']) && !empty($data['testimonial']->image_path))
-                              <img style="max-width:80px;" src="{{$BASE_URL}}/testimonial_photo/{{$data['testimonial']->image_path}}" />
+                              <img style="max-width:80px;" src="{{$BASE_URL}}/photo/testimonial_photo/{{$data['testimonial']->image_path}}" />
                               </br>
                             @endif
                           

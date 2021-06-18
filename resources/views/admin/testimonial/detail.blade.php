@@ -70,7 +70,7 @@
                       $related = (string)$result[$key]['related'];
                       $result[$key]['text'] = $data['testimonial']->$related->name;
                     } elseif ($key == "image_path") {
-                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/testimonial_photo/{$data['testimonial']->$key}' />";
+                      $result[$key]['text'] = "<img style='max-width:80px;' src='{$BASE_URL}/photo/testimonial_photo/{$data['testimonial']->$key}' />";
                     } else {
                         $result[$key]['text'] = $data['testimonial']->$key;
                     }

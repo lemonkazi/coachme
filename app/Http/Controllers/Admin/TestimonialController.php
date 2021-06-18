@@ -239,7 +239,7 @@ class TestimonialController extends Controller
       {
         $image = $request->file('image_path');
         $new_name = $testimonial->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('testimonial_photo'), $new_name);
+        $image->move(public_path('photo/testimonial_photo'), $new_name);
         $testimonial->image_path = $new_name;
       }
       if (!$testimonial->save()) {
