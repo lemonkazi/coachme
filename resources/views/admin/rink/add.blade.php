@@ -93,6 +93,25 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name">Google Map Latitude <span class="input-required">*</span></label>
+                          <input type="text" class="form-control" id="latitude" name="latitude" placeholder="latitude"  value="{{!empty($data['rink']) ? old('latitude', $data['rink']->latitude) : old('latitude')}}" required>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name">Google Map Longitude <span class="input-required">*</span></label>
+                          <input type="text" class="form-control" id="longitude" name="longitude" placeholder="longitude"  value="{{!empty($data['rink']) ? old('longitude', $data['rink']->longitude) : old('longitude')}}" required>
+                        </div>
+                      </div>
+                      
+                    </div>
                       
                       <!-- /.card-body -->
 

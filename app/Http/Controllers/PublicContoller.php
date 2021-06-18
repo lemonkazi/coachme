@@ -65,8 +65,26 @@ class PublicContoller extends Controller
           'COACH_USER' => trans('global.LABEL_COACH_USER'),
           'RINK_USER' => trans('global.LABEL_RINK_USER')
       );
+      $rink_all = Rink::all()->sortBy("name")->toArray();
+      $rinks=[];
+      foreach ($rink_all as $key => $value) {
+        $rinks[]=array(
+          "Id"=> $value['id'],
+          "PropertyCode"=> $value['name'],
+          "address"=> $value['address'],
+          "latitude"=> $value['latitude'],
+          "longitude"=> $value['longitude'],
+          "GMapIconImage"=> "/assets/markers/marker.png",
+          "type"=> "Hotel",
+          "hotelName"=> $value['name']
+        );
+      }
+      //print_r($rinks);
+      //$rinks  = json_encode($rinks);
+      //exit();
+      
       return view('pages.home')
-      ->with(compact('authority','testimonials'));
+      ->with(compact('authority','testimonials','rinks'));
     }
 
 

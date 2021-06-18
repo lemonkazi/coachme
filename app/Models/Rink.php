@@ -18,7 +18,9 @@ class Rink extends Model
         'name',
         'province_id',
         'location_id',
-        'address'
+        'address',
+        'latitude',
+        'longitude'
     ];
 
     /**
