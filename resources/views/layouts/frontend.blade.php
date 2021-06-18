@@ -234,12 +234,14 @@
                   </div>
                   <div class="form-group">
                     <label for="userSelect">Type of user</label>
+                    @if (isset($authority))
                     <select class="form-control" name="authority" id="userSelect">
                       <option value="">Select</option>
                       @foreach($authority as $id => $value)
                           <option value="{{ $id }}" {{ (old('authority') ? old('authority') : $data['user']->authority ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                       @endforeach
                     </select>
+                    @endif
                   </div>
                   <div class="form-group">
                     <label for="reg-password">Password</label>
@@ -407,6 +409,29 @@
                 });
                 $('#calendar').fullCalendar({
                     // put your options and callbacks here
+                    events: [
+                      {
+                        id: 'a',
+                        title: 'my event',
+                        start: '2021-06-20',
+                        end: '2021-06-25',
+                        backgroundColor:'#A7DAE9'
+                      },
+                      {
+                        id: 'b',
+                        title: 'new',
+                        start: '2021-06-20',
+                        end: '2021-06-25',
+                        backgroundColor: '#D0E6A5'
+                      },
+                      {
+                        id: 'c',
+                        title: 'new',
+                        start: '2021-06-20',
+                        end: '2021-06-25',
+                        backgroundColor: '#D1B3DD'
+                      }
+                    ]
                 })
 
 
