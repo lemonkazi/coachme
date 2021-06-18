@@ -409,27 +409,34 @@
                 });
                 $('#calendar').fullCalendar({
                     // put your options and callbacks here
+                    
                     events: [
                       {
                         id: 'a',
                         title: 'my event',
                         start: '2021-06-20',
                         end: '2021-06-25',
-                        backgroundColor:'#A7DAE9'
+                        backgroundColor:'#A7DAE9',
+                        borderColor:'#A7DAE9',
+                        textColor:'#233C50',
                       },
                       {
                         id: 'b',
                         title: 'new',
                         start: '2021-06-20',
                         end: '2021-06-25',
-                        backgroundColor: '#D0E6A5'
+                        backgroundColor: '#D0E6A5',
+                        borderColor: '#D0E6A5',
+                        textColor:'#233C50',
                       },
                       {
                         id: 'c',
                         title: 'new',
                         start: '2021-06-20',
                         end: '2021-06-25',
-                        backgroundColor: '#D1B3DD'
+                        backgroundColor: '#D1B3DD',
+                        borderColor: '#D1B3DD',
+                        textColor:'#233C50',
                       }
                     ]
                 })
