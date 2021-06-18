@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('title','Home')
 @section('content')
-      
+
       @if(session()->has('error'))
           <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
       @endif

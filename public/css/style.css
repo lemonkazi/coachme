@@ -771,6 +771,12 @@ footer ul li {
   padding-top: 5px;
 }
 
+footer ul li a.btn-custom {
+  text-decoration: none;
+  color: #fff;
+  padding: 0px;
+}
+
 footer ul li:first-child {
   font-weight: 600;
   color: #8ac8dc;
