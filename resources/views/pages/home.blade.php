@@ -384,12 +384,12 @@
         //to see all the properties of the place object
         map.panTo(place.geometry.location);
         map.setZoom(12);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: place.geometry.location
-            //instead of
-            //position: new google.maps.LatLng(location.geometry.location.lat, location.geometry.location.lng),
-        });
+        // var marker = new google.maps.Marker({
+        //     map: map,
+        //     position: place.geometry.location
+        //     //instead of
+        //     //position: new google.maps.LatLng(location.geometry.location.lat, location.geometry.location.lng),
+        // });
         codeAddress();
       } 
       else {
@@ -414,7 +414,8 @@
         animation: google.maps.Animation.DROP,
         address: worldMapData[i].address,
         title: worldMapData[i].PropertyCode,
-        html: worldMapData[i].PropertyCode + "<br>" + worldMapData[i].address + "<br><br><a href='javascript:getDirections(customerMarker.getPosition(),&quot;" + worldMapData[i].address + "&quot;);'>Get Directions</a>"
+        html: worldMapData[i].PropertyCode + "<br>" + worldMapData[i].address + "<br>"
+        //html: worldMapData[i].PropertyCode + "<br>" + worldMapData[i].address + "<br><br><a href='javascript:getDirections(customerMarker.getPosition(),&quot;" + worldMapData[i].address + "&quot;);'>Get Directions</a>"
       });
       gmarkers.push(marker);
   
@@ -473,11 +474,11 @@
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         map.setCenter(results[0].geometry.location);
-        if (customerMarker) customerMarker.setMap(null);
-        customerMarker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-        });
+        // if (customerMarker) customerMarker.setMap(null);
+        // customerMarker = new google.maps.Marker({
+        //   map: map,
+        //   position: results[0].geometry.location
+        // });
         console.log('aaa'+results[0].geometry.location);
         closest = findClosestN(results[0].geometry.location, 12);
         // get driving distance
@@ -565,8 +566,10 @@
                       sidebarHtml += "<h5><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>" + results[i].title + "</a><br></h5>";
                       sidebarHtml += '<a href="">info@kitsfsc.ca</a><p>'+ results[i].address +'</p>';
                       sidebarHtml += '<a href="">www.kitsfsc.ca</a>';
-                      sidebarHtml += '<h6>3,79 kilometers</h6>';
-                      sidebarHtml += '<p class="gray">Directions</p>';
+                      sidebarHtml += '<h6>'+ (results[i].distance.value / 1000) + ' Kilometers approximately ' + results[i].duration.text +'</h6>';
+                      sidebarHtml += "<p class='gray'><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>Directions</a></p>";
+                      
+                      //sidebarHtml += '<p class="gray">Directions</p>';
                       sidebarHtml += '</div>';
               sidebarHtml += '</div>';
                //sidebarHtml += "<tr><td><div class='numberCircle'>" + letterMarkers + "</div><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>" + results[i].title + '</a><br>' + results[i].address + "<br>" + results[i].distance.text + ' approximately ' + results[i].duration.text + "<br><a href='javascript:getDirections(customerMarker.getPosition(),&quot;" + results[i].address + "&quot;);'>Get Directions</a></td></tr>"

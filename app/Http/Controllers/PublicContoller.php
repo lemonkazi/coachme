@@ -1024,14 +1024,23 @@ class PublicContoller extends Controller
       }
       $camps_all = $query->get()->toArray();
 
+      $backgroundColor = array(
+        0=>'#A7DAE9',
+        1=>'#D0E6A5',
+        2=>'#D1B3DD'
+      );
       $camps=[];
       foreach ($camps_all as $key => $value) {
+
+        
+        // It returns array of random keys
+        $key = array_rand( $backgroundColor);
         $camps[]=array(
           "id"=> $value['id'],
           "title"=> $value['name'],
           "start"=> $value['start_date'],
           "end"=> $value['end_date'],
-          "backgroundColor"=> "#D0E6A5",
+          "backgroundColor"=> $backgroundColor[$key],
           "borderColor"=> "#D0E6A5",
           "textColor"=> "#233C50"
         );

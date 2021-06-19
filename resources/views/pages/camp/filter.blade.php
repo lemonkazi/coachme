@@ -202,6 +202,7 @@
         $('#calendar').fullCalendar({
             // put your options and callbacks here
             events : <?php echo json_encode($camps) ?>,
+            
             // events: [
             //   {
             //     id: 'a',
