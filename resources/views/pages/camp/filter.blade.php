@@ -151,7 +151,48 @@
           </div>
         </div>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
 
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'dayGrid','moment' ],
+          header: { center: 'prev,title,next,agendaWeek', left: '',right:'' },
+          events : <?php echo json_encode($camps) ?>
+          // events: [
+          //             {
+          //               id: 'a',
+          //               title: 'my event',
+          //               start: '2021-06-20',
+          //               end: '2021-06-25',
+          //               backgroundColor:'#A7DAE9',
+          //               borderColor:'#A7DAE9',
+          //               textColor:'#233C50',
+          //             },
+          //             {
+          //               id: 'b',
+          //               title: 'new',
+          //               start: '2021-06-20',
+          //               end: '2021-06-25',
+          //               backgroundColor: '#D0E6A5',
+          //               borderColor: '#D0E6A5',
+          //               textColor:'#233C50',
+          //             },
+          //             {
+          //               id: 'c',
+          //               title: 'new',
+          //               start: '2021-06-20',
+          //               end: '2021-06-25',
+          //               backgroundColor: '#D1B3DD',
+          //               borderColor: '#D1B3DD',
+          //               textColor:'#233C50',
+          //             }
+          //           ]
+        });
+
+        calendar.render();
+      });
+    </script>
     <script type="text/javascript">
 
       $(document).ready(function () {
@@ -199,40 +240,40 @@
 
 
 
-        $('#calendar').fullCalendar({
-            // put your options and callbacks here
-            events : <?php echo json_encode($camps) ?>,
+        // $('#calendar').fullCalendar({
+        //     // put your options and callbacks here
+        //     events : <?php echo json_encode($camps) ?>,
             
-            // events: [
-            //   {
-            //     id: 'a',
-            //     title: 'my event',
-            //     start: '2021-06-20',
-            //     end: '2021-06-25',
-            //     backgroundColor:'#A7DAE9',
-            //     borderColor:'#A7DAE9',
-            //     textColor:'#233C50',
-            //   },
-            //   {
-            //     id: 'b',
-            //     title: 'new',
-            //     start: '2021-06-20',
-            //     end: '2021-06-25',
-            //     backgroundColor: '#D0E6A5',
-            //     borderColor: '#D0E6A5',
-            //     textColor:'#233C50',
-            //   },
-            //   {
-            //     id: 'c',
-            //     title: 'new',
-            //     start: '2021-06-20',
-            //     end: '2021-06-25',
-            //     backgroundColor: '#D1B3DD',
-            //     borderColor: '#D1B3DD',
-            //     textColor:'#233C50',
-            //   }
-            // ]
-        })
+        //     // events: [
+        //     //   {
+        //     //     id: 'a',
+        //     //     title: 'my event',
+        //     //     start: '2021-06-20',
+        //     //     end: '2021-06-25',
+        //     //     backgroundColor:'#A7DAE9',
+        //     //     borderColor:'#A7DAE9',
+        //     //     textColor:'#233C50',
+        //     //   },
+        //     //   {
+        //     //     id: 'b',
+        //     //     title: 'new',
+        //     //     start: '2021-06-20',
+        //     //     end: '2021-06-25',
+        //     //     backgroundColor: '#D0E6A5',
+        //     //     borderColor: '#D0E6A5',
+        //     //     textColor:'#233C50',
+        //     //   },
+        //     //   {
+        //     //     id: 'c',
+        //     //     title: 'new',
+        //     //     start: '2021-06-20',
+        //     //     end: '2021-06-25',
+        //     //     backgroundColor: '#D1B3DD',
+        //     //     borderColor: '#D1B3DD',
+        //     //     textColor:'#233C50',
+        //     //   }
+        //     // ]
+        // })
       });
 
      

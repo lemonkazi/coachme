@@ -1035,6 +1035,12 @@ class PublicContoller extends Controller
         
         // It returns array of random keys
         $key = array_rand( $backgroundColor);
+        $value['start_date'] = strtotime($value['start_date']);
+        $value['start_date'] = date( 'Y-m-d', $value['start_date']);
+
+        $value['end_date'] = strtotime($value['end_date']);
+        $value['end_date'] = date( 'Y-m-d', $value['end_date']);
+
         $camps[]=array(
           "id"=> $value['id'],
           "title"=> $value['name'],
@@ -1045,6 +1051,8 @@ class PublicContoller extends Controller
           "textColor"=> "#233C50"
         );
       }
+      // echo json_encode($camps);
+      // exit();
 
 
       $title=trans('global.Camp List');
