@@ -17,7 +17,8 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.0/fullcalendar.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.css">
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <!-- CSS -->
@@ -285,11 +286,53 @@
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.0/fullcalendar.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/moment/main.min.js"></script>
         <!-- Optional JavaScript -->
 
         <script>
           $.widget.bridge('uibutton', $.ui.button)
+
+                          document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          plugins: [ 'dayGrid','moment' ],
+          header: { center: 'prev,title,next,agendaWeek', left: '',right:'' },
+          events: [
+                      {
+                        id: 'a',
+                        title: 'my event',
+                        start: '2021-06-20',
+                        end: '2021-06-25',
+                        backgroundColor:'#A7DAE9',
+                        borderColor:'#A7DAE9',
+                        textColor:'#233C50',
+                      },
+                      {
+                        id: 'b',
+                        title: 'new',
+                        start: '2021-06-20',
+                        end: '2021-06-25',
+                        backgroundColor: '#D0E6A5',
+                        borderColor: '#D0E6A5',
+                        textColor:'#233C50',
+                      },
+                      {
+                        id: 'c',
+                        title: 'new',
+                        start: '2021-06-20',
+                        end: '2021-06-25',
+                        backgroundColor: '#D1B3DD',
+                        borderColor: '#D1B3DD',
+                        textColor:'#233C50',
+                      }
+                    ]
+        });
+
+        calendar.render();
+      });
         </script>
         <script type="text/javascript">
             $(document).ready(function(){
@@ -407,39 +450,40 @@
                         }
                     });
                 });
-                $('#calendar').fullCalendar({
-                    // put your options and callbacks here
-                    
-                    events: [
-                      {
-                        id: 'a',
-                        title: 'my event',
-                        start: '2021-06-20',
-                        end: '2021-06-25',
-                        backgroundColor:'#A7DAE9',
-                        borderColor:'#A7DAE9',
-                        textColor:'#233C50',
-                      },
-                      {
-                        id: 'b',
-                        title: 'new',
-                        start: '2021-06-20',
-                        end: '2021-06-25',
-                        backgroundColor: '#D0E6A5',
-                        borderColor: '#D0E6A5',
-                        textColor:'#233C50',
-                      },
-                      {
-                        id: 'c',
-                        title: 'new',
-                        start: '2021-06-20',
-                        end: '2021-06-25',
-                        backgroundColor: '#D1B3DD',
-                        borderColor: '#D1B3DD',
-                        textColor:'#233C50',
-                      }
-                    ]
-                })
+
+                // $('#calendar').fullCalendar({
+                //     // put your options and callbacks here
+                //     header:'prev,title,next',
+                //     events: [
+                //       {
+                //         id: 'a',
+                //         title: 'my event',
+                //         start: '2021-06-20',
+                //         end: '2021-06-25',
+                //         backgroundColor:'#A7DAE9',
+                //         borderColor:'#A7DAE9',
+                //         textColor:'#233C50',
+                //       },
+                //       {
+                //         id: 'b',
+                //         title: 'new',
+                //         start: '2021-06-20',
+                //         end: '2021-06-25',
+                //         backgroundColor: '#D0E6A5',
+                //         borderColor: '#D0E6A5',
+                //         textColor:'#233C50',
+                //       },
+                //       {
+                //         id: 'c',
+                //         title: 'new',
+                //         start: '2021-06-20',
+                //         end: '2021-06-25',
+                //         backgroundColor: '#D1B3DD',
+                //         borderColor: '#D1B3DD',
+                //         textColor:'#233C50',
+                //       }
+                //     ]
+                // })
 
 
 
@@ -517,5 +561,6 @@
                 
             })(jQuery);
         </script>
+
     </body>
 </html>

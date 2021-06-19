@@ -1307,3 +1307,50 @@ label{
     }
     
 }
+#calendar{
+    padding-bottom: 25px;
+    h2{
+        color: #233C50;
+    }
+    .fc-button{
+        padding: 0;
+        color: #233C50;
+        background-color: #fff;
+        border-color: #fff;
+    }
+    
+}
+.fc-unthemed thead tr th{
+    border-bottom-color: #fff;
+    color: #7B8A96;
+    font: normal normal 600 14px/24px Raleway;
+}
+.fc th{
+    border-bottom-width: 0;
+}
+.fc-button-today{
+    display: none;
+}
+.fc-header-right{
+    position: absolute;
+    right: 0;
+}
+.fc-header-left{
+    width: 100%;
+    text-align: center;
+}
+.fc-head{
+    position: absolute;
+    bottom: -25px;
+}
+.fc-center{
+    div{
+        display: flex;
+    }
+    .fc-prev-button{
+        margin-right: 10px;
+    }
+    .fc-next-button{
+        margin-left: 10px;
+    }
+}
