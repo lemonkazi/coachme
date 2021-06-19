@@ -111,6 +111,8 @@
                             <th>Name</th>
                             <th>Province</th>
                             <th>City</th>
+                            <th>Map Latitude</th>
+                            <th>Map Longitude</th>
                             <th>Address</th>
                             
                             <th>Action</th>
@@ -124,6 +126,8 @@
                               <td>{{$rink->province_name}}</td>
                               <td>{{$rink->city_name}}</td>
                               <td>{{$rink->address}}</td>
+                              <td>{{$rink->latitude}}</td>
+                              <td>{{$rink->longitude}}</td>
                               <td> 
                                 <div class="btn-group">
                                   <a href="{{url('rinks').'/'.$rink->id}}" class="btn btn-primary">

@@ -50,6 +50,14 @@
                       'label' => __('Address'),
                       'text' => '',
                   ),
+                  'latitude' => array(
+                      'label' => __('Map Latitude'),
+                      'text' => '',
+                  ),
+                  'longitude' => array(
+                      'label' => __('Map Longitude'),
+                      'text' => '',
+                  ),
                   'created_at' => array(
                       'label' => trans('global.LABEL_CREATED'),
                       'text' => '',

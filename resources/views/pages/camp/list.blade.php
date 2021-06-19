@@ -10,9 +10,9 @@
                     <div class="row">
                       <h1>
                         Filters  
-                        <a href="" class="btn btn-custom mb-2 green">View calendar</a>                
+                        <a href="{{ url('/camp/filter')}}" class="btn btn-custom mb-2 green">View calendar</a>                
                       </h1>
-                      <label for="">Type of program</label>
+                      <label for="">Type of Camp</label>
                       <div class="check-section">
                         @foreach($camp_type_all as $id => $value)
                           <div>
