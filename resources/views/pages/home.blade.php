@@ -159,7 +159,7 @@
                   <h2>Find Rinks A Rinks Around You</h2>
                   
                   <div class="search-div mb-2">
-                    <button type="button" class="btn green-btn">Use my location</button>
+                    <button type="button" onclick="centerMap(USbounds);" class="btn green-btn">Use my location</button>
                     <input type="text" placeholder="Search" id="address" value="" class="search-btn"><i class="bi bi-search"></i>
                     <input type="button" style="display:none;" id="id_of_button" value="Submit" onclick="codeAddress();" />
                     
@@ -331,21 +331,260 @@
         "north": 82.1673907,
         "east": 74.35550009999997
       };
+
+  var allowGeoRecall = true
+  function getLocation() {   
+      console.log('getLocation was called') 
+      if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition, positionError);
+      } else {
+          hideLoadingDiv()
+          console.log('Geolocation is not supported by this device')
+      }
+  }
+
+  function positionError() {    
+      console.log('Geolocation is not enabled. Please enable to use this feature')
+
+      if(allowGeoRecall) getLocation()
+  }
+
+  function showPosition(position){
+      console.log('posiiton accepted');
+      console.log(position.coords.latitude);
+      console.log(position.coords.longitude);
+      allowGeoRecall = false
+  }
+
+  function showError(error) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        console.log("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        console.log("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        console.log("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        console.log("An unknown error occurred.");
+        break;
+    }
+  }
+
+  //getLocation();
   function centerMap(bounds) {
 
-     var bounds = new google.maps.LatLngBounds(
-      /* sw */
-      {
-        lat: southWestLat,
-        lng: southWestLng
-      },
-      /* ne */
-      {
-        lat: northEastLat,
-        lng: northEastLng
-      }); 
-     map.fitBounds(bounds);
-     map.setZoom(9);
+
+
+
+    console.log(navigator.geolocation);
+
+    if (navigator.geolocation) {
+      console.log('sss');
+      //navigator.geolocation.getCurrentPosition(showPosition, showError);
+
+      navigator.geolocation.getCurrentPosition(function(position) {
+           var pos = {
+             lat: position.coords.latitude,
+             lng: position.coords.longitude
+           };
+            //var pos = {lat: 22.9050139, lng: 89.89402460000001};
+             
+            console.log(pos);
+
+            var bounds = new google.maps.LatLngBounds(); 
+            var pt = new google.maps.LatLng(pos.lat, pos.lng);
+
+            var mapOptions = {
+              center: pt,
+              zoom: 12,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map.setOptions(mapOptions);
+              
+            bounds.extend(pt); 
+            map.fitBounds(bounds);
+            map.setZoom(12);
+
+            geocoder.geocode({
+              'location': pt
+            }, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+
+                var details = results[0].address_components;
+                var city;
+                var country;
+
+                for (var i = details.length - 1; i >= 0; i--) {
+                  for (var j = 0; j < details[i].types.length; j++) {
+                    if (details[i].types[j] == 'locality') {
+                      city = details[i].long_name;
+                    } else if (details[i].types[j] == 'sublocality') {
+                      city = details[i].long_name;
+                    } else if (details[i].types[j] == 'neighborhood') {
+                      city = details[i].long_name;
+                    } else if (details[i].types[j] == 'postal_town') {
+                      city = details[i].long_name;
+                      console.log("postal_town=" + city);
+                    } else if (details[i].types[j] == 'administrative_area_level_2') {
+                      city = details[i].long_name;
+                      console.log("admin_area_2=" + city);
+                    }
+                    // from "google maps API geocoding get address components"
+                    // https://stackoverflow.com/questions/50225907/google-maps-api-geocoding-get-address-components
+                    if (details[i].types[j] == "country") {
+                      country = details[i].long_name;
+                    }
+                  }
+                }
+
+                console.log("city=" + city);
+
+                var marker = new google.maps.Marker({
+                  position: pt,
+                  map: map,
+                  title: "<div style = 'height:80px;width:200px'><b>Your location:</b><br />Country:" + country + "<br/>City:" + city
+                });
+                google.maps.event.addListener(marker, "click", function(e) {
+                  var infoWindow = new google.maps.InfoWindow();
+                  infoWindow.setContent(marker.title);
+                  infoWindow.open(map, marker);
+                });
+                google.maps.event.trigger(marker, 'click');
+                map.setCenter(results[0].geometry.location);
+                // if (customerMarker) customerMarker.setMap(null);
+                // customerMarker = new google.maps.Marker({
+                //   map: map,
+                //   position: results[0].geometry.location
+                // });
+                console.log('aaa'+results[0].geometry.location);
+                closest = findClosestN(results[0].geometry.location, 12);
+                // get driving distance
+                closest = closest.splice(0, 12);
+                calculateDistances(results[0].geometry.location, closest, 12);
+              } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+              }
+            });
+
+
+      }, function() {
+
+              var pos = {lat: 23.810332, lng: 90.4125181};
+             
+              console.log(pos);
+
+              var bounds = new google.maps.LatLngBounds(); 
+              var pt = new google.maps.LatLng(pos.lat, pos.lng);
+
+              var mapOptions = {
+                center: pt,
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+              };
+              map.setOptions(mapOptions);
+                
+              bounds.extend(pt); 
+              map.fitBounds(bounds);
+              map.setZoom(12);
+
+              geocoder.geocode({
+                'location': pt
+              }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+
+                  var details = results[0].address_components;
+                  var city;
+                  var country;
+
+                  for (var i = details.length - 1; i >= 0; i--) {
+                    for (var j = 0; j < details[i].types.length; j++) {
+                      if (details[i].types[j] == 'locality') {
+                        city = details[i].long_name;
+                      } else if (details[i].types[j] == 'sublocality') {
+                        city = details[i].long_name;
+                      } else if (details[i].types[j] == 'neighborhood') {
+                        city = details[i].long_name;
+                      } else if (details[i].types[j] == 'postal_town') {
+                        city = details[i].long_name;
+                        console.log("postal_town=" + city);
+                      } else if (details[i].types[j] == 'administrative_area_level_2') {
+                        city = details[i].long_name;
+                        console.log("admin_area_2=" + city);
+                      }
+                      // from "google maps API geocoding get address components"
+                      // https://stackoverflow.com/questions/50225907/google-maps-api-geocoding-get-address-components
+                      if (details[i].types[j] == "country") {
+                        country = details[i].long_name;
+                      }
+                    }
+                  }
+
+                  console.log("city=" + city);
+
+                  var marker = new google.maps.Marker({
+                    position: pt,
+                    map: map,
+                    title: "<div style = 'height:80px;width:200px'><b>Your location:</b><br/>Country:" + country + "<br/>City:" + city
+                  });
+                  google.maps.event.addListener(marker, "click", function(e) {
+                    var infoWindow = new google.maps.InfoWindow();
+                    infoWindow.setContent(marker.title);
+                    infoWindow.open(map, marker);
+                  });
+                  google.maps.event.trigger(marker, 'click');
+
+
+                  map.setCenter(results[0].geometry.location);
+                  // if (customerMarker) customerMarker.setMap(null);
+                  // customerMarker = new google.maps.Marker({
+                  //   map: map,
+                  //   position: results[0].geometry.location
+                  // });
+                  console.log('aaa'+results[0].geometry.location);
+                  closest = findClosestN(results[0].geometry.location, 12);
+                  // get driving distance
+                  closest = closest.splice(0, 12);
+                  calculateDistances(results[0].geometry.location, closest, 12);
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+              });
+
+
+             //handleLocationError(true, infoWindow, map.getCenter());
+      });
+
+      // x.innerHTML = "Latitude: " + position.coords.latitude + 
+      //   "<br>Longitude: " + position.coords.longitude;
+    } else {
+        //x.innerHTML = "Geolocation is not supported by this browser.";
+      
+        var bounds = new google.maps.LatLngBounds(
+          /* sw */
+        {
+            lat: southWestLat,
+            lng: southWestLng
+        },
+          /* ne */
+        {
+            lat: northEastLat,
+            lng: northEastLng
+        }); 
+        var bounds = new google.maps.LatLngBounds(); 
+        var pt = new google.maps.LatLng("23.810332", "90.4125181");
+          
+        bounds.extend(pt); 
+        map.fitBounds(bounds);
+        map.setZoom(12);
+        document.getElementById('address').value = 'Dhaka, Bangladesh';
+        codeAddress();
+    }
+    //getLocation();
+    //console.log(navigator.geolocation);
+    
   }
   var map;
 
@@ -355,7 +594,7 @@
     
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
-      center: new google.maps.LatLng(60.16985569999999, 24.9383791),
+      //center: new google.maps.LatLng(60.16985569999999, 24.9383791),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     var input = document.getElementById('address');
@@ -474,11 +713,18 @@
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         map.setCenter(results[0].geometry.location);
-        // if (customerMarker) customerMarker.setMap(null);
-        // customerMarker = new google.maps.Marker({
-        //   map: map,
-        //   position: results[0].geometry.location
-        // });
+        if (customerMarker) customerMarker.setMap(null);
+        customerMarker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location,
+          title: "<div style = 'height:80px;width:200px'><b>Your Searched City:</b>"
+        });
+        google.maps.event.addListener(customerMarker, "click", function(e) {
+          var infoWindow = new google.maps.InfoWindow();
+          infoWindow.setContent(customerMarker.title);
+          infoWindow.open(map, customerMarker);
+        });
+        //google.maps.event.trigger(customerMarker, 'click');
         console.log('aaa'+results[0].geometry.location);
         closest = findClosestN(results[0].geometry.location, 12);
         // get driving distance
@@ -564,8 +810,7 @@
                   sidebarHtml += '</div>';
                   sidebarHtml += '<div class="description">';
                       sidebarHtml += "<h5><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>" + results[i].title + "</a><br></h5>";
-                      sidebarHtml += '<a href="">info@kitsfsc.ca</a><p>'+ results[i].address +'</p>';
-                      sidebarHtml += '<a href="">www.kitsfsc.ca</a>';
+                      sidebarHtml += '<p>'+ results[i].address +'</p>';
                       sidebarHtml += '<h6>'+ (results[i].distance.value / 1000) + ' Kilometers approximately ' + results[i].duration.text +'</h6>';
                       sidebarHtml += "<p class='gray'><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>Directions</a></p>";
                       

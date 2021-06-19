@@ -1041,7 +1041,7 @@ class PublicContoller extends Controller
           "start"=> $value['start_date'],
           "end"=> $value['end_date'],
           "backgroundColor"=> $backgroundColor[$key],
-          "borderColor"=> "#D0E6A5",
+          "borderColor"=> $backgroundColor[$key],
           "textColor"=> "#233C50"
         );
       }
