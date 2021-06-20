@@ -6,7 +6,9 @@
           <div class="row">
             <div class="col-md-6">
               
-              <h1>{{$data['program']->name}}<i class="fas fa-share-alt"></i></h1>
+              <h1>{{$data['program']->name}}
+                <!-- <i class="fas fa-share-alt"></i> -->
+              </h1>
               <?php 
               if(isset($data['program']->program_period)) {
                 
@@ -34,7 +36,14 @@
               }
               ?>
               <p class="gray">Window of registration: {{date('F', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}}</p>
-              <a href="#" class="btn btn-custom mb-3">Register here</a>
+              @if (Route::has('logout'))
+                  @auth
+                     
+                  @else
+                      <a href="#" class="btn btn-custom mb-3" data-toggle="modal" data-target="#exampleModalCenter">Register here</a>
+                  @endauth
+              @endif
+
               <div class="row">
                 <div class="col-md-4">
                   <label for="">Level</label>

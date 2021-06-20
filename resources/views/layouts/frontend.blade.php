@@ -135,12 +135,26 @@
                     <div class="image-part">
 
                     <ul>
-
-
-                        <li><img src="{{ asset('img/Group 86.png') }}" alt=""></li>
-                        <li><img src="{{ asset('img/Group 87.png') }}" alt=""></li>
-                        <li><img src="{{ asset('img/Group 88.png') }}" alt=""></li>
-                        <li><img src="{{ asset('img/Group 782.png') }}" alt=""></li>
+                        <li>
+                          <a href="https://web.whatsapp.com/" target="_blank">
+                            <img src="{{ asset('img/Group 86.png') }}" alt="">
+                          </a>
+                        /li>
+                        <li>
+                          <a href="https://www.instagram.com/" target="_blank">
+                            <img src="{{ asset('img/Group 87.png') }}" alt="">
+                          </a>
+                        </li>
+                        <li> 
+                          <a href="https://twitter.com/home" target="_blank">
+                            <img src="{{ asset('img/Group 88.png') }}" alt="">
+                          </a>
+                        </li>
+                        <li>
+                          <a href="https://www.facebook.com/" target="_blank">
+                            <img src="{{ asset('img/Group 782.png') }}" alt="">
+                          </a>
+                        </li>
 
                     </ul>
                     </div>
