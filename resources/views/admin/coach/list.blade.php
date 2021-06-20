@@ -135,9 +135,9 @@
                                   <a href="{{url('coaches').'/'.$user->id}}" class="btn btn-primary">
                                     <i class="fas fa-eye"></i>
                                   </a>
-                                  <a href="<?php echo $BASE_URL . '/coach/edit/' . $user->id ?>" class="btn btn-warning" title="Edit">
+                                  <!-- <a href="<?php echo $BASE_URL . '/coach/edit/' . $user->id ?>" class="btn btn-warning" title="Edit">
                                     <i class="fas fa-edit"></i>
-                                  </a> 
+                                  </a> --> 
                                   <a href="javascript:;" data-id="{{$user->id}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
                                     <i class="fa fa-trash" aria-hidden="true"></i>   
                                   </a>             

@@ -139,7 +139,6 @@
                           <a href="https://web.whatsapp.com/" target="_blank">
                             <img src="{{ asset('img/Group 86.png') }}" alt="">
                           </a>
-                        /li>
                         <li>
                           <a href="https://www.instagram.com/" target="_blank">
                             <img src="{{ asset('img/Group 87.png') }}" alt="">

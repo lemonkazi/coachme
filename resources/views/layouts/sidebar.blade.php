@@ -62,12 +62,12 @@
                     <p>All Coach</p>
                   </a>
                 </li>
-                <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
+                <!-- <li class="nav-item <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
                   <a href="{{ url('/coach/add')}}" class="nav-link <?php if ($controller == 'coachcontroller' && $action == 'create') echo 'active' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add Coach</p>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="nav-item">
@@ -88,12 +88,12 @@
                     <p>All Users</p>
                   </a>
                 </li>
-                <li class="nav-item <?php if ($controller == 'usercontroller' && $action == 'create') echo 'active' ?>">
+                <!-- <li class="nav-item <?php if ($controller == 'usercontroller' && $action == 'create') echo 'active' ?>">
                   <a href="{{ url('/user/add')}}" class="nav-link <?php if ($controller == 'usercontroller' && $action == 'create') echo 'active' ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add User</p>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li class="nav-item">
