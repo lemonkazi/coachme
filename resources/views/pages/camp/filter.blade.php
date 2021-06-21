@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('title',$data['Title'])
 @section('content')
-    <div class="program-list">
+    <div class="program-list camp-list">
         <div class="container">
           <div class="row">
             <div class="col-md-4">

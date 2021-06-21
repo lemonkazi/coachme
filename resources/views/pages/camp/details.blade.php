@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('title',$data['Title'])
 @section('content')
-    <div class="program-details">
+    <div class="program-details camp-details">
         <div class="container">
           <div class="row">
             <div class="col-md-6">
@@ -50,18 +50,20 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 coach">
                   <label for="">Coach</label>
-                  @if(isset($data['coaches']))
-                    @foreach ($data['coaches'] as $coach)
-                      <div class="row">
-                        <div class="col-md-3 text-center">
-                          <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" alt="">
-                          <p>{{!empty($coach) ? $coach['name'] : ''}}</p>
-                        </div>
-                      </div>
-                    @endforeach
-                  @endif
+                    <div class="row">
+                      @if(isset($data['coaches']))
+                        @foreach ($data['coaches'] as $coach)
+                        
+                            <div class="col-md-3 text-center">
+                              <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" alt="">
+                              <p>{{!empty($coach) ? $coach['name'] : ''}}</p>
+                            </div>
+                        
+                        @endforeach
+                      @endif
+                    </div>
                 </div>
               </div>
             </div>

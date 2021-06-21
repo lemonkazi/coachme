@@ -827,6 +827,8 @@ label{
         img{
             width: 100%;
             border-radius: 50%;
+            width: 218px;
+            height: 218px;
         }
         .bi-plus-lg{
             background: #233C50;
@@ -1020,8 +1022,8 @@ label{
 //program details
 .program-details,.coach-details{
     background: #F3F6FB;
-    background-image: url(../img/edit_program.png);
-    background-size: auto;
+    background-image: url(../img/bg-rink-list.png);
+    background-size: 100%;
     background-repeat: no-repeat;
     background-position: bottom center;
     padding-top: 4.5%;
@@ -1111,8 +1113,15 @@ label{
     }
 }
 .coach-details{
+    background-image: url(../img/bg-coach-details.png);
+    background-size: 100%;
+    background-position: top left;
     img{
         width: 100%;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        text-align: right;
     }
     h5{
         font: normal normal normal 18px Raleway;
@@ -1124,8 +1133,8 @@ label{
 //rink list
 .rink-list,.program-list{
     background: #F3F6FB;
-    background-image: url(../img/edit_program.png);
-    background-size: auto;
+    background-image: url(../img/bg-rink-list.png);
+    background-size: 100%;
     background-repeat: no-repeat;
     background-position: bottom center;
     .green{
@@ -1285,6 +1294,10 @@ label{
     }
 }
 .coach-list{
+    background: #F3F6FB  url(../img/bg-coach-list.png) !important;
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: bottom center;
     .profile{
         .card-body{
             padding: 10% 15%;
@@ -1297,6 +1310,8 @@ label{
             }
             img{
                 border-radius: 50%;
+                width: 150px;
+                height: 150px;
             }
             h4{
                 font: normal normal normal 20px Raleway;
@@ -1306,6 +1321,29 @@ label{
         }
     }
     
+}
+.camp-list{
+    background: #F3F6FB url(../img/bg-camp-list.png) !important;
+    background-size: 100%;
+    background-position: bottom left;
+}
+.camp-details{
+    background-image: url(../img/bg-camp-details.png);
+    background-size: 100%;
+    background-position: bottom left;
+    .program-slider{
+        img{
+            width: 500px;
+            height: 300px;
+        }
+    }
+    .coach{
+        img{
+            width: 100%;
+            height: 150px;
+            border-radius: 50%;
+        }
+    }
 }
 #calendar{
     padding-bottom: 25px;
@@ -1353,4 +1391,7 @@ label{
     .fc-next-button{
         margin-left: 10px;
     }
+}
+@media (min-width:375px){
+    
 }

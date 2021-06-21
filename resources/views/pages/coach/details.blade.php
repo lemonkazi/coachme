@@ -63,7 +63,7 @@
                 </div>
               </div>
             </div>
-            <div class="offset-md-3 col-md-4 ">
+            <div class=" col-md-7 text-right ">
               <img src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" />
             </div>
           </div>
