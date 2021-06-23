@@ -98,7 +98,7 @@
         <footer class="footer-part">
             <div class="container py-5">
                 <div class="row pt-5 mt-5">
-                <div class="col-md-3">
+                <div class="col-md-3 wid-40">
                     <ul>
 
                     <li>About</li>
@@ -123,13 +123,7 @@
                     </li>
                     </ul>
                 </div>
-                <div class="col-md-3">
-
-                </div>
-                <div class="col-md-3">
-
-                </div>
-                <div class="col-md-3">
+                <div class="offset-md-6 col-md-3 wid-60">
                     <img src="{{ asset('img/footer_logo.png') }}" alt="">
                     <span></span>
                     <div class="image-part">

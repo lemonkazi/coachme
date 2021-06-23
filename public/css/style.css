@@ -929,6 +929,8 @@ label {
 .coach-edit .img-upload img, .camp-edit .img-upload img, .program-edit .img-upload img, .rink-list .img-upload img, .program-list .img-upload img {
   width: 100%;
   border-radius: 50%;
+  width: 218px;
+  height: 218px;
 }
 
 .coach-edit .img-upload .bi-plus-lg, .camp-edit .img-upload .bi-plus-lg, .program-edit .img-upload .bi-plus-lg, .rink-list .img-upload .bi-plus-lg, .program-list .img-upload .bi-plus-lg {
@@ -1149,8 +1151,8 @@ label {
 
 .program-details, .coach-details {
   background: #F3F6FB;
-  background-image: url(../img/edit_program.png);
-  background-size: auto;
+  background-image: url(../img/bg-rink-list.png);
+  background-size: 100%;
   background-repeat: no-repeat;
   background-position: bottom center;
   padding-top: 4.5%;
@@ -1248,8 +1250,18 @@ label {
   font: normal normal 800 40px Raleway;
 }
 
+.coach-details {
+  background-image: url(../img/bg-coach-details.png);
+  background-size: 100%;
+  background-position: top left;
+}
+
 .coach-details img {
   width: 100%;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  text-align: right;
 }
 
 .coach-details h5 {
@@ -1262,8 +1274,8 @@ label {
 
 .rink-list, .program-list {
   background: #F3F6FB;
-  background-image: url(../img/edit_program.png);
-  background-size: auto;
+  background-image: url(../img/bg-rink-list.png);
+  background-size: 100%;
   background-repeat: no-repeat;
   background-position: bottom center;
 }
@@ -1444,6 +1456,13 @@ label {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D0E6A5', endColorstr='#D0E6A5',GradientType=0);
 }
 
+.coach-list {
+  background: #F3F6FB url(../img/bg-coach-list.png) !important;
+  background-size: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: bottom center;
+}
+
 .coach-list .profile .card-body {
   padding: 10% 15%;
   text-align: center;
@@ -1456,12 +1475,37 @@ label {
 
 .coach-list .profile .card-body img {
   border-radius: 50%;
+  width: 150px;
+  height: 150px;
 }
 
 .coach-list .profile .card-body h4 {
   font: normal normal normal 20px Raleway;
   letter-spacing: 0px;
   color: #233C50;
+}
+
+.camp-list {
+  background: #F3F6FB url(../img/bg-camp-list.png) !important;
+  background-size: 100%;
+  background-position: bottom left;
+}
+
+.camp-details {
+  background-image: url(../img/bg-camp-details.png);
+  background-size: 100%;
+  background-position: bottom left;
+}
+
+.camp-details .program-slider img {
+  width: 500px;
+  height: 300px;
+}
+
+.camp-details .coach img {
+  width: 100%;
+  height: 150px;
+  border-radius: 50%;
 }
 
 #calendar {
@@ -1520,5 +1564,90 @@ label {
 
 .fc-center .fc-next-button {
   margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .w-60 {
+    width: 60%;
+  }
+  .wid-40 {
+    width: 40%;
+    padding: 0;
+  }
+  .wid-60 {
+    width: 60%;
+    padding: 0;
+  }
+  footer {
+    background-image: url(../img/sp-footer-bg.png);
+    background-size: 300%;
+    padding: 0;
+  }
+  footer ul {
+    padding: 0 0 0 20px;
+  }
+  footer .pt-5 {
+    padding: 0;
+  }
+  .py-5 {
+    padding: 0;
+  }
+  .rink-list {
+    background: url(../img/sp-bg-rink-list.png);
+  }
+  .rink-list .card {
+    min-height: 450px;
+  }
+  .rink-list .learn-more a {
+    position: relative;
+  }
+  .coach-edit {
+    background: url(../img/sp-bg-coach-edit.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .coach-edit .wid-40 {
+    padding-left: 15px;
+  }
+  .coach-edit .btn-group {
+    display: block;
+    text-align: right;
+  }
+  .coach-edit #create-camp {
+    width: 150px;
+  }
+  .coach-edit .wid-60 {
+    padding-right: 15px;
+  }
+  .coach-edit .img-upload {
+    width: 100%;
+    text-align: center;
+  }
+  .coach-edit .img-upload .bi-plus-lg {
+    right: 26%;
+  }
+  .program-edit {
+    background: url(../img/sp-bg-program-update.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .program-edit #coachimg {
+    float: none !important;
+  }
+  .program-edit .add_period {
+    margin-top: 1% !important;
+    float: none !important;
+  }
+  .camp-edit {
+    background: url(../img/sp-bg-camp-update.png) no-repeat;
+    background-size: 100%;
+  }
+  .camp-edit .img-upload {
+    text-align: center;
+    display: block;
+  }
+  .camp-edit #coach_chosen {
+    width: 85% !important;
+  }
 }
 /*# sourceMappingURL=style.css.map */

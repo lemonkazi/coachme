@@ -27,8 +27,8 @@
                 </div>
               </div>
               
-              <a href="{{route('camp-create')}}" class="btn btn-custom mb-2 green col-md-3">Create a camp</a><br/>
-              <a href="{{route('program-create')}}" class="btn btn-custom mb-4 blue col-md-3">Create a program</a>
+              <a href="{{route('camp-create')}}" class="btn btn-custom mb-2 green col-md-3 w-60">Create a camp</a><br/>
+              <a href="{{route('program-create')}}" class="btn btn-custom mb-4 blue col-md-3 w-60">Create a program</a>
               <div class="row">
                 <div class="col-md-12">
                   <h2>Your Programs</h2>
