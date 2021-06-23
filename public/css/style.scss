@@ -1392,9 +1392,21 @@ label{
         margin-left: 10px;
     }
 }
+.pc{
+    display: block;
+}
+.sp{
+    display: none;
+}
 @media only screen and (max-width: 768px) {
-    .w-60{
-        width: 60%;
+    .pc{
+        display: none;
+    }
+    .sp{
+        display: block;
+    }
+    .wid-50{
+        width: 50%;
     }
     .wid-40{
         width: 40%;
@@ -1404,6 +1416,42 @@ label{
         width: 60%;
         padding: 0;        
     }
+    .wid-30{
+        width: 30%;
+    }
+    .learn-more{
+        a{
+            position: relative !important;
+            right: 0;
+        }
+    }
+    .filter{
+        display: none;
+        position: absolute;
+        top: 0;
+        z-index: 10;
+        padding: 0;
+        .card-body{
+           padding: 10px;
+           border-radius: 0;
+        }
+    }
+    h1 {
+        i{
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: #A7BE79;
+        }
+    }
+    .openTab{
+        background: #FFFFFF;
+        box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 24px;
+        color:#233C50 !important;
+        margin-bottom: 10px;
+        
+    }
     footer {
         background-image: url(../img/sp-footer-bg.png);
         background-size: 300%;
@@ -1412,12 +1460,15 @@ label{
             padding: 0 0 0 20px;
         }
         .pt-5{
-            padding: 0;
+            padding-top: 0 !important;
+        }
+        .py-5{
+            padding-top: 20px !important;
         }
     }
-    .py-5{
-        padding: 0;
-    }
+    // .py-5{
+    //     padding: 0;
+    // }
 
     .rink-list{
         background: url(../img/sp-bg-rink-list.png);
@@ -1479,7 +1530,65 @@ label{
         }
     }
     .program-details{
+        background: url(../img/sp-bg-program-details.png);
+        background-size: 100%;
+        background-position: top;
+        background-repeat: no-repeat;
+        h1{
+            text-align: center;
+        }
+    }
+    .camp-details{
+        background: url(../img/sp-bg-camp-details.png);
+        background-size: 100%;
+        background-position: bottom;
+        background-repeat: no-repeat;
+        .coach{
+            img{
+                width: 70px;
+                height: 70px;
+            }
+        }
+        .address{
+            text-align: left !important;
+        }
+    }
+    .program-list{
+        background: url(../img/sp-bg-program-list.png) !important;
+        background-size: 100% !important;
+        background-position: top;
+        background-repeat: no-repeat;
         
+    }
+    .camp-list{
+        .event{
+            background: #A7DAE9;
+            border-radius: 8px;
+            font-family: Raleway;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 19px;
+            color: #233C50;
+            padding: 10px;
+            display: none;
+            h4{
+                font-family: Raleway;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 19px;
+                color: #233C50;
+            }
+            p{
+                font-family: Raleway;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 16px;
+                color: #233C50;
+            }
+        }
     }
     
 }

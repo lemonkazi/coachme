@@ -4,13 +4,19 @@
     <div class="program-list camp-list">
         <div class="container">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12 sp d-flex justify-content-between">
+              <button class="btn btn-custom text-white openTab"> Filter</button>
+              <a href="{{ url('/camp/filter')}}" class="btn btn-custom mb-2 green ">View calendar</a> 
+            </div>
+            <div class="col-md-4 filter">
+
                 <div class=" text-white">        
                   <div class="card-body">
                     <div class="row">
+
                       <h1>
-                        Filters  
-                        <a href="{{ url('/camp/filter')}}" class="btn btn-custom mb-2 green">View calendar</a>                
+                        Filters  <i class="bi bi-x sp"></i>
+                        <a href="{{ url('/camp/filter')}}" class="btn btn-custom mb-2 green pc">View calendar</a>                
                       </h1>
                       <label for="">Type of Camp</label>
                       <div class="check-section">
@@ -235,6 +241,15 @@
             });
             return false;
         });
+        $('.openTab').on('click',function (e) {
+          e.preventDefault();
+          $('.filter').show();
+
+        })
+        $('h1 i').on('click',function(e) {
+          e.preventDefault();
+          $('.filter').hide();
+        })
       });
     </script>
     

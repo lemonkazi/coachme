@@ -4,13 +4,17 @@
     <div class="program-list camp-list">
         <div class="container">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12 sp d-flex justify-content-between">
+              <button class="btn btn-custom text-white openTab"> Filter</button>
+              <a href="{{ url('/camp/list')}}" class="btn btn-custom mb-2 green">View List</a>  
+            </div>
+            <div class="col-md-4 filter">
                 <div class=" text-white">        
                   <div class="card-body">
                     <div class="row">
                       <h1>
-                        Filters  
-                        <a href="{{ url('/camp/list')}}" class="btn btn-custom mb-2 green">View List</a>                
+                        Filters  <i class="bi bi-x sp"></i>
+                        <a href="{{ url('/camp/list')}}" class="btn btn-custom mb-2 green pc">View List</a>                
                       </h1>
                       <label for="">Type of Camp</label>
                       <div class="check-section">
@@ -142,8 +146,17 @@
                         <div class="col-md-12">
                           <div id='calendar'></div>
                         </div>
+                        
                       </div>
                     </div>
+                </div>
+                <div class="col-md-12 sp">
+                  <div class="events">
+                    <div class="event">
+                      <h4>Annecy club summer camp</h4>
+                      <p>May 1 - May 15</p>
+                    </div>
+                  </div>
                 </div>
               </div>
               </div>
@@ -156,38 +169,18 @@
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid','moment' ],
+          plugins: [ 'dayGrid','moment','interaction' ],
           header: { center: 'prev,title,next,agendaWeek', left: '',right:'' },
+          dateClick: function(info) {
+            console.log(info.date.toISOString());
+            console.log(info.dateStr);
+            console.log(info.allDay);
+            console.log(info.dayEl);
+            console.log(info.jsEvent);
+            $('.event').show();
+          },
           events : <?php echo json_encode($camps) ?>
-          // events: [
-          //             {
-          //               id: 'a',
-          //               title: 'my event',
-          //               start: '2021-06-20',
-          //               end: '2021-06-25',
-          //               backgroundColor:'#A7DAE9',
-          //               borderColor:'#A7DAE9',
-          //               textColor:'#233C50',
-          //             },
-          //             {
-          //               id: 'b',
-          //               title: 'new',
-          //               start: '2021-06-20',
-          //               end: '2021-06-25',
-          //               backgroundColor: '#D0E6A5',
-          //               borderColor: '#D0E6A5',
-          //               textColor:'#233C50',
-          //             },
-          //             {
-          //               id: 'c',
-          //               title: 'new',
-          //               start: '2021-06-20',
-          //               end: '2021-06-25',
-          //               backgroundColor: '#D1B3DD',
-          //               borderColor: '#D1B3DD',
-          //               textColor:'#233C50',
-          //             }
-          //           ]
+          
         });
 
         calendar.render();
@@ -237,43 +230,15 @@
             return false;
         });
 
+        $('.openTab').on('click',function (e) {
+          e.preventDefault();
+          $('.filter').show();
 
-
-
-        // $('#calendar').fullCalendar({
-        //     // put your options and callbacks here
-        //     events : <?php echo json_encode($camps) ?>,
-            
-        //     // events: [
-        //     //   {
-        //     //     id: 'a',
-        //     //     title: 'my event',
-        //     //     start: '2021-06-20',
-        //     //     end: '2021-06-25',
-        //     //     backgroundColor:'#A7DAE9',
-        //     //     borderColor:'#A7DAE9',
-        //     //     textColor:'#233C50',
-        //     //   },
-        //     //   {
-        //     //     id: 'b',
-        //     //     title: 'new',
-        //     //     start: '2021-06-20',
-        //     //     end: '2021-06-25',
-        //     //     backgroundColor: '#D0E6A5',
-        //     //     borderColor: '#D0E6A5',
-        //     //     textColor:'#233C50',
-        //     //   },
-        //     //   {
-        //     //     id: 'c',
-        //     //     title: 'new',
-        //     //     start: '2021-06-20',
-        //     //     end: '2021-06-25',
-        //     //     backgroundColor: '#D1B3DD',
-        //     //     borderColor: '#D1B3DD',
-        //     //     textColor:'#233C50',
-        //     //   }
-        //     // ]
-        // })
+        })
+        $('h1 i').on('click',function(e) {
+          e.preventDefault();
+          $('.filter').hide();
+        })
       });
 
      
