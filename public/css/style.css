@@ -1565,4 +1565,89 @@ label {
 .fc-center .fc-next-button {
   margin-left: 10px;
 }
+
+@media only screen and (max-width: 768px) {
+  .w-60 {
+    width: 60%;
+  }
+  .wid-40 {
+    width: 40%;
+    padding: 0;
+  }
+  .wid-60 {
+    width: 60%;
+    padding: 0;
+  }
+  footer {
+    background-image: url(../img/sp-footer-bg.png);
+    background-size: 300%;
+    padding: 0;
+  }
+  footer ul {
+    padding: 0 0 0 20px;
+  }
+  footer .pt-5 {
+    padding: 0;
+  }
+  .py-5 {
+    padding: 0;
+  }
+  .rink-list {
+    background: url(../img/sp-bg-rink-list.png);
+  }
+  .rink-list .card {
+    min-height: 450px;
+  }
+  .rink-list .learn-more a {
+    position: relative;
+  }
+  .coach-edit {
+    background: url(../img/sp-bg-coach-edit.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .coach-edit .wid-40 {
+    padding-left: 15px;
+  }
+  .coach-edit .btn-group {
+    display: block;
+    text-align: right;
+  }
+  .coach-edit #create-camp {
+    width: 150px;
+  }
+  .coach-edit .wid-60 {
+    padding-right: 15px;
+  }
+  .coach-edit .img-upload {
+    width: 100%;
+    text-align: center;
+  }
+  .coach-edit .img-upload .bi-plus-lg {
+    right: 26%;
+  }
+  .program-edit {
+    background: url(../img/sp-bg-program-update.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  .program-edit #coachimg {
+    float: none !important;
+  }
+  .program-edit .add_period {
+    margin-top: 1% !important;
+    float: none !important;
+  }
+  .camp-edit {
+    background: url(../img/sp-bg-camp-update.png) no-repeat;
+    background-size: 100%;
+  }
+  .camp-edit .img-upload {
+    text-align: center;
+    display: block;
+  }
+  .camp-edit #coach_chosen {
+    width: 85% !important;
+  }
+}
 /*# sourceMappingURL=style.css.map */

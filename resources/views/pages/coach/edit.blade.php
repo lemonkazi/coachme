@@ -168,13 +168,14 @@
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email"  value="{{!empty($data['user']) ? old('email', $data['user']->email) : old('email')}}" required>
                   </div>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-4 mb-4 wid-40">
                   <a href="{{route('camp-create')}}" id="create-camp" class="form-control btn btn-primary submit px-3">Create a camp</a>
                 </div>
-                <div class="offset-md-4 col-md-4 mb-4">
+                <div class="offset-md-4 col-md-4 mb-4 wid-60">
                   <div class="btn-group">
-                    <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
-                    <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                  <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                  <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
+                    
                   </div>
                 </div>
               </div>
