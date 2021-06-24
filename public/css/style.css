@@ -1581,6 +1581,41 @@ label {
   .sp {
     display: block;
   }
+  .hero-section {
+    background-color: #F3F6FB;
+  }
+  .navbar-nav {
+    text-align: center;
+    padding: 10% 0;
+  }
+  .navbar-toggler-icon {
+    background-image: none !important;
+  }
+  .navbar-toggler-icon i {
+    display: none;
+    color: #233C50;
+    font-size: 20px;
+  }
+  .navbar-toggler:focus {
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+  }
+  .navbar-toggler {
+    padding: 0;
+    border: 0;
+  }
+  .navbar-collapse {
+    background: url(../img/sp-nav-bg.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
+    height: 100vh;
+  }
+  .modal-content {
+    width: 46%;
+    position: absolute;
+    top: 0;
+  }
   .wid-50 {
     width: 50%;
   }
@@ -1609,6 +1644,7 @@ label {
   .filter .card-body {
     padding: 10px;
     border-radius: 0;
+    height: 100vh;
   }
   h1 i {
     position: absolute;
@@ -1623,6 +1659,15 @@ label {
     border-radius: 24px;
     color: #233C50 !important;
     margin-bottom: 10px;
+  }
+  .hero-banner {
+    background-image: url(../img/sp-bg-top.png);
+    background-size: 265%;
+    background-repeat: no-repeat;
+    background-position: top left;
+  }
+  .hero-banner .text-content .hero-button {
+    width: 45%;
   }
   footer {
     background-image: url(../img/sp-footer-bg.png);
@@ -1723,6 +1768,13 @@ label {
     background-position: top;
     background-repeat: no-repeat;
   }
+  .camp-list {
+    background: url(../img/sp-bg-camp-list.png) !important;
+    background-size: 100% !important;
+    background-position: bottom;
+    background-repeat: no-repeat !important;
+    border-radius: 0;
+  }
   .camp-list .event {
     background: #A7DAE9;
     border-radius: 8px;
@@ -1750,6 +1802,17 @@ label {
     font-size: 14px;
     line-height: 16px;
     color: #233C50;
+  }
+  .coach-list {
+    background: url(../img/sp-bg-coach-list.png) !important;
+    background-size: 100% !important;
+    background-position: top right;
+    background-repeat: no-repeat !important;
+    border-radius: 0;
+  }
+  .coach-list .profile .card-body {
+    padding: 20px;
+    text-align: center;
   }
 }
 /*# sourceMappingURL=style.css.map */

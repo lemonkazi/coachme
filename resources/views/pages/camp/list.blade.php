@@ -4,9 +4,9 @@
     <div class="program-list camp-list">
         <div class="container">
           <div class="row">
-            <div class="col-md-12 sp d-flex justify-content-between">
-              <button class="btn btn-custom text-white openTab"> Filter</button>
-              <a href="{{ url('/camp/filter')}}" class="btn btn-custom mb-2 green ">View calendar</a> 
+            <div class="col-md-12  d-flex justify-content-between">
+              <button class="btn btn-custom text-white openTab sp"> Filter</button>
+              <a href="{{ url('/camp/filter')}}" class="btn btn-custom mb-2 green sp">View calendar</a> 
             </div>
             <div class="col-md-4 filter">
 

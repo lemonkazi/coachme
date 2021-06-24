@@ -49,7 +49,7 @@
 
         <div class="container">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-4 wid-50">
               <div class="card text-white card-has-bg click-col">        
                 <div class="card-img-overlay d-flex flex-column">
                   <div class="card-body">
@@ -72,42 +72,44 @@
               </div>
             </div>
 
-            <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
-              <div class="card-img-overlay d-flex flex-column">
-               <div class="card-body">
-                  <h4 class="card-title mt-0 "><a herf="#">Step 2</a></h4>
-                 <img class="card-img" src="{{ asset('img/tutorial.png') }}" alt="">
-                </div>
-                <div class="card-footer">
-                 <div class="media">
-           <div class="media-body">
-          <h6 class="my-0 d-block">
-            Click on the coach, the program or the camp to know more
-          </h6>     
-        </div>
-      </div>
-                </div>
-              </div>
-            </div></div>
-
-
-            <div class="col-sm-4"><div class="card text-white card-has-bg click-col">        
-              <div class="card-img-overlay d-flex flex-column">
-               <div class="card-body">
-                  <h4 class="card-title mt-0 "><a herf="#">Step 3</a></h4>
-                 <img class="card-img" src="{{ asset('img/trust.png') }}" alt="">
-                </div>
-                <div class="card-footer">
-                 <div class="media">
-           <div class="media-body">
-          <h6 class="my-0 d-block">
-            Choose the best way for you to contact them
-          </h6>     
-        </div>
-      </div>
+            <div class="col-sm-4 wid-50">
+              <div class="card text-white card-has-bg click-col">        
+                <div class="card-img-overlay d-flex flex-column">
+                  <div class="card-body">
+                    <h4 class="card-title mt-0 "><a herf="#">Step 2</a></h4>
+                    <img class="card-img" src="{{ asset('img/tutorial.png') }}" alt="">
+                  </div>
+                  <div class="card-footer">
+                    <div class="media">
+                      <div class="media-body">
+                        <h6 class="my-0 d-block">
+                          Click on the coach, the program or the camp to know more
+                        </h6>     
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div></div>
+            </div>
+            <div class="col-sm-4 wid-50">
+              <div class="card text-white card-has-bg click-col">        
+                <div class="card-img-overlay d-flex flex-column">
+                  <div class="card-body">
+                    <h4 class="card-title mt-0 "><a herf="#">Step 3</a></h4>
+                    <img class="card-img" src="{{ asset('img/trust.png') }}" alt="">
+                  </div>
+                  <div class="card-footer">
+                    <div class="media">
+                      <div class="media-body">
+                        <h6 class="my-0 d-block">
+                          Choose the best way for you to contact them
+                        </h6>     
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         
       </div>
         

@@ -55,10 +55,13 @@
                 <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}"><img class="img-fluid" src="{{ asset('img/logo.png') }}" alt=""></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon">
+                      <img src="{{ asset('img/nav-icon.png') }}" alt="">
+                      <i class="bi bi-x "></i>
+                    </span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -406,7 +409,25 @@
                         }
                     });
                 });
-                
+                $('.navbar-toggler').on('click',function (e) {
+                  e.preventDefault();
+
+                  if($('.navbar-toggler').hasClass('collapsed')){
+                    $('.navbar-collapse').addClass('show');
+                    $(this).attr('aria-expanded',true);
+                    $('.navbar-toggler').removeClass('collapsed');
+                    $('.navbar-toggler-icon img').addClass('d-none');
+                    $('.navbar-toggler-icon i').show();
+                    $('.hero-section').css('background-color','#8ac8dc');
+                  }else{
+                    $('.navbar-collapse').removeClass('show');
+                    $(this).attr('aria-expanded',false);
+                    $('.navbar-toggler').addClass('collapsed');
+                    $('.navbar-toggler-icon img').removeClass('d-none');
+                    $('.navbar-toggler-icon i').hide();
+                    $('.hero-section').css('background-color','#F3F6FB');
+                  }
+                })
             });
 
             ;(function($){

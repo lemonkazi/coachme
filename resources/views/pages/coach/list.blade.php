@@ -4,12 +4,15 @@
     <div class="program-list coach-list">
         <div class="container">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
+              <button class="btn btn-custom text-white openTab sp"> Filter</button> 
+            </div>
+            <div class="col-md-4 filter">
                 <div class=" text-white">        
                   <div class="card-body">
                     <div class="row">
                       <h1>
-                        Filters                    
+                        Filters        <i class="bi bi-x sp"></i>            
                       </h1>
                       <label for="">Speciality</label>
                       <div class="check-section">
@@ -100,7 +103,7 @@
                         <div class="card profile">           
                             <div class="card-body">
                               <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 wid-40">
                                   @if(!empty($coach['avatar_image_path']))         
                                     <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" />      
                                   @else
@@ -108,13 +111,16 @@
                                   @endif
                                   
                                 </div>
-                                <div class="col-md-12">
-                                  <h3>{{$coach['name']}} {{$coach['family_name']}}</h3>
-                                  <h4>{{$coach['city_name']}}, {{$coach['province_name']}}</h4>
-                                </div> 
-                                <div class="col-md-12 learn-more">
-                                  <a href="{{!empty($coach['id']) ? route('coach-details', ['user' => $coach['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                                <div class="wid-60">
+                                  <div class="col-md-12 ">
+                                    <h3>{{$coach['name']}} {{$coach['family_name']}}</h3>
+                                    <h4>{{$coach['city_name']}}, {{$coach['province_name']}}</h4>
+                                  </div> 
+                                  <div class="col-md-12 learn-more">
+                                    <a href="{{!empty($coach['id']) ? route('coach-details', ['user' => $coach['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                                  </div>
                                 </div>
+
                                 
                               </div>
                             </div>
@@ -170,6 +176,15 @@
             });
             return false;
         });
+        $('.openTab').on('click',function (e) {
+          e.preventDefault();
+          $('.filter').show();
+
+        })
+        $('h1 i').on('click',function(e) {
+          e.preventDefault();
+          $('.filter').hide();
+        })
       });
     </script>
     

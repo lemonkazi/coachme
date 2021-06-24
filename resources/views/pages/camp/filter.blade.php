@@ -4,9 +4,9 @@
     <div class="program-list camp-list">
         <div class="container">
           <div class="row">
-            <div class="col-md-12 sp d-flex justify-content-between">
-              <button class="btn btn-custom text-white openTab"> Filter</button>
-              <a href="{{ url('/camp/list')}}" class="btn btn-custom mb-2 green">View List</a>  
+            <div class="col-md-12  d-flex justify-content-between">
+              <button class="btn btn-custom text-white openTab sp"> Filter</button>
+              <a href="{{ url('/camp/list')}}" class="btn btn-custom mb-2 green sp">View List</a>  
             </div>
             <div class="col-md-4 filter">
                 <div class=" text-white">        
@@ -171,7 +171,9 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'dayGrid','moment','interaction' ],
           header: { center: 'prev,title,next,agendaWeek', left: '',right:'' },
+          //link https://fullcalendar.io/docs/v4/dateClick
           dateClick: function(info) {
+            
             console.log(info.date.toISOString());
             console.log(info.dateStr);
             console.log(info.allDay);
