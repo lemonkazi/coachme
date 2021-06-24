@@ -5,26 +5,28 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              
-              <h1>{{$data['program']->name}}<i class="fas fa-share-alt"></i></h1>
+
+              <h1>{{$data['program']->name}}
+                <!-- <i class="fas fa-share-alt"></i> -->
+              </h1>
               <div class="col-md-6 sp">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="program-slider">
-                    @if(isset($data['program_photo']))
-                      @foreach ($data['program_photo'] as $photo)
-                        
-                        <div class="item">
-                          <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
-                        </div>
-                      @endforeach
-                    @endif
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="program-slider">
+                      @if(isset($data['program_photo']))
+                        @foreach ($data['program_photo'] as $photo)
+                          
+                          <div class="item">
+                            <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
+                          </div>
+                        @endforeach
+                      @endif
+                      
+                    </div>
                     
                   </div>
-                  
-                </div>
-              </div> 
-            </div>
+                </div> 
+              </div>
               <?php 
               if(isset($data['program']->program_period)) {
                 
@@ -52,7 +54,14 @@
               }
               ?>
               <p class="gray">Window of registration: {{date('F', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}}</p>
-              <a href="#" class="btn btn-custom mb-3">Register here</a>
+              @if (Route::has('logout'))
+                  @auth
+                     
+                  @else
+                      <a href="#" class="btn btn-custom mb-3" data-toggle="modal" data-target="#exampleModalCenter">Register here</a>
+                  @endauth
+              @endif
+
               <div class="row">
                 <div class="col-md-4 wid-50">
                   <label for="">Level</label>
