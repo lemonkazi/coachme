@@ -5,10 +5,28 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6">
-              
+
               <h1>{{$data['program']->name}}
                 <!-- <i class="fas fa-share-alt"></i> -->
               </h1>
+              <div class="col-md-6 sp">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="program-slider">
+                      @if(isset($data['program_photo']))
+                        @foreach ($data['program_photo'] as $photo)
+                          
+                          <div class="item">
+                            <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
+                          </div>
+                        @endforeach
+                      @endif
+                      
+                    </div>
+                    
+                  </div>
+                </div> 
+              </div>
               <?php 
               if(isset($data['program']->program_period)) {
                 
@@ -45,27 +63,39 @@
               @endif
 
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 wid-50">
                   <label for="">Level</label>
                   <p>{{$data['program']->level_name}}</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 wid-50">
                   <label for="">Price</label>
                   <p>{{$data['program']->price}}$</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 pc">
                   <label for="">Starting age</label>
                   <p>{{$data['program']->starting_age}}+</p>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 wid-50">
                   <label for="">Schedule</label>
                   <p>{{$data['program']->schedule_log}}</p>
+                </div>
+                <div class="col-md-4 sp wid-50">
+                  <label for="">Starting age</label>
+                  <p>{{$data['program']->starting_age}}+</p>
                 </div>
                 <div class="col-md-8">
                   <label for="">Location</label>
                   <p>{{$data['program']->location_name}}<a href="">{{$data['program']->rink_name}}</a></p>
+                </div>
+                <div class="col-md-12 sp">
+                  <div class="address">
+                      <label for="">Contact</label>
+                      <h5><i class="bi bi-telephone-fill"></i>+{{$data['program']->contacts}}</h5>
+                      <h5><i class="fas fa-at"></i>{{$data['program']->email}}</h5>
+                      <h5><i class="bi bi-telephone-fill"></i>+{{$data['program']->whatsapp}}</h5>
+                    </div>
                 </div>
               </div>
               <div class="row">
@@ -77,7 +107,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 pc">
               <div class="row">
                 <div class="col-md-12">
                   <div class="program-slider">

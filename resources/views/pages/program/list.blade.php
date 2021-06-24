@@ -4,12 +4,15 @@
     <div class="program-list">
         <div class="container">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
+              <button class="sp btn btn-custom text-white openTab"> Filter</button>
+            </div>
+            <div class="col-md-4 filter">
                 <div class=" text-white">        
                   <div class="card-body">
                     <div class="row">
                       <h1>
-                        Filters                    
+                        Filters <i class="bi bi-x sp"></i>                   
                       </h1>
                       <label for="">Type of program <i class="fas fa-info-circle"></i></label>
                       <div class="check-section">
@@ -263,6 +266,15 @@
             });
             return false;
         });
+        $('.openTab').on('click',function (e) {
+          e.preventDefault();
+          $('.filter').show();
+
+        })
+        $('h1 i').on('click',function(e) {
+          e.preventDefault();
+          $('.filter').hide();
+        })
       });
     </script>
     

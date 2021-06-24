@@ -174,8 +174,7 @@
                 <div class="offset-md-4 col-md-4 mb-4 wid-60">
                   <div class="btn-group">
                   <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
-                  <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
-                    
+                  <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>                 
                   </div>
                 </div>
               </div>
