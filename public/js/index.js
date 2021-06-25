@@ -16,13 +16,17 @@ $('.slider').slick({
         {
           breakpoint: 576,
           settings: {
+            prevArrow:'<i class="bi bi-arrow-up"></i>',
+            nextArrow:'<i class="bi bi-arrow-down"></i>',
+    //         centerMode: false,
+    // variableWidth: false,
             // centerMode: true,
             // prevArrow:'<i class="bi bi-arrow-up"></i>',
             // nextArrow:'<i class="bi bi-arrow-down"></i>',
             // slidesToScroll: 1,
             // dots: false,
-            vertical: true,
-            verticalSwiping: true
+            // vertical: true,
+            // verticalSwiping: true
           },
 
         },

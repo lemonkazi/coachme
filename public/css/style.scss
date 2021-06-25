@@ -1435,7 +1435,7 @@ label{
         height: 100vh;
     }
     .modal-content{
-        width: 46%;
+        width: 100%;
         position: absolute;
         top: 0;
     }
@@ -1501,6 +1501,10 @@ label{
         } 
     }
     .card-section {
+        background: url(../img/sp-bg-top-2.png);
+        background-size: 248%;
+        background-position: top left;
+        background-repeat: no-repeat;
         height: 957px;
         .mauto{
             margin: 10px auto;
@@ -1539,12 +1543,27 @@ label{
             }
         }
     }
-    .carousel-section .bi-arrow-left {
+    .carousel-section {
+        h1{
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .wrap{
+            padding: 0 15px;
+        }
+        .title{
+            .pic{
+                margin: 0 auto;
+            }
+        }
+            
+    }
+    .carousel-section .bi-arrow-up {
         left: 50%;
         text-align: left;
         top: -40px;
     }
-    .carousel-section .bi-arrow-right {
+    .carousel-section .bi-arrow-down {
         left: 50%;
         text-align: left;
         top: 111%;
