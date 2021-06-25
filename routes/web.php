@@ -25,6 +25,7 @@ Route::get('/filter_coach', 'PublicContoller@filter_coach');
 Route::get('ajax', function(){ return view('ajax'); });
 Route::post('ajax_citylist','AjaxController@citylist');
 Route::post('ajax_set_cookie','AjaxController@set_Cookie');
+Route::post('ajax_get_camp','AjaxController@get_camp');
 
 
 Route::get('/user/login', 'PublicContoller@login');

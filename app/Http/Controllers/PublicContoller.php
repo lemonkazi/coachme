@@ -1034,13 +1034,17 @@ class PublicContoller extends Controller
 
         
         // It returns array of random keys
-        $key = array_rand( $backgroundColor);
+        //$key = array_rand( $backgroundColor);
         $value['start_date'] = strtotime($value['start_date']);
         $value['start_date'] = date( 'Y-m-d', $value['start_date']);
 
         $value['end_date'] = strtotime($value['end_date']);
         $value['end_date'] = date( 'Y-m-d', $value['end_date']);
-
+        if (isset($backgroundColor[$key])) {
+          $backgroundColor[$key] = $backgroundColor[$key];
+        } else {
+          $backgroundColor[$key] = '#A7DAE9';
+        }
         $camps[]=array(
           "id"=> $value['id'],
           "title"=> $value['name'],
@@ -1089,7 +1093,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('params','camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
     }
     public function coach_edit(Request $request){
       $user = $request->user();

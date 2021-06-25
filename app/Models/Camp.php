@@ -276,6 +276,13 @@ class Camp extends Model
             }
             
         }
+        if (isset($params['date'])) {
+            $dt =  now();
+            $dt      = strtotime($params['date']);
+            $dt = date('Y-m-d H:i:s', $dt);
+            $query->where('start_date', '<=', $dt)
+                          ->where('end_date', '>=', $dt);
+        }
         if (isset($params['duration'])) {
 
             $array = explode(',', $params['duration']);

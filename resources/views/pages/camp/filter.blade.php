@@ -178,7 +178,43 @@
             console.log(info.allDay);
             console.log(info.dayEl);
             console.log(info.jsEvent);
-            $('.event').show();
+
+            var date = info.dateStr;
+            $('.event').html('');
+            if (date == '') {
+                return false;
+            }
+
+            //var value = $(this).val();
+            var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+          
+
+            var data = {
+                date: date,
+                _token:csrfToken,
+                params:<?php echo json_encode($params) ?>
+            };
+
+
+            $.ajax({
+              type: 'POST',
+              url: baseUrl + '/ajax_get_camp',
+              data: data,
+              //dataType: 'json',
+              success: function (response) {
+                console.log(response);
+                if (response) {
+                    $('.event').html(response);
+                    $('.event').show();
+                } else {
+                    $('.event').html('');
+                    $('.event').hide();
+                }
+              },
+              complete: function () {}
+            });
+            //return false;
+            //$('.event').show();
           },
           events : <?php echo json_encode($camps) ?>
           
