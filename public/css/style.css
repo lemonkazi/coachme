@@ -301,7 +301,7 @@ header nav ul li.active a {
 
 @media (max-width: 420px) {
   .card-section .card {
-    min-height: 300px;
+    min-height: 350px;
   }
 }
 
@@ -1669,6 +1669,47 @@ label {
   .hero-banner .text-content .hero-button {
     width: 45%;
   }
+  .card-section {
+    height: 957px;
+  }
+  .card-section .mauto {
+    margin: 10px auto;
+  }
+  .card-section .card .card-body {
+    padding-bottom: 0;
+  }
+  .card-section .card .card-body .card-img {
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    height: auto;
+  }
+  .card-section .card .card-footer .media .d-block {
+    color: #233c50;
+    width: 100%;
+    margin-left: 0;
+  }
+  .map-section .search-div {
+    display: table;
+    position: relative;
+  }
+  .map-section .search-div i {
+    position: absolute !important;
+    right: 9px;
+    top: 7px;
+    left: auto !important;
+  }
+  .carousel-section .bi-arrow-left {
+    left: 50%;
+    text-align: left;
+    top: -40px;
+  }
+  .carousel-section .bi-arrow-right {
+    left: 50%;
+    text-align: left;
+    top: 111%;
+    right: 0;
+  }
   footer {
     background-image: url(../img/sp-footer-bg.png);
     background-size: 300%;
@@ -1774,6 +1815,18 @@ label {
     background-position: bottom;
     background-repeat: no-repeat !important;
     border-radius: 0;
+  }
+  .camp-list .fc-head {
+    position: relative;
+    bottom: 0;
+  }
+  .camp-list .fc td, .camp-list .fc th {
+    border-width: 0;
+  }
+  .camp-list .fc-unthemed td.fc-today {
+    background: #A7BE79;
+    color: #fff;
+    border-radius: 15px;
   }
   .camp-list .event {
     background: #A7DAE9;

@@ -91,7 +91,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-4 wid-50">
+            <div class="col-sm-4 wid-50 mauto">
               <div class="card text-white card-has-bg click-col">        
                 <div class="card-img-overlay d-flex flex-column">
                   <div class="card-body">
@@ -161,8 +161,8 @@
                   <h2>Find Rinks A Rinks Around You</h2>
                   
                   <div class="search-div mb-2">
-                    <button type="button" onclick="centerMap(USbounds);" class="btn green-btn">Use my location</button>
-                    <input type="text" placeholder="Search" id="address" value="" class="search-btn"><i class="bi bi-search"></i>
+                    <button type="button" onclick="centerMap(USbounds);" class="btn green-btn wid-50">Use my location</button>
+                    <input type="text" placeholder="Search" id="address" value="" class="search-btn wid-50"><i class="bi bi-search"></i>
                     <input type="button" style="display:none;" id="id_of_button" value="Submit" onclick="codeAddress();" />
                     
                   </div>

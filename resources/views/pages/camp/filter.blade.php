@@ -146,17 +146,17 @@
                         <div class="col-md-12">
                           <div id='calendar'></div>
                         </div>
-                        
+                        <div class="events">
+                          <div class="event">
+                            <h4>Annecy club summer camp</h4>
+                            <p>May 1 - May 15</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                 </div>
                 <div class="col-md-12 sp">
-                  <div class="events">
-                    <div class="event">
-                      <h4>Annecy club summer camp</h4>
-                      <p>May 1 - May 15</p>
-                    </div>
-                  </div>
+                  
                 </div>
               </div>
               </div>
@@ -172,8 +172,7 @@
           plugins: [ 'dayGrid','moment','interaction' ],
           header: { center: 'prev,title,next,agendaWeek', left: '',right:'' },
           //link https://fullcalendar.io/docs/v4/dateClick
-          dateClick: function(info) {
-            
+          dateClick: function(info) {          
             console.log(info.date.toISOString());
             console.log(info.dateStr);
             console.log(info.allDay);

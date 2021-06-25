@@ -257,7 +257,7 @@ header {
         }
 
         @media (max-width: 420px) {
-            min-height: 300px;
+            min-height: 350px;
         }
 
         &.card-has-bg {
@@ -1500,6 +1500,56 @@ label{
             }
         } 
     }
+    .card-section {
+        height: 957px;
+        .mauto{
+            margin: 10px auto;
+        }
+        .card {
+
+            .card-body {
+                padding-bottom: 0;
+                .card-img{
+                    width: 100%;
+                    position: relative;
+                    margin: 0 auto;
+                    height: auto;
+                }
+            }
+            .card-footer{
+                .media {
+                    .d-block {
+                        color: #233c50;
+                        width: 100%;
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+    }
+    .map-section{
+        .search-div{
+            display: table;
+            position: relative;
+            i {
+                position: absolute !important;
+                right: 9px;
+                top: 7px;
+                left: auto !important;
+            }
+        }
+    }
+    .carousel-section .bi-arrow-left {
+        left: 50%;
+        text-align: left;
+        top: -40px;
+    }
+    .carousel-section .bi-arrow-right {
+        left: 50%;
+        text-align: left;
+        top: 111%;
+        right: 0;
+    } 
     footer {
         background-image: url(../img/sp-footer-bg.png);
         background-size: 300%;
@@ -1514,9 +1564,6 @@ label{
             padding-top: 20px !important;
         }
     }
-    // .py-5{
-    //     padding: 0;
-    // }
 
     .rink-list{
         background: url(../img/sp-bg-rink-list.png);
@@ -1614,6 +1661,18 @@ label{
         background-position: bottom;
         background-repeat: no-repeat !important;
         border-radius: 0;
+        .fc-head {
+            position: relative;
+            bottom: 0; 
+        }
+        .fc td, .fc th{
+            border-width: 0;
+        }
+        .fc-unthemed td.fc-today {
+            background: #A7BE79;
+            color: #fff;
+            border-radius: 15px;
+        }
         .event{
             background: #A7DAE9;
             border-radius: 8px;
