@@ -7,6 +7,7 @@ use App\Models\Speciality;
 use App\Models\Experience;
 use App\Models\Certificate;
 use App\Models\Price;
+use App\Models\Camp;
 use App\Models\Language;
 use App\Models\Location;
 use Illuminate\Http\Response;
@@ -138,6 +139,76 @@ class AjaxController extends Controller {
 		}
 		echo $cookieValue;
 		exit();
+   	}
+
+
+
+   	public function get_camp(Request $request){
+   		$camp = new Camp();
+   		$data = $request->all();
+   		
+   		if (!empty($data['params'])) {
+   			$params = json_decode($data['params'],true);
+   		} else {
+   			$params =[];
+   		}
+   		$params['date'] = $data['date'];
+
+   		$response = '';
+
+   		$query = $camp->filter($params);
+		try {
+		  	$limit = (int) $request->input('limit', 20);
+		} catch (\Exception $e) {
+		  	$limit = 20;
+		}
+		if (!is_int($limit) || $limit <= 0) {
+		  	$limit = 20;
+		}
+
+		if (isset($params['with'])) { 
+		  	$with = explode(',', $params['with']);
+
+		  	$query->with($with);
+		}
+		if (isset($params['sort']) && !empty($params['sort'])) {
+			$sort = $params['sort'];
+			$sortExplode = explode('-', $params['sort']);
+			$query->orderBy($sortExplode[0],$sortExplode[1]);
+		} else {
+			$sort = 'id-desc'; 
+			$query->orderBy('id', 'desc');
+		}
+		$camps_all = $query->get()->toArray();
+      	$backgroundColor = array(
+	        0=>'#A7DAE9',
+	        1=>'#D0E6A5',
+	        2=>'#D1B3DD'
+      	);
+      	$camps=[];
+      	foreach ($camps_all as $key => $value) {
+
+        
+	        // It returns array of random keys
+	        //$key = array_rand( $backgroundColor);
+	        $value['start_date'] = strtotime($value['start_date']);
+	        $value['start_date'] = date( 'M d', $value['start_date']);
+
+	        $value['end_date'] = strtotime($value['end_date']);
+	        $value['end_date'] = date( 'M d', $value['end_date']);
+
+	        if (isset($backgroundColor[$key])) {
+	          $backgroundColor[$key] = $backgroundColor[$key];
+	        } else {
+	          $backgroundColor[$key] = '#A7DAE9';
+	        }
+
+	        $response .= '<div class="event" style="background-color:'.$backgroundColor[$key].'">';
+     			$response .= '<h4>'.$value['name'].'</h4>';
+ 				$response .= '<p>'.$value['start_date'].' - '.$value['end_date'].'</p>';
+ 			$response .= '</div>';
+      	}
+   		echo $response; exit;
    	}
 
    
