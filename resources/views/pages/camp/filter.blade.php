@@ -146,11 +146,42 @@
                         <div class="col-md-12">
                           <div id='calendar'></div>
                         </div>
-                        <div class="events">
-                          <div class="event">
+                        <div class="events sp">
+                          <?php
+                          $backgroundColor = array(
+                            0=>'#A7DAE9',
+                            1=>'#D0E6A5',
+                            2=>'#D1B3DD'
+                          );
+                          $response = '';
+                          foreach ($current_camps as $key => $value) {
+
+                          
+                            // It returns array of random keys
+                            //$key = array_rand( $backgroundColor);
+                            $value['start_date'] = strtotime($value['start_date']);
+                            $value['start_date'] = date( 'M d', $value['start_date']);
+
+                            $value['end_date'] = strtotime($value['end_date']);
+                            $value['end_date'] = date( 'M d', $value['end_date']);
+
+                            if (isset($backgroundColor[$key])) {
+                              $backgroundColor[$key] = $backgroundColor[$key];
+                            } else {
+                              $backgroundColor[$key] = '#A7DAE9';
+                            }
+
+                            $response .= '<div class="event" style="background-color:'.$backgroundColor[$key].'">';
+                            $response .= '<h4>'.$value['name'].'</h4>';
+                            $response .= '<p>'.$value['start_date'].' - '.$value['end_date'].'</p>';
+                            $response .= '</div>';
+                          }
+                          echo $response;
+                          ?>
+                          <!-- <div class="event">
                             <h4>Annecy club summer camp</h4>
                             <p>May 1 - May 15</p>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -180,7 +211,7 @@
             console.log(info.jsEvent);
 
             var date = info.dateStr;
-            $('.event').html('');
+            $('.events').html('');
             if (date == '') {
                 return false;
             }
@@ -204,11 +235,9 @@
               success: function (response) {
                 console.log(response);
                 if (response) {
-                    $('.event').html(response);
-                    $('.event').show();
+                    $('.events').html(response);
                 } else {
-                    $('.event').html('');
-                    $('.event').hide();
+                    $('.events').html('');
                 }
               },
               complete: function () {}

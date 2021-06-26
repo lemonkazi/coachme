@@ -998,7 +998,19 @@ class PublicContoller extends Controller
     }
     public function camp_filter(Request $request, Camp $camp){
       $params = $request->all();
-      //$params['period'] = 'spring';
+      
+      $current_camps = [];
+      if (!isset($params['date']) || empty($params['date'])) {
+          $params['current_date'] = 1;
+          $dt =  now();
+          $dt      = strtotime($dt);
+          $dt = date('Y-m-d H:i:s', $dt);
+          $sss = $camp->filter($params);
+          // $sss= $camp->where('start_date', '<=', $dt)
+          //               ->where('end_date', '>=', $dt);
+          $current_camps = $sss->get()->toArray();
+      }
+
       $query = $camp->filter($params);
       try {
           $limit = (int) $request->input('limit', 20);
@@ -1093,7 +1105,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('params','camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('current_camps','params','camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
     }
     public function coach_edit(Request $request){
       $user = $request->user();
