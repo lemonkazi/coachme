@@ -148,12 +148,12 @@ class AjaxController extends Controller {
    		$data = $request->all();
    		
    		if (!empty($data['params'])) {
-   			$params = json_decode($data['params'],true);
+   			$params = $data['params'];
    		} else {
    			$params =[];
    		}
+   		$params['current_date'] = 0;
    		$params['date'] = $data['date'];
-
    		$response = '';
 
    		$query = $camp->filter($params);

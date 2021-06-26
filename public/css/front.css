@@ -20,6 +20,10 @@
   transform: translate(-50%, -45%);
 }
 
+.camp-list .events .event {
+  display: block !important;
+}
+
 button.remove.form-control.btn.btn-primary.submit.px-3 {
   float: right;
   width: 40px;
