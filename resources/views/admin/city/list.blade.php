@@ -109,6 +109,7 @@
                           <tr>
                             <th>ID</th>
                             <th>Name</th>
+                            <th>Province</th>
                             
                             <th>Action</th>
                           </tr>
@@ -118,6 +119,7 @@
                             <tr>
                               <td>{{$city->id}}</td>
                               <td>{{$city->name}}</td>
+                              <td>{{$city->province_name}}</td>
                               <td> 
                                 <div class="btn-group">
                                   <a href="{{url('city').'/'.$city->id}}" class="btn btn-primary">

@@ -136,7 +136,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'authority',
         'experience_id',
         'certificate_id',
-        'price_id'
+        'price_id',
+        'is_published',
+        'is_verified'
     ];
 
 

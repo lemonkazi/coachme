@@ -81,7 +81,7 @@
                     <div class="form-group button-group result-top">
                       <div class="result-top-buttons">
                         <div class="form-group">
-                          <a href="{{ url('/speciality/add')}}" class="btn btn-primary btn-addnew">Add New</a> 
+                          <a href="{{ url('special/add')}}" class="btn btn-primary btn-addnew">Add New</a> 
                         </div>
                       </div>
                       <div class="result-top-elements">

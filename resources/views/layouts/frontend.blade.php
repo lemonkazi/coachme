@@ -65,17 +65,17 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                         <a class="nav-link" href="#">About us</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link <?php if ($controller == 'publiccontroller' && $action == 'coach_list') echo 'active' ?>" href="{{ url('/coach/list') }}">Coaches</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/coach/list') }}">Coaches</a>
+                            <a class="nav-link <?php if ($controller == 'publiccontroller' && $action == 'camp_list') echo 'active' ?>" href="{{ url('/camp/list') }}">Camps</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/camp/list') }}">Camps</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/program/list') }}">Programs</a>
+                            <a class="nav-link <?php if ($controller == 'publiccontroller' && $action == 'program_list') echo 'active' ?>" href="{{ url('/program/list') }}">Programs</a>
                         </li>
                         <li>
                             @if (Route::has('logout'))
