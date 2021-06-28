@@ -145,7 +145,7 @@ class PublicContoller extends Controller
         if ( $validator->fails() ) 
         {
             
-          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          //Toastr::warning('Error occured',$validator->errors()->all()[0]);
           return redirect()->back()->withInput()->withErrors($validator);
         }
         else
@@ -276,7 +276,7 @@ class PublicContoller extends Controller
         if ( $validator->fails() ) 
         {
             
-          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          //Toastr::warning('Error occured',$validator->errors()->all()[0]);
           return redirect()->back()->withInput()->withErrors($validator);
         }
         else
@@ -504,7 +504,7 @@ class PublicContoller extends Controller
         if ( $validator->fails() ) 
         {
             
-          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          //Toastr::warning('Error occured',$validator->errors()->all()[0]);
           return redirect()->back()->withInput()->withErrors($validator);
         }
         else
@@ -635,7 +635,7 @@ class PublicContoller extends Controller
         if ( $validator->fails() ) 
         {
             
-          Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          //Toastr::warning('Error occured',$validator->errors()->all()[0]);
           return redirect()->back()->withInput()->withErrors($validator);
         }
         else
@@ -925,6 +925,7 @@ class PublicContoller extends Controller
 
       $params = $request->all();
       $params['authority'] = 'COACH_USER';
+      $params['is_published'] = 1;
       $query = $user->filter_coach($params);
 
      

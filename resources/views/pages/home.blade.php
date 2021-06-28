@@ -24,7 +24,7 @@
                         <h1>Finding <span>a coach, a program or camp</span> has never been that simple.</h1>
                         <p>Coach me solutions is the easiest, safest and most affordable way to connect with an experienced coach who can help you improve your athletic performance and reach your individual goals.</p>
 
-                        <button type="button" class="btn hero-button">Explore  <i class="fas fa-arrow-right"></i></button>
+                        <a href="{{ url('/coach/list') }}" class="btn hero-button">Explore  <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="col-md-5">
