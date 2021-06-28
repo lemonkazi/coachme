@@ -34,6 +34,8 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use Intervention\Image\ImageManagerStatic as InterventionImageManager;
+use Illuminate\Support\Facades\Storage;
 
 use App\Providers\RouteServiceProvider;
 
@@ -1253,10 +1255,85 @@ class PublicContoller extends Controller
           if($request->file('avatar_image_path'))
           {
             $image = $request->file('avatar_image_path');
+
+
+
+
+
+
+
+
+            $shouldCrop = $request->boolean('crop', true);
+            $width = $request->input('width', 150);
+            $height = $request->input('height', 150);
             $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+            //$name = time() . '_' . str_replace(' ', '-', $this->removeBs($file->getClientOriginalName()));
+            $filePath = '/user_photo/' . $new_name;
+            $fileContent = null;
+
+            // echo public_path('photo');
+            // exit();
+
+            if ($shouldCrop) {
+                $interventionImage = InterventionImageManager::make($image);
+                //$img = Image::make('foo.jpg')->resize(300, 200);
+                if (!$width && !$height) {
+                    $height = $interventionImage->height();
+                    $width = $interventionImage->width();
+                    
+                    if ($height <= $width) {
+                        $width = $height;
+                    } else {
+                        $height = $width;
+                    }
+                } else {
+                    if (!$width) {
+                        $width = $interventionImage->width();
+                    }
+
+                    if (!$height) {
+                        $height = $interventionImage->height();
+                    }
+                }
+
+                $croppedImage = $interventionImage->fit($width, $height);
+                
+                // $store  = Storage::putFile('public/image', $croppedImage);
+
+                // $url    = Storage::url($store);
+
+                $croppedImageStream = $croppedImage->stream();
+                
+                $fileContent = $croppedImageStream->__toString();
+                
+            } else {
+                $fileContent = file_get_contents($image);
+            }
+            $result = Storage::disk('public')->put($filePath, $fileContent);
             
-            $image->move(public_path('photo/user_photo'), $new_name);
+            if (!$result) {
+              return redirect()->back()->withInput()->withErrors('Image could not be uploaded');
+                //throw new HttpResponseException(response()->error('Image could not be uploaded', Response::HTTP_BAD_REQUEST));
+            }
             $data['avatar_image_path'] = $new_name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //$new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+            
+            //$image->move(public_path('photo/user_photo'), $new_name);
+            //$data['avatar_image_path'] = $new_name;
           }
           if (!$user->update($data)) {
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
