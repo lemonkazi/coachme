@@ -16,11 +16,17 @@
                       </h1>
                       <label for="">Type of program <i class="fas fa-info-circle"></i></label>
                       <div class="check-section">
-
+                        <?php
+                        $programArray = array();
+                        if (isset($_GET['program_type_id'])) {
+                          $programArray = explode(',', $_GET['program_type_id']);
+                        }
+                        
+                        ?>
                         @foreach($program_type_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="program_type_id" type="checkbox" value="{{ $id }}" {{ (old('program_type_id') ? old('program_type_id') : $_GET['program_type_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="program_type_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $programArray)) ? 'checked="checked"' : '' }}  >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -29,11 +35,17 @@
                       </div>
                       <label for="">Levels</label>
                       <div class="check-section">
-
+                        <?php
+                        $levelArray = array();
+                        if (isset($_GET['level_id'])) {
+                          $levelArray = explode(',', $_GET['level_id']);
+                        }
+                        
+                        ?>
                         @foreach($level_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (old('level_id') ? old('level_id') : $_GET['level_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $levelArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -205,7 +217,13 @@
                                 }
                               }
                               ?>
-                              <h5><i class="fas fa-map-marker-alt"></i>{{$program['rink']['address']}}</h5>
+                              @if(isset($program['rink']))
+                                <h5><i class="fas fa-map-marker-alt"></i>
+                                  
+                                    {{$program['rink']['address']}}
+                                  
+                                </h5>
+                              @endif
                               <h5><i class="fas fa-clock"></i>Starting at {{$program['starting_age']}}</h5>
                               <h5><i class="fas fa-road"></i>{{$program['level_name']}}</h5>
                             </div> 

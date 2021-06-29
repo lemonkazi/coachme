@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->foreign('price_id')->references('id')->on('prices');
             $table->string('family_name', 50)->nullable();
             $table->string('name', 50)->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->text('about')->nullable();

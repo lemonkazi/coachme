@@ -86,7 +86,7 @@ class Program extends Model
      */
     protected $exactFilterable = [
         'id',
-        'program_type_id',
+        //'program_type_id',
         'level_id',
         'location_id',
         'rink_id',
@@ -127,13 +127,7 @@ class Program extends Model
     {
         return $this->belongsTo(Rink::class);
     }
-    /**
-     * The coupons that belong to the city.
-     */
-    public function program_type()
-    {
-        return $this->belongsTo(ProgramType::class);
-    }
+   
 
 
     
@@ -174,7 +168,16 @@ class Program extends Model
      */
     public function getProgramTypeNameAttribute()
     {
-        return !empty($this->program_type) ? $this->program_type->name : null;
+        $program_types=array();
+        if(!empty($this->program_type_id)){
+            $program_type_id_data = json_decode($this->program_type_id);
+            foreach ($program_type_id_data as $key=>$program_type) {
+              $program_types[] = ProgramType::find($program_type, ['name', 'id'])->toArray();
+            }
+        }
+        
+        
+        return $program_types;
     }
 
 
@@ -271,6 +274,17 @@ class Program extends Model
         if (isset($params['is_varified'])) {
             $params['is_verified'] = $params['is_varified'];
             unset($params['is_varified']);
+        }
+
+        if (isset($params['program_type_id'])) {
+            $array = explode(',', $params['program_type_id']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('program_type_id', $id);
+               }
+            })->get();
         }
 
         if (isset($params['period'])) {

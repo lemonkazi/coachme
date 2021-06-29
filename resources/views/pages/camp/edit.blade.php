@@ -65,18 +65,33 @@
                   </div>
                 </div>
                 <div class="row">
+
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="camp-type">Camp Type</label>
-                      <select name="camp_type_id" id ="camp_type_id" class="form-control" style="width: 100%">
-                        <option value="">Select</option>
-                        @foreach($camp_type_all as $id => $value)
-                          <option value="{{ $id }}" {{ (old('camp_type_id') ? old('camp_type_id') : $data['camp']->camp_type_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                        @endforeach
+                      <select class="form-control" id="camp_type_id" name="camp_type_id[]" multiple="multiple">
+                        <?php 
+                        if(!empty($data['camp_type_id'])) {
+                          ?>
+                          @foreach($camp_type_all as $id => $value)
+                            <option value="{{$id}}" @foreach($data['camp_type_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                          <?php 
+                        } else {
+                          ?>
+                          @foreach($camp_type_all as $id => $value)
+                            <option value="{{$id}}">{{$value}}</option>
+                          @endforeach
+                          <?php
+                        }
+                        ?>
                       </select>
-                      <i class="bi bi-chevron-compact-down"></i>
+                      <i class="bi bi-plus-lg"></i>
                     </div>
                   </div>
+
+
+                  
                 </div> 
                 <div class="col-md-4">
                   <div class="form-group">
@@ -170,8 +185,8 @@
                     <div class="row coach1" id ="coachimg">
                       <div class="col-md-4">
                         <div class="img-upload mb-4 output">
-                          
-                          <img id="output" src="{{ asset('img/patrick_chan.png')}}" alt="PAT">
+                          <img id="output" src="https://via.placeholder.com/150x150" alt=""> 
+                          <!-- <img id="output" src="{{ asset('img/patrick_chan.png')}}" alt="PAT"> -->
                           
                         </div>
                       </div>

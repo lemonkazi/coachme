@@ -23,8 +23,7 @@ class CreateCampsTable extends Migration
             $table->unsignedInteger('rink_id')->nullable();
             $table->foreign('rink_id')->references('id')->on('rinks');
             
-            $table->unsignedBigInteger('camp_type_id')->nullable();
-            $table->foreign('camp_type_id')->references('id')->on('camp_types');
+            $table->string('camp_type_id')->nullable();
             
             $table->string('name', 50)->nullable();
             $table->string('web_site_url')->nullable();

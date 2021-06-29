@@ -73,9 +73,9 @@ class PublicContoller extends Controller
         $rinks[]=array(
           "Id"=> $value['id'],
           "PropertyCode"=> $value['name'],
-          "address"=> $value['address'],
-          "latitude"=> $value['latitude'],
-          "longitude"=> $value['longitude'],
+          "address"=> ( $value['address'] ) ? $value['address'] : '' ,
+          "latitude"=> ( $value['latitude'] ) ? $value['latitude'] : '' ,
+          "longitude"=> ( $value['longitude'] ) ? $value['longitude'] : '' ,
           "GMapIconImage"=> "/assets/markers/marker.png",
           "type"=> "Hotel",
           "hotelName"=> $value['name']
@@ -155,6 +155,10 @@ class PublicContoller extends Controller
 
           if (isset($data['coaches'])) {
            $data['coaches'] = json_encode(array_unique($data['coaches']));
+          }
+
+          if (isset($data['camp_type_id'])) {
+           $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
           }
 
           if (isset($_COOKIE['cookieRink'])) {
@@ -289,6 +293,11 @@ class PublicContoller extends Controller
           }else{
             unset($data['coaches']);
           }
+          if (!empty($data['camp_type_id'])) {
+            $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
+          }else{
+            unset($data['camp_type_id']);
+          }
           if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
@@ -377,6 +386,17 @@ class PublicContoller extends Controller
         }
       }
 
+      $camp_type_id =array();
+      if(!empty($camp) && !empty($camp->camp_type_id)){
+        $camp_type_id_data = json_decode($camp->camp_type_id);
+        foreach ($camp_type_id_data as $key=>$camp_type) {
+          $camp_type_id[] = CampType::find($camp_type, ['name', 'id'])->toArray();
+        }
+      }
+
+      // print_r($camp_type_id);
+      // exit();
+
 
 
 
@@ -405,6 +425,7 @@ class PublicContoller extends Controller
                'camp_photo'      =>  $camp_photo,
                'camp_schedule'      =>  $camp_schedule,
                'coaches'   => $coaches,
+               'camp_type_id'   => $camp_type_id,
                'user'      =>  $user,
                'Title' =>  $title,
                'rink' => $rink
@@ -429,6 +450,14 @@ class PublicContoller extends Controller
         $coaches_data = json_decode($camp->coaches);
         foreach ($coaches_data as $key=>$coach) {
           $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+        }
+      }
+
+      $camp_type_id =array();
+      if(!empty($camp) && !empty($camp->camp_type_id)){
+        $camp_type_id_data = json_decode($camp->camp_type_id);
+        foreach ($camp_type_id_data as $key=>$coach) {
+          $camp_type_id[] = CampType::find($coach, ['name', 'id'])->toArray();
         }
       }
 
@@ -465,6 +494,7 @@ class PublicContoller extends Controller
                'camp_photo'      =>  $camp_photo,
                'camp_schedule'      =>  $camp_schedule,
                'coaches'   => $coaches,
+               'camp_type_id'   => $camp_type_id,
                'Title' =>  $title
           ]
       ])
@@ -515,6 +545,10 @@ class PublicContoller extends Controller
           // if (isset($data['coaches'])) {
           //  $data['coaches'] = json_encode(array_unique($data['coaches']));
           // }
+
+          if (isset($data['program_type_id'])) {
+           $data['program_type_id'] = json_encode(array_unique($data['program_type_id']));
+          }
 
           if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
@@ -643,7 +677,11 @@ class PublicContoller extends Controller
         else
         {
 
-         
+          if (!empty($data['program_type_id'])) {
+            $data['program_type_id'] = json_encode(array_unique($data['program_type_id']));
+          }else{
+            unset($data['program_type_id']);
+          }
           if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
@@ -710,13 +748,19 @@ class PublicContoller extends Controller
 
       //$program ='';
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
-      $program_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
+      $program_type_all = ProgramType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
       
-
+      $program_type_id =array();
+      if(!empty($program) && !empty($program->program_type_id)){
+        $program_type_id_data = json_decode($program->program_type_id);
+        foreach ($program_type_id_data as $key=>$program_type) {
+          $program_type_id[] = ProgramType::find($program_type, ['name', 'id'])->toArray();
+        }
+      }
 
 
        $program_photo = AttachedFile::where([
@@ -741,7 +785,7 @@ class PublicContoller extends Controller
       //   );
                         
       // }
-      // print_r($periods);
+      // print_r($program_type_all);
       // exit();
                         
 
@@ -751,7 +795,8 @@ class PublicContoller extends Controller
                'program'      =>  $program,
                'program_photo'      =>  $program_photo,
                'program_periods'      =>  $program_periods,
-               //'period' => $period,
+               'program_type_id'   => $program_type_id,
+               'program_type_all' => $program_type_all,
                'user'      =>  $user,
                'Title' =>  $title,
                'rink' => $rink
@@ -782,7 +827,15 @@ class PublicContoller extends Controller
                         ['deleted_at', null],
                     ])->get(['name', 'path', 'id'])->toArray();
 
-       
+      $program_type_id =array();
+      if(!empty($program) && !empty($program->program_type_id)){
+        $program_type_id_data = json_decode($program->program_type_id);
+        foreach ($program_type_id_data as $key=>$program_type) {
+          $program_type_id[] = ProgramType::find($program_type, ['name', 'id'])->toArray();
+        }
+      }
+
+
       $reg_start_date = strtotime($program->reg_start_date);
       $reg_end_date = strtotime($program->reg_end_date);
       $schedule_start_date = strtotime($program->schedule_start_date);
@@ -800,7 +853,8 @@ class PublicContoller extends Controller
                'schedule_start_date'      =>  $schedule_start_date,
                'schedule_end_date'      =>  $schedule_end_date,
                'program_photo'      =>  $program_photo,
-               'Title' =>  $title
+               'Title' =>  $title,
+               'program_type_id'   => $program_type_id
           ]
       ])
       ->with(compact('formatedDate'));
@@ -910,6 +964,14 @@ class PublicContoller extends Controller
       }
 
       $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
+
+      // $camp_type_id =array();
+      // if(!empty($camp) && !empty($camp->camp_type_id)){
+      //   $camp_type_id_data = json_decode($camp->camp_type_id);
+      //   foreach ($camp_type_id_data as $key=>$camp_type) {
+      //     $camp_type_id[] = CampType::find($camp_type, ['name', 'id'])->toArray();
+      //   }
+      // }
 
 
       return view('pages.camp.list', [

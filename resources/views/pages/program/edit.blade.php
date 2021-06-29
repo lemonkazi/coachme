@@ -188,13 +188,24 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="program-type">Program Type</label>
-                <select name="program_type_id" id ="program_type_id" class="form-control" style="width: 100%">
-                  <option value="">Select</option>
-                  @foreach($program_type_all as $id => $value)
-                    <option value="{{ $id }}" {{ (old('program_type_id') ? old('program_type_id') : $data['program']->program_type_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                  @endforeach
+                <select class="form-control" id="program_type_id" name="program_type_id[]" multiple="multiple">
+                  <?php 
+                  if(!empty($data['program_type_id'])) {
+                    ?>
+                    @foreach($program_type_all as $id => $value)
+                      <option value="{{$id}}" @foreach($data['program_type_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
+                    @endforeach
+                    <?php 
+                  } else {
+                    ?>
+                    @foreach($program_type_all as $id => $value)
+                      <option value="{{$id}}">{{$value}}</option>
+                    @endforeach
+                    <?php
+                  }
+                  ?>
                 </select>
-                <i class="bi bi-chevron-compact-down"></i>
+                <i class="bi bi-plus-lg"></i>
               </div>
             </div>
           </div>
