@@ -93,7 +93,7 @@
             </div>
             </div>
         </section>
-        <section>
+        <section class="contents">
             @yield('content')
         </section>
         <!-- footer section -->

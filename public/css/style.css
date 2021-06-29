@@ -4,6 +4,11 @@
   margin: 0;
 }
 
+.contents {
+  padding-bottom: 40px;
+  background-color: #F3F6FB;
+}
+
 h1 {
   font: normal normal normal 46px Raleway;
   line-height: 50px;
@@ -694,7 +699,7 @@ header nav ul li.active a {
   background: #FFFFFF 0% 0% no-repeat padding-box;
   border: 3px solid #A7BE79;
   border-radius: 29px;
-  font: normal normal medium 16px Raleway;
+  font: normal normal 500 16px Raleway;
   padding: 4px 10px;
 }
 
@@ -999,7 +1004,7 @@ label {
 }
 
 .coach-edit #cancel, .camp-edit #cancel, .program-edit #cancel, .rink-list #cancel, .program-list #cancel {
-  font: normal normal medium 20px/27px Raleway;
+  font: normal normal medium 18px Raleway;
   letter-spacing: 0px;
   color: #7B8A96;
   width: 150px;
@@ -1131,7 +1136,7 @@ label {
 
 .program-edit span a {
   color: #8AC8DC;
-  font: normal normal medium 18px Raleway;
+  font: normal normal 500 18px Raleway;
   padding-left: 10px;
   text-decoration: none;
 }
@@ -1179,8 +1184,7 @@ label {
 }
 
 .program-details p, .coach-details p {
-  font: normal normal medium Raleway;
-  font-size: 16px;
+  font: normal normal 500 16px Raleway;
   letter-spacing: 0px;
   color: #233C50;
 }
@@ -1327,8 +1331,7 @@ label {
 }
 
 .rink-list h5, .program-list h5 {
-  font: normal normal medium Raleway;
-  font-size: 16px;
+  font: normal normal  500 16px Raleway;
   letter-spacing: 0px;
   color: #233C50;
   opacity: .6;
