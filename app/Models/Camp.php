@@ -80,7 +80,7 @@ class Camp extends Model
      */
     protected $exactFilterable = [
         'id',
-        'camp_type_id',
+        //'camp_type_id',
         'level_id',
         'location_id',
         'rink_id'
@@ -120,13 +120,7 @@ class Camp extends Model
     {
         return $this->belongsTo(Rink::class);
     }
-    /**
-     * The coupons that belong to the city.
-     */
-    public function camp_type()
-    {
-        return $this->belongsTo(CampType::class);
-    }
+    
 
 
     
@@ -160,15 +154,35 @@ class Camp extends Model
     {
         return !empty($this->rink) ? $this->rink->name : null;
     }
-    /**
-     * Get the user's speciality name.
-     *
-     * @return string
-     */
+
+
+
+
     public function getCampTypeNameAttribute()
     {
-        return !empty($this->camp_type) ? $this->camp_type->name : null;
+        
+
+        // $info  = DB::table('user_infos')
+        //              ->select('id', 'content_type', 'content_id')
+        //              ->where('user_id', '=', $this->id)
+        //              ->where('deleted_at', '=', null)
+        //              ->get();
+
+
+        $camp_types=array();
+        if(!empty($this->camp_type_id)){
+            $camp_type_id_data = json_decode($this->camp_type_id);
+            foreach ($camp_type_id_data as $key=>$camp_type) {
+              $camp_types[] = CampType::find($camp_type, ['name', 'id'])->toArray();
+            }
+        }
+        
+        
+        return $camp_types;
     }
+
+
+   
 
 
     /**
@@ -253,6 +267,18 @@ class Camp extends Model
             $query->where(function ($query) use ($array) {
                foreach ($array as $id) {
                    $query->orWhereJsonContains('coaches', $id);
+               }
+            })->get();
+        }
+
+
+        if (isset($params['camp_type_id'])) {
+            $array = explode(',', $params['camp_type_id']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('camp_type_id', $id);
                }
             })->get();
         }

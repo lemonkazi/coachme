@@ -18,10 +18,18 @@
                       </h1>
                       <label for="">Type of Camp</label>
                       <div class="check-section">
+                        <?php
+                        $campArray = array();
+                        if (isset($_GET['camp_type_id'])) {
+                          $campArray = explode(',', $_GET['camp_type_id']);
+                        }
+                        
+                        ?>
+
                         @foreach($camp_type_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="camp_type_id" type="checkbox" value="{{ $id }}" {{ (old('camp_type_id') ? old('camp_type_id') : $_GET['camp_type_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="camp_type_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $campArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -29,10 +37,18 @@
                       </div>
                       <label for="">Levels</label>
                       <div class="check-section">
+                        <?php
+                        $levelArray = array();
+                        if (isset($_GET['level_id'])) {
+                          $levelArray = explode(',', $_GET['level_id']);
+                        }
+                        
+                        ?>
+
                         @foreach($level_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (old('level_id') ? old('level_id') : $_GET['level_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $levelArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>

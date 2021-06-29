@@ -12,7 +12,7 @@ class ProgramType extends Model
     protected $table = 'program_types';
 
     protected $cascadeDeletes = [
-        'programs'
+        //'programs'
     ];
     
     protected $fillable= [
@@ -59,13 +59,7 @@ class ProgramType extends Model
     
 
     
-    /**
-     * Get the users for the building.
-     */
-    public function programs()
-    {
-        return $this->hasMany(Program::class);
-    }
+  
 
     
 

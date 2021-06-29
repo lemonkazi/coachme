@@ -12,7 +12,7 @@ class CampType extends Model
     protected $table = 'camp_types';
 
     protected $cascadeDeletes = [
-        'camps'
+        //'camps'
     ];
     
     protected $fillable= [
@@ -59,14 +59,7 @@ class CampType extends Model
     
 
     
-    /**
-     * Get the users for the building.
-     */
-    public function camps()
-    {
-        return $this->hasMany(Camp::class);
-    }
-
+    
     
 
 

@@ -20,10 +20,18 @@
                       </h1>
                       <label for="">Type of Camp</label>
                       <div class="check-section">
+                        <?php
+                        $campArray = array();
+                        if (isset($_GET['camp_type_id'])) {
+                          $campArray = explode(',', $_GET['camp_type_id']);
+                        }
+                        
+                        ?>
+
                         @foreach($camp_type_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="camp_type_id" type="checkbox" value="{{ $id }}" {{ (old('camp_type_id') ? old('camp_type_id') : $_GET['camp_type_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="camp_type_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $campArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -31,10 +39,18 @@
                       </div>
                       <label for="">Levels</label>
                       <div class="check-section">
+                        <?php
+                        $levelArray = array();
+                        if (isset($_GET['level_id'])) {
+                          $levelArray = explode(',', $_GET['level_id']);
+                        }
+                        
+                        ?>
+
                         @foreach($level_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (old('level_id') ? old('level_id') : $_GET['level_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="level_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $levelArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -180,8 +196,24 @@
                             <div class="col-md-6">
                               <h3>{{$camp['name']}}</h3>
                               <h6>{{$start_date}}-{{$end_date}}</h6>
-                              <h5><i class="fas fa-map-marker-alt"></i>{{$camp['rink']['address']}}</h5>
-                              <h5><i class="fas fa-clock"></i>{{$camp['camp_type_name']}}</h5>
+                              @if(isset($camp['rink']))
+                                <h5><i class="fas fa-map-marker-alt"></i>
+                                  
+                                    {{$camp['rink']['address']}}
+                                  
+                                </h5>
+                              @endif
+                              
+                              
+                              @if(isset($data['camp_type_name']) && !empty($data['camp_type_name']))
+                                @foreach ($data['camp_type_name'] as $camp_type)
+
+                                    <h5><i class="fas fa-clock"></i>{{$camp_type['name']}}</h5>
+
+                                   
+                                
+                                @endforeach
+                              @endif
                               <h5><i class="fas fa-road"></i>{{$camp['level_name']}}</h5>
                             </div> 
                             <div class="col-md-3 learn-more">

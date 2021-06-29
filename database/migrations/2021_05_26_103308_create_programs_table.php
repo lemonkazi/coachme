@@ -24,8 +24,7 @@ class CreateProgramsTable extends Migration
             $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations');
             
-            $table->unsignedBigInteger('program_type_id')->nullable();
-            $table->foreign('program_type_id')->references('id')->on('program_types');
+            $table->string('program_type_id')->nullable();
             
             $table->string('name', 50)->nullable();
             $table->string('web_site_url')->nullable();
