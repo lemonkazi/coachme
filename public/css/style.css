@@ -1,6 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap");
 * {
   padding: 0;
   margin: 0;
+}
+
+h1 {
+  font: normal normal normal 46px Raleway;
+  line-height: 50px;
+}
+
+h1 span {
+  font: normal normal bold 46px Raleway;
+  line-height: 50px;
+}
+
+p {
+  font-family: Raleway;
+  font-size: 16px;
+  font-weight: 400px;
 }
 
 body {
@@ -33,6 +50,7 @@ body {
 
 .navbar-light .navbar-nav .nav-link {
   color: #fff;
+  font: normal normal 500 18px Raleway;
 }
 
 header {
@@ -205,7 +223,7 @@ header nav ul li.active a {
 .hero-banner {
   background-color: #f3f6fb;
   background-image: url(../img/Group76@1X.png);
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -220,6 +238,7 @@ header nav ul li.active a {
 .hero-banner .text-content h1 {
   font-size: 45px;
   color: #ffffff;
+  margin-bottom: 70px;
 }
 
 .hero-banner .text-content h1 span {
@@ -232,6 +251,7 @@ header nav ul li.active a {
   color: #ffffff;
   font-size: 16px;
   font-weight: 400;
+  margin-bottom: 50px;
 }
 
 .hero-banner .text-content .hero-button {
@@ -649,6 +669,7 @@ header nav ul li.active a {
   background-color: #f3f6fb;
   background-image: url(../img/);
   text-align: left;
+  padding-bottom: 40px;
 }
 
 .map-section h2 {
@@ -752,7 +773,6 @@ header nav ul li.active a {
 
 footer {
   background-color: #f3f6fb;
-  padding: 50px 0px;
   background-image: url(../img/footer-bg.png);
   background-position: center;
   background-repeat: no-repeat;
@@ -1458,9 +1478,11 @@ label {
 
 .coach-list {
   background: #F3F6FB url(../img/bg-coach-list.png) !important;
-  background-size: 100% !important;
+  background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: bottom center;
+  border-radius: 0;
+  padding-bottom: 23%;
 }
 
 .coach-list .profile .card-body {
@@ -1471,6 +1493,8 @@ label {
 .coach-list .profile .card-body .learn-more a {
   position: relative;
   right: 0;
+  font: normal normal bold 14px Raleway;
+  padding: 10px 20px;
 }
 
 .coach-list .profile .card-body img {
@@ -1480,9 +1504,14 @@ label {
 }
 
 .coach-list .profile .card-body h4 {
-  font: normal normal normal 20px Raleway;
+  font: normal normal normal 18px Raleway;
   letter-spacing: 0px;
   color: #233C50;
+  margin-bottom: 10px;
+}
+
+.coach-list .profile .card-body h3 {
+  font-size: 20px;
 }
 
 .camp-list {

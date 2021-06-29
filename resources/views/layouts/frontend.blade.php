@@ -100,7 +100,7 @@
 
         <footer class="footer-part">
             <div class="container py-5">
-                <div class="row pt-5 mt-5">
+                <div class="row pt-5 ">
                 <div class="col-md-3 wid-40">
                     <ul>
 
