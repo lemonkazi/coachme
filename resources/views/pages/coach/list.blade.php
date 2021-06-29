@@ -16,10 +16,17 @@
                       </h1>
                       <label for="">Speciality</label>
                       <div class="check-section">
+                        <?php
+                        $coachArray = array();
+                        if (isset($_GET['speciality'])) {
+                          $coachArray = explode(',', $_GET['speciality']);
+                        }
+                        
+                        ?>
                         @foreach($speciality_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="speciality" type="checkbox" value="{{ $id }}" {{ (old('speciality_id') ? old('speciality_id') : $_GET['speciality_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="speciality" type="checkbox" value="{{ $id }}" {{ (in_array($id, $coachArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -28,10 +35,17 @@
                       </div>
                       <label for="">Coaching certificate</label>
                       <div class="check-section">
+                        <?php
+                        $certificateArray = array();
+                        if (isset($_GET['certificate_id'])) {
+                          $certificateArray = explode(',', $_GET['certificate_id']);
+                        }
+                        
+                        ?>
                         @foreach($certificate_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="certificate_id" type="checkbox" value="{{ $id }}" {{ (old('certificate_id') ? old('certificate_id') : $_GET['certificate_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="certificate_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $certificateArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -60,11 +74,17 @@
                       
                       <label for="">Price</label>
                       <div class="check-section">
-
+                        <?php
+                        $priceArray = array();
+                        if (isset($_GET['price_id'])) {
+                          $priceArray = explode(',', $_GET['price_id']);
+                        }
+                        
+                        ?>
                         @foreach($price_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="price_id" type="checkbox" value="{{ $id }}" {{ (old('price_id') ? old('price_id') : $_GET['price_id'] ?? '') == $id ? 'checked="checked"' : '' }} >
+                              <input name="price_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $priceArray)) ? 'checked="checked"' : '' }}  >
                               <span class="checkmark"></span>
                             </label>
                           </div>
