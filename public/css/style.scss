@@ -5,7 +5,6 @@
     margin: 0;
 }
 .contents{
-    padding-bottom: 40px;
     background-color: #F3F6FB;
 }
 h1{
@@ -676,11 +675,14 @@ header {
 }
 
 footer {
-    background-color: #f3f6fb;
+    background-color: transparent;
     background-image: url(../img/footer-bg.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
+    position: relative;
+    z-index: 3;
+    margin-top: -3%;
 }
 footer ul {
     list-style: none;
@@ -1321,7 +1323,7 @@ label{
     padding-bottom: 23%;
     .profile{
         .card-body{
-            padding: 10% 15%;
+            padding: 10% 0;
             text-align: center;
             .learn-more{
                 a{
