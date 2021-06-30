@@ -115,7 +115,7 @@
         
       </div>
       </section>
-      <section class="drop-arrow">
+      <section class="drop-arrow extra">
         <i class="fas fa-angle-down"></i>
       </section>
       <!-- /carosel section -->

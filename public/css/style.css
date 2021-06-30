@@ -46,6 +46,7 @@ body {
   border-radius: 50px;
   padding: 5px 25px;
   margin-top: 3px;
+  font-weight: bold;
 }
 
 .btn-custom:hover {
@@ -216,12 +217,18 @@ header nav ul li.active a {
 
 .drop-arrow {
   text-align: center;
-  background-color: #f3f6fb;
 }
 
 .drop-arrow i {
   color: #A7DAE9;
   font-size: 60px;
+}
+
+.extra {
+  background-color: transparent;
+  margin-top: -10%;
+  z-index: 2;
+  position: relative;
 }
 
 .hero-banner {
@@ -279,20 +286,20 @@ header nav ul li.active a {
 }
 
 .card-section {
-  height: 920px;
   background-color: #f3f6fb;
-  background-image: url(../img/Group75.png);
-  background-size: 130%;
+  background-image: url(../img/bg-couch.png);
+  background-size: 100%;
   background-repeat: no-repeat;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+  padding: 8% 0 21%;
+  position: relative;
 }
 
 .card-section .content {
   color: #233c50;
-  padding-top: 10%;
 }
 
 .card-section .content h1 {
@@ -423,15 +430,18 @@ header nav ul li.active a {
 
 .carousel-section {
   height: 920px;
-  background-color: #f3f6fb;
+  background-color: transparent;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+  position: relative;
+  z-index: 3;
+  margin-top: 0%;
 }
 
 .carousel-section h1 {
-  padding-top: 10%;
+  padding-top: 0%;
   color: #233c50;
   font-weight: bold;
   padding-right: 400px;
@@ -670,10 +680,13 @@ header nav ul li.active a {
 }
 
 .map-section {
-  background-color: #f3f6fb;
-  background-image: url(../img/);
+  background-color: transparent;
+  background-image: url(../img/Group_96_edit.png), url(../img/Group_85_edit.png);
+  background-size: 20%,30%;
+  background-position: top right, left 79% url(../img/Group_96_edit.png);
+  background-repeat: no-repeat,no-repeat;
   text-align: left;
-  padding-bottom: 40px;
+  padding: 15% 0;
 }
 
 .map-section h2 {
@@ -713,7 +726,6 @@ header nav ul li.active a {
 
 .map-section .container {
   padding: 10px;
-  background: #f2f6f8;
 }
 
 .map-section #map {
@@ -1280,6 +1292,7 @@ label {
   background-image: url(../img/bg-coach-details.png);
   background-size: 100%;
   background-position: top left;
+  padding-bottom: 20%;
 }
 
 .coach-details img {
@@ -1521,8 +1534,10 @@ label {
 
 .camp-list {
   background: #F3F6FB url(../img/bg-camp-list.png) !important;
-  background-size: 100%;
+  background-size: cover !important;
   background-position: bottom left;
+  padding-bottom: 20%;
+  border-radius: 0;
 }
 
 .camp-details {
