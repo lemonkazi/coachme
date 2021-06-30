@@ -210,17 +210,18 @@
                           </span>
                         @enderror
                       </div>
+                    </div>
                       
                     <div class="form-group">
                       <button type="submit" id="userLogin" class="form-control btn btn-primary submit px-3">Login</button>
                     </div>
                   </form>
                   <h1 class="a">or</h1>
-                  <h3 class="text-center mb-2">Sign up</h3>
-                  <h5 class="mb-3">Sign up to join Coach me solutions!</h5>
+                  <h3 class="text-center mb-2 signUp">Sign up</h3>
+                  <h5 class="mb-3 signUp">Sign up to join Coach me solutions!</h5>
                   <div class="alert alert-danger registration" style="display:none"></div>
                   <div class="alert alert-success registration" style="display:none"></div>
-                  <form method="POST" action="{{ url('user/register') }}" class="registration-form">
+                  <form method="POST" action="{{ url('user/register') }}" class="registration-form signUp">
                     @csrf
                     @if(session()->has('error'))
                         <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
@@ -367,6 +368,8 @@
 
                 $('#userRegister').click(function(e){
                     e.preventDefault();
+                    // $('.signUp').hide();
+                    // return false;
                     var loader = $('#pageloader');
                     var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
                     var data_controller = controller;
@@ -412,6 +415,8 @@
                                 $('.alert-success.registration').show();
                                 $('.alert-success.registration').append('<li>'+result.result+'</li>');
                                 //window.location = result.url;  
+                                $('.signUp').hide();
+                                //return false;
                             }
                                 
 
@@ -422,6 +427,22 @@
                         }
                     });
                 });
+                if (!$("#exampleModalCenter").is(':visible')) {
+                    // if modal is not shown/visible then do something
+                    $('.signUp').show();
+                }
+                $(document).on('hide.bs.modal','#exampleModalCenter', function () {
+                    alert('sasa');
+                    //Do stuff here
+                });
+                window.onclick = function(event) {
+                   if (event.target.id != "exampleModalCenter") {
+                      $('.signUp').show();
+                   }
+                }
+                // $("#exampleModalCenter").on("hidden.bs.modal", function () {
+                    
+                // });
                 $('.navbar-toggler').on('click',function (e) {
                   e.preventDefault();
 
@@ -487,7 +508,9 @@
                     $("#coach_chosen").trigger("chosen:updated");
 
                 });
-
+                 $(document).on("click", ".close", function () {
+                    $('.signUp').show();
+                });
                 $(document).on("click", ".remove", function () {
                     //$('#coachimg').on('click', '.remove', function() {
                     $(this).parent().remove();
