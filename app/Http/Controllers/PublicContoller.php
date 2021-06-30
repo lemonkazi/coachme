@@ -1693,8 +1693,18 @@ class PublicContoller extends Controller
             return response()->json(['errors'=>['Registration failed, please try again!']]);
           }
           if (config('global.email_send') == 1) {
-            \Mail::to($user->email)->send(new VerifyMail($user));
-            return response()->json(['success'=>true,'result'=>'We sent you an activation code. Check your email and click on the link to verify.','url'=> RouteServiceProvider::ROOT]);
+            try {
+               \Mail::to($user->email)->send(new VerifyMail($user));
+               return response()->json(['success'=>true,'result'=>'We sent you an activation code. Check your email and click on the link to verify.','url'=> RouteServiceProvider::ROOT]);
+            
+            } catch (\Exception $e) {
+              $user->email_verified_at = now();
+              $user->save();
+              return response()->json(['success'=>true,'result'=>'Registration successfull','url'=> RouteServiceProvider::ROOT]);
+           
+            }
+
+            
             
           }
           return response()->json(['success'=>true,'result'=>'Registration successfull','url'=> RouteServiceProvider::ROOT]);
