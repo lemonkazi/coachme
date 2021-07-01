@@ -682,8 +682,8 @@ header nav ul li.active a {
 .map-section {
   background-color: transparent;
   background-image: url(../img/Group_96_edit.png), url(../img/Group_85_edit.png);
-  background-size: 20%,30%;
-  background-position: top right, left 79% url(../img/Group_96_edit.png);
+  background-size: 20%,25%;
+  background-position: top right,left 79%;
   background-repeat: no-repeat,no-repeat;
   text-align: left;
   padding: 15% 0;
@@ -1392,8 +1392,13 @@ label {
 }
 
 .program-list {
-  background: #F3F6FB !important;
+  background: transparent !important;
   background-image: url(../img/edit_program.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-bottom: 20%;
+  background-position: top;
+  border-radius: 0;
   background: #fff;
   border-radius: 20px;
 }
@@ -1630,6 +1635,9 @@ label {
   .sp {
     display: block;
   }
+  .extra {
+    margin-top: 0%;
+  }
   .hero-section {
     background-color: #F3F6FB;
   }
@@ -1742,6 +1750,9 @@ label {
     width: 100%;
     margin-left: 0;
   }
+  .map-section {
+    background-position: top right,left 95%;
+  }
   .map-section .search-div {
     display: table;
     position: relative;
@@ -1751,6 +1762,9 @@ label {
     right: 9px;
     top: 7px;
     left: auto !important;
+  }
+  .carousel-section {
+    height: auto;
   }
   .carousel-section h1 {
     padding-left: 0;
@@ -1874,7 +1888,7 @@ label {
   }
   .camp-list {
     background: url(../img/sp-bg-camp-list.png) !important;
-    background-size: 100% !important;
+    background-size: cover !important;
     background-position: bottom;
     background-repeat: no-repeat !important;
     border-radius: 0;
