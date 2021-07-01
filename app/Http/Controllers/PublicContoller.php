@@ -449,7 +449,10 @@ class PublicContoller extends Controller
       if(!empty($camp) && !empty($camp->coaches)){
         $coaches_data = json_decode($camp->coaches);
         foreach ($coaches_data as $key=>$coach) {
-          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+          $coache = User::select('name', 'avatar_image_path', 'id')->where('id', '=', $coach)->where('deleted_at', '=', null)->get()->toArray();
+          if (!empty($coache)) {
+            $coaches[] =$coache[0];
+          }
         }
       }
 

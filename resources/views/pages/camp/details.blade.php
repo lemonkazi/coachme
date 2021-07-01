@@ -122,9 +122,13 @@
                       @if(isset($data['coaches']))
                         @foreach ($data['coaches'] as $coach)
                         
-                            <div class="col-md-3 text-center wid-30">
-                              <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" alt="">
-                              <p>{{!empty($coach) ? $coach['name'] : ''}}</p>
+                            <div class="col-md-3 text-center wid-30 {{!empty($coach['id']) ? $coach['id'] : ''}}">
+                              @if(isset($coach['avatar_image_path']))
+                                <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" alt="">
+                              @else
+                                <img src="https://via.placeholder.com/150x150" alt=""> 
+                              @endif
+                              <p>{{!empty($coach['name']) ? $coach['name'] : ''}}</p>
                             </div>
                         
                         @endforeach
