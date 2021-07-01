@@ -51,6 +51,9 @@ body {
     color: #fff;
     font: normal normal 500 18px Raleway;
 }
+.navbar-light .navbar-nav .nav-link.active{
+    font-weight: bold;
+}
 
 header {
     height: 80px;
