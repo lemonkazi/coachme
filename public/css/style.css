@@ -401,17 +401,21 @@ header nav ul li.active a {
 }
 
 .card-section .card .card-body .card-img {
-  position: absolute;
   height: 170px;
   width: 170px;
-  margin-top: 10%;
-  margin-left: -20%;
 }
 
 .card-section .card .card-body .card-title {
   color: #233c50;
   padding-bottom: 20px;
   font: normal normal bold 32px/40px Raleway;
+}
+
+.card-section .card .card-body h6 {
+  font: normal normal normal 22px/30px Raleway;
+  letter-spacing: 0px;
+  color: #233C50;
+  padding: 20px 0;
 }
 
 .card-section .card:hover {
@@ -887,6 +891,22 @@ label {
   font: normal normal bold 18px Raleway;
   letter-spacing: 1.6px;
   color: #233C50;
+}
+
+.card-body label {
+  font: normal normal bold 14px/14px Raleway;
+  letter-spacing: 1.12px;
+  color: #233C50;
+}
+
+.card-body .check-section label {
+  font: normal normal 500 16px/21px Raleway;
+  letter-spacing: -0.16px;
+}
+
+.card-body .multiselect-selected-text {
+  font: normal normal 500 16px/21px Raleway;
+  letter-spacing: -0.16px;
 }
 
 .blue {
@@ -1372,6 +1392,7 @@ label {
   position: absolute;
   bottom: 0;
   right: 0;
+  font: normal normal 700 15px Raleway !important;
 }
 
 .rink-list .check-section, .program-list .check-section {
@@ -1691,6 +1712,32 @@ label {
   .wid-30 {
     width: 30%;
   }
+  .purple {
+    color: #9D7CB0 !important;
+  }
+  .light-purple {
+    color: #D1B3DD !important;
+  }
+  label {
+    font: normal normal bold 14px Raleway;
+    letter-spacing: 1.6px;
+    color: #233C50;
+    line-height: 16.44px;
+  }
+  .card-body .check-section label {
+    font: normal normal 500 15px/21px Raleway;
+    letter-spacing: -0.16px;
+    line-height: 17.61px;
+  }
+  .card-body .multiselect-selected-text {
+    font-family: Raleway;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
   .learn-more a {
     position: relative !important;
     right: 0;
@@ -1705,7 +1752,7 @@ label {
   .filter .card-body {
     padding: 10px;
     border-radius: 0;
-    height: 100vh;
+    height: 100%;
   }
   h1 i {
     position: absolute;
@@ -1720,15 +1767,63 @@ label {
     border-radius: 24px;
     color: #233C50 !important;
     margin-bottom: 10px;
+    font-family: 'Raleway';
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 21.13px;
   }
   .hero-banner {
     background-image: url(../img/sp-bg-top.png);
-    background-size: 265%;
+    background-size: 194%;
     background-repeat: no-repeat;
     background-position: top left;
+    position: relative;
+    z-index: 5;
+    padding-bottom: 8%;
   }
   .hero-banner .text-content .hero-button {
     width: 45%;
+    font-family: Raleway;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 19px;
+    letter-spacing: 0em;
+    padding: 8px 0;
+    text-align: center;
+  }
+  .hero-banner .text-content h1 {
+    font-family: Raleway;
+    font-size: 37px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 39px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 8px;
+  }
+  .hero-banner .text-content h1 span {
+    font-family: Raleway;
+    font-size: 37px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 39px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .hero-banner .text-content p {
+    width: 100%;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  .drop-arrow {
+    text-align: center;
+    background: transparent;
+    position: relative;
+    z-index: 5;
+    margin-top: -7%;
   }
   .card-section {
     background: url(../img/sp-bg-top-2.png);
@@ -1736,26 +1831,78 @@ label {
     background-position: top left;
     background-repeat: no-repeat;
     height: 957px;
+    padding: 8% 2% 21%;
+  }
+  .card-section .content h1 {
+    font-family: Raleway;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .card-section .content p {
+    font-family: Raleway;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
   }
   .card-section .mauto {
     margin: 10px auto;
   }
+  .card-section .card {
+    min-height: 290px;
+  }
   .card-section .card .card-body {
-    padding-bottom: 0;
+    padding: 0;
   }
   .card-section .card .card-body .card-img {
-    width: 100%;
+    width: 70%;
     position: relative;
     margin: 0 auto;
     height: auto;
+  }
+  .card-section .card .card-body .card-title {
+    font-family: Raleway;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .card-section .card .card-body h6 {
+    color: #233c50;
+    width: 100%;
+    margin-left: 0;
+    font-family: Raleway;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 15px 0;
   }
   .card-section .card .card-footer .media .d-block {
     color: #233c50;
     width: 100%;
     margin-left: 0;
+    font-family: Raleway;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
   }
   .map-section {
-    background-position: top right,left 95%;
+    background-position: top right,left 92%;
+    background-size: 39%,54%;
   }
   .map-section .search-div {
     display: table;
@@ -1773,6 +1920,14 @@ label {
   .carousel-section h1 {
     padding-left: 0;
     padding-right: 0;
+    font-family: Raleway;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 0 8%;
   }
   .carousel-section .wrap {
     padding: 0 15px;
@@ -1799,6 +1954,15 @@ label {
   footer ul {
     padding: 0 0 0 20px;
   }
+  footer ul li a.btn-custom {
+    font-family: Raleway;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
   footer .pt-5 {
     padding-top: 0 !important;
   }
@@ -1813,6 +1977,15 @@ label {
   }
   .rink-list .learn-more a {
     position: relative;
+  }
+  .rink-list h1, .program-list h1 {
+    font-family: Raleway;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
   }
   .coach-edit {
     background: url(../img/sp-bg-coach-edit.png);
@@ -1947,6 +2120,12 @@ label {
   .coach-list .profile .card-body {
     padding: 20px;
     text-align: center;
+  }
+  .coach-list .profile .card-body h3 {
+    font-size: 18px;
+  }
+  .coach-list .profile .card-body h4 {
+    font-size: 15px;
   }
 }
 /*# sourceMappingURL=style.css.map */
