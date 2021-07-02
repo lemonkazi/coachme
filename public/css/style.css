@@ -1425,6 +1425,10 @@ label {
   color: #233C50;
 }
 
+.rink-list {
+  padding-bottom: 15%;
+}
+
 .program-list {
   background-image: url(../img/bg-program-list.png);
   background-repeat: no-repeat;
