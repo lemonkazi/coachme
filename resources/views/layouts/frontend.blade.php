@@ -115,15 +115,6 @@
                                 @endauth
                             @endif
                     </li>
-                    <li>
-                        @if (Route::has('logout'))
-                                @auth
-                                    <a href="{{ url('/logout') }}" class="btn btn-custom">Logout</a>
-                                @else
-                                   <a href="" class="btn btn-custom"  data-toggle="modal" data-target="#exampleModalCenter">Sign-as a rink</a>
-                                @endauth
-                            @endif
-                    </li>
                     </ul>
                 </div>
                 <div class="offset-md-6 col-md-3 wid-60">
