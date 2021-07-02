@@ -452,8 +452,8 @@ header nav ul li.active a {
   padding-top: 0%;
   color: #233c50;
   font-weight: bold;
-  padding-right: 400px;
-  padding-left: 400px;
+  width: 63%;
+  margin: 0 auto;
 }
 
 .carousel-section .wrap {
