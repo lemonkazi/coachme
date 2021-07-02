@@ -126,6 +126,7 @@
                               @if(isset($coach['avatar_image_path']))
                                 <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" alt="">
                               @else
+                                <!-- <img src="{{ asset('img/avatar.png') }}" alt=""> -->
                                 <img src="https://via.placeholder.com/150x150" alt=""> 
                               @endif
                               <p>{{!empty($coach['name']) ? $coach['name'] : ''}}</p>

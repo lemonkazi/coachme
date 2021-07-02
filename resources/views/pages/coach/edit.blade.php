@@ -23,7 +23,13 @@
 
                 <div class="img-upload mb-4">
                   <input accept="image/*" name="avatar_image_path" type='file' id="imgInp" onchange="loadFile(event)" />
-                  <img id="output" src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
+                  
+                  @if(isset($data['user']->avatar_image_path))
+                    <img id="output" src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" alt="PAT">
+                  @else
+                    <img id="output" src="{{ asset('img/avatar.png') }}" alt="">
+                  @endif
+
                   <i class="bi bi-plus-lg"></i>
                 </div>
                 <h2>Basic information</h2>
