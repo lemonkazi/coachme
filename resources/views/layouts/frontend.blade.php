@@ -69,13 +69,13 @@
                         <a class="nav-link" href="#">About us</a>
                         </li> -->
                         <li class="nav-item">
-                            <a class="nav-link <?php if ($controller == 'publiccontoller' && $action == 'coach_list') echo 'active' ?>" href="{{ url('/coach/list') }}">Coaches</a>
+                            <a class="nav-link <?php if ($controller == 'publiccontoller' && in_array($action, array('coach_details', 'coach_list'))) echo 'active' ?>" href="{{ url('/coach/list') }}">Coaches</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php if ($controller == 'publiccontoller' && $action == 'camp_list') echo 'active' ?>" href="{{ url('/camp/list') }}">Camps</a>
+                            <a class="nav-link <?php if ($controller == 'publiccontoller' && in_array($action, array('camp_details', 'camp_list','camp_filter'))) echo 'active' ?>" href="{{ url('/camp/list') }}">Camps</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?php if ($controller == 'publiccontoller' && $action == 'program_list') echo 'active' ?>" href="{{ url('/program/list') }}">Programs</a>
+                            <a class="nav-link <?php if ($controller == 'publiccontoller' && in_array($action, array('program_details', 'program_list'))) echo 'active' ?>" href="{{ url('/program/list') }}">Programs</a>
                         </li>
                         <li>
                             @if (Route::has('logout'))
