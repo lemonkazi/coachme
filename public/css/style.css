@@ -437,7 +437,7 @@ header nav ul li.active a {
 }
 
 .carousel-section {
-  height: 920px;
+  height: 600px;
   background-color: transparent;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -1068,6 +1068,10 @@ label {
   top: 10px;
 }
 
+.coach-edit {
+  padding-bottom: 10%;
+}
+
 .camp-edit {
   background: #F3F6FB;
   background-image: url(../img/camp_edit.png);
@@ -1312,11 +1316,16 @@ label {
   font: normal normal 800 40px Raleway;
 }
 
+.program-details {
+  padding-bottom: 10%;
+}
+
 .coach-details {
   background-image: url(../img/bg-coach-details.png);
   background-size: 100%;
-  background-position: top left;
+  background-position: 0px -35px;
   padding-bottom: 20%;
+  padding-top: 13%;
 }
 
 .coach-details img {
@@ -1417,15 +1426,12 @@ label {
 }
 
 .program-list {
-  background: transparent !important;
-  background-image: url(../img/);
+  background-image: url(../img/bg-program-list.png);
   background-repeat: no-repeat;
   background-size: cover;
   padding-bottom: 20%;
   background-position: top;
   border-radius: 0;
-  background: #fff;
-  border-radius: 20px;
 }
 
 .program-list .learn-more a {
@@ -1570,10 +1576,15 @@ label {
   border-radius: 0;
 }
 
+.camp-list .btn-custom {
+  font: normal normal bold 14px/19px Raleway;
+}
+
 .camp-details {
   background-image: url(../img/bg-camp-details.png);
   background-size: 100%;
   background-position: bottom left;
+  padding-bottom: 15%;
 }
 
 .camp-details .program-slider img {

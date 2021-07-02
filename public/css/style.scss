@@ -373,7 +373,7 @@ header {
 
 //carousel section
 .carousel-section {
-    height: 920px;
+    height: 600px;
     background-color: transparent;
     align-items: center;
     text-align: center;
@@ -953,6 +953,9 @@ label{
         top: 10px;
     }
 }
+.coach-edit{
+    padding-bottom: 10%;
+}
 //camp-edit
 .camp-edit{
     background: #F3F6FB;
@@ -1170,11 +1173,15 @@ label{
         font: normal normal 800 40px Raleway;
     }
 }
+.program-details{
+    padding-bottom: 10%;
+}
 .coach-details{
-    background-image: url(../img/bg-coach-details.png);
-    background-size: 100%;
-    background-position: top left;
-    padding-bottom: 20%;
+        background-image: url(../img/bg-coach-details.png);
+        background-size: 100%;
+        background-position: 0px -35px;
+        padding-bottom: 20%;
+        padding-top: 13%;
     img{
         width: 100%;
         width: 250px;
@@ -1254,8 +1261,7 @@ label{
     }
 }
 .program-list{
-    background: transparent !important;
-    background-image: url(../img/);
+    background-image: url(../img/bg-program-list.png);
     background-repeat: no-repeat;
     background-size: cover;
     padding-bottom: 20%;
@@ -1285,8 +1291,6 @@ label{
         background: #fff;
         box-shadow: 4px 4px 12px #00000021;
     }
-    background: #fff;
-    border-radius: 20px;
     .custom-select{
         background: #D0E6A5 0% 0% no-repeat padding-box;
     }
@@ -1401,11 +1405,15 @@ label{
     background-position: bottom left;
     padding-bottom: 20%;
     border-radius: 0;
+    .btn-custom{
+        font: normal normal bold 14px/19px Raleway;
+    }
 }
 .camp-details{
     background-image: url(../img/bg-camp-details.png);
     background-size: 100%;
     background-position: bottom left;
+    padding-bottom: 15%;
     .program-slider{
         img{
             width: 500px;
