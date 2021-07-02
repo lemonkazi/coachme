@@ -57,16 +57,10 @@
                       <a herf="#">Step 1</a>
                     </h4>
                     <img class="card-img" src="{{ asset('img/purpose.png') }}" alt="">
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <div class="media-body">
-                        <h6 class="my-0 d-block">
-                          Go on the coach, camp 
-                          or program tab and look for what you need
-                        </h6>     
-                      </div>
-                    </div>
+                    <h6>
+                      Go on the coach, camp 
+                      or program tab and look for what you need
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -78,15 +72,7 @@
                   <div class="card-body">
                     <h4 class="card-title mt-0 "><a herf="#">Step 2</a></h4>
                     <img class="card-img" src="{{ asset('img/tutorial.png') }}" alt="">
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <div class="media-body">
-                        <h6 class="my-0 d-block">
-                          Click on the coach, the program or the camp to know more
-                        </h6>     
-                      </div>
-                    </div>
+                    <h6> Click on the coach, the program or the camp to know more</h6>
                   </div>
                 </div>
               </div>
@@ -97,15 +83,7 @@
                   <div class="card-body">
                     <h4 class="card-title mt-0 "><a herf="#">Step 3</a></h4>
                     <img class="card-img" src="{{ asset('img/trust.png') }}" alt="">
-                  </div>
-                  <div class="card-footer">
-                    <div class="media">
-                      <div class="media-body">
-                        <h6 class="my-0 d-block">
-                          Choose the best way for you to contact them
-                        </h6>     
-                      </div>
-                    </div>
+                    <h6>Choose the best way for you to contact them</h6>
                   </div>
                 </div>
               </div>
@@ -115,8 +93,8 @@
         
       </div>
       </section>
-      <section class="drop-arrow extra">
-        <i class="fas fa-angle-down"></i>
+      <section class="drop-arrow extra ">
+        <i class="fas fa-angle-down purple"></i>
       </section>
       <!-- /carosel section -->
       <section class="carousel-section">
@@ -149,16 +127,17 @@
           </div>
       </section>
       <section class="drop-arrow">
-        <i class="fas fa-angle-down"></i>
+        <i class="fas fa-angle-down light-purple"></i>
       </section>
       <section class="map-section">
         <div class="container">
           <div class="col-md-12 ">
+          <h2 class="sp text-center">Find Rinks Around You</h2>
             <div class="card p-3">
               <div class="row">
               <div class="col-md-8">
                 <div class="title">
-                  <h2>Find Rinks A Rinks Around You</h2>
+                  <h2 class="pc">Find Rinks A Rinks Around You</h2>
                   
                   <div class="search-div mb-2">
                     <button type="button" onclick="centerMap(USbounds);" class="btn green-btn wid-50">Use my location</button>
