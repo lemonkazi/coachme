@@ -1808,7 +1808,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   }
   .hero-banner {
     background-image: url(../img/sp-bg-top.png);
-    background-size: 194%;
+    background-size: 100%;
     background-repeat: no-repeat;
     background-position: top left;
     position: relative;
@@ -1862,7 +1862,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   .card-section {
     background: url(../img/sp-bg-top-2.png);
     background-size: 100%;
-    background-position: top left;
+    background-position: 0 250px;
     background-repeat: no-repeat;
     height: 957px;
     padding: 8% 2% 21%;
