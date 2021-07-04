@@ -38,7 +38,7 @@ use Intervention\Image\ImageManagerStatic as InterventionImageManager;
 use Illuminate\Support\Facades\Storage;
 
 use App\Providers\RouteServiceProvider;
-
+use Cookie;
 
 class PublicContoller extends Controller
 {
@@ -127,6 +127,20 @@ class PublicContoller extends Controller
       if (isset($_COOKIE['cookieRink'])) {
           $rink = Rink::find($_COOKIE['cookieRink']);
       } 
+      if ($user->authority =='RINK_USER') {
+        //$data['web_site_url'] = $user->web_site_url;
+        $rinks = $user->userinfos['rinks'];
+        //$rink = '';
+        if (!empty($rinks) ) {
+          foreach($rinks as $row){
+              $rink =$row->content_id;
+              //$rink = Rink::find($rink);
+              $rink = Rink::find($row->content_id);
+              //$data['rink_id'] = $rink->id;
+              //break();
+          }
+        }
+      }
       if ($request->isMethod('post')) {
 
         $data = $request->all();
@@ -166,6 +180,20 @@ class PublicContoller extends Controller
           }
           if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+          if ($user->authority =='RINK_USER') {
+            $data['web_site_url'] = $user->web_site_url;
+            $rinks = $user->userinfos['rinks'];
+            //$rink = '';
+            if (!empty($rinks) ) {
+              foreach($rinks as $row){
+                  $rink =$row->content_id;
+                  //$rink = Rink::find($rink);
+                  $rink = Rink::find($row->content_id);
+                  $data['rink_id'] = $rink->id;
+                  //break();
+              }
+            }
           }
 
           
@@ -255,6 +283,20 @@ class PublicContoller extends Controller
       if (isset($_COOKIE['cookieRink'])) {
           $rink = Rink::find($_COOKIE['cookieRink']);
       } 
+      if ($user->authority =='RINK_USER') {
+        //$data['web_site_url'] = $user->web_site_url;
+        $rinks = $user->userinfos['rinks'];
+        //$rink = '';
+        if (!empty($rinks) ) {
+          foreach($rinks as $row){
+              $rink =$row->content_id;
+              //$rink = Rink::find($rink);
+              $rink = Rink::find($row->content_id);
+              //$data['rink_id'] = $rink->id;
+              //break();
+          }
+        }
+      }
       if (!empty($camp->rink_id)) {
         $rink = Rink::find($camp->rink_id);
       }
@@ -303,6 +345,20 @@ class PublicContoller extends Controller
           }
           if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+          if ($user->authority =='RINK_USER') {
+            $data['web_site_url'] = $user->web_site_url;
+            $rinks = $user->userinfos['rinks'];
+            //$rink = '';
+            if (!empty($rinks) ) {
+              foreach($rinks as $row){
+                  $rink =$row->content_id;
+                  //$rink = Rink::find($rink);
+                  $rink = Rink::find($row->content_id);
+                  $data['rink_id'] = $rink->id;
+                  //break();
+              }
+            }
           }
 
           
@@ -518,6 +574,20 @@ class PublicContoller extends Controller
           $rink = Rink::find($_COOKIE['cookieRink']);
       }
 
+      if ($user->authority =='RINK_USER') {
+        
+        $rinks = $user->userinfos['rinks'];
+        //$rink = '';
+        if (!empty($rinks) ) {
+          foreach($rinks as $row){
+              $rink =$row->content_id;
+              //$rink = Rink::find($rink);
+              $rink = Rink::find($row->content_id);
+              //break();
+          }
+        }
+      }
+
 
       if ($request->isMethod('post')) {
 
@@ -558,6 +628,21 @@ class PublicContoller extends Controller
           }
           if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+
+          if ($user->authority =='RINK_USER') {
+            $data['web_site_url'] = $user->web_site_url;
+            $rinks = $user->userinfos['rinks'];
+            //$rink = '';
+            if (!empty($rinks) ) {
+              foreach($rinks as $row){
+                  $rink =$row->content_id;
+                  //$rink = Rink::find($rink);
+                  $rink = Rink::find($row->content_id);
+                  $data['rink_id'] = $rink->id;
+                  //break();
+              }
+            }
           }
 
           
@@ -602,8 +687,14 @@ class PublicContoller extends Controller
                 $attached_file = AttachedFile::create($attached_files);
               }
           }
-          //return redirect('/program')->with('status', $status);
-          return redirect()->intended(route('program-update', ['program' => $program->id]));
+          if ($user->authority=='RINK_USER') {
+            $status = "Program Successfully added.";
+            return redirect(route(RouteServiceProvider::RINKLIST))->with('status', $status);
+          
+          } else {
+            return redirect()->intended(route('program-update', ['program' => $program->id]));
+          
+          }
           
         }
         
@@ -646,7 +737,20 @@ class PublicContoller extends Controller
       $rink ='';
       if (isset($_COOKIE['cookieRink'])) {
           $rink = Rink::find($_COOKIE['cookieRink']);
-      } 
+      }
+      if ($user->authority =='RINK_USER') {
+        
+        $rinks = $user->userinfos['rinks'];
+        //$rink = '';
+        if (!empty($rinks) ) {
+          foreach($rinks as $row){
+              $rink =$row->content_id;
+              //$rink = Rink::find($rink);
+              $rink = Rink::find($row->content_id);
+              //break();
+          }
+        }
+      }
       if (!empty($program->rink_id)) {
         $rink = Rink::find($program->rink_id);
       }
@@ -690,6 +794,21 @@ class PublicContoller extends Controller
           }
           if (isset($_COOKIE['cookieWebURL'])) {
               $data['web_site_url'] = $_COOKIE['cookieWebURL'];
+          }
+
+          if ($user->authority =='RINK_USER') {
+            $data['web_site_url'] = $user->web_site_url;
+            $rinks = $user->userinfos['rinks'];
+            //$rink = '';
+            if (!empty($rinks) ) {
+              foreach($rinks as $row){
+                  $rink =$row->content_id;
+                  //$rink = Rink::find($rink);
+                  $rink = Rink::find($row->content_id);
+                  $data['rink_id'] = $rink->id;
+                  //break();
+              }
+            }
           }
           
           $data['user_id'] = $user->id;
@@ -741,9 +860,16 @@ class PublicContoller extends Controller
                 $attached_file = AttachedFile::create($attached_files);
               }
           }
-          //return redirect('/program')->with('status', $status);
-          return redirect()->intended(route('program-update', ['program' => $program->id]));
+
+          if ($user->authority=='RINK_USER') {
+            $status = "Program Successfully Updated.";
+            return redirect(route(RouteServiceProvider::RINKLIST))->with('status', $status);
+          } else {
+            return redirect()->intended(route('program-update', ['program' => $program->id]));
           
+          }
+          //return redirect('/program')->with('status', $status);
+         
         }
         
       }
@@ -1441,7 +1567,135 @@ class PublicContoller extends Controller
       }
       if ($request->isMethod('post')) {
         $data = $request->all();
+        if (isset($data['cookieRink'])) {
+            $data['rink_id'][] = $data['cookieRink'];
+        }
+        if (isset($data['cookieWebURL'])) {
+            $data['web_site_url'] = $data['cookieWebURL'];
+        }
+
+
+
+        $rules = array( 
+            'rink_id'   => 'required',
+            'web_site_url'  => 'required'
+          );    
+        $messages = array(
+                    'rink_id.required' => trans('messages.rink_id.required'),
+                    'web_site_url.required' => trans('messages.web_site_url.required')
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          //Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+
+
+          if (isset($data['rink_id'])) {
+            foreach ($data['rink_id'] as $key => $rink_id) {
+
+              $rink = Rink::find($rink_id);
+
+              if (!$rink) {
+                 return redirect()->back()->withInput()->withErrors('rink not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $rink->id;
+              $insert_arr['content_type'] = 'RINK';
+              $insert_arr['content_name'] = $rink->name;
+
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('deleted_at',null)
+                               ->where('content_type','RINK')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
+            }
+             
+          }
+
+
+          
+
+          
+          
+          //$data['user_id'] = $user->id;
+          
+          if (!$user->update($data)) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          } else {
+            $status = "User Updated.";
+            return redirect(route(RouteServiceProvider::RINKLIST))->with('status', $status);
+          
+          }
+        }
       }
+
+
+      
+
+
+      $rinks = $user->userinfos['rinks'];
+      $rink = '';
+      foreach($rinks as $row){
+          $rink =$row->content_id;
+          //$rink = Rink::find($rink);
+          $rink = Rink::find($row->content_id);
+          //break();
+      }
+
+
+      if (isset($_COOKIE['cookieRink']) && !empty($rink)) {
+        unset($_COOKIE['cookieRink']); 
+        $cookieValue = $rink->id;
+        $cookieName = 'cookieRink';
+
+        $cookiePath = "/";
+        $cookieExpire = time()+(60*60*1);//one day -> seconds*minutes*hours
+        setcookie($cookieName,$cookieValue,$cookieExpire,$cookiePath);
+        //echo $_COOKIE['cookieRink'];
+        //print_r($_COOKIE);
+      } else if (isset($_COOKIE['cookieWebURL']) && !empty($user->web_site_url)) {
+        unset($_COOKIE['cookieWebURL']); 
+        $cookieValue = $user->web_site_url;
+        $cookieName = 'cookieWebURL';
+
+        $cookiePath = "/";
+        $cookieExpire = time()+(60*60*1);//one day -> seconds*minutes*hours
+        setcookie($cookieName,$cookieValue,$cookieExpire,$cookiePath);
+        //echo $_COOKIE['cookieRink'];
+        //print_r($_COOKIE);
+      }
+      else {
+        $cookieValue = '';
+
+        $cookieName = 'cookieWebURL';
+        $cookiePath = "/";
+        $cookieExpire = time()+(60*60*1);//one day -> seconds*minutes*hours
+        setcookie($cookieName,$cookieValue,$cookieExpire,$cookiePath);
+
+        $cookieName = 'cookieRink';
+        $cookieValue = '';
+        $cookiePath = "/";
+        $cookieExpire = time()+(60*60*1);//one day -> seconds*minutes*hours
+        setcookie($cookieName,$cookieValue,$cookieExpire,$cookiePath);
+
+        
+        //echo $_COOKIE['cookieRink'];
+        //print_r($_COOKIE);
+      }
+
+
+
       $programs = Program::where([
                         ['user_id', $user->id],
                         ['deleted_at', null],
@@ -1449,8 +1703,9 @@ class PublicContoller extends Controller
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
       return view('pages.rink.list', [
           'data'=>
-          [
-              'user'      =>  $user,
+          [   
+              'rink' => $rink,
+              'user' =>  $user,
               'Title' =>  $title,
               'programs' => $programs
           ]
@@ -1623,7 +1878,7 @@ class PublicContoller extends Controller
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::PROFILE]);
                 }
                 elseif ($user->isRinkUser()) {
-                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::RINKLIST]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> route(RouteServiceProvider::RINKLIST)]);
                 } else{
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::ROOT]);
                 }
