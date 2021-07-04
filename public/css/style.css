@@ -1861,7 +1861,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   }
   .card-section {
     background: url(../img/sp-bg-top-2.png);
-    background-size: 248%;
+    background-size: 100%;
     background-position: top left;
     background-repeat: no-repeat;
     height: 957px;
@@ -1965,6 +1965,9 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   }
   .carousel-section .wrap {
     padding: 0 0px;
+  }
+  .carousel-section h1{
+    width: 80%;
   }
   .carousel-section .title .pic {
     margin: 0 auto;
