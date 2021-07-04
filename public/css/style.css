@@ -1689,7 +1689,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     display: block;
   }
   .extra {
-    margin-top: 0%;
+    margin-top: 0% !important;
   }
   .hero-section {
     background-color: #F3F6FB;
@@ -1813,7 +1813,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     background-position: top left;
     position: relative;
     z-index: 5;
-    padding-bottom: 8%;
+    padding-bottom: 33%;
   }
   .hero-banner .text-content .hero-button {
     width: 45%;
@@ -1857,15 +1857,21 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     background: transparent;
     position: relative;
     z-index: 5;
-    margin-top: -7%;
+    margin-top: 0%;
+  }
+  .blue-arrow{
+    margin-top: -31% !important;
+  }
+  .pink-arrow{
+    margin-top: -100% !important;
   }
   .card-section {
     background: url(../img/sp-bg-top-2.png);
     background-size: 100%;
     background-position: 0 250px;
     background-repeat: no-repeat;
-    height: 957px;
-    padding: 8% 2% 21%;
+    height: 1300px;
+    padding: 30% 2% 21%;
   }
   .card-section .content h1 {
     font-family: Raleway;

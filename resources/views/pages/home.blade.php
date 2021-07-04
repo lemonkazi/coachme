@@ -35,7 +35,7 @@
             </div>
         </div>
     </section>
-    <section class="drop-arrow">
+    <section class="drop-arrow blue-arrow">
       <i class="fas fa-angle-down"></i>
     </section>
     
@@ -93,7 +93,7 @@
         
       </div>
       </section>
-      <section class="drop-arrow extra ">
+      <section class="drop-arrow extra pink-arrow">
         <i class="fas fa-angle-down purple"></i>
       </section>
       <!-- /carosel section -->
