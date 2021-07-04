@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->text('about')->nullable();
+            $table->string('web_site_url')->nullable();
             $table->unsignedBigInteger('province_id')->nullable();
             
             $table->foreign('province_id')

@@ -70,8 +70,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('program/create',['as' =>'program-create','uses' =>'PublicContoller@program_add']);
 	
 
-
-	Route::get('rink/list', 'PublicContoller@rink_list');
+	//Route::get('/', [HomeController::class, 'index'])->name('home');
+	Route::get('rink/list', [App\Http\Controllers\PublicContoller::class,'rink_list'])->name('rink/list');
 	Route::post('rink/list',['as' =>'rink-list','uses' =>'PublicContoller@rink_list']);
 	
 

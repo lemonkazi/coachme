@@ -6,26 +6,60 @@
           <div class="row">
             <div class="col-md-10">
               <h2>Rink basic information</h2>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="location">Select your rink</label>
-                    <select name="cookieRink" id="set_rink_id" class="set_cookie form-control" style="width: 100%">
-                      <option value="">Select</option>
-                      @foreach($rink_all as $id => $value)
-                          <option value="{{ $id }}" {{ (old('rink_id') ? old('rink_id') : '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                      @endforeach
-                    </select>
-                    <i class="bi bi-chevron-compact-down"></i>
+              <form action="{{ route('rink-list')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                {{session('msg')}}
+                @if(session()->has('error'))
+                    <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+                @endif
+                @if (session('status'))
+                  <div class="alert alert-success">
+                    {{ session('status') }}
+                  </div>
+                @endif
+                @if (session('warning'))
+                  <div class="alert alert-warning">
+                    {{ session('warning') }}
+                  </div>
+                @endif
+                @if ($errors->any())
+                  <div class="alert alert-danger">
+                      <ul>
+                          @foreach ($errors->all() as $error)
+                              <li>{{ $error }}</li>
+                          @endforeach
+                      </ul>
+                  </div>
+                @endif
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="location">Select your rink</label>
+                      <select name="cookieRink" id="set_rink_id" class="set_cookie form-control" style="width: 100%">
+                        <option value="">Select</option>
+
+                        @foreach($rink_all as $id => $value)
+                            <option value="{{ $id }}" {{ (old('cookieRink') ? old('cookieRink') : $data['rink']->id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                      </select>
+                      <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="location">Website link</label>
+                      <input type="text" class="form-control set_cookie" id="set_web_site_url" name="cookieWebURL" value="{{!empty($data['user']) ? old('cookieWebURL', $data['user']->web_site_url) : old('cookieWebURL')}}" required aria-describedby="emailHelp" >
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 mt-4">
+                    <div class="btn-group">
+                      <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
+                      <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="location">Website link</label>
-                    <input type="text" class="form-control set_cookie" id="set_web_site_url" name="cookieWebURL" value="" required aria-describedby="emailHelp" >
-                  </div>
-                </div>
-              </div>
+              </form>
               
               <a href="{{route('camp-create')}}" class="btn btn-custom mb-2 green col-md-3 w-60">Create a camp</a><br/>
               <a href="{{route('program-create')}}" class="btn btn-custom mb-4 blue col-md-3 w-60">Create a program</a>
