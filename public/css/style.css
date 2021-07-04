@@ -1696,7 +1696,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   }
   .navbar-nav {
     text-align: center;
-    padding: 10% 0;
+    padding: 20% 0;
   }
   .navbar-toggler-icon {
     background-image: none !important;
@@ -1802,6 +1802,9 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     font-size: 18px;
     font-weight: 700;
     line-height: 21.13px;
+  }
+  .hero-section ul li{
+    padding: 10px 0;
   }
   .hero-banner {
     background-image: url(../img/sp-bg-top.png);
