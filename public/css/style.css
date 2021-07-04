@@ -1079,6 +1079,7 @@ label {
   background-repeat: no-repeat;
   background-position: bottom center;
   padding-top: 4.5%;
+  padding-bottom: 18%;
 }
 
 .camp-edit .calender i {
@@ -1150,6 +1151,7 @@ label {
   background-repeat: no-repeat;
   background-position: bottom center;
   padding-top: 4.5%;
+  padding-bottom: 15%;
 }
 
 .program-edit i {
@@ -1215,8 +1217,20 @@ label {
   display: -ms-flexbox;
   display: flex;
 }
+.program-details {
+    background: #F3F6FB;
+    background-image: url(../img/program_bg.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    padding-top: 4.5%;
+}
 
-.program-details, .coach-details {
+a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
+    color: #fff;
+}
+
+.coach-details {
   background: #F3F6FB;
   background-image: url(../img/bg-rink-list.png);
   background-size: 100%;
@@ -1349,7 +1363,7 @@ label {
   background-image: url(../img/bg-rink-list.png);
   background-size: 100%;
   background-repeat: no-repeat;
-  background-position: bottom center;
+  background-position: 0px 150px;
 }
 
 .rink-list .green, .program-list .green {
@@ -1432,7 +1446,7 @@ label {
 .program-list {
   background-image: url(../img/bg-program-list.png);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
   padding-bottom: 20%;
   background-position: top;
   border-radius: 0;
@@ -1546,6 +1560,7 @@ label {
 .coach-list .profile .card-body {
   padding: 10% 0;
   text-align: center;
+  min-height:340px;
 }
 
 .coach-list .profile .card-body .learn-more a {
@@ -1573,9 +1588,7 @@ label {
 }
 
 .camp-list {
-  background: #F3F6FB url(../img/bg-camp-list.png) !important;
-  background-size: cover !important;
-  background-position: bottom left;
+  background: #F3F6FB url(../img/bg-camp-list.png) no-repeat left bottom/100%;
   padding-bottom: 20%;
   border-radius: 0;
 }
@@ -1687,6 +1700,9 @@ label {
   }
   .navbar-toggler-icon {
     background-image: none !important;
+  }
+  .navbar-toggler-icon img{
+    width: 100%;
   }
   .navbar-toggler-icon i {
     display: none;
@@ -2057,11 +2073,76 @@ label {
     background-repeat: no-repeat;
   }
   .program-details h1 {
+    font-family: Raleway;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 31px;
+    letter-spacing: 0em;
+    text-align: center;
+
+  }
+  .coach-details h2 {
+    font-family: Raleway;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 35px;
+    letter-spacing: 0em;
     text-align: center;
   }
+  .coach-details h2 i{
+    font-size: 22px;
+  }
+  .program-details h1 i{
+    font-size: 22px;
+  }
+  .program-details h4, .coach-details h4 {
+    font-family: Raleway;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .program-details p, .coach-details p {
+    font-family: Raleway;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+.program-details p a{
+  display: block;
+}
+.program-details label, .coach-details label{
+  font-family: Raleway;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  
+}
+.address h5,.coach-details h5{
+  font-family: Raleway;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.logo-sp{
+  max-width: 168px;
+}
   .camp-details {
     background: url(../img/sp-bg-camp-details.png);
-    background-size: 100%;
+    background-size: contain;
     background-position: bottom;
     background-repeat: no-repeat;
   }
@@ -2080,7 +2161,7 @@ label {
   }
   .camp-list {
     background: url(../img/sp-bg-camp-list.png) !important;
-    background-size: cover !important;
+    background-size: contain !important;
     background-position: bottom;
     background-repeat: no-repeat !important;
     border-radius: 0;
@@ -2135,12 +2216,34 @@ label {
   .coach-list .profile .card-body {
     padding: 20px;
     text-align: center;
+    min-height:auto;
   }
   .coach-list .profile .card-body h3 {
     font-size: 18px;
   }
   .coach-list .profile .card-body h4 {
     font-size: 15px;
+  }
+  .coach-details img {
+    width: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 50%;
+    text-align: right;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 40px;
+  }
+  .coach-details h2 {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  /* .coach-details .row{
+    flex-direction: column-reverse;
+  } */
+  .coach-details {
+    background-image: url(../img/coach_details_bg_sp.png);
+    padding-top: 10%;
   }
 }
 /*# sourceMappingURL=style.css.map */

@@ -21,12 +21,6 @@
                       @endif
                       
                     </div>
-                    <div class="address text-center mt-5">
-                      <label for="">Contact</label>
-                      <p>
-                        {{$data['camp']->about}}
-                      </p>
-                    </div>
                   </div>
                 </div> 
               </div>

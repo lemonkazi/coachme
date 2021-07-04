@@ -4,48 +4,78 @@
     <div class="coach-details">
         <div class="container">
           <div class="row">
+            <div class=" col-md-7 text-right sp">
+              <img src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" />
+            </div>
             <div class="col-md-5">
               <h2>{{$data['user']->name}} {{$data['user']->family_name}} <i class="fas fa-share-alt"></i></h2>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 wid-50">
                   <label for="">Experience</label>
                   <p>{{$data['user']->experience_name}}</p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 wid-50">
                   <label for="">Coaching certificate</label>
                   <p>{{$data['user']->certificate_name}}</p>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 wid-50">
                   <label for="">Speciality</label>
                   <p>{{$data['speciality']}}</p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 wid-50">
                   <label for="">Language spoken</label>
                   <p>{{$data['language']}}</p>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <label for="">Price</label>
-                  <p>
-                    {{$data['user']->price_name}}$
-                  </p>
+              <div class="pc">
+                <div class="row ">
+                  <div class="col-md-6">
+                    <label for="">Price</label>
+                    <p>
+                      {{$data['user']->price_name}}$
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="">Rink</label>
+                    <p>
+                      {{$data['rink']}}
+                    </p>
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <label for="">Rink</label>
-                  <p>
-                    {{$data['rink']}}
-                  </p>
+                <div class="row ">
+                  <div class="col-md-12">
+                    <label for="">Location</label>
+                    <p>{{$data['user']->city_name}}</p>
+                  </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label for="">Location</label>
-                  <p>{{$data['user']->city_name}}</p>
+              <div class="sp">
+                <div class="row">
+                  <div class="col-md-6 wid-50">
+                    <label for="">Location</label>
+                    <p>{{$data['user']->city_name}}</p>
+                  </div>
+                  <div class="col-md-6 wid-50">
+                    <label for="">Price</label>
+                    <p>
+                      {{$data['user']->price_name}}$
+                    </p>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="">Rink</label>
+                    <p>
+                      {{$data['rink']}}
+                    </p>
+                  </div>
                 </div>
               </div>
+
+
               <div class="row">
                 <div class="col-md-12">
                   <label for="">About me</label>
@@ -63,7 +93,7 @@
                 </div>
               </div>
             </div>
-            <div class=" col-md-7 text-right ">
+            <div class=" col-md-7 text-right pc">
               <img src="{{$BASE_URL}}/photo/user_photo/{{$data['user']->avatar_image_path}}" />
             </div>
           </div>
