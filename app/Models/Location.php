@@ -11,8 +11,8 @@ class Location extends Model
 {
 
     protected $cascadeDeletes = [
-        'users',
-        'camps'
+        //'users',
+        //'camps'
     ];
     
     protected $fillable= [

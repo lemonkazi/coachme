@@ -11,7 +11,7 @@ class Rink extends Model
 {
 
     protected $cascadeDeletes = [
-        'users'
+        //'users'
     ];
     
     protected $fillable= [

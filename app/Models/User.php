@@ -13,6 +13,8 @@ use App\Models\Speciality;
 use App\Models\Price;
 use App\Models\Language;
 use App\Models\City;
+use App\Models\Camp;
+use App\Models\Program;
 use App\Models\Province;
 use App\Models\Experience;
 use App\Models\Certificate;
@@ -109,7 +111,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
 
     protected $cascadeDeletes = [
-        //'userNewsReads',
+        //'camps',
+        'programs'
         
     ];
 
@@ -143,6 +146,21 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
 
+    /**
+     * Get the users for the building.
+     */
+    public function camps()
+    {
+        return $this->hasMany(Camp::class);
+    }
+
+    /**
+     * Get the users for the building.
+     */
+    public function programs()
+    {
+        return $this->hasMany(Program::class);
+    }
 
     /**
      * Set the user's password.

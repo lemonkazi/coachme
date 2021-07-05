@@ -248,6 +248,8 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
+        $('#rinks').multiselect();
+    
         $("#ex2").bootstrapSlider({});
         // add logic change value of result top condition
         $('#province_id').on('change', function(){

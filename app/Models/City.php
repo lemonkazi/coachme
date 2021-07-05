@@ -13,8 +13,8 @@ class City extends Model
     protected $table = 'locations';
 
     protected $cascadeDeletes = [
-        'users',
-        'camps'
+        //'users',
+        //'camps'
     ];
     
     protected $fillable= [

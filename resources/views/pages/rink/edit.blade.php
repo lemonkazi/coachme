@@ -7,7 +7,19 @@
         @csrf
         <div class="container">
           {{session('msg')}}
-
+          @if(session()->has('error'))
+              <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+          @endif
+          @if (session('status'))
+            <div class="alert alert-success">
+              {{ session('status') }}
+            </div>
+          @endif
+          @if (session('warning'))
+            <div class="alert alert-warning">
+              {{ session('warning') }}
+            </div>
+          @endif
           @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -122,7 +134,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="rinks">Rinks</label>
-                    <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
+                    <select class="form-control" id="rinks" name="rink_id">
 
                       @foreach($rink_all as $id => $value)
                         <option value="{{$id}}" @foreach($data['user']->userinfos['rinks'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
@@ -193,7 +205,7 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
-        $('#rinks').multiselect();
+
         // add logic change value of result top condition
         $('#province_id').on('change', function(){
             var name = $(this).attr('name');
