@@ -240,10 +240,18 @@ class PublicContoller extends Controller
                 $attached_file = AttachedFile::create($attached_files);
               }
           }
+
+          if ($user->authority=='RINK_USER') {
+            $status = "Camp Successfully added.";
+            return redirect(route(RouteServiceProvider::PROFILE))->with('status', $status);
+          
+          } else {
+            return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+          
+          }
           //return redirect('/camp')->with('status', $status);
-          return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
-          print_r($data);
-          exit();
+          // print_r($data);
+          // exit();
         }
         
       }
@@ -689,7 +697,7 @@ class PublicContoller extends Controller
           }
           if ($user->authority=='RINK_USER') {
             $status = "Program Successfully added.";
-            return redirect(route(RouteServiceProvider::RINKLIST))->with('status', $status);
+            return redirect(route(RouteServiceProvider::PROFILE))->with('status', $status);
           
           } else {
             return redirect()->intended(route('program-update', ['program' => $program->id]));
@@ -863,7 +871,7 @@ class PublicContoller extends Controller
 
           if ($user->authority=='RINK_USER') {
             $status = "Program Successfully Updated.";
-            return redirect(route(RouteServiceProvider::RINKLIST))->with('status', $status);
+            return redirect(route(RouteServiceProvider::PROFILE))->with('status', $status);
           } else {
             return redirect()->intended(route('program-update', ['program' => $program->id]));
           
@@ -1549,6 +1557,264 @@ class PublicContoller extends Controller
       $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
       
       return view('pages.coach.edit', [
+          'data'=>
+          [
+               'user'      =>  $user,
+               'Title' =>  $title
+          ]
+      ])
+      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
+
+    }
+
+    public function rink_edit(Request $request){
+      $user = $request->user();
+      if (!$user) {
+         return redirect(RouteServiceProvider::ROOT);
+      } else {
+        $title=trans('global.Edit Rink User');
+      }
+      if ($request->isMethod('post')) {
+
+        $data = $request->all();
+        //$user = $request->user();
+        if (isset($data['is_published']) && $data['is_published'] =='on') {
+          $data['is_published'] = 1;
+        } else {
+          $data['is_published'] = 0;
+        }
+        if (isset($data['location_id']) && !empty($data['location_id'])) {
+          $data['city_id'] = $data['location_id'];
+        }
+        //$data['authority'] = User::ACCESS_LEVEL_COACH;
+
+
+
+        $rules = array(
+                'name'   => 'required|string|max:255',
+                'email'  => 'required|string|email|max:255',
+                'avatar_image_path' => 'nullable'
+              );    
+        $messages = array(
+                    'name.required' => trans('messages.name.required'),
+                    'name.max' => trans('messages.name.max'),
+                    'email.required' => trans('messages.email.required'),
+                    'email.string' => trans('messages.email.string'),
+                    'email.email' => trans('messages.email.email'),
+                    'email.max' => trans('messages.email.max')                    
+                  );
+        $validator = Validator::make( $data, $rules, $messages );
+
+        if ( $validator->fails() ) 
+        {
+            
+          //Toastr::warning('Error occured',$validator->errors()->all()[0]);
+          return redirect()->back()->withInput()->withErrors($validator);
+        }
+        else
+        {
+          if (isset($data['email'])) {
+              $userExists = User::where([
+                                          ['id', '<>', $user->id],
+                                          ['email', $data['email']]
+                                      ])->first();
+          }
+            
+          if ($userExists) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.email.already_registered'));
+          }
+          
+          //$eMail = new CoachmeAppsMail();
+          //$eMail->resetPasswordMail($data['email'], $oauth_token, $userExists,$os);
+            
+          $data['is_verified'] = true;
+          //$user = User::create($data);
+          if (isset($data['rink_id'])) {
+            foreach ($data['rink_id'] as $key => $rink_id) {
+
+              $rink = Rink::find($rink_id);
+
+              if (!$rink) {
+                 return redirect()->back()->withInput()->withErrors('rink not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $rink->id;
+              $insert_arr['content_type'] = 'RINK';
+              $insert_arr['content_name'] = $rink->name;
+
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('deleted_at',null)
+                               ->where('content_type','RINK')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
+            }
+            
+            
+          }
+
+          if (isset($data['speciality_id'])) {
+            foreach ($data['speciality_id'] as $key => $speciality_id) {
+
+              $speciality = Speciality::find($speciality_id);
+
+              if (!$speciality) {
+                 return redirect()->back()->withInput()->withErrors('rink not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $speciality->id;
+              $insert_arr['content_type'] = 'SPECIALITY';
+              $insert_arr['content_name'] = $speciality->name;
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('content_id',$speciality->id)
+                               ->where('content_type','SPECIALITY')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
+            }
+            
+          }
+          if (isset($data['language_id'])) {
+            foreach ($data['language_id'] as $key => $language_id) {
+            
+              $language = Language::find($language_id);
+
+              if (!$language) {
+                 return redirect()->back()->withInput()->withErrors('rink not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $language->id;
+              $insert_arr['content_type'] = 'LANGUAGE';
+              $insert_arr['content_name'] = $language->name;
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('content_id',$language->id)
+                               ->where('content_type','LANGUAGE')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
+            }
+          }
+          
+          $data['token'] = sha1(time());
+          
+          if($request->file('avatar_image_path'))
+          {
+            $image = $request->file('avatar_image_path');
+
+
+
+
+
+
+
+
+            $shouldCrop = $request->boolean('crop', true);
+            $width = $request->input('width', 150);
+            $height = $request->input('height', 150);
+            $new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+            //$name = time() . '_' . str_replace(' ', '-', $this->removeBs($file->getClientOriginalName()));
+            $filePath = '/user_photo/' . $new_name;
+            $fileContent = null;
+
+            // echo public_path('photo');
+            // exit();
+
+            if ($shouldCrop) {
+                $interventionImage = InterventionImageManager::make($image);
+                //$img = Image::make('foo.jpg')->resize(300, 200);
+                if (!$width && !$height) {
+                    $height = $interventionImage->height();
+                    $width = $interventionImage->width();
+                    
+                    if ($height <= $width) {
+                        $width = $height;
+                    } else {
+                        $height = $width;
+                    }
+                } else {
+                    if (!$width) {
+                        $width = $interventionImage->width();
+                    }
+
+                    if (!$height) {
+                        $height = $interventionImage->height();
+                    }
+                }
+
+                $croppedImage = $interventionImage->fit($width, $height);
+                
+                // $store  = Storage::putFile('public/image', $croppedImage);
+
+                // $url    = Storage::url($store);
+
+                $croppedImageStream = $croppedImage->stream();
+                
+                $fileContent = $croppedImageStream->__toString();
+                
+            } else {
+                $fileContent = file_get_contents($image);
+            }
+            $result = Storage::disk('public')->put($filePath, $fileContent);
+            
+            if (!$result) {
+              return redirect()->back()->withInput()->withErrors('Image could not be uploaded');
+                //throw new HttpResponseException(response()->error('Image could not be uploaded', Response::HTTP_BAD_REQUEST));
+            }
+            $data['avatar_image_path'] = $new_name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //$new_name = $user->id . '_s_' . self::uniqueString() . '.' . $image->getClientOriginalExtension();
+            
+            //$image->move(public_path('photo/user_photo'), $new_name);
+            //$data['avatar_image_path'] = $new_name;
+          }
+          if (!$user->update($data)) {
+            return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+          
+
+          
+          //Toastr::success(trans('global.A new Coach has been created'),'Success');
+          //return back();
+        }
+
+      }
+
+      $city_all = Location::all()->pluck("name", "id")->sortBy("name");
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+
+      $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
+      $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
+      $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
+      $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $price_all = Price::all()->pluck("name", "id")->sortBy("name");
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      
+      return view('pages.rink.edit', [
           'data'=>
           [
                'user'      =>  $user,

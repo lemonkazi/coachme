@@ -87,6 +87,12 @@ Route::middleware(['auth', 'authority:coach_user'])->group(function () {
 });
 
 
+Route::middleware(['auth', 'authority:rink_user'])->group(function () {
+	Route::get('my-account', 'PublicContoller@rink_edit');
+	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@rink_edit']);
+});
+
+
 
 
 Route::middleware(['auth', 'authority:super_admin'])->group(function () {
