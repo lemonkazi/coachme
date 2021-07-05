@@ -64,7 +64,7 @@ class LoginController extends Controller
                     return redirect()->intended(route('home'));
                 }
                 elseif ($user->isCoachUser()) {
-                    return redirect(RouteServiceProvider::PROFILE);
+                    return redirect(RouteServiceProvider::COACH_PROFILE);
                 }
                 elseif ($user->isRinkUser()) {
                     return redirect(RouteServiceProvider::RINKLIST);

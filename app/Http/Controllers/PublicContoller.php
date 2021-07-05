@@ -243,7 +243,7 @@ class PublicContoller extends Controller
 
           if ($user->authority=='RINK_USER') {
             $status = "Camp Successfully added.";
-            return redirect(route(RouteServiceProvider::PROFILE))->with('status', $status);
+            return redirect(route(RouteServiceProvider::RINK_PROFILE))->with('status', $status);
           
           } else {
             return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
@@ -697,7 +697,7 @@ class PublicContoller extends Controller
           }
           if ($user->authority=='RINK_USER') {
             $status = "Program Successfully added.";
-            return redirect(route(RouteServiceProvider::PROFILE))->with('status', $status);
+            return redirect(route(RouteServiceProvider::RINK_PROFILE))->with('status', $status);
           
           } else {
             return redirect()->intended(route('program-update', ['program' => $program->id]));
@@ -871,7 +871,7 @@ class PublicContoller extends Controller
 
           if ($user->authority=='RINK_USER') {
             $status = "Program Successfully Updated.";
-            return redirect(route(RouteServiceProvider::PROFILE))->with('status', $status);
+            return redirect(route(RouteServiceProvider::RINK_PROFILE))->with('status', $status);
           } else {
             return redirect()->intended(route('program-update', ['program' => $program->id]));
           
@@ -2087,7 +2087,7 @@ class PublicContoller extends Controller
               return redirect()->intended(route('home'));
           }
           elseif ($user->isCoachUser()) {
-            return redirect(RouteServiceProvider::PROFILE);
+            return redirect(RouteServiceProvider::COACH_PROFILE);
           }
           elseif ($user->isRinkUser()) {
             return redirect(RouteServiceProvider::RINKLIST);
@@ -2141,7 +2141,7 @@ class PublicContoller extends Controller
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> route('home')]);
                   
                 } elseif ($user->isCoachUser()) {
-                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::PROFILE]);
+                  return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> RouteServiceProvider::COACH_PROFILE]);
                 }
                 elseif ($user->isRinkUser()) {
                   return response()->json(['success'=>true,'token'=>csrf_token(),'result'=>trans('messages.success_message'),'url'=> route(RouteServiceProvider::RINKLIST)]);

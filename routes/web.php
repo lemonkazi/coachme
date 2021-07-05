@@ -80,17 +80,51 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
+//Route::middleware(['auth', 'authority:coach_user'])->group(function () {
+//	Route::get('my-account', 'PublicContoller@coach_edit');
+//	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
+//});
 
-Route::middleware(['auth', 'authority:coach_user'])->group(function () {
-	Route::get('my-account', 'PublicContoller@coach_edit');
-	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
-});
+
+// Route::middleware(['auth', 'authority:rink_user'])->group(function () {
+// 	Route::get('my-account', 'PublicContoller@rink_edit');
+// 	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@rink_edit']);
+// });
+
+//  Route::get('my-account', function()
+//  {
+// 		if (Auth::check()) {
+// 	        if(Auth::user()->authority == "COACH_USER"){
+// 	        	//retutn 'PublicContoller@coach_edit';
+// 	        	return redirect()->route('my-account');
+//     		}
+// 	        else if(Auth::user()->authority == "RINK_USER"){
+// 	        	return redirect()->route('my-account');
+// 	        }
+// 	    }
+// });
+
+
+// Route::middleware(['auth', 'authority:coach_user'])->group(function () {
+// 	Route::get('my-account', 'PublicContoller@coach_edit');
+// 	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
+// });
 
 
 Route::middleware(['auth', 'authority:rink_user'])->group(function () {
-	Route::get('my-account', 'PublicContoller@rink_edit');
-	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@rink_edit']);
+	Route::get('rink-account', 'PublicContoller@rink_edit');
+	Route::post('rink-account',['as' =>'profile-update','uses' =>'PublicContoller@rink_edit']);
 });
+Route::middleware(['auth', 'authority:coach_user'])->group(function () {
+	Route::get('coach-account', 'PublicContoller@coach_edit');
+	Route::post('coach-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
+});
+
+
+// Route::middleware(['auth', 'authority:rink_user'])->group(function () {
+// 	Route::get('my-account', 'PublicContoller@rink_edit');
+// 	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@rink_edit']);
+// });
 
 
 

@@ -34,7 +34,7 @@ class RedirectIfAuthenticated
                             return redirect(RouteServiceProvider::HOME);
                         } 
                         elseif ($user->isCoachUser()) {
-                            return redirect(RouteServiceProvider::PROFILE);
+                            return redirect(RouteServiceProvider::COACH_PROFILE);
                         }
                         elseif ($user->isRinkUser()) {
                             return redirect(RouteServiceProvider::RINKLIST);
