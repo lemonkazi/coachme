@@ -12,7 +12,7 @@ class Level extends Model
     //protected $table = 'speciality';
 
     protected $cascadeDeletes = [
-        'camps'
+        //'camps'
     ];
     
     protected $fillable= [

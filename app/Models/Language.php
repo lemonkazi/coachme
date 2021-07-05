@@ -11,7 +11,7 @@ class Language extends Model
     //protected $table = 'speciality';
 
     protected $cascadeDeletes = [
-        'users'
+        //'users'
     ];
     
     protected $fillable= [

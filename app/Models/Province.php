@@ -11,8 +11,8 @@ class Province extends Model
 {
 
     protected $cascadeDeletes = [
-        'users',
-        'locations'
+        //'users',
+        //'locations'
     ];
     
     protected $fillable= [
