@@ -1863,7 +1863,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     margin-top: -31% !important;
   }
   .pink-arrow{
-    margin-top: -100% !important;
+    margin-top: -470px!important;
   }
   .card-section {
     background: url(../img/sp-bg-top-2.png);
@@ -1871,7 +1871,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     background-position: 0 250px;
     background-repeat: no-repeat;
     height: 1300px;
-    padding: 30% 2% 21%;
+    padding: 10% 2% 21%;
   }
   .card-section .content h1 {
     font-family: Raleway;
@@ -1881,6 +1881,9 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     line-height: 28px;
     letter-spacing: 0em;
     text-align: center;
+    margin-top: 0%;
+    z-index: 9999;
+    position: relative;
   }
   .card-section .content p {
     font-family: Raleway;
@@ -1956,6 +1959,10 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   }
   .carousel-section {
     height: auto;
+    margin-top:10%;
+  }
+  .carousel-section .slider{
+      max-width:95%;
   }
   .carousel-section h1 {
     padding-left: 0;
@@ -1991,8 +1998,11 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   }
   footer {
     background-image: url(../img/sp-footer-bg.png);
-    background-size: 300%;
+    background-size: 100%;
     padding: 0;
+    background-position: 0 0;
+    margin-top: -30px;
+    padding-top: 45px;
   }
   footer ul {
     padding: 0 0 0 20px;
