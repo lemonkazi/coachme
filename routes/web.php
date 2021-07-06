@@ -55,6 +55,12 @@ Auth::routes();
 
 
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    // return what you want
+});
+
+
 // auth
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('camp/update/{camp}',['as' =>'camp-update','uses' =>'PublicContoller@camp_edit']);

@@ -243,7 +243,7 @@ class PublicContoller extends Controller
 
           if ($user->authority=='RINK_USER') {
             $status = "Camp Successfully added.";
-            return redirect(route(RouteServiceProvider::RINK_PROFILE))->with('status', $status);
+            return redirect(RouteServiceProvider::RINKLIST)->with('status', $status);
           
           } else {
             return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
@@ -697,7 +697,7 @@ class PublicContoller extends Controller
           }
           if ($user->authority=='RINK_USER') {
             $status = "Program Successfully added.";
-            return redirect(route(RouteServiceProvider::RINK_PROFILE))->with('status', $status);
+            return redirect(RouteServiceProvider::RINKLIST)->with('status', $status);
           
           } else {
             return redirect()->intended(route('program-update', ['program' => $program->id]));
@@ -871,7 +871,7 @@ class PublicContoller extends Controller
 
           if ($user->authority=='RINK_USER') {
             $status = "Program Successfully Updated.";
-            return redirect(route(RouteServiceProvider::RINK_PROFILE))->with('status', $status);
+            return redirect(RouteServiceProvider::RINK_PROFILE)->with('status', $status);
           } else {
             return redirect()->intended(route('program-update', ['program' => $program->id]));
           

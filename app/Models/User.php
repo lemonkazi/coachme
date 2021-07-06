@@ -111,7 +111,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
 
     protected $cascadeDeletes = [
-        //'camps',
+        'camps',
         'programs'
         
     ];
