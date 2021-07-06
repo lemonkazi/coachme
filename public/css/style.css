@@ -1363,7 +1363,7 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
   background-image: url(../img/bg-rink-list.png);
   background-size: 100%;
   background-repeat: no-repeat;
-  background-position: 0px 150px;
+  background-position: center bottom;
 }
 
 .rink-list .green, .program-list .green {
