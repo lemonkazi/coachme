@@ -246,7 +246,10 @@ class PublicContoller extends Controller
             return redirect(RouteServiceProvider::RINKLIST)->with('status', $status);
           
           } else {
-            return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+            $status = "Camp Successfully added.";
+            return redirect(RouteServiceProvider::COACH_PROFILE)->with('status', $status);
+          
+            //return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
           
           }
           //return redirect('/camp')->with('status', $status);
@@ -700,7 +703,10 @@ class PublicContoller extends Controller
             return redirect(RouteServiceProvider::RINKLIST)->with('status', $status);
           
           } else {
-            return redirect()->intended(route('program-update', ['program' => $program->id]));
+            $status = "Program Successfully added.";
+            return redirect(RouteServiceProvider::COACH_PROFILE)->with('status', $status);
+          
+            //return redirect()->intended(route('program-update', ['program' => $program->id]));
           
           }
           
