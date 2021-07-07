@@ -217,26 +217,23 @@
                       <div class="col-md-4 mt-4">
                         <div class="btn-group">
                           <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
-                          <button id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                          <button id="save_coach" class="form-control btn btn-primary submit px-3">Save</button>
                         </div>
                       </div>
                     </div>
 
-                    <div class="row coach1" id ="coachimg" style="display: none;">
+                    <div class="row coach1" id ="coachimg2">
                       <div class="col-md-4">
                         <div class="img-upload mb-4 output">
-                          <img id="output" src="https://via.placeholder.com/150x150" alt=""> 
-                          <!-- <img id="output" src="{{ asset('img/patrick_chan.png')}}" alt="PAT"> -->
                           
                         </div>
                       </div>
-                      <div class="col-md-7 pt-10 outputName">
-                        <input type="text" disabled class="form-control" id="coach" value="" aria-describedby="emailHelp" >
-                        <p>Link to an existing coach account</p>
+                      <div class="col-md-4 pt-10 outputName">
+                        
                       </div>
 
-                      <!-- <button class="remove form-control btn btn-primary submit px-3">x</button>
-                       -->
+                      <button class="remove form-control btn btn-primary submit px-3">x</button>
+                      
                     </div>
                     @if(isset($data['coaches']))
                       @foreach ($data['coaches'] as $coach)
@@ -283,6 +280,7 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
+        $("#coachimg2").hide();
         var projects =  <?php echo json_encode($coaches) ?>;
         console.log(projects);
         // var projects = [
@@ -313,6 +311,51 @@
         $(document).on("click", "#addMore", function () {
             $("#coachimg_input").show();
         });
+
+        $(document).on("change", "#imgInp1", function () {
+          //var total_file=document.getElementById("imgInp").files.length;
+          // $("#image_preview1").empty();//you can remove this code if you want previous user input
+          // imagesPreview(this, '#image_preview1');
+          console.log('sss');
+          
+        });
+
+        $(document).on("click", "#save_coach", function () {
+            var value = $( "#coach_select" ).val();
+
+            // $("#btn1").click(function() {
+            //   $('<input type="file" name="pic" accept="image/*" />b<br>').insertBefore(this);
+            // });
+            var src ="<div id='aaa'>";
+                    
+                src+="<input accept='image/*' name='coach_image' type='file' id='imgInp1' onchange='preview_image();' />";
+                src+="<i class='far fa-file-image'></i>";
+                src+="<i class='bi bi-plus-circle'></i>";
+                src+="</div>";
+            var val ="<input type='text' disabled class='form-control' id='coach' value='"+ value +"' aria-describedby='emailHelp' >";
+            
+
+            var newSelect='<div class="row coach1" id ="coachimg"><div class="col-md-4"><div class="img-upload mb-4 output">'+src+'</div></div><div class="col-md-4 pt-10 outputName">'+val+'</div><button class="remove form-control btn btn-primary submit px-3">x</button></div>';
+
+
+
+            //var newSelect = $("#coachimg2").clone();
+
+            
+
+
+            //var src ="<img id='output' src='https://via.placeholder.com/150x150' alt=''>";
+            //src+="<input type='hidden' name='coaches[]' value='"+ui.item.id+"'>";
+            //newSelect.find('.output').html(src);
+            //var newSelect = $('<input type="file" name="pic" accept="image/*" />b<br>').insertBefore(this);
+
+
+            //val+="<p>Link to an existing coach account</p>";
+            //newSelect.find('.outputName').html(val);
+            //document.getElementById("output").src = src;
+            $("#coachimg-wrapper").append(newSelect);
+            //newSelect.show();
+        });
              
              
         $( "#coach_select" ).autocomplete({
@@ -328,26 +371,26 @@
               
               //var src = "<input type='hidden' name='coaches[]' value='"+ui.item.id+"'>";
               //var newSelect = $("#coachimg");
-              var newSelect = $("#coachimg").clone();
-              newSelect.find('.output').html(src);
+              var newSelect = $("#coachimg2").clone();
+              //newSelect.find('.output').html(src);
 
 
 
-              var src ="<img id='output' src='"+baseUrl+"/photo/user_photo/"+ui.item.avatar_image_path+"' />";
+              var src ="<img id='output' src='"+baseUrl+"/photo/user_photo/"+ ui.item.avatar_image_path +"' />";
               src+="<input type='hidden' name='coaches[]' value='"+ui.item.id+"'>";
               newSelect.find('.output').html(src);
 
 
-              var val ="<input type='text' disabled class='form-control' id='coach' value='"+ui.item.name+"' aria-describedby='emailHelp' >";
+              var val ="<input type='text' disabled class='form-control' id='coach' value='"+ ui.item.name +"' aria-describedby='emailHelp' >";
               val+="<p>Link to an existing coach account</p>";
               newSelect.find('.outputName').html(val);
               //document.getElementById("output").src = src;
               $("#coachimg-wrapper").append(newSelect);
-
+              newSelect.show();
               
             }
             console.log(ui.item);
-            $("#coachimg").show();
+            //newSelect.show();
             // $( "#project-id" ).val( ui.item.id );
             // //$( "#project-label" ).val( ui.item.label );
             // $( "#project-description" ).val( ui.item.desc );
@@ -408,6 +451,8 @@
         imagesPreview(this, '#image_preview');
         
       });
+
+      
 
       let files = [];
         // Multiple images preview in browser
