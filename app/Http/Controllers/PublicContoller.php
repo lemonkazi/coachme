@@ -265,6 +265,12 @@ class PublicContoller extends Controller
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
+      $coaches = [];
+      $coaches_data = User::select('name', 'avatar_image_path', 'id')->where('authority', '=', 'COACH_USER')->where('deleted_at', '=', null)->get()->toArray();
+      foreach ($coaches_data as $key=>$coach) {
+        $coach['value'] =  $coach['name'];
+        $coaches[] = $coach;
+      } 
       return view('pages.camp.edit', [
           'data'=>
           [
@@ -274,7 +280,7 @@ class PublicContoller extends Controller
                'rink' =>$rink
           ]
       ])
-      ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all'));
     }
 
     public function camp_edit(Request $request, Camp $camp){

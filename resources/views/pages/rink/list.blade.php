@@ -55,7 +55,7 @@
                   <div class="col-md-4 mt-4">
                     <div class="btn-group">
                       <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
-                      <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                      <button type="submit" id="save" class="form-control btn btn-primary submit px-3">+</button>
                     </div>
                   </div>
                 </div>

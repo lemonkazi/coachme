@@ -191,12 +191,11 @@
                   </div>
                   <label>Coaches</label>
                   <div class="col-md-10 coachimg" id="coachimg-wrapper">
-                    <div class="row coach1" id ="coachimg">
+                    <!-- <div class="row coach1" id ="coachimg">
                       <div class="col-md-4">
                         <div class="img-upload mb-4 output">
                           <img id="output" src="https://via.placeholder.com/150x150" alt=""> 
-                          <!-- <img id="output" src="{{ asset('img/patrick_chan.png')}}" alt="PAT"> -->
-                          
+                         
                         </div>
                       </div>
                       <div class="col-md-7 pt-10">
@@ -208,6 +207,36 @@
 
                       <button class="remove form-control btn btn-primary submit px-3">x</button>
                       
+                    </div> -->
+                    <div class="row coach1" id ="coachimg_input" style="display: none;">
+                      <div class="col-md-8 mt-4">
+                        <div class="form-group">
+                          <input id="coach_select" type="text" class="form-control" >
+                        </div>
+                      </div>
+                      <div class="col-md-4 mt-4">
+                        <div class="btn-group">
+                          <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
+                          <button id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row coach1" id ="coachimg" style="display: none;">
+                      <div class="col-md-4">
+                        <div class="img-upload mb-4 output">
+                          <img id="output" src="https://via.placeholder.com/150x150" alt=""> 
+                          <!-- <img id="output" src="{{ asset('img/patrick_chan.png')}}" alt="PAT"> -->
+                          
+                        </div>
+                      </div>
+                      <div class="col-md-7 pt-10 outputName">
+                        <input type="text" disabled class="form-control" id="coach" value="" aria-describedby="emailHelp" >
+                        <p>Link to an existing coach account</p>
+                      </div>
+
+                      <!-- <button class="remove form-control btn btn-primary submit px-3">x</button>
+                       -->
                     </div>
                     @if(isset($data['coaches']))
                       @foreach ($data['coaches'] as $coach)
@@ -231,11 +260,11 @@
                     @endif
 
                   </div>
-                 <!--  <div class="row">
+                 <div class="row">
                     <div class="col-md-4 mb-4">
-                      <button id="addMore" class="form-control btn btn-primary submit px-3">Add More</button>
+                      <a href="javascript:void(0);" id="addMore" class="form-control btn btn-primary submit px-3">Add Coach</a>
                     </div>
-                  </div> -->
+                  </div>
 
                 </div>
                 <div class="offset-md-8 col-md-4 mb-4">
@@ -254,6 +283,86 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
+        var projects =  <?php echo json_encode($coaches) ?>;
+        console.log(projects);
+        // var projects = [
+        // {
+        //   id:1,
+        //   value: "jquery",
+        //   label: "jQuery",
+        //   desc: "the write less, do more, JavaScript library",
+        //   icon: "jquery_32x32.png"
+        // },
+        // {
+        //     id:2,
+        //   value: "jquery-ui",
+        //   label: "jQuery UI",
+        //   desc: "the official user interface library for jQuery",
+        //   icon: "jqueryui_32x32.png"
+        // },
+        // {
+        //     id:3,
+        //   value: "sizzlejs",
+        //   label: "Sizzle JS",
+        //   desc: "a pure-JavaScript CSS selector engine",
+        //   icon: "sizzlejs_32x32.png"
+        // }
+        // ];
+        
+
+        $(document).on("click", "#addMore", function () {
+            $("#coachimg_input").show();
+        });
+             
+             
+        $( "#coach_select" ).autocomplete({
+          minLength: 0,
+          source: projects,
+          focus: function( event, ui ) {
+            $( "#coach_select" ).val( ui.item.name );
+            return false;
+          },
+          select: function( event, ui ) {
+            if (ui.item) {
+              $( "#coach_select" ).val( ui.item.name );
+              
+              //var src = "<input type='hidden' name='coaches[]' value='"+ui.item.id+"'>";
+              //var newSelect = $("#coachimg");
+              var newSelect = $("#coachimg").clone();
+              newSelect.find('.output').html(src);
+
+
+
+              var src ="<img id='output' src='"+baseUrl+"/photo/user_photo/"+ui.item.avatar_image_path+"' />";
+              src+="<input type='hidden' name='coaches[]' value='"+ui.item.id+"'>";
+              newSelect.find('.output').html(src);
+
+
+              var val ="<input type='text' disabled class='form-control' id='coach' value='"+ui.item.name+"' aria-describedby='emailHelp' >";
+              val+="<p>Link to an existing coach account</p>";
+              newSelect.find('.outputName').html(val);
+              //document.getElementById("output").src = src;
+              $("#coachimg-wrapper").append(newSelect);
+
+              
+            }
+            console.log(ui.item);
+            $("#coachimg").show();
+            // $( "#project-id" ).val( ui.item.id );
+            // //$( "#project-label" ).val( ui.item.label );
+            // $( "#project-description" ).val( ui.item.desc );
+            // $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+            return false;
+          }
+        })
+
+        .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+          .append( "<a id='"+item.id+"'>" + item.name + "</a>" )
+          .appendTo( ul );
+        };
+
+
 
         // add logic change value of result top condition
         $('#province_id').on('change', function(){
