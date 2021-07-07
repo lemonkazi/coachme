@@ -73,10 +73,10 @@
                       @endforeach
                     </select>
                     <div class="form-check">
-                      @if ($data['user']->is_published === 1)
-                          <input type="checkbox" name="is_published" checked class="form-check-input" id="is_published">
+                      @if ($data['user']->is_published == 1)
+                          <input type="checkbox" value="1" name="is_published" checked class="form-check-input" id="is_published">
                       @else
-                          <input type="checkbox" name="is_published" {{ old('is_published') ? 'checked' : '' }} class="form-check-input" id="is_published">
+                          <input type="checkbox" value="1" name="is_published" {{ old('is_published') ? 'checked' : '' }} class="form-check-input" id="is_published">
                       @endif
                       <label class="form-check-label" for="is_published">Publish my account</label>
                     </div>

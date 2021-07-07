@@ -430,8 +430,20 @@ class PublicContoller extends Controller
                 $attached_file = AttachedFile::create($attached_files);
               }
           }
+
+          if ($user->authority=='RINK_USER') {
+            $status = "Camp Successfully Updated.";
+            return redirect(RouteServiceProvider::RINKLIST)->with('status', $status);
+          
+          } else {
+            $status = "Camp Successfully Updated.";
+            return redirect(RouteServiceProvider::COACH_PROFILE)->with('status', $status);
+          
+            //return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+          
+          }
           //return redirect('/camp')->with('status', $status);
-          return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
+          //return redirect()->intended(route('camp-update', ['camp' => $camp->id]));
           
         }
         
@@ -875,11 +887,23 @@ class PublicContoller extends Controller
               }
           }
 
+          // if ($user->authority=='RINK_USER') {
+          //   $status = "Program Successfully Updated.";
+          //   return redirect(RouteServiceProvider::RINK_PROFILE)->with('status', $status);
+          // } else {
+          //   return redirect()->intended(route('program-update', ['program' => $program->id]));
+          
+          // }
+
           if ($user->authority=='RINK_USER') {
             $status = "Program Successfully Updated.";
-            return redirect(RouteServiceProvider::RINK_PROFILE)->with('status', $status);
+            return redirect(RouteServiceProvider::RINKLIST)->with('status', $status);
+          
           } else {
-            return redirect()->intended(route('program-update', ['program' => $program->id]));
+            $status = "Program Successfully Updated.";
+            return redirect(RouteServiceProvider::COACH_PROFILE)->with('status', $status);
+          
+            //return redirect()->intended(route('program-update', ['program' => $program->id]));
           
           }
           //return redirect('/program')->with('status', $status);
@@ -1325,8 +1349,10 @@ class PublicContoller extends Controller
       if ($request->isMethod('post')) {
 
         $data = $request->all();
+        // print_r($data);
+        // exit();
         //$user = $request->user();
-        if (isset($data['is_published']) && $data['is_published'] =='on') {
+        if (isset($data['is_published']) && $data['is_published'] ==1) {
           $data['is_published'] = 1;
         } else {
           $data['is_published'] = 0;
