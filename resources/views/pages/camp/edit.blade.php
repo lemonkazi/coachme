@@ -33,6 +33,15 @@
           <div class="row">
             <div class="col-md-10">
               <div class="row">
+                @if ($data['user']->authority =='COACH_USER')
+                  <a href="{{ url('/coach-account') }}" class="back_btn">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                  </a>
+                @else
+                  <a href="{{ url('/rink/list') }}" class="back_btn">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                  </a>
+                @endif
                 <h2>Basic information</h2>
                 <div class="col-md-4">
                   <div class="form-group">
