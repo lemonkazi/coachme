@@ -1562,11 +1562,22 @@ class PublicContoller extends Controller
       $price_all = Price::all()->pluck("name", "id")->sortBy("name");
       $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
       
+      $programs = Program::where([
+                        ['user_id', $user->id],
+                        ['deleted_at', null],
+                    ])->get()->toArray();
+      $camps = Camp::where([
+                        ['user_id', $user->id],
+                        ['deleted_at', null],
+                    ])->get()->toArray();
+
       return view('pages.coach.edit', [
           'data'=>
           [
                'user'      =>  $user,
-               'Title' =>  $title
+               'Title' =>  $title,
+               'programs' =>  $programs,
+               'camps' =>  $camps
           ]
       ])
       ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
@@ -1972,6 +1983,10 @@ class PublicContoller extends Controller
                         ['user_id', $user->id],
                         ['deleted_at', null],
                     ])->get()->toArray();
+      $camps = Camp::where([
+                        ['user_id', $user->id],
+                        ['deleted_at', null],
+                    ])->get()->toArray();
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
       return view('pages.rink.list', [
           'data'=>
@@ -1979,7 +1994,8 @@ class PublicContoller extends Controller
               'rink' => $rink,
               'user' =>  $user,
               'Title' =>  $title,
-              'programs' => $programs
+              'programs' => $programs,
+              'camps' => $camps
           ]
       ])
       ->with(compact('rink_all'));
