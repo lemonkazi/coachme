@@ -77,8 +77,6 @@ Route::group(['middleware' => ['auth']], function () {
 	
 
 	//Route::get('/', [HomeController::class, 'index'])->name('home');
-	Route::get('rink/list', [App\Http\Controllers\PublicContoller::class,'rink_list'])->name('rink/list');
-	Route::post('rink/list',['as' =>'rink-list','uses' =>'PublicContoller@rink_list']);
 	
 
 	Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout']);
@@ -118,6 +116,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 Route::middleware(['auth', 'authority:rink_user'])->group(function () {
+	Route::get('rink/list', [App\Http\Controllers\PublicContoller::class,'rink_list'])->name('rink/list');
+	Route::post('rink/list',['as' =>'rink-list','uses' =>'PublicContoller@rink_list']);
+	
+
 	Route::get('rink-account', 'PublicContoller@rink_edit');
 	Route::post('rink-account',['as' =>'profile-update','uses' =>'PublicContoller@rink_edit']);
 });

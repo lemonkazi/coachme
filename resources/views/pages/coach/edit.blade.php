@@ -189,88 +189,90 @@
         </div>
       </form>
 
+      <div class="container camp_list">
+        <div class="row">
+          @if(isset($data['camps']))
+          <div class="col-md-12">
+            <h2>Your Camps</h2>
+            <div class="row">
+            <div class="col-sm-12">
+              @if(isset($data['camps']))
+                @foreach ($data['camps'] as $camp)
 
-
-      <div class="row">
-        <div class="col-md-12">
-          <h2>Your Camps</h2>
-          <div class="row">
-          <div class="col-sm-12">
-            @if(isset($data['camps']))
-              @foreach ($data['camps'] as $camp)
-
-                <div class="card text-white card-has-bg click-col mb-4">        
-                  <div class="card-img-overlay d-flex flex-column">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                          @if(isset($camp['camp_photo'][0]))
-                            <img src="{{$BASE_URL}}/{{$camp['camp_photo'][0]['path']}}" alt="">
-                          @endif
-                        </div>
-                        
-                        <?php
-
-                        //$today = new DateTime();
-                        $today      = strtotime('today');
-                        $date_year = date('Y', $today);
-
-                        $start_date      = strtotime($camp['start_date']);
-                        $start_year = date('Y', $start_date);
-                        if ($date_year == $start_year) {
-                          $start_date = date('F d', $start_date);
-                        } else {
-                          $start_date = date('F d, Y', $start_date);
-                        }
-                        
-
-                        $end_date      = strtotime($camp['end_date']);
-                        $end_year = date('Y', $end_date);
-                        if ($date_year == $end_year) {
-                          $end_date = date('F d', $end_date);
-                        } else {
-                          $end_date = date('F d, Y', $end_date);
-                        }
-                        ?>
-                        <div class="col-md-6">
-                          <h3>{{$camp['name']}}</h3>
-                          <h6>{{$start_date}}-{{$end_date}}</h6>
-                          @if(isset($camp['rink']))
-                            <h5><i class="fas fa-map-marker-alt"></i>
-                              
-                                {{$camp['rink']['address']}}
-                              
-                            </h5>
-                          @endif
+                  <div class="card text-white card-has-bg click-col mb-4">        
+                    <div class="card-img-overlay d-flex flex-column">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-3">
+                            @if(isset($camp['camp_photo'][0]))
+                              <img src="{{$BASE_URL}}/{{$camp['camp_photo'][0]['path']}}" alt="" class="img-responsive">
+                            @endif
+                          </div>
                           
+                          <?php
+
+                          //$today = new DateTime();
+                          $today      = strtotime('today');
+                          $date_year = date('Y', $today);
+
+                          $start_date      = strtotime($camp['start_date']);
+                          $start_year = date('Y', $start_date);
+                          if ($date_year == $start_year) {
+                            $start_date = date('F d', $start_date);
+                          } else {
+                            $start_date = date('F d, Y', $start_date);
+                          }
                           
-                          @if(isset($data['camp_type_name']) && !empty($data['camp_type_name']))
-                            @foreach ($data['camp_type_name'] as $camp_type)
 
-                                <h5><i class="fas fa-clock"></i>{{$camp_type['name']}}</h5>
-
-                               
+                          $end_date      = strtotime($camp['end_date']);
+                          $end_year = date('Y', $end_date);
+                          if ($date_year == $end_year) {
+                            $end_date = date('F d', $end_date);
+                          } else {
+                            $end_date = date('F d, Y', $end_date);
+                          }
+                          ?>
+                          <div class="col-md-6">
+                            <h3>{{$camp['name']}}</h3>
+                            <h6>{{$start_date}}-{{$end_date}}</h6>
+                            @if(isset($camp['rink']))
+                              <h5><i class="fas fa-map-marker-alt"></i>
+                                
+                                  {{$camp['rink']['address']}}
+                                
+                              </h5>
+                            @endif
                             
-                            @endforeach
-                          @endif
-                          <h5><i class="fas fa-road"></i>{{$camp['level_name']}}</h5>
-                        </div> 
-                        <div class="col-md-3 learn-more">
-                          <a href="{{!empty($camp['id']) ? route('camp-update', ['camp' => $camp['id']]): ''}}" class="btn btn-custom mb-2 green">Edit</a>
-                          <a href="{{!empty($camp['id']) ? route('camp-details', ['camp' => $camp['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                            
+                            @if(isset($data['camp_type_name']) && !empty($data['camp_type_name']))
+                              @foreach ($data['camp_type_name'] as $camp_type)
+
+                                  <h5><i class="fas fa-clock"></i>{{$camp_type['name']}}</h5>
+
+                                 
+                              
+                              @endforeach
+                            @endif
+                            <h5><i class="fas fa-road"></i>{{$camp['level_name']}}</h5>
+                          </div> 
+                          <div class="col-md-3 learn-more">
+                            <a href="{{!empty($camp['id']) ? route('camp-update', ['camp' => $camp['id']]): ''}}" class="btn btn-custom mb-2 green">Edit</a>
+                            <a href="{{!empty($camp['id']) ? route('camp-details', ['camp' => $camp['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                          </div>
+                          
                         </div>
-                        
                       </div>
+                      
                     </div>
-                    
                   </div>
-                </div>
-               
-              @endforeach
-            @endif
-            
+                 
+                @endforeach
+              @endif
+              
+            </div>
+            </div>
           </div>
-          </div>
+          @endif
         </div>
       </div>
     </div>
