@@ -144,6 +144,8 @@ class PublicContoller extends Controller
       if ($request->isMethod('post')) {
 
         $data = $request->all();
+        // print_r($data);
+        // exit();
         $rules = array(
             'name'   => 'required|string|max:255',
             'email'  => 'required|string|email|max:255'
@@ -170,6 +172,17 @@ class PublicContoller extends Controller
           if (isset($data['coaches'])) {
            $data['coaches'] = json_encode(array_unique($data['coaches']));
           }
+
+
+          if (isset($data['coach_name'])) {
+           $data['coach_name_array'] = array_unique($data['coach_name']);
+           $data['coach_name'] = json_encode(array_unique($data['coach_name']));
+            
+          }
+
+
+
+          
 
           if (isset($data['camp_type_id'])) {
            $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
@@ -201,6 +214,37 @@ class PublicContoller extends Controller
           $camp = Camp::create($data);
           if (!$camp) {
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
+          }
+
+          if (isset($data['coach_name'])) {
+          
+            $image_files = $request->file('coach_image');
+
+            if($request->hasFile('coach_image'))
+            {
+              $attached_files =array();
+              $j=0;
+                foreach ($image_files as $file) {
+                  if(isset($data['coach_name_array'][$j])){
+                    $new_name =$data['coach_name_array'][$j] .'_s_' . self::uniqueString() .$j. '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('photo/camp_photo/coach/'.$data['coach_name_array'][$j].'/'), $new_name);
+                    $attached_files['content_type'] = 'CAMP';
+                    $attached_files['content_id'] = $camp->id;
+                    $attached_files['type'] = 'COACH';
+                    $attached_files['user_id'] = $user->id;
+                    $attached_files['coach_name'] = $data['coach_name_array'][$j];
+                    $attached_files['name'] = $new_name;
+                    $attached_files['path'] = 'photo/camp_photo/coach/'.$data['coach_name_array'][$j].'/'.$new_name;
+                    $attached_file = AttachedFile::create($attached_files);
+                    
+                  }
+                  $j++;
+                }
+            }
+            $camp->coach_name = $data['coach_name'];
+            $camp->save();
+            //exit();
+
           }
 
 
@@ -463,13 +507,15 @@ class PublicContoller extends Controller
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
-      $coaches =array();
+      $coaches_datas =array();
       if(!empty($camp) && !empty($camp->coaches)){
         $coaches_data = json_decode($camp->coaches);
         foreach ($coaches_data as $key=>$coach) {
-          $coaches[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+          $coaches_datas[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
         }
       }
+      // print_r($coaches);
+      // exit();
 
       $camp_type_id =array();
       if(!empty($camp) && !empty($camp->camp_type_id)){
@@ -500,7 +546,12 @@ class PublicContoller extends Controller
                     ])->get(['name', 'path', 'id'])->toArray();
 
        
-
+      $coaches = [];
+      $coaches_data = User::select('name', 'avatar_image_path', 'id')->where('authority', '=', 'COACH_USER')->where('deleted_at', '=', null)->get()->toArray();
+      foreach ($coaches_data as $key=>$coach) {
+        $coach['value'] =  $coach['name'];
+        $coaches[] = $coach;
+      }
 
 
       return view('pages.camp.edit', [
@@ -509,14 +560,14 @@ class PublicContoller extends Controller
                'camp'      =>  $camp,
                'camp_photo'      =>  $camp_photo,
                'camp_schedule'      =>  $camp_schedule,
-               'coaches'   => $coaches,
+               'coaches'   => $coaches_datas,
                'camp_type_id'   => $camp_type_id,
                'user'      =>  $user,
                'Title' =>  $title,
                'rink' => $rink
           ]
       ])
-      ->with(compact('formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all'));
     }
 
 

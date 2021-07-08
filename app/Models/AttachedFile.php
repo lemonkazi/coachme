@@ -29,7 +29,8 @@ class AttachedFile extends Model
         'content_id',
         'name',
         'type',
-        'path'
+        'path',
+        'coach_name'
     ];
 
     protected $dates = ['deleted_at'];

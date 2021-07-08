@@ -34,7 +34,8 @@ class Camp extends Model
         'whatsapp',
         'coaches',
         'user_id',
-        'email'
+        'email',
+        'coach_name'
     ];
 
     /**

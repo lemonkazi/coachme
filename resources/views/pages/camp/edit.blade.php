@@ -217,7 +217,7 @@
                       <div class="col-md-4 mt-4">
                         <div class="btn-group">
                           <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
-                          <button id="save_coach" class="form-control btn btn-primary submit px-3">Save</button>
+                          <a id="save_coach" class="form-control btn btn-primary submit px-3">Save</a>
                         </div>
                       </div>
                     </div>
@@ -228,7 +228,7 @@
                           
                         </div>
                       </div>
-                      <div class="col-md-4 pt-10 outputName">
+                      <div class="col-md-6 pt-10 outputName">
                         
                       </div>
 
@@ -328,14 +328,14 @@
             // });
             var src ="<div id='aaa'>";
                     
-                src+="<input accept='image/*' name='coach_image' type='file' id='imgInp1' onchange='preview_image();' />";
+                src+="<input accept='image/*' name='coach_image[]' type='file' id='imgInp1' onchange='preview_image();' />";
                 src+="<i class='far fa-file-image'></i>";
                 src+="<i class='bi bi-plus-circle'></i>";
                 src+="</div>";
-            var val ="<input type='text' disabled class='form-control' id='coach' value='"+ value +"' aria-describedby='emailHelp' >";
+            var val ="<input type='text' class='form-control' id='coach' name='coach_name[]' value='"+ value +"' aria-describedby='emailHelp' >";
             
 
-            var newSelect='<div class="row coach1" id ="coachimg"><div class="col-md-4"><div class="img-upload mb-4 output">'+src+'</div></div><div class="col-md-4 pt-10 outputName">'+val+'</div><button class="remove form-control btn btn-primary submit px-3">x</button></div>';
+            var newSelect='<div class="row coach1" id ="coachimg"><div class="col-md-4"><div class="img-upload mb-4 output">'+src+'</div></div><div class="col-md-6 pt-10 outputName">'+val+'</div><button class="remove form-control btn btn-primary submit px-3">x</button></div>';
 
 
 
@@ -488,6 +488,10 @@
         $('.upClick span').html(event.target.files[0].name);
       }
     </script>
-    
+    <style type="text/css">
+      .camp-edit #coachimg .img-upload input {
+          display: block;
+      }
+    </style>
 @endsection
   
