@@ -39,6 +39,7 @@ class CreateCampsTable extends Migration
             
             
             $table->text('coaches')->nullable();
+            $table->text('coach_name')->nullable();
 
             $table->unsignedBigInteger('user_id')->nullable()->comment = 'This camp is created by user_id';
             $table->foreign('user_id')->references('id')->on('users');
