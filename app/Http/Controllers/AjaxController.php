@@ -91,6 +91,23 @@ class AjaxController extends Controller {
 			}
 		}
 
+		if ($param['controller'] =='campcontroller') {
+			$camp = Camp::find($param['id']);
+			if ($camp->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+		if ($param['controller'] =='programcontroller') {
+			$program = Program::find($param['id']);
+			if ($program->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+
 		
 		return response()->json($result);
    }

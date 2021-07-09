@@ -44,7 +44,7 @@
 
           var HTTP_HOST = '{{ $_SERVER['HTTP_HOST'] }}';
           var MESSAGE_CONFIRM_DELETE = '{{ __('MESSAGE_CONFIRM_DELETE') }}';
-          console.log(MESSAGE_CONFIRM_DELETE);
+          //console.log(MESSAGE_CONFIRM_DELETE);
         </script>
     </head>
     <body>
@@ -271,6 +271,7 @@
             </div>
           </div>
         </section>
+        @include('layouts.elements.modal_alert')
         <!-- /modal-->
         <script type="text/javascript" src="{{ asset('js/index.js') }}"></script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -303,7 +304,95 @@
         </script>
         <script type="text/javascript">
             $(document).ready(function(){
-                
+                $('.btn_delete_camp').on('click', function(event){
+                  event.preventDefault();
+
+                  var tr = $(this).closest('.card');
+                  var id = $(this).attr('data-id') ? $(this).attr('data-id') : '';
+                  var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+                  var data_controller = 'campcontroller';
+
+                  if (confirm('Do You want to delete?')) {
+
+                      var data = {
+                          controller: data_controller,
+                          action: 'delete',
+                          id: id,
+                          delete: 1,
+                          _token:csrfToken
+                      };
+                      //showAlertModal('sdasdasd');
+                      //alert('camp deleted.')
+                      // console.log(data);
+                      //return false;
+                      $.ajax({
+                          type: 'POST',
+                          url: baseUrl + '/ajax_delete',
+                          data: data,
+                          dataType: 'json',
+                          success: function (response) {
+                            if (response.status == 0) {
+                                // Show error
+                                alert(response.message)
+                               // showAlertModal(response.message);
+                            }else {
+                                tr.remove();
+                                 alert('camp deleted.')
+                            }
+                          },
+                          complete: function () {}
+                      });
+                  }
+                });
+                $('.btn_delete_program').on('click', function(event){
+                  event.preventDefault();
+
+                  var tr = $(this).closest('.card');
+                  var id = $(this).attr('data-id') ? $(this).attr('data-id') : '';
+                  var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+                  var data_controller = 'programcontroller';
+
+                  if (confirm('Do You want to delete?')) {
+
+                      var data = {
+                          controller: data_controller,
+                          action: 'delete',
+                          id: id,
+                          delete: 1,
+                          _token:csrfToken
+                      };
+                      //showAlertModal('sdasdasd');
+                      //alert('camp deleted.')
+                      // console.log(data);
+                      //return false;
+                      $.ajax({
+                          type: 'POST',
+                          url: baseUrl + '/ajax_delete',
+                          data: data,
+                          dataType: 'json',
+                          success: function (response) {
+                            if (response.status == 0) {
+                                // Show error
+                                alert(response.message)
+                               // showAlertModal(response.message);
+                            }else {
+                                tr.remove();
+                                 alert('Program deleted.')
+                            }
+                          },
+                          complete: function () {}
+                      });
+                  }
+                });
+                /**
+                 * Show alert using bootstrap modal
+                 * @param {string} message
+                 */
+                function showAlertModal(message) {
+                    $('#modal_alert_body').html(message);
+                    $('#modal_alert').modal('show');
+                }
+
                 $('#userLogin').click(function(e){
                     e.preventDefault();
                     var loader = $('#pageloader');

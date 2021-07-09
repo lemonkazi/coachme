@@ -42,7 +42,7 @@
 
       var HTTP_HOST = '{{ $_SERVER['HTTP_HOST'] }}';
       var MESSAGE_CONFIRM_DELETE = '{{ __('MESSAGE_CONFIRM_DELETE') }}';
-      console.log(MESSAGE_CONFIRM_DELETE);
+      //console.log(MESSAGE_CONFIRM_DELETE);
     </script>
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">

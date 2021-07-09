@@ -275,7 +275,7 @@
                             <a href="{{!empty($camp['id']) ? route('camp-update', ['camp' => $camp['id']]): ''}}" class="btn btn-warning" title="Edit">
                               <i class="fas fa-edit"></i>
                             </a> 
-                            <a href="javascript:;" data-id="{{$camp['id']}}" class="btn btn-danger btn_delete" data-toggle="tooltip" title="Delete">
+                            <a href="javascript:;" data-id="{{$camp['id']}}" class="btn btn-danger btn_delete_camp" data-toggle="tooltip" title="Delete">
                               <i class="fa fa-trash" aria-hidden="true"></i>   
                             </a> 
                           </div>

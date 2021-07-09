@@ -136,9 +136,16 @@
                                   <h5><i class="fas fa-road"></i>{{$program['level_name']}}</h5>
                                 </div> 
                                 <div class="col-md-3 learn-more">
-                                  <a href="{{!empty($program['id']) ? route('program-update', ['program' => $program['id']]): ''}}" class="btn btn-custom mb-2 green">Edit</a>
-                                
-                                  <a href="{{!empty($program['id']) ? route('program-details', ['program' => $program['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                                  <a href="{{!empty($program['id']) ? route('program-details', ['program' => $program['id']]): ''}}" class="btn btn-primary">
+                                    <i class="fas fa-eye"></i>
+                                  </a>
+                                  <a href="{{!empty($program['id']) ? route('program-update', ['program' => $program['id']]): ''}}" class="btn btn-warning" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                  </a> 
+                                  <a href="javascript:;" data-id="{{$program['id']}}" class="btn btn-danger btn_delete_program" data-toggle="tooltip" title="Delete">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>   
+                                  </a> 
+
                                 </div>
                                 
                               </div>
@@ -222,9 +229,15 @@
                                   <h5><i class="fas fa-road"></i>{{$camp['level_name']}}</h5>
                                 </div> 
                                 <div class="col-md-3 learn-more">
-                                  <a href="{{!empty($camp['id']) ? route('camp-update', ['camp' => $camp['id']]): ''}}" class="btn btn-custom mb-2 green">Edit</a>
-                                
-                                  <a href="{{!empty($camp['id']) ? route('camp-details', ['camp' => $camp['id']]): ''}}" class="btn btn-custom mb-2 green">Learn more</a>
+                                  <a href="{{!empty($camp['id']) ? route('camp-details', ['camp' => $camp['id']]): ''}}" class="btn btn-primary">
+                                    <i class="fas fa-eye"></i>
+                                  </a>
+                                  <a href="{{!empty($camp['id']) ? route('camp-update', ['camp' => $camp['id']]): ''}}" class="btn btn-warning" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                  </a> 
+                                  <a href="javascript:;" data-id="{{$camp['id']}}" class="btn btn-danger btn_delete_camp" data-toggle="tooltip" title="Delete">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>   
+                                  </a> 
                                 </div>
                                 
                               </div>
