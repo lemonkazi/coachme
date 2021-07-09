@@ -662,14 +662,43 @@ class PublicContoller extends Controller
 
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
-      $coaches =array();
+      // $coaches =array();
+      // if(!empty($camp) && !empty($camp->coaches)){
+      //   $coaches_data = json_decode($camp->coaches);
+      //   foreach ($coaches_data as $key=>$coach) {
+      //     $coache = User::select('name', 'avatar_image_path', 'id')->where('id', '=', $coach)->where('deleted_at', '=', null)->get()->toArray();
+      //     if (!empty($coache)) {
+      //       $coaches[] =$coache[0];
+      //     }
+      //   }
+      // }
+
+      $coaches_datas =array();
       if(!empty($camp) && !empty($camp->coaches)){
         $coaches_data = json_decode($camp->coaches);
         foreach ($coaches_data as $key=>$coach) {
-          $coache = User::select('name', 'avatar_image_path', 'id')->where('id', '=', $coach)->where('deleted_at', '=', null)->get()->toArray();
-          if (!empty($coache)) {
-            $coaches[] =$coache[0];
-          }
+          $coaches_datas[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
+        }
+      }
+
+      $coaches_datas_new =array();
+      if(!empty($camp) && !empty($camp->coach_name)){
+        $coaches_data_new = json_decode($camp->coach_name);
+        foreach ($coaches_data_new as $key=>$coach) {
+          $coach_photo = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'COACH'],
+                        ['deleted_at', null],
+                        ['coach_name', $coach],
+                    ])->get(['name', 'path', 'id'])->toArray();
+          // print_r($coach_photo);
+          // exit();
+
+          $coaches_datas_new[] = array(
+                                'name'=>$coach,
+                                'avatar_image_path' => ( $coach_photo[0] ) ? $coach_photo[0]['path'] : ''
+                                );
         }
       }
 
@@ -713,7 +742,8 @@ class PublicContoller extends Controller
                'end_date'      =>  $end_date,
                'camp_photo'      =>  $camp_photo,
                'camp_schedule'      =>  $camp_schedule,
-               'coaches'   => $coaches,
+               'coaches'   => $coaches_datas,
+               'coaches_datas_new' => $coaches_datas_new,
                'camp_type_id'   => $camp_type_id,
                'Title' =>  $title
           ]

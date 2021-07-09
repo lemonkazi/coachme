@@ -128,6 +128,22 @@
                         
                         @endforeach
                       @endif
+
+                      @if(isset($data['coaches_datas_new']))
+                        @foreach ($data['coaches_datas_new'] as $coach)
+                        
+                            <div class="col-md-3 text-center wid-30 ">
+                              @if(isset($coach['avatar_image_path']))
+                                <img src="{{$BASE_URL}}/{{$coach['avatar_image_path']}}" alt="">
+                              @else
+                                <!-- <img src="{{ asset('img/avatar.png') }}" alt=""> -->
+                                <img src="https://via.placeholder.com/150x150" alt=""> 
+                              @endif
+                              <p>{{!empty($coach['name']) ? $coach['name'] : ''}}</p>
+                            </div>
+                        
+                        @endforeach
+                      @endif
                     </div>
                 </div>
               </div>
