@@ -7,7 +7,19 @@
         @csrf
         <div class="container">
           {{session('msg')}}
-
+          @if(session()->has('error'))
+              <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+          @endif
+          @if (session('status'))
+            <div class="alert alert-success">
+              {{ session('status') }}
+            </div>
+          @endif
+          @if (session('warning'))
+            <div class="alert alert-warning">
+              {{ session('warning') }}
+            </div>
+          @endif
           @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>

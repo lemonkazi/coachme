@@ -174,9 +174,9 @@ class PublicContoller extends Controller
           }
 
 
-          if (isset($data['coach_name'])) {
-           $data['coach_name_array'] = array_unique($data['coach_name']);
-           $data['coach_name'] = json_encode(array_unique($data['coach_name']));
+          if (isset($data['coach_name_added'])) {
+           $data['coach_name_array'] = array_unique($data['coach_name_added']);
+           $data['coach_name'] = json_encode(array_unique($data['coach_name_added']));
             
           }
 
@@ -226,7 +226,7 @@ class PublicContoller extends Controller
               $j=0;
                 foreach ($image_files as $file) {
                   if(isset($data['coach_name_array'][$j])){
-                    $new_name =$data['coach_name_array'][$j] .'_s_' . self::uniqueString() .$j. '.' . $file->getClientOriginalExtension();
+                    $new_name =$camp->id .'_s_' . self::uniqueString() .$j. '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('photo/camp_photo/coach/'.$data['coach_name_array'][$j].'/'), $new_name);
                     $attached_files['content_type'] = 'CAMP';
                     $attached_files['content_id'] = $camp->id;
@@ -234,7 +234,7 @@ class PublicContoller extends Controller
                     $attached_files['user_id'] = $user->id;
                     $attached_files['coach_name'] = $data['coach_name_array'][$j];
                     $attached_files['name'] = $new_name;
-                    $attached_files['path'] = 'photo/camp_photo/coach/'.$data['coach_name_array'][$j].'/'.$new_name;
+                    $attached_files['path'] = 'photo/camp_photo/coach/'.$camp->id.'/'.$new_name;
                     $attached_file = AttachedFile::create($attached_files);
                     
                   }
@@ -368,6 +368,8 @@ class PublicContoller extends Controller
       if ($request->isMethod('post')) {
 
         $data = $request->all();
+        // print_r($data);
+        // exit();
         $rules = array(
             'name'   => 'required|string|max:255',
             'email'  => 'required|string|email|max:255'
@@ -395,6 +397,63 @@ class PublicContoller extends Controller
             $data['coaches'] = json_encode(array_unique($data['coaches']));
           }else{
             unset($data['coaches']);
+          }
+          if (isset($data['coach_name'])) {
+           //$data['coach_name_array'] = array_unique($data['coach_name']);
+           $data['coach_name'] = $data['coach_name'];
+            
+          }
+
+          if (isset($data['coach_name_added'])) {
+           $data['coach_name_array'] = array_unique($data['coach_name_added']);
+           $coach_name_added = array_unique($data['coach_name_added']);
+           if (isset($data['coach_name'])) {
+             $data['coach_name'] = array_merge($data['coach_name'],$coach_name_added);
+           
+           } else {
+            $data['coach_name'] = $coach_name_added;
+           
+           }
+          }
+
+          if (isset($data['coach_name'])) {
+           $data['coach_name'] = json_encode($data['coach_name']);
+            
+          }
+
+          // print_r($data);
+          // exit();
+
+
+          if (isset($data['coach_name_array'])) {
+          
+            $image_files = $request->file('coach_image');
+
+            if($request->hasFile('coach_image'))
+            {
+              $attached_files =array();
+              $j=0;
+                foreach ($image_files as $file) {
+                  if(isset($data['coach_name_array'][$j])){
+                    $new_name =$camp->id .'_s_' . self::uniqueString() .$j. '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('photo/camp_photo/coach/'.$data['coach_name_array'][$j].'/'), $new_name);
+                    $attached_files['content_type'] = 'CAMP';
+                    $attached_files['content_id'] = $camp->id;
+                    $attached_files['type'] = 'COACH';
+                    $attached_files['user_id'] = $user->id;
+                    $attached_files['coach_name'] = $data['coach_name_array'][$j];
+                    $attached_files['name'] = $new_name;
+                    $attached_files['path'] = 'photo/camp_photo/coach/'.$camp->id.'/'.$new_name;
+                    $attached_file = AttachedFile::create($attached_files);
+                    
+                  }
+                  $j++;
+                }
+            }
+            //$camp->coach_name = $data['coach_name'];
+            //$camp->save();
+            //exit();
+
           }
           if (!empty($data['camp_type_id'])) {
             $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
@@ -514,6 +573,27 @@ class PublicContoller extends Controller
           $coaches_datas[] = User::find($coach, ['name', 'avatar_image_path', 'id'])->toArray();
         }
       }
+
+      $coaches_datas_new =array();
+      if(!empty($camp) && !empty($camp->coach_name)){
+        $coaches_data_new = json_decode($camp->coach_name);
+        foreach ($coaches_data_new as $key=>$coach) {
+          $coach_photo = AttachedFile::where([
+                        ['content_id', $camp->id],
+                        ['content_type', 'CAMP'],
+                        ['type', 'COACH'],
+                        ['deleted_at', null],
+                        ['coach_name', $coach],
+                    ])->get(['name', 'path', 'id'])->toArray();
+          // print_r($coach_photo);
+          // exit();
+
+          $coaches_datas_new[] = array(
+                                'name'=>$coach,
+                                'avatar_image_path' => ( $coach_photo[0] ) ? $coach_photo[0]['path'] : ''
+                                );
+        }
+      }
       // print_r($coaches);
       // exit();
 
@@ -561,6 +641,7 @@ class PublicContoller extends Controller
                'camp_photo'      =>  $camp_photo,
                'camp_schedule'      =>  $camp_schedule,
                'coaches'   => $coaches_datas,
+               'coaches_datas_new' => $coaches_datas_new,
                'camp_type_id'   => $camp_type_id,
                'user'      =>  $user,
                'Title' =>  $title,

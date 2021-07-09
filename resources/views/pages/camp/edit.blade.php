@@ -247,9 +247,33 @@
                             </div>
                             <div class="col-md-7 pt-10">
                               <input type="text" disabled class="form-control" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
-                              <p>Link to an existing coach account</p>
+                              <a href="{{!empty($coach['id']) ? route('coach-details', ['user' => $coach['id']]): ''}}"> <p>Link to an existing coach account</p></a>
                             </div>
+                            <input type="hidden" name="coaches[]" value="{{$coach['id']}}">
 
+                            <button class="remove form-control btn btn-primary submit px-3">x</button>
+                            
+                          </div>
+                      @endforeach
+                    @endif
+                    @if(isset($data['coaches_datas_new']))
+                      @foreach ($data['coaches_datas_new'] as $coach)
+                          <div class="row coach1" id ="coachimg">
+                            <div class="col-md-4">
+                              <div class="img-upload mb-4 output">
+                                <img id="output" src="{{$BASE_URL}}/{{$coach['avatar_image_path']}}" />
+                                
+                                
+                              </div>
+                            </div>
+                            <div class="col-md-7 pt-10">
+                              <input type="text" class="form-control" disabled name="coach_name1[]" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
+                              
+                              <input type="hidden" class="form-control" name="coach_name[]" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
+                              
+                            </div>
+                            
+                            
                             <button class="remove form-control btn btn-primary submit px-3">x</button>
                             
                           </div>
@@ -332,29 +356,13 @@
                 src+="<i class='far fa-file-image'></i>";
                 src+="<i class='bi bi-plus-circle'></i>";
                 src+="</div>";
-            var val ="<input type='text' class='form-control' id='coach' name='coach_name[]' value='"+ value +"' aria-describedby='emailHelp' >";
+            var val ="<input type='text' class='form-control' id='coach' name='coach_name_added[]' value='"+ value +"' aria-describedby='emailHelp' >";
             
 
             var newSelect='<div class="row coach1" id ="coachimg"><div class="col-md-4"><div class="img-upload mb-4 output">'+src+'</div></div><div class="col-md-6 pt-10 outputName">'+val+'</div><button class="remove form-control btn btn-primary submit px-3">x</button></div>';
 
-
-
-            //var newSelect = $("#coachimg2").clone();
-
-            
-
-
-            //var src ="<img id='output' src='https://via.placeholder.com/150x150' alt=''>";
-            //src+="<input type='hidden' name='coaches[]' value='"+ui.item.id+"'>";
-            //newSelect.find('.output').html(src);
-            //var newSelect = $('<input type="file" name="pic" accept="image/*" />b<br>').insertBefore(this);
-
-
-            //val+="<p>Link to an existing coach account</p>";
-            //newSelect.find('.outputName').html(val);
-            //document.getElementById("output").src = src;
             $("#coachimg-wrapper").append(newSelect);
-            //newSelect.show();
+            $("#coach_select" ).val('');
         });
              
              
@@ -382,7 +390,7 @@
 
 
               var val ="<input type='text' disabled class='form-control' id='coach' value='"+ ui.item.name +"' aria-describedby='emailHelp' >";
-              val+="<p>Link to an existing coach account</p>";
+              val+="<a href='"+baseUrl+"/coach/details/'"+ui.item.id+"'><p>Link to an existing coach account</p></a>";
               newSelect.find('.outputName').html(val);
               //document.getElementById("output").src = src;
               $("#coachimg-wrapper").append(newSelect);

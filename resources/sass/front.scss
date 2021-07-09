@@ -10,7 +10,9 @@
     background-color: rgba(0, 0, 0, 0.7);    
     overflow: auto;    
 }
-
+.camp-edit .pt-10 a {
+    text-decoration: none;
+}
 #pageloader img {
     display: flex;
     flex-direction: row;
