@@ -216,9 +216,11 @@
                       <div class="card-body">
                         <div class="row">
                           <div class="col-md-3">
-                            @if(isset($camp['camp_photo'][0]))
+                          <?php if(isset($camp['camp_photo'][0])){ ?>
                               <img src="{{$BASE_URL}}/{{$camp['camp_photo'][0]['path']}}" alt="" class="img-responsive">
-                            @endif
+                          <?php } else{ ?>
+                            <img src="{{ asset('img/default-thumbnail.jpeg') }}" alt="">
+                          <?php } ?> 
                           </div>
                           
                           <?php
