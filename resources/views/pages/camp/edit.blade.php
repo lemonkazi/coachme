@@ -208,6 +208,11 @@
                       <button class="remove form-control btn btn-primary submit px-3">x</button>
                       
                     </div> -->
+                    <div class="row">
+                    <div class="col-md-4 mb-4">
+                      <a href="javascript:void(0);" id="addMore" class="form-control btn btn-primary submit px-3 btn-save"><i class="fas fa-plus"></i></a>
+                    </div>
+                  </div>
                     <div class="row coach1" id ="coachimg_input" style="display: none;">
                       <div class="col-md-8 mt-4">
                         <div class="form-group">
@@ -217,7 +222,7 @@
                       <div class="col-md-4 mt-4">
                         <div class="btn-group">
                           <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
-                          <a id="save_coach" class="form-control btn btn-primary submit px-3">Save</a>
+                          <a id="save_coach" class="form-control btn btn-primary submit px-3 btn-save">Save</a>
                         </div>
                       </div>
                     </div>
@@ -256,10 +261,11 @@
                           </div>
                       @endforeach
                     @endif
+                   
                     @if(isset($data['coaches_datas_new']))
                       @foreach ($data['coaches_datas_new'] as $coach)
                           <div class="row coach1" id ="coachimg">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                               <div class="img-upload mb-4 output">
                                 <img id="output" src="{{$BASE_URL}}/{{$coach['avatar_image_path']}}" />
                                 
@@ -281,17 +287,13 @@
                     @endif
 
                   </div>
-                 <div class="row">
-                    <div class="col-md-4 mb-4">
-                      <a href="javascript:void(0);" id="addMore" class="form-control btn btn-primary submit px-3">Add Coach</a>
-                    </div>
-                  </div>
+
 
                 </div>
                 <div class="offset-md-8 col-md-4 mb-4">
                   <div class="btn-group">
                     <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
-                    <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
+                    <button type="submit" id="save" class="form-control btn btn-primary submit px-3 btn-save">Save</button>
                   </div>
                 </div>
               </div>
@@ -336,11 +338,30 @@
             $("#coachimg_input").show();
         });
 
-        $(document).on("change", "#imgInp1", function () {
+        $(document).on("change", "#imgInp", function () {
           //var total_file=document.getElementById("imgInp").files.length;
           // $("#image_preview1").empty();//you can remove this code if you want previous user input
           // imagesPreview(this, '#image_preview1');
           console.log('sss');
+          
+        });
+        $(document).on("change", "#imgInpNew", function () {
+          //var total_file=document.getElementById("imgInp").files.length;
+          $(this).parent().siblings('#image_preview').empty();//you can remove this code if you want previous user input
+          imagesPreview(this, $(this).parent().siblings('#image_preview'));
+          if($(window).width()<500){
+            $(this).siblings('.bi-plus-circle').css({
+              top : '4px',
+              left : '-11px',
+            })
+          }else{
+            $(this).siblings('.bi-plus-circle').css({
+              top : '-17px',
+              left : '27px',
+            })
+          }
+
+
           
         });
 
@@ -350,16 +371,18 @@
             // $("#btn1").click(function() {
             //   $('<input type="file" name="pic" accept="image/*" />b<br>').insertBefore(this);
             // });
-            var src ="<div id='aaa'>";
-                    
-                src+="<input accept='image/*' name='coach_image[]' type='file' id='imgInp1' onchange='preview_image();' />";
+            var src ="<div id='image_preview'>";
+                src+= "</div>"
+                src+= "<input type='hidden' class='form-control' id='imagePath' name='image_path'>"    
+                src+= "<div class='newImg'>"    
+                src+="<input accept='image/*' name='coach_image[]' type='file' id='imgInpNew'/>";
                 src+="<i class='far fa-file-image'></i>";
                 src+="<i class='bi bi-plus-circle'></i>";
                 src+="</div>";
             var val ="<input type='text' class='form-control' id='coach' name='coach_name_added[]' value='"+ value +"' aria-describedby='emailHelp' >";
             
 
-            var newSelect='<div class="row coach1" id ="coachimg"><div class="col-md-4"><div class="img-upload mb-4 output">'+src+'</div></div><div class="col-md-6 pt-10 outputName">'+val+'</div><button class="remove form-control btn btn-primary submit px-3">x</button></div>';
+            var newSelect='<div class="row coach1" id ="coachimg"><div class="col-md-5"><div class="img-upload mb-4 output">'+src+'</div></div><div class="col-md-6 pt-10 outputName pb-5 wid-80">'+val+'</div><button class="remove form-control btn btn-primary submit px-3">x</button></div>';
 
             $("#coachimg-wrapper").append(newSelect);
             $("#coach_select" ).val('');
@@ -453,10 +476,17 @@
         
       });
       //$("#imgInp").on('change',function(){
-      $(document).on("change", "#imgInp", function () {
+      $(document).on("click", ".newImg i", function (event) {
+
+        $(this).prev('input').trigger('click');
+        
+      });
+      $(document).on("click", ".coach_img", function () {
+        
+        
         //var total_file=document.getElementById("imgInp").files.length;
-        $("#image_preview").empty();//you can remove this code if you want previous user input
-        imagesPreview(this, '#image_preview');
+        //$("#image_preview").empty();//you can remove this code if you want previous user input
+        //imagesPreview(this, '#image_preview');
         
       });
 
@@ -465,19 +495,18 @@
       let files = [];
         // Multiple images preview in browser
       var imagesPreview = function(input, placeToInsertImagePreview) {
-
           if (input.files) {
               var filesAmount = input.files.length;
 
               for (i = 0; i < filesAmount; i++) {
                   var reader = new FileReader();
-
                   reader.onload = function(event) {
                       $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
                   }
 
                   reader.readAsDataURL(input.files[i]);
                   files.push(input.files[i]);
+                  //files = [];
               }
           }
           console.log(files);
@@ -488,18 +517,22 @@
           //   $('#image_preview').append('file[]', file);
           // });
           $("#imagePath").val(files);
-      
-
+          files = [];
       };
 
       function file_name(){
         $('.upClick span').html(event.target.files[0].name);
       }
+      
     </script>
     <style type="text/css">
-      .camp-edit #coachimg .img-upload input {
-          display: block;
+      .newImg{
+        margin-top: 44px;
       }
+      #coachimg_input{
+        margin-bottom: 20px;
+      }
+
     </style>
 @endsection
   

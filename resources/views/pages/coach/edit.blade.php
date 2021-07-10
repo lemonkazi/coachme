@@ -207,10 +207,10 @@
           <div class="col-md-12">
             <h2>Your Camps</h2>
             <div class="row">
-            <div class="col-sm-12">
+              <div class="col-sm-12">
               @if(isset($data['camps']))
                 @foreach ($data['camps'] as $camp)
-
+               
                   <div class="card text-white card-has-bg click-col mb-4">        
                     <div class="card-img-overlay d-flex flex-column">
                       <div class="card-body">
@@ -285,11 +285,10 @@
                       
                     </div>
                   </div>
-                 
+               
                 @endforeach
               @endif
-              
-            </div>
+              </div>
             </div>
           </div>
           @endif
