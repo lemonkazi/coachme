@@ -131,7 +131,10 @@
                                     }
                                   }
                                   ?>
-                                  <h5><i class="fas fa-map-marker-alt"></i>{{$program['rink']['address']}}</h5>
+                                  @if(isset($program['rink']))
+                                    <h5><i class="fas fa-map-marker-alt"></i>{{$program['rink']['address']}}</h5>
+                                  @endif
+                                  
                                   <h5><i class="fas fa-clock"></i>Starting at {{$program['starting_age']}}</h5>
                                   <h5><i class="fas fa-road"></i>{{$program['level_name']}}</h5>
                                 </div> 
