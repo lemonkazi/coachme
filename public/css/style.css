@@ -2444,5 +2444,22 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
         background-image: url(../img/coach_details_bg_sp.png);
         padding-top: 10%;
     }
+    .outputName,
+    .input_area {
+        width: 85%;
+        float: left;
+    }
+    .save_area {
+        width: 90%;
+        margin: 50px auto;
+    }
+    .coach-edit .card img {
+        width: 100%;
+        max-width: 220px;
+        margin-bottom: 20px;
+    }
+    .col-md-3.learn-more {
+        margin-top: 20px;
+    }
 }
 /*# sourceMappingURL=style.css.map */

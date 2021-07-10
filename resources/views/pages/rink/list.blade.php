@@ -55,7 +55,7 @@
                   <div class="col-md-4 mt-4">
                     <div class="btn-group">
                       <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
-                      <button type="submit" id="save" class="form-control btn btn-primary submit px-3">+</button>
+                      <button type="submit" id="save" class="form-control btn btn-primary submit px-3">Save</button>
                     </div>
                   </div>
                 </div>
@@ -77,9 +77,11 @@
                             <div class="card-body">
                               <div class="row">
                                 <div class="col-md-3">
-                                  @if(isset($program['program_photo'][0]))
+                                  <?php if(isset($program['program_photo'][0])){ ?>
                                     <img src="{{$BASE_URL}}/{{$program['program_photo'][0]['path']}}" alt="">
-                                  @endif
+                                  <?php } else{ ?>
+                                    <img src="{{ asset('img/default-thumbnail.jpeg') }}" alt="">
+                                  <?php } ?> 
                                 </div>
                                 
                                 <div class="col-md-6">
@@ -180,9 +182,11 @@
                             <div class="card-body">
                               <div class="row">
                                 <div class="col-md-3">
-                                  @if(isset($camp['camp_photo'][0]))
+                                  <?php if(isset($camp['camp_photo'][0])){ ?>
                                     <img src="{{$BASE_URL}}/{{$camp['camp_photo'][0]['path']}}" alt="">
-                                  @endif
+                                  <?php } else{ ?>
+                                    <img src="{{ asset('img/default-thumbnail.jpeg') }}" alt="">
+                                  <?php } ?>  
                                 </div>
                                 
                                 <?php

@@ -209,8 +209,10 @@
                       
                     </div> -->
                     <div class="row">
-                    <div class="col-md-4 mb-4">
-                      <a href="javascript:void(0);" id="addMore" class="form-control btn btn-primary submit px-3 btn-save"><i class="fas fa-plus"></i></a>
+                    <div class="col-md-4 mb-4 p-left-0">
+                      <a href="javascript:void(0);" id="addMore" class="form-control btn btn-primary submit px-3 btn-save">
+                        <i class="fas fa-plus"></i>
+                      </a>
                     </div>
                   </div>
                     <div class="row coach1" id ="coachimg_input" style="display: none;">
@@ -221,7 +223,6 @@
                       </div>
                       <div class="col-md-4 mt-4">
                         <div class="btn-group">
-                          <!-- <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button> -->
                           <a id="save_coach" class="form-control btn btn-primary submit px-3 btn-save">Save</a>
                         </div>
                       </div>
@@ -250,7 +251,7 @@
                                 
                               </div>
                             </div>
-                            <div class="col-md-7 pt-10">
+                            <div class="col-md-7 pt-10 input_area">
                               <input type="text" disabled class="form-control" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
                               <a href="{{!empty($coach['id']) ? route('coach-details', ['user' => $coach['id']]): ''}}"> <p>Link to an existing coach account</p></a>
                             </div>
@@ -265,14 +266,14 @@
                     @if(isset($data['coaches_datas_new']))
                       @foreach ($data['coaches_datas_new'] as $coach)
                           <div class="row coach1" id ="coachimg">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                               <div class="img-upload mb-4 output">
                                 <img id="output" src="{{$BASE_URL}}/{{$coach['avatar_image_path']}}" />
                                 
                                 
                               </div>
                             </div>
-                            <div class="col-md-7 pt-10">
+                            <div class="col-md-7 pt-10 input_area">
                               <input type="text" class="form-control" disabled name="coach_name1[]" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
                               
                               <input type="hidden" class="form-control" name="coach_name[]" id="coach" value="{{!empty($coach) ? $coach['name'] : ''}}" aria-describedby="emailHelp" >
@@ -290,7 +291,7 @@
 
 
                 </div>
-                <div class="offset-md-8 col-md-4 mb-4">
+                <div class="offset-md-8 col-md-4 mb-4 save_area">
                   <div class="btn-group">
                     <button type="submit" id="cancel" class="form-control btn btn-primary submit px-3">Cancel</button>
                     <button type="submit" id="save" class="form-control btn btn-primary submit px-3 btn-save">Save</button>
