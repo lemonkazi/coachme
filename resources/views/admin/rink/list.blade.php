@@ -111,9 +111,10 @@
                             <th>Name</th>
                             <th>Province</th>
                             <th>City</th>
+                            <th>Address</th>
                             <th>Map Latitude</th>
                             <th>Map Longitude</th>
-                            <th>Address</th>
+                            
                             
                             <th>Action</th>
                           </tr>
