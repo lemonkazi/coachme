@@ -227,7 +227,7 @@ class PublicContoller extends Controller
                 foreach ($image_files as $file) {
                   if(isset($data['coach_name_array'][$j])){
                     $new_name =$camp->id .'_s_' . self::uniqueString() .$j. '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('photo/camp_photo/coach/'.$data['coach_name_array'][$j].'/'), $new_name);
+                    $file->move(public_path('photo/camp_photo/coach/'.$camp->id.'/'), $new_name);
                     $attached_files['content_type'] = 'CAMP';
                     $attached_files['content_id'] = $camp->id;
                     $attached_files['type'] = 'COACH';
@@ -436,7 +436,7 @@ class PublicContoller extends Controller
                 foreach ($image_files as $file) {
                   if(isset($data['coach_name_array'][$j])){
                     $new_name =$camp->id .'_s_' . self::uniqueString() .$j. '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('photo/camp_photo/coach/'.$data['coach_name_array'][$j].'/'), $new_name);
+                    $file->move(public_path('photo/camp_photo/coach/'.$camp->id.'/'), $new_name);
                     $attached_files['content_type'] = 'CAMP';
                     $attached_files['content_id'] = $camp->id;
                     $attached_files['type'] = 'COACH';
