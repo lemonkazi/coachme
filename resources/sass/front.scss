@@ -10,6 +10,13 @@
     background-color: rgba(0, 0, 0, 0.7);    
     overflow: auto;    
 }
+.p-left-0{
+  padding-left:0px;
+}
+a#addMore {
+  max-width: 80px;
+  padding: 8px;
+}
 .camp-edit .pt-10 a {
     text-decoration: none;
 }
@@ -30,10 +37,11 @@
 }
 button.remove.form-control.btn.btn-primary.submit.px-3 {
     float: right;
-    width: 40px;
-    margin-top: 9%;
-    padding: 6px;
-    padding-left: 1px;
+    width: 36px;
+    margin-top: 10%;
+    font-size: 20px;
+    padding: 0px!important;
+    height: 36px;
 }
 a.back_btn {
     margin-bottom: 30px;
@@ -44,11 +52,12 @@ a.back_btn {
 }
 
 ul#ui-id-1 {
-    background: #D4E8F3 0% 0% no-repeat padding-box;
-    border-radius: 8px;
-    border: none;
-    width: 182px !important;
-    list-style: none;
+  background: #D4E8F3 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  border: none;
+  width: 300px !important;
+  list-style: none;
+  padding: 5px 10px;
 }
 
 .ui-menu .ui-menu-item {
