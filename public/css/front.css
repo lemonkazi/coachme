@@ -78,26 +78,25 @@ ul#ui-id-1 {
   font-weight: normal;
 }
 
-/* button.add_period {
-  margin-top:11%!important;
-} */
+.period_area {
+  width: 82%;
+}
 
-/* .period_area{
-  width: 100%;
-}
-.area_perios .period_area {
-  width: 85%;
-}
-.area_perios .period_area input{
-  width: 100%!important;
-}
 input#schedule_period {
-  width: 85%;
   float: left;
-} */
+  width: 80%;
+}
 
 .period_area button.remove {
   margin-top: 0!important;
+}
+
+#coachimg-wrapper div#coachimg:nth-child(2) {
+  width: 85%;
+}
+
+#coachimg-wrapper div#coachimg:nth-child(2) #schedule_period {
+  width: 95%;
 }
 
 button.add_period .fas {
@@ -106,4 +105,8 @@ button.add_period .fas {
   float: right;
   position: relative;
   left: 7px;
+}
+
+.period_area {
+  width: 100%;
 }

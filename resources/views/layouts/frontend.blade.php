@@ -601,15 +601,25 @@
                 });
 
                 $(document).on("click", ".add_period", function () {
+                    var value = $( "#schedule_period" ).val();
+
+
                     var schedule_start_date = $('.schedule_start_date input').val();
                     var schedule_end_date = $('.schedule_end_date input').val();
-                    
+                    $( "#schedule_period" ).val('');
+
+                    $('#schedule_end_date').val('');
+                    $('#schedule_start_date').val('');
+
+                    console.log(value);
                     //$('#coachimg').on('click', '.remove', function() {
                     var newSelect = $("#coachimg").clone();
                     var src ="<input type='hidden' name='schedule_start_date[]' value='"+schedule_start_date+"'/>";
                     var src2 ="<input type='hidden' name='schedule_end_date[]' value='"+schedule_end_date+"'/>";
                     
                     newSelect.find('.schedule_start_date').html(src);
+                    newSelect.find('#schedule_period').val(value);
+                    newSelect.find('#schedule_period').attr('disabled', 'disabled');
                     newSelect.find('.schedule_end_date').html(src2);
                     newSelect.append('<button class="remove form-control btn btn-primary submit px-3" style="margin-top: 1%;">x</button>');
                             

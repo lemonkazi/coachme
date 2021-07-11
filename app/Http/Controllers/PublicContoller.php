@@ -786,6 +786,13 @@ class PublicContoller extends Controller
       if ($request->isMethod('post')) {
 
         $data = $request->all();
+        if (!empty($data['schedule_period']) && !array_filter($data['schedule_start_date'])) {
+          $date=$data['schedule_period'];
+          $date=explode(' - ',$date);
+          $data['schedule_start_date'][]=$date[0];
+          $data['schedule_end_date'][]=$date[1];
+          //print_r($date);
+        }
         $rules = array(
             'name'   => 'required|string|max:255',
             'email'  => 'required|string|email|max:255'
@@ -853,15 +860,17 @@ class PublicContoller extends Controller
           }
           $periods =array();
           foreach ($data['schedule_start_date'] as $key => $value) {
-            $periods['content_type'] = 'PROGRAM';
-            $periods['content_id'] = $program->id;
-            $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
-            $periods['user_id'] = $user->id;
-            $periods['start_date'] = $value;
-            $periods['end_date'] = $data['schedule_end_date'][$key];
+            if (!empty($value)) {
+              $periods['content_type'] = 'PROGRAM';
+              $periods['content_id'] = $program->id;
+              $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
+              $periods['user_id'] = $user->id;
+              $periods['start_date'] = $value;
+              $periods['end_date'] = $data['schedule_end_date'][$key];
 
 
-            $attached_file = Period::create($periods);
+              $attached_file = Period::create($periods);
+            }
           }
 
 
@@ -961,6 +970,16 @@ class PublicContoller extends Controller
       if ($request->isMethod('post')) {
 
         $data = $request->all();
+
+        if (!empty($data['schedule_period']) && !array_filter($data['schedule_start_date'])) {
+          $date=$data['schedule_period'];
+          $date=explode(' - ',$date);
+          $data['schedule_start_date'][]=$date[0];
+          $data['schedule_end_date'][]=$date[1];
+          
+        }
+        // print_r($data);
+        // exit();
         $rules = array(
             'name'   => 'required|string|max:255',
             'email'  => 'required|string|email|max:255'
@@ -1029,15 +1048,18 @@ class PublicContoller extends Controller
                     ])->delete();
           $periods =array();
           foreach ($data['schedule_start_date'] as $key => $value) {
-            $periods['content_type'] = 'PROGRAM';
-            $periods['content_id'] = $program->id;
-            //$periods['type'] = 'FALL';
-            $periods['user_id'] = $user->id;
-            $periods['start_date'] = $value;
-            $periods['end_date'] = $data['schedule_end_date'][$key];
+            if (!empty($value)) {
+              $periods['content_type'] = 'PROGRAM';
+              $periods['content_id'] = $program->id;
+              //$periods['type'] = 'FALL';
+              $periods['user_id'] = $user->id;
+              $periods['start_date'] = $value;
+              $periods['end_date'] = $data['schedule_end_date'][$key];
 
-            $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
-            $attached_file = Period::create($periods);
+              $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
+              $attached_file = Period::create($periods);
+              // code...
+            }
           }
 
           $image_files = $request->file('program_image_path');

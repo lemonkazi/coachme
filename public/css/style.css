@@ -1293,7 +1293,7 @@ label {
 
 .program-edit span a {
     color: #8ac8dc;
-    font: normal normal 500 18px Raleway;
+    font: normal normal 500 15px Raleway;
     padding-left: 10px;
     text-decoration: none;
 }
@@ -2245,10 +2245,11 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
         background-repeat: no-repeat;
     }
     .program-edit #coachimg {
-        float: none !important;
+        float: left !important;
+        width:100%!important;
     }
     .program-edit .add_period {
-        margin-top: 1% !important;
+        margin-top: 7% !important;
         float: none !important;
     }
     .camp-edit {
@@ -2460,6 +2461,21 @@ a.btn.btn-custom.mb-4.blue.col-md-3.w-60:hover {
     }
     .col-md-3.learn-more {
         margin-top: 20px;
+    }
+    #coachimg-wrapper div#coachimg:nth-child(2) {
+        width: 90%!important;
+        float: left!important;
+    }
+    #coachimg-wrapper div#coachimg:nth-child(2) #schedule_period {
+        width: 95%!important;
+    }
+    input#schedule_period {
+        float: left!important;
+        width: 86%!important;
+    }
+    #coachimg label {
+        width: 100%;
+        float: left;
     }
 }
 /*# sourceMappingURL=style.css.map */
