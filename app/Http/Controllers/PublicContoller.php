@@ -203,7 +203,10 @@ class PublicContoller extends Controller
                   $rink =$row->content_id;
                   //$rink = Rink::find($rink);
                   $rink = Rink::find($row->content_id);
-                  $data['rink_id'] = $rink->id;
+                  if($rink){
+                    $data['rink_id'] = $rink->id;
+                  }
+                  
                   //break();
               }
             }
@@ -1002,7 +1005,10 @@ class PublicContoller extends Controller
                   $rink =$row->content_id;
                   //$rink = Rink::find($rink);
                   $rink = Rink::find($row->content_id);
-                  $data['rink_id'] = $rink->id;
+                  if ($rink) {
+                    $data['rink_id'] = $rink->id;
+                  }
+                  
                   //break();
               }
             }
