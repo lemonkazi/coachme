@@ -77,3 +77,33 @@ ul#ui-id-1 {
   min-height: 0;
   font-weight: normal;
 }
+
+/* button.add_period {
+  margin-top:11%!important;
+} */
+
+/* .period_area{
+  width: 100%;
+}
+.area_perios .period_area {
+  width: 85%;
+}
+.area_perios .period_area input{
+  width: 100%!important;
+}
+input#schedule_period {
+  width: 85%;
+  float: left;
+} */
+
+.period_area button.remove {
+  margin-top: 0!important;
+}
+
+button.add_period .fas {
+  color: #fff;
+  font-size: 15px;
+  float: right;
+  position: relative;
+  left: 7px;
+}

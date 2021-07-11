@@ -92,7 +92,7 @@
               <div class="row ">
                 <h6 class="mb-3">Schedule</h6>
                 <div class="col-md-12" id="coachimg-wrapper">
-                  <button class="add_period form-control btn btn-primary px-3" style="width: 10px;float: left;margin-top: 10%;">+</button>
+                  <button class="add_period form-control btn btn-primary px-3" style="width: 10px;float:right;margin-top: 11%;"><i class="fas fa-plus" aria-hidden="true"></i></button>
                        
                   
                     <?php 
@@ -106,7 +106,7 @@
                         $period['start_date'] = date('Y-m-d', strtotime($period['start_date']));
                         $period['end_date'] = date('Y-m-d', strtotime($period['end_date']));
                         ?>
-                        <div class="form-group" id="coachimg" style="float: right;">
+                        <div class="form-group" id="coachimg" style="float: left;">
                           <label for="name">Period <span class="input-required">*</span></label>
 
                           
@@ -132,7 +132,7 @@
                     }
                     else {
                       ?>
-                    <div class="form-group" id="coachimg" style="float: right;">
+                    <div class="form-group" id="coachimg" style="float: left;">
                       <label for="name">Period <span class="input-required">*</span></label>
 
                       <input type="text" class="form-control" id="schedule_period" name="schedule_period" value="" required aria-describedby="emailHelp" >
