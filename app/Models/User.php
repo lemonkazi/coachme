@@ -622,6 +622,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function filter_coach($params)
     {
         $query = $this->newQuery();
+        
 
         $authUser = request()->user();
         if (empty($params) || !is_array($params)) {
@@ -640,58 +641,60 @@ class User extends Authenticatable implements MustVerifyEmail
         if (isset($params['speciality'])) {
 
             $filterParams = [];
-            //$filterParams['content_type'] = 'SPECIALITY';
-            $filterParams['content_type'] = strtoupper($params['speciality']);
+            $filterParams['content_type'] = 'SPECIALITY';
+            $filterParams['content_id'] = $params['speciality'];
 
             //$filterParams['type'] = $params['period'];
             
             $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
                     ->toArray();
+
             $ids = array();
             foreach ($periods as $key => $value) {
-                $ids[]=$value['content_id'];
+                $ids[]=$value['user_id'];
             }
             $params['id'] = $ids;
         }
         if (isset($params['rink'])) {
 
             $filterParams = [];
-            //$filterParams['content_type'] = 'SPECIALITY';
-            $filterParams['content_type'] = strtoupper($params['rink']);
+            $filterParams['content_type'] = 'RINK';
+            $filterParams['content_id'] = $params['rink'];
 
             //$filterParams['type'] = $params['period'];
             
             $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
                     ->toArray();
             $ids = array();
             foreach ($periods as $key => $value) {
-                $ids[]=$value['content_id'];
+                $ids[]=$value['user_id'];
             }
             $params['id'] = $ids;
         }
         if (isset($params['language'])) {
 
             $filterParams = [];
-            //$filterParams['content_type'] = 'SPECIALITY';
-            $filterParams['content_type'] = strtoupper($params['language']);
+            $filterParams['content_type'] = 'LANGUAGE';
+            $filterParams['content_id'] = $params['language'];
 
             //$filterParams['type'] = $params['period'];
             
             $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id', 'content_type', 'id'])
+            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
                     ->toArray();
             $ids = array();
             foreach ($periods as $key => $value) {
-                $ids[]=$value['content_id'];
+                $ids[]=$value['user_id'];
             }
             $params['id'] = $ids;
         }
-        
+        // print_r($params);
+        // exit();
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
@@ -705,6 +708,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 }
             }
         }
+        //echo $query->toSql();exit();
         return $query;
     }
 }

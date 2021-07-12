@@ -34,7 +34,7 @@
                   <div class="col-md-6">
                     <label for="">Price</label>
                     <p>
-                      {{$data['user']->price_name}}$
+                      {{$data['user']->price_name}}
                     </p>
                   </div>
                   <div class="col-md-6">

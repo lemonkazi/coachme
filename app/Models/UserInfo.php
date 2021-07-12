@@ -30,6 +30,28 @@ class UserInfo extends Model
         'content_name'
     ];
 
+
+    /**
+     * The attributes that are partially match filterable.
+     *
+     * @var array
+     */
+    protected $partialFilterable = [
+        'content_name'
+    ];
+
+    /**
+     * The attributes that are exact match filterable.
+     *
+     * @var array
+     */
+    protected $exactFilterable = [
+        'id',
+        'user_id',
+        'content_type',
+        'content_id'
+    ];
+
      /**
      * Get the user for the News.
      */
