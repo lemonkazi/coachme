@@ -307,7 +307,8 @@
                 $('.btn_delete_camp').on('click', function(event){
                   event.preventDefault();
 
-                  var tr = $(this).closest('.card');
+                  var tr = $(this).parent().parent().parent().parent().closest('.card');
+                  
                   var id = $(this).attr('data-id') ? $(this).attr('data-id') : '';
                   var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
                   var data_controller = 'campcontroller';
@@ -347,7 +348,9 @@
                 $('.btn_delete_program').on('click', function(event){
                   event.preventDefault();
 
-                  var tr = $(this).closest('.card');
+                  //var tr = $(this).closest('.card');
+                  var tr = $(this).parent().parent().parent().parent().closest('.card');
+                  
                   var id = $(this).attr('data-id') ? $(this).attr('data-id') : '';
                   var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
                   var data_controller = 'programcontroller';
