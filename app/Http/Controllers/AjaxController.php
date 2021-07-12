@@ -8,6 +8,7 @@ use App\Models\Experience;
 use App\Models\Certificate;
 use App\Models\Price;
 use App\Models\Camp;
+use App\Models\Program;
 use App\Models\Language;
 use App\Models\Location;
 use Illuminate\Http\Response;
@@ -172,6 +173,8 @@ class AjaxController extends Controller {
    		$params['current_date'] = 0;
    		$params['date'] = $data['date'];
    		$response = '';
+   		// print_r($params);
+     //  	exit();
 
    		$query = $camp->filter($params);
 		try {
@@ -202,6 +205,8 @@ class AjaxController extends Controller {
 	        1=>'#D0E6A5',
 	        2=>'#D1B3DD'
       	);
+      	print_r($camps_all);
+      	exit();
       	$camps=[];
       	foreach ($camps_all as $key => $value) {
 
