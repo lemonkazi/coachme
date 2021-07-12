@@ -1431,16 +1431,18 @@ class PublicContoller extends Controller
       $params = $request->all();
       
       $current_camps = [];
-      if (!isset($params['date']) || empty($params['date'])) {
-          $params['current_date'] = 1;
-          $dt =  now();
-          $dt      = strtotime($dt);
-          $dt = date('Y-m-d H:i:s', $dt);
-          $sss = $camp->filter($params);
-          // $sss= $camp->where('start_date', '<=', $dt)
-          //               ->where('end_date', '>=', $dt);
-          $current_camps = $sss->get()->toArray();
-      }
+      // if (!isset($params['date']) || empty($params['date'])) {
+      //     $params['current_date'] = 1;
+      //     $dt =  now();
+      //     $dt      = strtotime($dt);
+      //     $dt = date('Y-m-d H:i:s', $dt);
+      //     $sss = $camp->filter($params);
+      //     // $sss= $camp->where('start_date', '<=', $dt)
+      //     //               ->where('end_date', '>=', $dt);
+      //     $current_camps = $sss->get()->toArray();
+      // }
+      // print_r($params);
+      // exit();
 
       $query = $camp->filter($params);
       try {
@@ -1528,7 +1530,8 @@ class PublicContoller extends Controller
       }
 
       $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
-
+      // print_r($camps);
+      // exit();
       return view('pages.camp.filter', [
           'data'=>
           [

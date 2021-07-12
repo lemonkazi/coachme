@@ -214,7 +214,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
-
+        console.log('<?php echo json_encode($camps) ?>');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'dayGrid','moment','interaction' ],
           header: { center: 'prev,title,next,agendaWeek', left: '',right:'' },
