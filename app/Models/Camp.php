@@ -29,6 +29,7 @@ class Camp extends Model
         'start_date',
         'end_date',
         'price',
+        'price_text',
         'about',
         'contacts',
         'whatsapp',
@@ -307,15 +308,15 @@ class Camp extends Model
             $dt =  now();
             $dt      = strtotime($params['date']);
             $dt = date('Y-m-d H:i:s', $dt);
-            $query->where('start_date', '<=', $dt)
-                          ->where('end_date', '>=', $dt);
+            $query->where('start_date', '<=', "$dt")
+                          ->where('end_date', '>=', "$dt");
         } 
-        if (isset($params['current_date'])) {
+        if (isset($params['current_date']) && !empty($params['current_date'])) {
             $dt =  now();
             $dt      = strtotime($dt);
-            $dt = date('Y-m-d H:i:s', $dt);
-            $query->where('start_date', '<=', $dt)
-                          ->where('end_date', '>=', $dt);
+             $dt = date('Y-m-d', $dt);
+            $query->where('start_date', '<=', "$dt")
+                          ->where('end_date', '>=', "$dt");
            
         } 
 
@@ -357,20 +358,20 @@ class Camp extends Model
             $min_value = $params['min'];
             $max_value = $params['max'];
             // if none of them is null
-            if (! (is_null($min_value) && is_null($max_value))) {
+            //if (! (is_null($min_value) && is_null($max_value))) {
                 // fetch all between min & max values
                 $query->whereBetween('price', [$min_value, $max_value]);
-            }
-            // if just min_value is available (is not null)
-            elseif (! is_null($min_value)) {
-                // fetch all greater than or equal to min_value
-                $query->where('price', '>=', $min_value);
-            }
-            // if just max_value is available (is not null)
-            elseif (! is_null($max_value)) {
-                // fetch all lesser than or equal to max_value
-                $query->where('price', '<=', $max_value);
-            }
+            // }
+            // // if just min_value is available (is not null)
+            // elseif (! is_null($min_value)) {
+            //     // fetch all greater than or equal to min_value
+            //     $query->where('price', '>=', $min_value);
+            // }
+            // // if just max_value is available (is not null)
+            // elseif (! is_null($max_value)) {
+            //     // fetch all lesser than or equal to max_value
+            //     $query->where('price', '<=', $max_value);
+            // }
         }
         
 
@@ -393,6 +394,7 @@ class Camp extends Model
                 }
             }
         }
+        //echo $query->toSql();exit();
         return $query;
     }
 }

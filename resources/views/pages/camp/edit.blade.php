@@ -118,7 +118,13 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Price <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="price" name="price" value="{{!empty($data['camp']) ? old('price', $data['camp']->price) : old('price')}}"  required aria-describedby="emailHelp" >
+                    
+                    @if(!empty($data['camp']) && empty($data['camp']->price) && !empty($data['camp']->price_text))
+                      <input type="text" class="form-control" id="price" name="price" value="{{!empty($data['camp']) ? old('price', $data['camp']->price_text) : old('price')}}"  required aria-describedby="emailHelp" >
+                    @else
+                      <input type="text" class="form-control" id="price" name="price" value="{{!empty($data['camp']) ? old('price', $data['camp']->price) : old('price')}}"  required aria-describedby="emailHelp" >
+                    @endif
+                    
                   </div>
                 </div>
 

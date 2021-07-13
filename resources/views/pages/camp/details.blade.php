@@ -62,7 +62,11 @@
                 <div class="col-md-4">
                   <label for="">Price</label>
                   <p>
-                    {{$data['camp']->price}}$
+                    @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
+                      {{$data['camp']->price_text}}
+                    @else
+                      {{$data['camp']->price}}$
+                    @endif
                   </p>
                 </div>
               </div>
@@ -74,7 +78,11 @@
                 <div class="col-md-4 wid-50">
                   <label for="">Price</label>
                   <p>
-                    {{$data['camp']->price}}$
+                    @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
+                      {{$data['camp']->price_text}}
+                    @else
+                      {{$data['camp']->price}}$
+                    @endif
                   </p>
                 </div>
                 

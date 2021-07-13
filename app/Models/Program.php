@@ -31,6 +31,7 @@ class Program extends Model
         'reg_start_date',
         'reg_end_date',
         'price',
+        'price_text',
         'about',
         'contacts',
         'whatsapp',
@@ -328,20 +329,20 @@ class Program extends Model
             $min_value = $params['min'];
             $max_value = $params['max'];
             // if none of them is null
-            if (! (is_null($min_value) && is_null($max_value))) {
+            //if (! (is_null($min_value) && is_null($max_value))) {
                 // fetch all between min & max values
                 $query->whereBetween('price', [$min_value, $max_value]);
-            }
-            // if just min_value is available (is not null)
-            elseif (! is_null($min_value)) {
-                // fetch all greater than or equal to min_value
-                $query->where('price', '>=', $min_value);
-            }
-            // if just max_value is available (is not null)
-            elseif (! is_null($max_value)) {
-                // fetch all lesser than or equal to max_value
-                $query->where('price', '<=', $max_value);
-            }
+            // }
+            // // if just min_value is available (is not null)
+            // elseif (! is_null($min_value)) {
+            //     // fetch all greater than or equal to min_value
+            //     $query->where('price', '>=', $min_value);
+            // }
+            // // if just max_value is available (is not null)
+            // elseif (! is_null($max_value)) {
+            //     // fetch all lesser than or equal to max_value
+            //     $query->where('price', '<=', $max_value);
+            // }
         }
         //$data['start_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['start_date']);
         //$data['end_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['end_date']);

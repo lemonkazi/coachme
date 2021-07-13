@@ -169,6 +169,15 @@ class PublicContoller extends Controller
         else
         {
 
+          if (isset($data['price'])) {
+           
+            if ( filter_var($data['price'], FILTER_VALIDATE_INT) === false ) {
+              //echo "Your variable is not an integer";
+              $data['price_text'] = $data['price'];
+              $data['price'] = 0;
+            }
+          }
+
           if (isset($data['coaches'])) {
            $data['coaches'] = json_encode(array_unique($data['coaches']));
           }
@@ -395,6 +404,15 @@ class PublicContoller extends Controller
         }
         else
         {
+
+          if (isset($data['price'])) {
+           
+            if ( filter_var($data['price'], FILTER_VALIDATE_INT) === false ) {
+              //echo "Your variable is not an integer";
+              $data['price_text'] = $data['price'];
+              $data['price'] = 0;
+            }
+          }
 
           if (!empty($data['coaches'])) {
             $data['coaches'] = json_encode(array_unique($data['coaches']));
@@ -819,6 +837,14 @@ class PublicContoller extends Controller
           // if (isset($data['coaches'])) {
           //  $data['coaches'] = json_encode(array_unique($data['coaches']));
           // }
+          if (isset($data['price'])) {
+           
+            if ( filter_var($data['price'], FILTER_VALIDATE_INT) === false ) {
+              //echo "Your variable is not an integer";
+              $data['price_text'] = $data['price'];
+              $data['price'] = 0;
+            }
+          }
 
           if (isset($data['program_type_id'])) {
            $data['program_type_id'] = json_encode(array_unique($data['program_type_id']));
@@ -1002,6 +1028,14 @@ class PublicContoller extends Controller
         }
         else
         {
+          if (isset($data['price'])) {
+           
+            if ( filter_var($data['price'], FILTER_VALIDATE_INT) === false ) {
+              //echo "Your variable is not an integer";
+              $data['price_text'] = $data['price'];
+              $data['price'] = 0;
+            }
+          }
 
           if (!empty($data['program_type_id'])) {
             $data['program_type_id'] = json_encode(array_unique($data['program_type_id']));
@@ -1339,6 +1373,10 @@ class PublicContoller extends Controller
       //   }
       // }
 
+      //$maxPrice = 1000;
+      
+      $maxPrice = Camp::where('deleted_at',null)->orderBy('price', 'desc')->value('price'); 
+
 
       return view('pages.camp.list', [
           'data'=>
@@ -1348,7 +1386,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('maxPrice','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
 
     }
     public function coach_list(Request $request, User $user){
@@ -1431,17 +1469,20 @@ class PublicContoller extends Controller
       $params = $request->all();
       
       $current_camps = [];
-      // if (!isset($params['date']) || empty($params['date'])) {
-      //     $params['current_date'] = 1;
-      //     $dt =  now();
-      //     $dt      = strtotime($dt);
-      //     $dt = date('Y-m-d H:i:s', $dt);
-      //     $sss = $camp->filter($params);
-      //     // $sss= $camp->where('start_date', '<=', $dt)
-      //     //               ->where('end_date', '>=', $dt);
-      //     $current_camps = $sss->get()->toArray();
-      // }
-      // print_r($params);
+      if (!isset($params['date']) || empty($params['date'])) {
+          //if (empty($params)) {
+            $params1['current_date'] = 1;
+          //}
+          
+          $dt =  now();
+          $dt      = strtotime($dt);
+          $dt = date('Y-m-d H:i:s', $dt);
+          $sss = $camp->filter($params1);
+          // $sss= $camp->where('start_date', '<=', $dt)
+          //               ->where('end_date', '>=', $dt);
+          $current_camps = $sss->get()->toArray();
+      }
+      // print_r($current_camps);
       // exit();
 
       $query = $camp->filter($params);
@@ -1529,6 +1570,9 @@ class PublicContoller extends Controller
         $filtered_month = explode(',', $_GET['month']);
       }
 
+      $maxPrice = Camp::where('deleted_at',null)->orderBy('price', 'desc')->value('price'); 
+
+
       $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
       // print_r($camps);
       // exit();
@@ -1539,7 +1583,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('current_camps','params','camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('maxPrice','current_camps','params','camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
     }
     public function coach_edit(Request $request){
       $user = $request->user();
@@ -2289,6 +2333,7 @@ class PublicContoller extends Controller
 
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
+      $maxPrice = Program::where('deleted_at',null)->orderBy('price', 'desc')->value('price'); 
 
       return view('pages.program.list', [
           'data'=>
@@ -2297,7 +2342,7 @@ class PublicContoller extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('filtered_rink','rink_all','province_all','formatedDate','city_all','program_type_all','level_all'));
+      ->with(compact('maxPrice','filtered_rink','rink_all','province_all','formatedDate','city_all','program_type_all','level_all'));
 
       //return view('pages.program.list');
     }

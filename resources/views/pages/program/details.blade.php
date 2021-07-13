@@ -69,7 +69,13 @@
                 </div>
                 <div class="col-md-4 wid-50">
                   <label for="">Price</label>
-                  <p>{{$data['program']->price}}$</p>
+                  <p>
+                    @if(empty($data['program']->price) && !empty($data['program']->price_text))
+                      {{$data['program']->price_text}}
+                    @else
+                      {{$data['program']->price}}$
+                    @endif
+                  </p>
                 </div>
                 <div class="col-md-4 pc">
                   <label for="">Starting age</label>

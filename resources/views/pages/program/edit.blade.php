@@ -77,7 +77,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="Price">Price <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="Price" name="price" value="{{!empty($data['program']) ? old('price', $data['program']->price) : old('price')}}" required aria-describedby="emailHelp" >
+                    
+                    @if(!empty($data['program']) && empty($data['program']->price) && !empty($data['program']->price_text))
+                      <input type="text" class="form-control" id="price" name="price" value="{{!empty($data['program']) ? old('price', $data['program']->price_text) : old('price')}}"  required aria-describedby="emailHelp" >
+                    @else
+                      <input type="text" class="form-control" id="Price" name="price" value="{{!empty($data['program']) ? old('price', $data['program']->price) : old('price')}}" required aria-describedby="emailHelp" >
+                    @endif
+                    
                   </div>
                 </div>
                 <div class="col-md-12">

@@ -142,7 +142,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'certificate_id',
         'price_id',
         'is_published',
-        'is_verified'
+        'is_verified',
+        'province_id',
+        'city_id'
     ];
 
 
@@ -621,6 +623,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function filter_coach($params)
     {
+        // print_r($params);
+        // exit();
         $query = $this->newQuery();
         
 
@@ -695,6 +699,13 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         // print_r($params);
         // exit();
+        if (isset($params['location_id'])) {
+            $params['city_id'] = $params['location_id'];
+        }
+        if (isset($params['price_id'])) {
+            //$params['city_id'] = $params['price_id'];
+            $params['price_id'] = explode(',', $params['price_id']);
+        }
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
