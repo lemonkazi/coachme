@@ -205,8 +205,6 @@ class AjaxController extends Controller {
 	        1=>'#D0E6A5',
 	        2=>'#D1B3DD'
       	);
-      	print_r($camps_all);
-      	exit();
       	$camps=[];
       	foreach ($camps_all as $key => $value) {
 
