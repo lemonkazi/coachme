@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Providers\RouteServiceProvider;
 use Cookie;
+use DateTime;
 
 class PublicContoller extends Controller
 {
@@ -1091,6 +1092,8 @@ class PublicContoller extends Controller
               $periods['end_date'] = $data['schedule_end_date'][$key];
 
               $periods['type'] = $this->season(array($value, $data['schedule_end_date'][$key]));
+              // print_r($periods);
+              // exit();
               $attached_file = Period::create($periods);
               // code...
             }
@@ -2560,50 +2563,84 @@ class PublicContoller extends Controller
             'WINTER'    => array('December 1'  , 'February 28')
         );
 
-        $seasonsYear = array();
+        // get today's date
+        //$today = strtotime($period[0]);
+        $today = new DateTime($period[0]);
+        //echo 'Today is: ' . $today->format('m-d-Y') . '<br />';
+        //echo $today = new DateTime($today);
+        //exit();
+        //echo 'Today is: ' . $today->format('m-d-Y') . '<br />';
 
-        $start      = strtotime($period[0]);
-        $end        = strtotime($period[1]);
+        // get the season dates
+        $spring = new DateTime('March 1');
+        $summer = new DateTime('June 1');
+        $fall = new DateTime('September 1');
+        $winter = new DateTime('December 1');
 
-        $seasonsYear[date('Y', $start)] = array();
+        switch(true) {
+            case $today >= $spring && $today < $summer:
+                //echo 'It\'s Spring!';
+                return 'SPRING';
+                break;
 
-        if (key(current($seasonsYear)) != date('Y', $end))
-            $seasonsYear[date('Y', $end)] = array();
+            case $today >= $summer && $today < $fall:
+                return 'SUMMER';
+                break;
 
-        foreach ($seasonsYear as $year => &$seasonYear)
-            foreach ($seasons as $season => $period)
-                $seasonYear[$season] = array(strtotime($period[0].' '.$year), strtotime($period[1].' '.($season != 'winter' ? $year : ($year+1))));
+            case $today >= $fall && $today < $winter:
+                //echo 'It\'s Fall!';
+                return 'FALL';
+                break;
 
-        foreach ($seasonsYear as $year => &$seasons) {
-            foreach ($seasons as $season => &$period) {
-                if ($start >= $period[0] && $end <= $period[1])
-                    return ucFirst($season);
-
-                if ($start >= $period[0] && $start <= $period[1]) {
-                    if (date('Y', $end) != $year) 
-                        $seasons = $seasonsYear[date('Y', $end)];   
-                        $year = date('Y', $end);
-
-                    $nextSeason = key($seasons);
-                    $nextPeriod = current($seasons);                
-                    do {                    
-                        $findNext   = ($end >= $nextPeriod[0] && $end <= $nextPeriod[1]);
-
-                        $nextSeason = key($seasons);
-                        $nextPeriod = current($seasons);
-                    } while ($findNext = False);
-
-                    $diffCurr   = $period[1]-$start;
-                    $diffNext   = $end-$nextPeriod[0];
-
-                    if ($diffCurr > $diffNext)
-                        return ucFirst($season);
-                    else {
-                        return ucFirst($nextSeason);
-                    }
-                }
-            }
+            default:
+                //echo 'It must be Winter!';
+                return 'WINTER';
         }
+
+        // $seasonsYear = array();
+
+        // $start      = strtotime($period[0]);
+        // $end        = strtotime($period[1]);
+
+        // $seasonsYear[date('Y', $start)] = array();
+
+        // if (key(current($seasonsYear)) != date('Y', $end))
+        //     $seasonsYear[date('Y', $end)] = array();
+
+        // foreach ($seasonsYear as $year => &$seasonYear)
+        //     foreach ($seasons as $season => $period)
+        //         $seasonYear[$season] = array(strtotime($period[0].' '.$year), strtotime($period[1].' '.($season != 'winter' ? $year : ($year+1))));
+
+        // foreach ($seasonsYear as $year => &$seasons) {
+        //     foreach ($seasons as $season => &$period) {
+        //         if ($start >= $period[0] && $end <= $period[1])
+        //             return ucFirst($season);
+
+        //         if ($start >= $period[0] && $start <= $period[1]) {
+        //             if (date('Y', $end) != $year) 
+        //                 $seasons = $seasonsYear[date('Y', $end)];   
+        //                 $year = date('Y', $end);
+
+        //             $nextSeason = key($seasons);
+        //             $nextPeriod = current($seasons);                
+        //             do {                    
+        //                 $findNext   = ($end >= $nextPeriod[0] && $end <= $nextPeriod[1]);
+
+        //                 $nextSeason = key($seasons);
+        //                 $nextPeriod = current($seasons);
+        //             } while ($findNext = False);
+
+        //             $diffCurr   = $period[1]-$start;
+        //             $diffNext   = $end-$nextPeriod[0];
+
+        //             if ($diffCurr > $diffNext)
+        //                 return ucFirst($season);
+        //             else {
+        //                 return ucFirst($nextSeason);
+        //             }
+        //         }
+        //     }
+        // }
     }
 
 }

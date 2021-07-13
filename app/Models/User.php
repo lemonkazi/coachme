@@ -643,7 +643,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         if (isset($params['speciality'])) {
-
+            $params['speciality'] = explode(',', $params['speciality']);
             $filterParams = [];
             $filterParams['content_type'] = 'SPECIALITY';
             $filterParams['content_id'] = $params['speciality'];
@@ -662,7 +662,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $params['id'] = $ids;
         }
         if (isset($params['rink'])) {
-
+            $params['rink'] = explode(',', $params['rink']);
             $filterParams = [];
             $filterParams['content_type'] = 'RINK';
             $filterParams['content_id'] = $params['rink'];
@@ -680,7 +680,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $params['id'] = $ids;
         }
         if (isset($params['language'])) {
-
+            $params['language'] = explode(',', $params['language']);
             $filterParams = [];
             $filterParams['content_type'] = 'LANGUAGE';
             $filterParams['content_id'] = $params['language'];

@@ -289,11 +289,12 @@ class Program extends Model
         }
 
         if (isset($params['period'])) {
-
+            $params['period'] = strtoupper($params['period']);
+            
             $filterParams = [];
             $filterParams['content_type'] = 'PROGRAM';
-            $params['period'] = strtoupper($params['period']);
-
+            //$params['period'] = strtoupper($params['period']);
+            $params['period'] = explode(',', $params['period']);
             $filterParams['type'] = $params['period'];
             
             $newsQuery = (new Period())->filter($filterParams);

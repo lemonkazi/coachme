@@ -203,7 +203,12 @@ class BaseModel extends Model
             if (in_array($key, $this->partialFilterable)) { 
                 $query->where($key, 'LIKE', "%{$value}%");
             } elseif (in_array($key, $this->exactFilterable)) {
-                $query->where($key, '=', $value);
+                //$query->where($key, '=', $value);
+                if (is_array($value)) {
+                    $query->whereIn($key, $value);
+                } else {
+                    $query->where($key, '=', $value);
+                }
             } elseif ($key === 'start_show_date' && in_array($key, $this->fillable)) {
                 $fromFilterDate = str_replace('/', '-', $value);
                 
