@@ -27,6 +27,22 @@
               <h4>From {{date('F', $data['start_date'])}} {{date('d', $data['start_date'])}} to {{date('F', $data['end_date'])}} {{date('d', $data['end_date'])}}</h4>
               <div class="row pc">
                 <div class="col-md-6 ">
+                  <label for="">Camp Type</label>
+                  <p>{{$data['camp']->camp_type_name}}</p>
+                </div>
+              </div>
+              @if (isset($data['camp']->camp_type_name))
+                <div class="row pc">
+                    <div class="col-md-6 ">
+                        <label for="">Camp Type</label>
+                        @foreach ($data['camp']->camp_type_name as $key => $camp_type_name)
+                            <p>{{$camp_type_name['name']}}</p></br>
+                        @endforeach
+                    </div>
+                </div>
+              @endif
+              <div class="row pc">
+                <div class="col-md-6 ">
                   <label for="">Level</label>
                   <p>{{$data['camp']->level_name}}</p>
                 </div>
@@ -70,6 +86,18 @@
                   </p>
                 </div>
               </div>
+              @if (isset($data['camp']->camp_type_name))
+                <div class="row sp d-flex">
+                    <div class="col-md-6 wid-50">
+                        <label for="">Camp Type</label>
+                        @foreach ($data['camp']->camp_type_name as $key => $camp_type_name)
+                            <p>{{$camp_type_name['name']}}</p></br>
+                        @endforeach
+                    </div>
+                </div>
+              @endif
+              
+                  
               <div class="row sp d-flex">
                 <div class="col-md-6 wid-50">
                   <label for="">Level</label>

@@ -90,7 +90,7 @@
                           <span class="minVal">${{$min}}</span>
                           <span class="maxVal">${{$max}}</span>
                         </div>
-                          <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="{{maxPrice}}" data-slider-step="5" data-slider-value="[{{$min}},{{$max}}]"/>
+                          <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="{{$maxPrice}}" data-slider-step="5" data-slider-value="[{{$min}},{{$max}}]"/>
                         <div>
                           <span>min</span>
                           <span>max</span>

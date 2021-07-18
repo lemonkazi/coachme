@@ -61,7 +61,16 @@
                       <a href="#" class="btn btn-custom mb-3" data-toggle="modal" data-target="#exampleModalCenter">Register here</a>
                   @endauth
               @endif
-
+              @if (isset($data['program']->program_type_name))
+                <div class="row">
+                    <div class="col-md-4 wid-50">
+                        <label for="">Program Type</label>
+                        @foreach ($data['program']->program_type_name as $key => $program_type_name)
+                            <p>{{$program_type_name['name']}}</p></br>
+                        @endforeach
+                    </div>
+                </div>
+              @endif
               <div class="row">
                 <div class="col-md-4 wid-50">
                   <label for="">Level</label>
@@ -93,7 +102,8 @@
                 </div>
                 <div class="col-md-8">
                   <label for="">Location</label>
-                  <p>{{$data['program']->location_name}}<a href="">{{$data['program']->rink_name}}</a></p>
+                  <p>{{$data['program']->location_name}}</br>
+                  <a href="">{{$data['program']->rink_name}}</a></p>
                 </div>
                 <div class="col-md-12 sp">
                   <div class="address">
