@@ -99,7 +99,7 @@
                 <div class="col-md-8">
                   <label for="">Location</label>
                   <p>{{$data['program']->location_name}}</br>
-                  <a href="">{{$data['program']->rink_name}}</a></p>
+                  <a href="{{!empty($data['program']->web_site_url) ? $data['program']->web_site_url : '#'}}">{{$data['program']->rink_name}}</a></p>
                 </div>
                 <div class="col-md-12 sp">
                   <div class="address">

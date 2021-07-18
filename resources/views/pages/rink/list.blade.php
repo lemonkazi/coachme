@@ -48,7 +48,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="location">Website link</label>
-                      <input type="text" class="form-control set_cookie" id="set_web_site_url" name="cookieWebURL" value="{{!empty($data['user']) ? old('cookieWebURL', $data['user']->web_site_url) : old('cookieWebURL')}}" required aria-describedby="emailHelp" >
+                      <input type="text" class="form-control set_cookie" id="set_web_site_url" name="cookieWebURL" value="{{!empty($data['user']->web_site_url) ? $data['user']->web_site_url : ''}}" placeholder="https://www.example.com" required aria-describedby="emailHelp" >
                     </div>
                   </div>
 

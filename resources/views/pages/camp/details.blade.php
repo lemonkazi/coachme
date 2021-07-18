@@ -25,12 +25,7 @@
                 </div> 
               </div>
               <h4>From {{date('F', $data['start_date'])}} {{date('d', $data['start_date'])}} to {{date('F', $data['end_date'])}} {{date('d', $data['end_date'])}}</h4>
-              <div class="row pc">
-                <div class="col-md-6 ">
-                  <label for="">Camp Type</label>
-                  <p>{{$data['camp']->camp_type_name}}</p>
-                </div>
-              </div>
+              
               @if (isset($data['camp']->camp_type_name))
                 <div class="row pc">
                     <div class="col-md-6 ">
