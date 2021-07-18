@@ -24,6 +24,7 @@ class Program extends Model
     protected $fillable= [
         'name',
         'location_id',
+        'province_id',
         'level_id',
         'rink_id',
         'program_type_id',
@@ -88,6 +89,7 @@ class Program extends Model
     protected $exactFilterable = [
         'id',
         //'program_type_id',
+        'province_id',
         'level_id',
         'location_id',
         'rink_id',
@@ -275,6 +277,10 @@ class Program extends Model
         if (isset($params['is_varified'])) {
             $params['is_verified'] = $params['is_varified'];
             unset($params['is_varified']);
+        }
+
+        if (isset($params['level_id'])) {
+            $params['level_id'] = explode(',', $params['level_id']);
         }
 
         if (isset($params['program_type_id'])) {

@@ -178,6 +178,13 @@ class PublicContoller extends Controller
               $data['price'] = 0;
             }
           }
+          if (isset($data['location_id'])) {
+            $location = Location::find($data['location_id']);
+            if ($province) {
+                $data['province_id'] = $location->province_id;
+            }
+            
+          } 
 
           if (isset($data['coaches'])) {
            $data['coaches'] = json_encode(array_unique($data['coaches']));
@@ -414,6 +421,14 @@ class PublicContoller extends Controller
               $data['price'] = 0;
             }
           }
+
+          if (isset($data['location_id'])) {
+            $location = Location::find($data['location_id']);
+            if ($province) {
+                $data['province_id'] = $location->province_id;
+            }
+            
+          } 
 
           if (!empty($data['coaches'])) {
             $data['coaches'] = json_encode(array_unique($data['coaches']));
@@ -835,6 +850,14 @@ class PublicContoller extends Controller
         else
         {
 
+            if (isset($data['location_id'])) {
+                $location = Location::find($data['location_id']);
+                if ($province) {
+                    $data['province_id'] = $location->province_id;
+                }
+                
+            } 
+
           // if (isset($data['coaches'])) {
           //  $data['coaches'] = json_encode(array_unique($data['coaches']));
           // }
@@ -1029,6 +1052,14 @@ class PublicContoller extends Controller
         }
         else
         {
+
+            if (isset($data['location_id'])) {
+                $location = Location::find($data['location_id']);
+                if ($province) {
+                    $data['province_id'] = $location->province_id;
+                }
+                
+            } 
           if (isset($data['price'])) {
            
             if ( filter_var($data['price'], FILTER_VALIDATE_INT) === false ) {

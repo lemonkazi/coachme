@@ -222,7 +222,7 @@
                               @if(isset($program['rink']))
                                 <h5><i class="fas fa-map-marker-alt"></i>
                                   
-                                    {{$program['rink']['address']}}
+                                    {{$program['rink']['city_name']}}
                                   
                                 </h5>
                               @endif

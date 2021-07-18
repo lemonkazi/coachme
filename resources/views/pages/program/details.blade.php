@@ -53,14 +53,10 @@
                 }
               }
               ?>
-              <p class="gray">Window of registration: {{date('F', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}}</p>
-              @if (Route::has('logout'))
-                  @auth
-                     
-                  @else
-                      <a href="#" class="btn btn-custom mb-3" data-toggle="modal" data-target="#exampleModalCenter">Register here</a>
-                  @endauth
-              @endif
+                <p class="gray">Window of registration: {{date('F', $data['reg_start_date'])}} to {{date('F', $data['reg_end_date'])}}</p>
+             
+                <a target="_blank" href="{{$data['program']->web_site_url}}" class="btn btn-custom mb-3">Register here</a>
+                 
               @if (isset($data['program']->program_type_name))
                 <div class="row">
                     <div class="col-md-4 wid-50">

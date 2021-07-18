@@ -22,6 +22,7 @@ class Camp extends Model
     protected $fillable= [
         'name',
         'location_id',
+        'province_id',
         'level_id',
         'rink_id',
         'camp_type_id',
@@ -83,6 +84,7 @@ class Camp extends Model
     protected $exactFilterable = [
         'id',
         //'camp_type_id',
+        'province_id',
         'level_id',
         'location_id',
         'rink_id'
@@ -255,7 +257,10 @@ class Camp extends Model
         }
 
         
-      
+        if (isset($params['level_id'])) {
+            $params['level_id'] = explode(',', $params['level_id']);
+        }
+        
         if (isset($params['is_varified'])) {
             $params['is_verified'] = $params['is_varified'];
             unset($params['is_varified']);

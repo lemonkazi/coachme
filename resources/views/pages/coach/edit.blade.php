@@ -250,11 +250,11 @@
                             <h3>{{$camp['name']}}</h3>
                             <h6>{{$start_date}}-{{$end_date}}</h6>
                             @if(isset($camp['rink']))
-                              <h5><i class="fas fa-map-marker-alt"></i>
-                                
-                                  {{$camp['rink']['address']}}
-                                
-                              </h5>
+                                <h5><i class="fas fa-map-marker-alt"></i>
+                                  
+                                    {{$program['camp']['city_name']}}
+                                  
+                                </h5>
                             @endif
                             
                             
