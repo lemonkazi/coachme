@@ -148,13 +148,18 @@
                         @foreach ($data['coaches'] as $coach)
                         
                             <div class="col-md-3 text-center wid-30 {{!empty($coach['id']) ? $coach['id'] : ''}}">
-                              @if(isset($coach['avatar_image_path']))
+                              <a href="{{!empty($coach['id']) ? route('coach-details', ['user' => $coach['id']]): ''}}">
+                              
+                              `@if(isset($coach['avatar_image_path']))
                                 <img src="{{$BASE_URL}}/photo/user_photo/{{$coach['avatar_image_path']}}" alt="">
                               @else
                                 <!-- <img src="{{ asset('img/avatar.png') }}" alt=""> -->
                                 <img src="https://via.placeholder.com/150x150" alt=""> 
-                              @endif
-                              <p>{{!empty($coach['name']) ? $coach['name'] : ''}}</p>
+                              @endif`
+                              </a>
+                              <a href="{{!empty($coach['id']) ? route('coach-details', ['user' => $coach['id']]): ''}}">
+                                <p>{{!empty($coach['name']) ? $coach['name'] : ''}}</p>
+                              </a>
                             </div>
                         
                         @endforeach
