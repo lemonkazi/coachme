@@ -706,6 +706,10 @@ class User extends Authenticatable implements MustVerifyEmail
             //$params['city_id'] = $params['price_id'];
             $params['price_id'] = explode(',', $params['price_id']);
         }
+        if (isset($params['certificate_id'])) {
+            //$params['city_id'] = $params['price_id'];
+            $params['certificate_id'] = explode(',', $params['certificate_id']);
+        }
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
