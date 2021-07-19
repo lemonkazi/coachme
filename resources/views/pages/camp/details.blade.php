@@ -7,139 +7,134 @@
             <div class="col-md-6">
               <h1> {{$data['camp']->name}}<i class="fas fa-share-alt"></i>
               </h1>
-              <div class="col-md-6 sp">
+              <div class="sp">
+                <div class="col-md-6 ">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="program-slider">
+                        @if(isset($data['camp_photo']))
+                          @foreach ($data['camp_photo'] as $photo)
+                            
+                            <div class="item">
+                              <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
+                            </div>
+                          @endforeach
+                        @endif
+                        
+                      </div>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+
+              <h4>From {{date('F', $data['start_date'])}} {{date('d', $data['start_date'])}} to {{date('F', $data['end_date'])}} {{date('d', $data['end_date'])}}</h4>
+              
+              <div class="pc">
+                <div class="row ">
+                  <div class="col-md-6 ">
+                    <label for="">Level</label>
+                    <p>{{$data['camp']->level_name}}</p>
+                  </div>
+                  <div class="col-md-6 ">
+                    <label for="">Location</label>
+                    <p>{{$data['camp']->location_name}}</p>
+                  </div>
+                </div>
                 <div class="row">
-                  <div class="col-md-12">
-                    <div class="program-slider">
-                      @if(isset($data['camp_photo']))
-                        @foreach ($data['camp_photo'] as $photo)
+                  <div class="col-md-6 ">
+                    <label for="">Schedule</label>
+                    <div class="upClick">
+                      @if(isset($data['camp_schedule']))
+                        @foreach ($data['camp_schedule'] as $schedule)
+                          <a href="javascript:void(0);" onclick='downloadPDF("{{$BASE_URL}}/{{$schedule['path']}}");'>
+                            <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                          </a>
                           
-                          <div class="item">
-                            <img class="pic" src="{{$BASE_URL}}/{{$photo['path']}}" alt="{{$photo['name']}}">
-                          </div>
                         @endforeach
                       @endif
+
                       
                     </div>
                   </div>
-                </div> 
-              </div>
-              <h4>From {{date('F', $data['start_date'])}} {{date('d', $data['start_date'])}} to {{date('F', $data['end_date'])}} {{date('d', $data['end_date'])}}</h4>
-              
-              @if (isset($data['camp']->camp_type_name))
-                <div class="row pc">
-                    <div class="col-md-6 ">
-                        <label for="">Camp Type</label>
-                        @foreach ($data['camp']->camp_type_name as $key => $camp_type_name)
-                            <p>{{$camp_type_name['name']}}</p></br>
-                        @endforeach
-                    </div>
-                </div>
-              @endif
-              <div class="row pc">
-                <div class="col-md-6 ">
-                  <label for="">Level</label>
-                  <p>{{$data['camp']->level_name}}</p>
-                </div>
-                <div class="col-md-6 ">
-                  <label for="">Location</label>
-                  <p>{{$data['camp']->location_name}}</p>
-                </div>
-              </div>
-              <div class="row pc">
-                <div class="col-md-6 ">
-                  <label for="">Schedule</label>
-
-
-                  <div class="upClick">
-                    @if(isset($data['camp_schedule']))
-                      @foreach ($data['camp_schedule'] as $schedule)
-                        <a href="javascript:void(0);" onclick='downloadPDF("{{$BASE_URL}}/{{$schedule['path']}}");'>
-                          <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
-                        </a>
-                        
-                      @endforeach
-                    @endif
-
-                    
+                  <div class="col-md-6">
+                    <label for="">Rink</label>
+                    <p>{{$data['camp']->rink_name}}</p>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label for="">Rink</label>
-                  <p>{{$data['camp']->rink_name}}</p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="">Price</label>
+                    <p>
+                      @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
+                        {{$data['camp']->price_text}}
+                      @else
+                        {{$data['camp']->price}}$
+                      @endif
+                    </p>
+                  </div>
+                  @if (isset($data['camp']->camp_type_name))
+                  <div class="col-md-6 ">
+                      <label for="">Camp Type</label>
+                      @foreach ($data['camp']->camp_type_name as $key => $camp_type_name)
+                          <p>{{$camp_type_name['name']}}</p></br>
+                      @endforeach
+                  </div>
+                  @endif
                 </div>
-              </div>
-              <div class="row pc">
-                <div class="col-md-4">
-                  <label for="">Price</label>
-                  <p>
-                    @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
-                      {{$data['camp']->price_text}}
-                    @else
-                      {{$data['camp']->price}}$
-                    @endif
-                  </p>
+              </div> 
+              <div class="sp">
+                <div class="row  d-flex">
+                  <div class="col-md-6 wid-50">
+                    <label for="">Level</label>
+                    <p>{{$data['camp']->level_name}}</p>
+                  </div>
+                  <div class="col-md-4 wid-50">
+                    <label for="">Price</label>
+                    <p>
+                      @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
+                        {{$data['camp']->price_text}}
+                      @else
+                        {{$data['camp']->price}}$
+                      @endif
+                    </p>
+                  </div>
+                  
                 </div>
-              </div>
-              @if (isset($data['camp']->camp_type_name))
-                <div class="row sp d-flex">
+                <div class="row">
+                  <div class="col-md-6 wid-50">
+                    <label for="">Schedule</label>
+                    <div class="upClick">
+                      @if(isset($data['camp_schedule']))
+                        @foreach ($data['camp_schedule'] as $schedule)
+                          <a href="javascript:void(0);" onclick='downloadPDF("{{$BASE_URL}}/{{$schedule['path']}}");'>
+                            <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
+                          </a>                        
+                        @endforeach
+                      @endif
+                    </div>
+                  </div>
+                  <div class="col-md-6 wid-50">
+                    <label for="">Location</label>
+                    <p>{{$data['camp']->location_name}}</p>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                  <div class="col-md-6 wid-50">
+                    <label for="">Rink</label>
+                    <p>{{$data['camp']->rink_name}}</p>
+                  </div>
+                  @if (isset($data['camp']->camp_type_name))
                     <div class="col-md-6 wid-50">
                         <label for="">Camp Type</label>
                         @foreach ($data['camp']->camp_type_name as $key => $camp_type_name)
                             <p>{{$camp_type_name['name']}}</p></br>
                         @endforeach
-                    </div>
+                    </div>  
+                  @endif
                 </div>
-              @endif
-              
-                  
-              <div class="row sp d-flex">
-                <div class="col-md-6 wid-50">
-                  <label for="">Level</label>
-                  <p>{{$data['camp']->level_name}}</p>
-                </div>
-                <div class="col-md-4 wid-50">
-                  <label for="">Price</label>
-                  <p>
-                    @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
-                      {{$data['camp']->price_text}}
-                    @else
-                      {{$data['camp']->price}}$
-                    @endif
-                  </p>
-                </div>
-                
-              </div>
-              <div class="row sp d-flex">
-                <div class="col-md-6 wid-50">
-                  <label for="">Schedule</label>
+              </div>  
 
-
-                  <div class="upClick">
-                    @if(isset($data['camp_schedule']))
-                      @foreach ($data['camp_schedule'] as $schedule)
-                        <a href="javascript:void(0);" onclick='downloadPDF("{{$BASE_URL}}/{{$schedule['path']}}");'>
-                          <i class="bi bi-file-earmark-down-up-fill"></i> <span>Download a PDF</span>
-                        </a>
-                        
-                      @endforeach
-                    @endif
-
-                    
-                  </div>
-                </div>
-                <div class="col-md-6 wid-50">
-                  <label for="">Location</label>
-                  <p>{{$data['camp']->location_name}}</p>
-                </div>
-                
-              </div>
-              <div class="row sp">
-                <div class="col-md-6">
-                  <label for="">Rink</label>
-                  <p>{{$data['camp']->rink_name}}</p>
-                </div>
-              </div>
               <div class="row">
                 <div class="col-md-12 coach">
                   <label for="">Coach</label>
