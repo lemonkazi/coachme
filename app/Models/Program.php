@@ -92,8 +92,7 @@ class Program extends Model
         'province_id',
         'level_id',
         'location_id',
-        'rink_id',
-        'starting_age'
+        'rink_id'
     ];
 
     
@@ -283,6 +282,7 @@ class Program extends Model
             $params['level_id'] = explode(',', $params['level_id']);
         }
 
+
         if (isset($params['program_type_id'])) {
             $array = explode(',', $params['program_type_id']);
 
@@ -350,6 +350,10 @@ class Program extends Model
             //     // fetch all lesser than or equal to max_value
             //     $query->where('price', '<=', $max_value);
             // }
+        }
+
+        if (isset($params['starting_age'])) {
+            $query->where('starting_age', '<=', $params['starting_age']);
         }
         //$data['start_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['start_date']);
         //$data['end_date'] = Carbon::createFromFormat('Y/m/d H:i', $data['end_date']);

@@ -217,73 +217,22 @@
 
     $("#address").keyup(function(event) {
         if (event.keyCode === 13) {
+          var val = $(this).val(); // get selected value
+          if (val.length != 0) { 
             $("#id_of_button").click();
+          }
         }
     });
+
+ 
+    $('.bi-search').on('click',function(e){
+      var val = $("#address").val(); // get selected value
+      if (val.length != 0) { 
+        $("#id_of_button").click();
+      }
+    });
     var worldMapData = <?php echo json_encode($rinks) ?>;
-    // var worldMapData = [
-    //   {
-    //     "Id": "10025",
-    //     "PropertyCode": "Dhaka",
-    //     "address": "Siltasaarenkatu 14",
-    //     "latitude": "23.810332",
-    //     "longitude": "90.4125181",
-    //     "GMapIconImage": "/assets/markers/marker.png",
-    //     "type": "Hotel",
-    //     "hotelName": "Cumulus Hakaniemi Helsinki"
-    //   },
-    //   {
-    //     "Id": "10020",
-    //     "PropertyCode": "HELHAK",
-    //     "address": "Siltasaarenkatu 14",
-    //     "latitude": "60.1791466",
-    //     "longitude": "24.9473743",
-    //     "GMapIconImage": "/assets/markers/marker.png",
-    //     "type": "Hotel",
-    //     "hotelName": "Cumulus Hakaniemi Helsinki"
-    //   },
-    //   {
-    //     "Id": "10080",
-    //     "PropertyCode": "HELKAI",
-    //     "address": "Kaisaniemenkatu 7",
-    //     "latitude": "60.1716867",
-    //     "longitude": "24.9458183",
-    //     "GMapIconImage": "/assets/markers/marker.png",
-    //     "type": "Hotel",
-    //     "hotelName": "Cumulus Kaisaniemi Helsinki"
-    //   },
-    //   {
-    //     "Id": "10170",
-    //     "PropertyCode": "HELMEI",
-    //     "address": "Tukholmankatu 2",
-    //     "latitude": "60.1910171",
-    //     "longitude": "24.9090258",
-    //     "GMapIconImage": "/assets/markers/marker.png",
-    //     "type": "Hotel",
-    //     "hotelName": "Cumulus Meilahti Helsinki"
-    //   },
-    //   {
-    //     "Id": "10090",
-    //     "PropertyCode": "HELOLY",
-    //     "address": "Läntinen Brahenkatu 2",
-    //     "latitude": "60.1868253",
-    //     "longitude": "24.946055",
-    //     "GMapIconImage": "/assets/markers/marker.png",
-    //     "type": "Hotel",
-    //     "hotelName": "Cumulus Kallio Helsinki"
-    //   },
-    //   {
-    //     "Id": "10280",
-    //     "PropertyCode": "HELSEU",
-    //     "address": "Kaivokatu 12",
-    //     "latitude": "60.1700957",
-    //     "longitude": "24.9377173",
-    //     "GMapIconImage": "/assets/markers/marker.png",
-    //     "type": "Hotel",
-    //     "hotelName": "Hotel Seurahuone Helsinki"
-    //   }
-    // ];
-  // alert(locations.length);
+   
   var geocoder = null;
   var map = null;
   var customerMarker = null;
@@ -354,6 +303,19 @@
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+  
   //getLocation();
   function centerMap(bounds) {
 
@@ -444,6 +406,7 @@
                 closest = findClosestN(results[0].geometry.location, 12);
                 // get driving distance
                 closest = closest.splice(0, 12);
+                
                 calculateDistances(results[0].geometry.location, closest, 12);
               } else {
                 alert('Geocode was not successful for the following reason: ' + status);
@@ -528,6 +491,8 @@
                   closest = findClosestN(results[0].geometry.location, 12);
                   // get driving distance
                   closest = closest.splice(0, 12);
+                  console.log('ssssad');
+                  console.log(closest);
                   calculateDistances(results[0].geometry.location, closest, 12);
                 } else {
                   alert('Geocode was not successful for the following reason: ' + status);
@@ -582,7 +547,8 @@
 
     var options = {
       //types: ['address'],
-      types: ['(cities)'],
+      //types: ['(cities)'],
+      types: ['(regions)']
       // componentRestrictions: {
       //   country: 'us'
       // }
@@ -590,17 +556,20 @@
     //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     autocomplete = new google.maps.places.Autocomplete(input, options);
+
+
+
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
       var place = autocomplete.getPlace();
       if (place.geometry) {
-        for (var i = 0; i < place.address_components.length; i++) {
-          for (var j = 0; j < place.address_components[i].types.length; j++) {
-            if (place.address_components[i].types[j] == "postal_code") {
-              document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
+        // for (var i = 0; i < place.address_components.length; i++) {
+        //   for (var j = 0; j < place.address_components[i].types.length; j++) {
+        //     if (place.address_components[i].types[j] == "postal_code") {
+        //       document.getElementById('postal_code').innerHTML = place.address_components[i].long_name;
 
-            }
-          }
-        }
+        //     }
+        //   }
+        // }
         //to see all the properties of the place object
         map.panTo(place.geometry.location);
         map.setZoom(12);
@@ -623,30 +592,54 @@
       infowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
     //document.getElementById('info').innerHTML = "found " + locations.length + " locations<br>";
-    
-    for (i = 0; i < worldMapData.length; i++) { 
-      var pt = new google.maps.LatLng(worldMapData[i].latitude, worldMapData[i].longitude);
-      
-      bounds.extend(pt); 
-      marker = new google.maps.Marker({
-        position: pt,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        address: worldMapData[i].address,
-        title: worldMapData[i].PropertyCode,
-        html: worldMapData[i].PropertyCode + "<br>" + worldMapData[i].address + "<br>"
-        //html: worldMapData[i].PropertyCode + "<br>" + worldMapData[i].address + "<br><br><a href='javascript:getDirections(customerMarker.getPosition(),&quot;" + worldMapData[i].address + "&quot;);'>Get Directions</a>"
-      });
-      gmarkers.push(marker);
-  
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          infowindow.setContent(marker.html);
-          infowindow.open(map, marker);
-        }
-      })(marker, i));
-  
-    }
+    var sidebarHtml = '';
+		var outputDiv = document.getElementById('side_bar');
+    if (worldMapData.length>0) {
+			sidebarHtml += '<div class="address-group">';
+			for (i = 0; i < worldMapData.length; i++) { 
+				var pt = new google.maps.LatLng(worldMapData[i].latitude, worldMapData[i].longitude);
+				
+				bounds.extend(pt); 
+				var letterMarkers = ""+ (i + 1);
+				marker = new google.maps.Marker({
+					position: pt,
+					map: map,
+					animation: google.maps.Animation.DROP,
+					address: worldMapData[i].address,
+					label: letterMarkers,
+					title: worldMapData[i].PropertyCode,
+					html: worldMapData[i].PropertyCode + "<br>" + worldMapData[i].address + "<br>"
+					//html: worldMapData[i].PropertyCode + "<br>" + worldMapData[i].address + "<br><br><a href='javascript:getDirections(customerMarker.getPosition(),&quot;" + worldMapData[i].address + "&quot;);'>Get Directions</a>"
+				});
+				gmarkers.push(marker);
+		
+				google.maps.event.addListener(marker, 'click', (function(marker, i) {
+					return function() {
+						infowindow.setContent(marker.html);
+						infowindow.open(map, marker);
+					}
+				})(marker, i));
+
+				console.log(worldMapData[i]);
+				sidebarHtml += '<div class="address">';
+					sidebarHtml += '<div class="number">';
+						sidebarHtml += '<img src="img/Ellipse 17.png" alt="" srcset="">';
+						sidebarHtml += '<span>'+letterMarkers+'</span>';
+					sidebarHtml += '</div>';
+					sidebarHtml += '<div class="description">';
+							sidebarHtml += "<h5><a href='javascript:google.maps.event.trigger(worldMapData[" + i + "],\"click\");'>" + worldMapData[i].PropertyCode + "</a><br></h5>";
+							sidebarHtml += '<p>'+ worldMapData[i].address +'</p>';
+							sidebarHtml += '<h6>'+ (worldMapData[i].distance / 1000) + ' Kilometers approximately ' + worldMapData[i].duration +'</h6>';
+							sidebarHtml += "<p class='gray'><a href='javascript:google.maps.event.trigger(worldMapData[" + worldMapData[i].idx_closestMark + "],\"click\");'>Directions</a></p>";
+							
+							//sidebarHtml += '<p class="gray">Directions</p>';
+					sidebarHtml += '</div>';
+				sidebarHtml += '</div>';
+		
+			}
+			sidebarHtml += '</div>';
+			//outputDiv.innerHTML = sidebarHtml;
+		}
     console.log(bounds);
     map.fitBounds(bounds);
 
@@ -676,6 +669,8 @@
     closest = findClosestN(locationV.latLng, 12);
     // get driving distance
     closest = closest.splice(0, 12);
+    console.log('by click');
+                  console.log(closest);
     calculateDistances(locationV.latLng, closest, 12);
     //MAKE AJAX CALL TO GOOGLE API BY CLICKED LAT & LNG CLICK POSITION
     jQuery.get( "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + locationV.latLng.lat() + ',' + locationV.latLng.lng(), function( data )   {
@@ -698,7 +693,7 @@
         customerMarker = new google.maps.Marker({
           map: map,
           position: results[0].geometry.location,
-          title: "<div style = 'height:80px;width:200px'><b>Your Searched City:</b>"
+          title: "<div style = 'height:80px;width:200px;font-size: 15px;font-weight: bold;'><b>Your Searched City:"+results[0].formatted_address+"</b>"
         });
         google.maps.event.addListener(customerMarker, "click", function(e) {
           var infoWindow = new google.maps.InfoWindow();
@@ -709,7 +704,9 @@
         console.log('aaa'+results[0].geometry.location);
         closest = findClosestN(results[0].geometry.location, 12);
         // get driving distance
-        closest = closest.splice(0, 12);
+        
+        console.log('ooo');
+                  console.log(closest);
         calculateDistances(results[0].geometry.location, closest, 12);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -728,10 +725,13 @@
       closest.push(gmarkers[i]);
       closest.sort(sortByDist);
     }
+    closest = closest.splice(0, numberOfResults);
+    
     return closest;
   }
 
   function sortByDist(a, b) {
+    //console.log(a.distance - b.distance);
     return (a.distance - b.distance)
   }
 
@@ -756,21 +756,27 @@
         var origins = response.originAddresses;
         var destinations = response.destinationAddresses;
         var outputDiv = document.getElementById('side_bar');
+				
         
         console.log(response);
         var results = response.rows[0].elements;
         var found = 0;
         // save title and address in record for sorting
         for (var i = 0; i < closest.length; i++) {
-          if (results[i].status=='OK') {
+          //if (results[i].status=='OK') {
             results[i].title = closest[i].title;
             results[i].address = closest[i].address;
+						results[i].distance = closest[i].distance;
             results[i].idx_closestMark = i;
+
+						
             found++;
-          }
+          //}
           
         }
         var sidebarHtml = '';
+				outputDiv.innerHTML = sidebarHtml;
+				var outputDiv = document.getElementById('side_bar');
         console.log('found'+found);
         if (found>0) {
           sidebarHtml += '<div class="address-group">';
@@ -780,9 +786,9 @@
             ((i < numberOfResults) && (i < closest.length)); i++) {
             closest[i].setMap(map);
             //var letterMarkers = String.fromCharCode(97 + i);
-            var letterMarkers = i + 1;
-            //console.log(results);
-            if (results[i].status=='OK') {
+            var letterMarkers = ""+ (i + 1);
+            console.log(results);
+            //if (results[i].status=='OK') {
               closest[results[i].idx_closestMark].setLabel(letterMarkers);
               sidebarHtml += '<div class="address">';
                   sidebarHtml += '<div class="number">';
@@ -792,14 +798,14 @@
                   sidebarHtml += '<div class="description">';
                       sidebarHtml += "<h5><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>" + results[i].title + "</a><br></h5>";
                       sidebarHtml += '<p>'+ results[i].address +'</p>';
-                      sidebarHtml += '<h6>'+ (results[i].distance.value / 1000) + ' Kilometers approximately ' + results[i].duration.text +'</h6>';
+                      sidebarHtml += '<h6>'+ (results[i].distance / 1000).toFixed(2) + ' Kilometers approximately</h6>';
                       sidebarHtml += "<p class='gray'><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>Directions</a></p>";
                       
                       //sidebarHtml += '<p class="gray">Directions</p>';
                       sidebarHtml += '</div>';
               sidebarHtml += '</div>';
                //sidebarHtml += "<tr><td><div class='numberCircle'>" + letterMarkers + "</div><a href='javascript:google.maps.event.trigger(closest[" + results[i].idx_closestMark + "],\"click\");'>" + results[i].title + '</a><br>' + results[i].address + "<br>" + results[i].distance.text + ' approximately ' + results[i].duration.text + "<br><a href='javascript:getDirections(customerMarker.getPosition(),&quot;" + results[i].address + "&quot;);'>Get Directions</a></td></tr>"
-            }
+            //}
           }
           sidebarHtml += '</div>';
           

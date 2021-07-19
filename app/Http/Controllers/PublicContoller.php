@@ -180,7 +180,7 @@ class PublicContoller extends Controller
           }
           if (isset($data['location_id'])) {
             $location = Location::find($data['location_id']);
-            if ($province) {
+            if ($location) {
                 $data['province_id'] = $location->province_id;
             }
             
@@ -424,7 +424,7 @@ class PublicContoller extends Controller
 
           if (isset($data['location_id'])) {
             $location = Location::find($data['location_id']);
-            if ($province) {
+            if ($location) {
                 $data['province_id'] = $location->province_id;
             }
             
@@ -852,7 +852,7 @@ class PublicContoller extends Controller
 
             if (isset($data['location_id'])) {
                 $location = Location::find($data['location_id']);
-                if ($province) {
+                if ($location) {
                     $data['province_id'] = $location->province_id;
                 }
                 
@@ -1055,7 +1055,7 @@ class PublicContoller extends Controller
 
             if (isset($data['location_id'])) {
                 $location = Location::find($data['location_id']);
-                if ($province) {
+                if ($location) {
                     $data['province_id'] = $location->province_id;
                 }
                 
