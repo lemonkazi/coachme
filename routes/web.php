@@ -33,12 +33,15 @@ Route::get('/user/login', 'PublicContoller@login');
 Route::post('/user/login', 'PublicContoller@publiclogin');
 Route::post('/user/register', 'PublicContoller@publicRegister');
 
+Route::get('/user/forgot_password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/user/forgot_password', 'PublicContoller@forgot_password');
+
 Auth::routes(['verify' => true]);
 
 
 
 /**Forgot Password Routes**/
-Route::get('password/request', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'index'])->name('password.request');
+Route::get('password/request', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLink')->name('password.email');
 /**Reset Password Routes**/
 //Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
@@ -84,35 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
-//Route::middleware(['auth', 'authority:coach_user'])->group(function () {
-//	Route::get('my-account', 'PublicContoller@coach_edit');
-//	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
-//});
 
-
-// Route::middleware(['auth', 'authority:rink_user'])->group(function () {
-// 	Route::get('my-account', 'PublicContoller@rink_edit');
-// 	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@rink_edit']);
-// });
-
-//  Route::get('my-account', function()
-//  {
-// 		if (Auth::check()) {
-// 	        if(Auth::user()->authority == "COACH_USER"){
-// 	        	//retutn 'PublicContoller@coach_edit';
-// 	        	return redirect()->route('my-account');
-//     		}
-// 	        else if(Auth::user()->authority == "RINK_USER"){
-// 	        	return redirect()->route('my-account');
-// 	        }
-// 	    }
-// });
-
-
-// Route::middleware(['auth', 'authority:coach_user'])->group(function () {
-// 	Route::get('my-account', 'PublicContoller@coach_edit');
-// 	Route::post('my-account',['as' =>'profile-update','uses' =>'PublicContoller@coach_edit']);
-// });
 
 
 Route::middleware(['auth', 'authority:rink_user'])->group(function () {

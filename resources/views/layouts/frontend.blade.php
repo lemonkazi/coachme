@@ -186,7 +186,7 @@
                     @endif
                     <div class="form-group">
                       <label for="log-email">Email</label>
-                      <input id="email" type="email" class="form-control rounded-left @error('email') is-invalid @enderror" placeholder="email" id="log-email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                      <input id="email" type="email" class="form-control rounded-left @error('email') is-invalid @enderror" placeholder="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                       @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -209,6 +209,43 @@
                     <div class="form-group">
                       <button type="submit" id="userLogin" class="form-control btn btn-primary submit px-3">Login</button>
                     </div>
+                    <a id="forgot_link" href="javascript:;">
+                      Forgot Your Password?
+                    </a>
+                  </form>
+                  <form method="POST" style="display:none" action="{{ route('password.email') }}" id="forgot" class="forgot-password-form">
+                    @csrf
+                    <div class="alert alert-danger forgot_password" style="display:none"></div>
+                    <div class="alert alert-success forgot_password" style="display:none"></div>
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+                    @endif
+                    @if (session('status'))
+                      <div class="alert alert-success">
+                        {{ session('status') }}
+                      </div>
+                    @endif
+                    @if (session('warning'))
+                      <div class="alert alert-warning">
+                        {{ session('warning') }}
+                      </div>
+                    @endif
+                    <div class="form-group">
+                      <label for="log-email">Email</label>
+                      <input id="email_forgot" type="email" class="form-control rounded-left @error('email') is-invalid @enderror" placeholder="email" name="email_forgot" value="{{ old('email_forgot') }}" required autocomplete="email" autofocus>
+                      @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                    </div>
+                      
+                    <div class="form-group">
+                      <button type="submit" id="forgot_password" class="form-control btn btn-primary submit px-3">Send Password Reset Link</button>
+                    </div>
+                    <a id="login_again" href="javascript:;">
+                      login
+                    </a>
                   </form>
                   <h1 class="a">or</h1>
                   <h3 class="text-center mb-2 signUp">Sign up</h3>
@@ -395,6 +432,79 @@
                     $('#modal_alert_body').html(message);
                     $('#modal_alert').modal('show');
                 }
+
+                $('#forgot_link').click(function(e){
+                  
+                  $('.login-form').hide();
+                  $('#forgot').show();
+                  
+                });
+                $('#login_again').click(function(e){
+                  
+                  $('.login-form').show();
+                  $('#forgot').hide();
+                  
+                });
+                $('#forgot_password').click(function(e){
+
+                  e.preventDefault();
+                  var loader = $('#pageloader');
+                  var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+                  var data_controller = controller;
+                  var data = {
+                      controller: data_controller,
+                      email: $('#email_forgot').val(),
+                      _token:csrfToken
+                  };
+
+                  $.ajaxSetup({
+                      headers: {
+                          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                      }
+                  });
+
+                  $.ajax({
+                      type: 'POST',
+                      url: baseUrl + '/user/forgot_password',
+                      data: data,
+                      dataType: 'json',
+                      beforeSend: function (xhr) {
+                          loader.show();
+                      },
+                      success: function (result) {
+                        if(result.errors)
+                        {
+                            $('.alert-danger.forgot_password').html('');
+
+                            $.each(result.errors, function(key, value){
+                                $('.alert-danger.forgot_password').show();
+                                $('.alert-danger.forgot_password').append('<li>'+value+'</li>');
+                            });
+                        }
+                        else
+                        {
+
+                          $('.alert-danger.forgot_password').hide();
+                            //$('#exampleModalCenter').removeClass('show');
+                            if(result.success)
+                            {
+                                $('.alert-success.forgot_password').html('');
+                                $('.alert-success.forgot_password').show();
+                                $('.alert-success.forgot_password').append('<li>'+result.result+'</li>');
+                                //window.location = result.url;  
+                                //$('.signUp').hide();
+                                //return false;
+                            }
+                              
+
+                        }
+                      },
+                      complete: function() {
+                          loader.hide();
+                      }
+                  });
+                });
+
 
                 $('#userLogin').click(function(e){
                     e.preventDefault();

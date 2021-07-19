@@ -38,12 +38,22 @@ use Intervention\Image\ImageManagerStatic as InterventionImageManager;
 use Illuminate\Support\Facades\Storage;
 
 use App\Providers\RouteServiceProvider;
+
+use App\Models\PasswordReset;
+use Illuminate\Support\Facades\Password;
+
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Str;
+
+
 use Cookie;
 use DateTime;
 
 class PublicContoller extends Controller
 {
     
+
+    use SendsPasswordResetEmails;
     /**
      * Create a new controller instance
      *
@@ -2672,6 +2682,93 @@ class PublicContoller extends Controller
         //         }
         //     }
         // }
+    }
+
+
+
+
+
+     /**
+     * Display login.
+     *
+     * @return Response
+     */
+    public function forgot_password(Request $request)
+    {
+      $data = $request->all();
+      
+     
+      $rules = array(
+            'email'  => 'required|string|email|max:255'
+          );    
+      $messages = array(
+                'email.required' => trans('messages.email.required'),
+                'email.string' => trans('messages.email.string'),
+                'email.email' => trans('messages.email.email'),
+                'email.max' => trans('messages.email.max')
+              );
+      $validator = Validator::make( $data, $rules, $messages );
+
+      if ( $validator->fails() ) 
+      {
+        return response()->json(['errors'=>$validator->errors()->all()]);
+      }
+      else
+      {
+        $user = User::where([
+                  ['email', $data['email']],
+                  ['deleted_at', null],
+             ])->first();
+       
+        if ($user) {
+            $usernotVerified = User::where([
+                  ['email', $data['email']],
+                  ['email_verified_at', null]
+            ])->first();
+            if ($usernotVerified) {
+              return response()->json(['errors'=>['email not verified please verify']]);
+            }
+
+
+
+            if (config('global.email_send') == 1) {
+              try {
+                //return response()->json(['success'=>true,'result'=>'We sent a reset password link. please check your email.','url'=> RouteServiceProvider::ROOT]);
+              
+                $response = $this->broker()->sendResetLink(
+                    $request->only('email')
+                );
+                //print_r(Password::RESET_LINK_SENT);
+                //exit();
+                //Return the response
+                if ($response == Password::RESET_LINK_SENT) {
+                  return response()->json(['success'=>true,'result'=>'We sent a reset password link. please check your email.','url'=> RouteServiceProvider::ROOT]);
+              
+                } else {
+                    return response()->json(['errors'=>['Failed to send eamil!']]);
+                }
+
+
+                // \Mail::to($user->email)->send(new VerifyMail($user));
+                // return response()->json(['success'=>true,'result'=>'We sent you an activation code. Check your email and click on the link to verify.','url'=> RouteServiceProvider::ROOT]);
+              
+              } catch (\Exception $e) {
+                //$user->email_verified_at = now();
+                //$user->save();
+                return response()->json(['success'=>true,'result'=>'Failed to send eamil!','url'=> RouteServiceProvider::ROOT]);
+             
+              }
+  
+              
+              
+            }
+            //return response()->json(['success'=>true,'result'=>'Registration successfull','url'=> RouteServiceProvider::ROOT]);
+              
+            
+            
+        }
+        return response()->json(['errors'=>['Login failed, please try again!']]);
+      }
     }
 
 }
