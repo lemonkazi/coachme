@@ -20,6 +20,8 @@ class CreateProgramsTable extends Migration
             
             $table->unsignedInteger('rink_id')->nullable();
             $table->foreign('rink_id')->references('id')->on('rinks');
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->foreign('province_id')->references('id')->on('provinces');
             
             $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations');

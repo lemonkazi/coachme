@@ -22,8 +22,8 @@ class CreateRinkTable extends Migration
             $table->foreign('location_id')->references('id')->on('locations');
             
             $table->text('address')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
+            $table->string('latitude', 50)->nullable();
+            $table->string('longitude', 50)->nullable();
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
         });

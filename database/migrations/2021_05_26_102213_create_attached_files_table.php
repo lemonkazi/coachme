@@ -17,7 +17,7 @@ class CreateAttachedFilesTable extends Migration
             $table->id();
             $table->enum('content_type', ['CAMP', 'PROGRAM','COACH'])->nullable();
             $table->unsignedInteger('content_id')->nullable();
-            $table->enum('type', ['SCHEDULE', 'PHOTO'])->nullable();
+            $table->enum('type', ['SCHEDULE', 'PHOTO', 'COACH'])->nullable();
             $table->unsignedBigInteger('user_id')->nullable()->comment = 'This attachment is reported by user_id';
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('coach_name', 100)->nullable();
