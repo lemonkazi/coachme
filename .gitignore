@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/coach_photo/
 /storage/*.key
 /vendor
 .env
@@ -11,3 +12,8 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+*.map
+
+/public/photo
+/public/files
