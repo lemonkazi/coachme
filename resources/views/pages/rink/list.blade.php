@@ -64,7 +64,7 @@
               <a href="{{route('camp-create')}}" class="btn btn-custom mb-2 green col-md-3 w-60">Create a camp</a><br/>
               <a href="{{route('program-create')}}" class="btn btn-custom mb-4 blue col-md-3 w-60">Create a program</a>
               <div class="row">
-                @if(isset($data['programs']))
+                @if(!empty($data['programs']))
                 <div class="col-md-12">
                   <h2>Your Programs</h2>
                   <div class="row">
@@ -174,7 +174,7 @@
               </div>
 
               <div class="row">
-                @if(isset($data['camps']))
+                @if(!empty($data['camps']))
                 <div class="col-md-12">
                   <h2>Your Camps</h2>
                   <div class="row">

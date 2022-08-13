@@ -17,9 +17,6 @@ class CreateCampsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('level_id')->nullable();
             $table->foreign('level_id')->references('id')->on('levels');
-            $table->unsignedBigInteger('province_id')->nullable();
-            $table->foreign('province_id')->references('id')->on('provinces');
-            
             $table->unsignedBigInteger('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations');
             
@@ -33,8 +30,7 @@ class CreateCampsTable extends Migration
 
             $table->datetime('start_date')->nullable();
             $table->datetime('end_date')->nullable();
-            $table->integer('price')->nullable()->default(0);
-            $table->string('price_text', 50)->nullable();
+            $table->string('price', 50)->nullable();
             $table->text('about')->nullable();
             $table->string('email')->nullable();
             $table->string('contacts', 25)->nullable();
@@ -43,7 +39,6 @@ class CreateCampsTable extends Migration
             
             
             $table->text('coaches')->nullable();
-            $table->text('coach_name')->nullable();
 
             $table->unsignedBigInteger('user_id')->nullable()->comment = 'This camp is created by user_id';
             $table->foreign('user_id')->references('id')->on('users');

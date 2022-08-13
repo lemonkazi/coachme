@@ -203,7 +203,7 @@
 
       <div class="container camp_list">
         <div class="row">
-          @if(isset($data['camps']))
+          @if(!empty($data['camps']))
           <div class="col-md-12">
             <h2>Your Camps</h2>
             <div class="row">

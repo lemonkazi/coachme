@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/front.css') }}">
-        <title>@yield('title')</title>
+        <title>Coachadvisor</title>
         <!-- external JS-->
         <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />

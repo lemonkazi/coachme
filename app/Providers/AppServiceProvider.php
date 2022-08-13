@@ -17,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //Passport::ignoreMigrations();
+        $this->app->bind('path.public', function() {
+            return realpath(base_path().'/../');
+        });
     }
 
     /**
