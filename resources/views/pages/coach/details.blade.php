@@ -21,7 +21,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 wid-50">
-                  <label for="">Speciality</label>
+                  <label for="">Discipline</label>
                   <p>{{$data['speciality']}}</p>
                 </div>
                 <div class="col-md-6 wid-50">

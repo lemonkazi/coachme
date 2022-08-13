@@ -45,11 +45,11 @@ class SpecialityController extends Controller
     if (!empty($speciality->id)) {
       $breadcrumb = array(
         array(
-           'name'=>trans('global.All Speciality'),
+           'name'=>trans('global.All Discipline'),
            'link'=>'/speciality'
         ),
         array(
-           'name'=>trans('global.Speciality Detail'),
+           'name'=>trans('global.Discipline Detail'),
            'link'=>''
         )
       );
@@ -65,7 +65,7 @@ class SpecialityController extends Controller
           [
              'speciality' => Speciality::find($speciality->id),
              'breadcrumb' =>  $breadcrumb,
-             'Title' =>  trans('global.Speciality Detail')
+             'Title' =>  trans('global.Discipline Detail')
           ]
         ]);
     } 
@@ -99,7 +99,7 @@ class SpecialityController extends Controller
 
     $breadcrumb = array(
         array(
-           'name'=>trans('global.All Speciality'),
+           'name'=>trans('global.All Discipline'),
            'link'=>'/speciality'
         )
     );
@@ -146,7 +146,7 @@ class SpecialityController extends Controller
         [
           'speciality'      =>  $response->appends(request()->except('page')),
           'breadcrumb' =>  $breadcrumb,
-          'Title' =>  trans('global.Speciality List'),
+          'Title' =>  trans('global.Discipline List'),
           'sumary' => $sumary,
           'request' => $params,
           'sort' => $sort,
@@ -164,10 +164,10 @@ class SpecialityController extends Controller
   public function create($id=null)
   {
     $speciality='';
-    $title=trans('global.Add Speciality');
+    $title=trans('global.Add Discipline');
     $breadcrumb = array(
         array(
-           'name'=>trans('global.All Speciality'),
+           'name'=>trans('global.All Discipline'),
            'link'=>'/speciality'
         )
       );
@@ -177,10 +177,10 @@ class SpecialityController extends Controller
         return back();
       } else {
         $breadcrumb[] = array(
-           'name'=>trans('global.Edit Speciality'),
+           'name'=>trans('global.Edit Discipline'),
            'link'=>''
         );
-        $title=trans('global.Edit Speciality');
+        $title=trans('global.Edit Discipline');
       }
     } else {
       $breadcrumb[] = array(
@@ -189,7 +189,7 @@ class SpecialityController extends Controller
       );
     }
    
-    return view('admin.speciality.add', [
+    return view('admin.Discipline.add', [
           'pageInfo'=>
           [
             'siteTitle'        =>'Manage Users',
@@ -234,7 +234,7 @@ class SpecialityController extends Controller
       if (!Speciality::create($data)) {
         return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
       }
-      Toastr::success('A new Speciality has been created','Success');
+      Toastr::success('A new Discipline has been created','Success');
       return back();
     }
   }
@@ -277,7 +277,7 @@ class SpecialityController extends Controller
         return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
       }
 
-      Toastr::success(trans('global.Speciality has been updated'),'Success');
+      Toastr::success(trans('global.Discipline has been updated'),'Success');
       return back();
     }
     

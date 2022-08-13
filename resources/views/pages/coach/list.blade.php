@@ -14,7 +14,7 @@
                       <h1>
                         Filters        <i class="bi bi-x sp"></i>            
                       </h1>
-                      <label for="">Speciality</label>
+                      <label for="">Discipline</label>
                       <div class="check-section">
                         <?php
                         $coachArray = array();

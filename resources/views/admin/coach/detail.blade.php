@@ -67,7 +67,7 @@
                       'text' => '',
                   ),
                   'speciality' => array(
-                      'label' => __('speciality'),
+                      'label' => __('Discipline'),
                       'text' => '',
                       'content_type' => 'userinfos'
                   ),

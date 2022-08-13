@@ -97,7 +97,7 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="speciality">speciality</label>
+                          <label for="speciality">Discipline</label>
                           <select name="speciality_id" class="form-control" style="width: 100%">
                             <option value="">Select</option>
                             @foreach($speciality_all as $id => $value)

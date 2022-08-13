@@ -131,7 +131,7 @@
           <a href="#" class="nav-link <?php if ($controller == 'specialitycontroller') echo 'active' ?>">
             <i class="nav-icon fas fa-th"></i>
             <p>
-              Speciality
+              Discipline
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
@@ -139,13 +139,13 @@
             <li class="nav-item <?php if ($controller == 'specialitycontroller' && $action == 'show') echo 'active' ?>">
               <a href="{{ url('speciality')}}" class="nav-link <?php if ($controller == 'specialitycontroller' && $action == 'show') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>All Speciality</p>
+                <p>All Discipline</p>
               </a>
             </li>
             <li class="nav-item <?php if ($controller == 'specialitycontroller' && $action == 'create') echo 'active' ?>">
               <a href="{{ url('/special/add')}}" class="nav-link <?php if ($controller == 'specialitycontroller' && $action == 'create') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Add Speciality</p>
+                <p>Add Discipline</p>
               </a>
             </li>
           </ul>

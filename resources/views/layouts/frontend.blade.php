@@ -77,9 +77,6 @@
                         <li class="nav-item">
                             <a class="nav-link <?php if ($controller == 'publiccontoller' && in_array($action, array('camp_details', 'camp_list','camp_filter'))) echo 'active' ?>" href="{{ url('/camp/list') }}">Camps</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?php if ($controller == 'publiccontoller' && in_array($action, array('program_details', 'program_list'))) echo 'active' ?>" href="{{ url('/program/list') }}">Programs</a>
-                        </li>
                         <li>
                             @if (Route::has('logout'))
                                 @auth
@@ -276,17 +273,7 @@
                         </span>
                       @enderror
                     </div>
-                    <div class="form-group">
-                      <label for="userSelect">Type of user</label>
-                      @if (isset($authority))
-                      <select class="form-control" name="authority" id="userSelect">
-                        <option value="">Select</option>
-                        @foreach($authority as $id => $value)
-                            <option value="{{ $id }}" {{ (old('authority') ? old('authority') : $data['user']->authority ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                        @endforeach
-                      </select>
-                      @endif
-                    </div>
+                    <input type="hidden" name="authority" id="userSelect" value="COACH_USER">
                     <div class="form-group">
                       <label for="reg-password">Password</label>
                       <div class="icon-input mb-3">

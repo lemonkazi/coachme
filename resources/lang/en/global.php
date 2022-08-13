@@ -260,13 +260,13 @@ return [
     'A new Rink has been created' => 'A new Rink has been created',
     'Rink has been updated' => 'Rink has been updated',
 
-    'All Speciality' => 'All Speciality',
-    'Speciality Detail' => 'Speciality Detail',
-    'Speciality List' => 'Speciality List',
-    'Edit Speciality' => 'Edit Speciality',
-    'Add Speciality' => 'Add Speciality',
-    'A new Speciality has been created' => 'A new Speciality has been created',
-    'Speciality has been updated' => 'Speciality has been updated',
+    'All Discipline' => 'All Discipline',
+    'Discipline Detail' => 'Discipline Detail',
+    'Discipline List' => 'Discipline List',
+    'Edit Discipline' => 'Edit Discipline',
+    'Add Discipline' => 'Add Discipline',
+    'A new Discipline has been created' => 'A new Discipline has been created',
+    'Discipline has been updated' => 'Discipline has been updated',
     'LABEL_USER_CHANGE_PASSWORD' => 'Change Password',
 
 

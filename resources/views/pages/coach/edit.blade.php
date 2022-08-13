@@ -97,7 +97,7 @@
                 <h2>Coach information</h2>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="speciality">Speciality</label>
+                    <label for="speciality">Discipline</label>
                     <select class="form-control" id="speciality" name="speciality_id[]" multiple="multiple">
 
                       @foreach($speciality_all as $id => $value)

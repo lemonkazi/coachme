@@ -76,7 +76,7 @@ class PublicContoller extends Controller
 
       $authority = array(
           'COACH_USER' => trans('global.LABEL_COACH_USER'),
-          'RINK_USER' => trans('global.LABEL_RINK_USER')
+          //'RINK_USER' => trans('global.LABEL_RINK_USER')
       );
       $rink_all = Rink::all()->sortBy("name")->toArray();
       $rinks=[];
