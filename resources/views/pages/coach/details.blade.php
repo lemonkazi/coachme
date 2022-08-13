@@ -87,6 +87,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <label for="">Contact</label>
+                  <h5>{{$data['user']->website}}</h5>
                   <h5><i class="bi bi-telephone-fill"></i>+{{$data['user']->phone_number}}</h5>
                   <h5><i class="fas fa-at"></i>{{$data['user']->email}}</h5>
                   <h5><i class="fab fa-linkedin"></i>+{{$data['user']->whatsapp}}</h5>

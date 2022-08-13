@@ -47,6 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'family_name',
         'experience_id',
         'certificate_id',
+        'certificate_name',
         'price_id',
         'province_id',
         'city_id',
@@ -56,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'province',
         'city',
         'phone_number',
+        'website',
         'whatsapp',
         'avatar_image_path',
         'gender',
@@ -127,7 +129,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'phone_number',
-        //'shop_name',
+        'certificate_name'
     ];
 
     /**

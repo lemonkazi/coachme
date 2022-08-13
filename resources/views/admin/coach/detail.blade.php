@@ -96,7 +96,10 @@
                       'text' => '',
                       'related' => 'price'
                   ),
-                  
+                  'website' => array(
+                      'label' => __('Website or associated club'),
+                      'text' => '',
+                  ),
                   'phone_number' => array(
                       'label' => __('phone_number'),
                       'text' => '',

@@ -145,26 +145,11 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="rink">rink</label>
-                          <select name="rink_id" class="form-control" style="width: 100%">
-                            <option value="">Select</option>
-                            @foreach($rink_all as $id => $value)
-                                <option value="{{ $id }}" {{ (old('rink_id') ? old('rink_id') : $data['user']->rink_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>
+                      
                       <div class="col-md-6">
                           <div class="form-group">
-                            <label for="certificate">certificate</label>
-                            <select name="certificate_id" class="form-control" style="width: 100%">
-                              <option value="">Select</option>
-                              @foreach($certificate_all as $id => $value)
-                                <option value="{{ $id }}" {{ (old('experience_id') ? old('experience_id') : $data['user']->experience_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                              @endforeach
-                            </select>
+                            <label for="certificate">Coaching certification</label>
+                            <input type="text" class="form-control" id="certificate_name" name="certificate_name" placeholder="Coaching certification"  value="{{!empty($data['user']) ? old('certificate_name', $data['user']->certificate_name) : old('certificate_name')}}">
                           </div>
                       </div>
                     </div>
@@ -180,18 +165,16 @@
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="price">price</label>
-                            <select name="price_id" class="form-control" style="width: 100%">
-                              <option value="">Select</option>
-                              @foreach($price_all as $id => $value)
-                                <option value="{{ $id }}" {{ (old('price_id') ? old('price_id') : $data['user']->price_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                              @endforeach
-                            </select>
-                          </div>
-                      </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="phone">Website or associated club</label>
+                            <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['user']) ? old('website', $data['user']->website) : old('website')}}">
+                          </div>
+                        </div>
+                    </div>
+                    
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
