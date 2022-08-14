@@ -18,20 +18,20 @@
                         Filters  <i class="bi bi-x sp"></i>
                         <a href="{{ url('/camp/filter')}}" class="btn btn-custom mb-2 green pc">View calendar</a>                
                       </h1>
-                      <label for="">Type of Camp</label>
+                      <label for="">Discipline</label>
                       <div class="check-section">
                         <?php
-                        $campArray = array();
-                        if (isset($_GET['camp_type_id'])) {
-                          $campArray = explode(',', $_GET['camp_type_id']);
+                        $specialityArray = array();
+                        if (isset($_GET['speciality_id'])) {
+                          $specialityArray = explode(',', $_GET['speciality_id']);
                         }
                         
                         ?>
 
-                        @foreach($camp_type_all as $id => $value)
+                        @foreach($speciality_all as $id => $value)
                           <div>
                             <label class="box">{{ $value }}
-                              <input name="camp_type_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $campArray)) ? 'checked="checked"' : '' }} >
+                              <input name="speciality_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $specialityArray)) ? 'checked="checked"' : '' }} >
                               <span class="checkmark"></span>
                             </label>
                           </div>
@@ -76,65 +76,9 @@
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
-                      <div class="form-group range">
-                        <label for="">Price Range</label>
-                        <?php 
-                        $min = 0;
-                        $max = $maxPrice;
-                        if (isset($_GET['min']) && !empty($_GET['min'])) {
-                          $min = $_GET['min'];
-                        }
-                        if (isset($_GET['max']) && !empty($_GET['max'])) {
-                          $max = $_GET['max'];
-                        }
-                        ?>
-                        <div>
-                          <span class="minVal">${{$min}}</span>
-                          <span class="maxVal">${{$max}}</span>
-                        </div>
-                          <input id="ex2" type="text" class="span2" value="" data-slider-min="0" data-slider-max="{{$maxPrice}}" data-slider-step="5" data-slider-value="[{{$min}},{{$max}}]"/>
-                        <div>
-                          <span>min</span>
-                          <span>max</span>
-                        </div>
-                      </div>
-                      <div class="form-group position-relative">
-                        <label for="name">Coach <span class="input-required">*</span></label>
-                        <select class="form-control listdates location" id="coach" name="coach_id" multiple="multiple">
-                          @if(isset($data['coaches']))
-                            @foreach ($data['coaches'] as $id => $value)
-                              <option value="{{$id}}" @foreach($filtered_coach as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
-                          
-                            @endforeach
-                          @endif
-                        </select>
-                        <i class="bi bi-plus-lg"></i>
-                      </div>
-                      <label for="">Duration</label>
-                      <div class="check-section">
-
-                        <?php
-                        $duration = [
-                                'day_0-3'    => '1-3 days',
-                                'day_4-7'    => '4-7 days',
-                                'day_8-21'      => '1-3 weeks',
-                                'day_22-100'    => '4* weeks'
-                            ];
-                        $myArray = array();
-                        if (isset($_GET['duration'])) {
-                          $myArray = explode(',', $_GET['duration']);
-                        }
-                        
-                        ?>
-                        <?php foreach ($duration as $id => $value): ?>
-                          <div>
-                            <label class="box">{{ $value }}
-                              <input name="duration" type="checkbox" value="{{ $id }}" {{ (in_array($id, $myArray)) ? 'checked="checked"' : '' }} >
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        <?php endforeach ?>
-                      </div>
+                      
+                      
+                      
                       <div class="form-group position-relative">
                         <label for="name">Date <span class="input-required">*</span></label>
                         <select class="form-control listdates location" id="campdates" name="month" multiple="multiple">

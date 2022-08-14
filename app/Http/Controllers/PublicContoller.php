@@ -1441,7 +1441,7 @@ class PublicContoller extends Controller
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
-      
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
@@ -1479,7 +1479,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('maxPrice','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('maxPrice','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all','speciality_all'));
 
     }
     public function coach_list(Request $request, User $user){
