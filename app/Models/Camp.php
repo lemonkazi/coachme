@@ -209,7 +209,7 @@ class Camp extends Model
         return $camp_types;
     }
 
-    public function getSpecilityNameAttribute()
+    public function getSpecialityNameAttribute()
     {
         $speciality_ids = array();
         if (!empty($this->speciality_id)) {

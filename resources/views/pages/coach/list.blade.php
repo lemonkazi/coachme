@@ -33,24 +33,7 @@
                         @endforeach
                         
                       </div>
-                      <label for="">Coaching certificate</label>
-                      <div class="check-section">
-                        <?php
-                        $certificateArray = array();
-                        if (isset($_GET['certificate_id'])) {
-                          $certificateArray = explode(',', $_GET['certificate_id']);
-                        }
-                        
-                        ?>
-                        @foreach($certificate_all as $id => $value)
-                          <div>
-                            <label class="box">{{ $value }}
-                              <input name="certificate_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $certificateArray)) ? 'checked="checked"' : '' }} >
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        @endforeach
-                      </div>
+                      
                       <div class="form-group position-relative">
                         <label for="name">Location <span class="input-required">*</span></label>
                         <select name="province_id" id ="province_id" class="location form-control listdates">
@@ -70,35 +53,6 @@
                           @endforeach
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
-                      </div>
-                      
-                      <label for="">Price</label>
-                      <div class="check-section">
-                        <?php
-                        $priceArray = array();
-                        if (isset($_GET['price_id'])) {
-                          $priceArray = explode(',', $_GET['price_id']);
-                        }
-                        
-                        ?>
-                        @foreach($price_all as $id => $value)
-                          <div>
-                            <label class="box">{{ $value }}
-                              <input name="price_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $priceArray)) ? 'checked="checked"' : '' }}  >
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        @endforeach
-                        
-                      </div>
-                      <div class="form-group position-relative">
-                        <label for="name">Rinks <span class="input-required">*</span></label>
-                        <select class="form-control location" id="rinks" name="rink" multiple="multiple">
-                          @foreach($rink_all as $id => $value)
-                            <option value="{{$id}}" @foreach($filtered_rink as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
-                          @endforeach
-                        </select>
-                        <i class="bi bi-plus-lg"></i>
                       </div>
                       <div class="form-group position-relative">
                         <label for="name">Language <span class="input-required">*</span></label>
