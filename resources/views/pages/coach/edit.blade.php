@@ -142,11 +142,11 @@
                 </div>
                 <h2>Contact</h2>
                 <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="phone">Website or associated club</label>
-                      <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['user']) ? old('website', $data['user']->website) : old('website')}}">
-                    </div>
+                  <div class="form-group">
+                    <label for="phone">Website or associated club</label>
+                    <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['user']) ? old('website', $data['user']->website) : old('website')}}">
                   </div>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="phone">Phone</label>

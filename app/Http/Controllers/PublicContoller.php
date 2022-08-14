@@ -17,6 +17,7 @@ use App\Models\Certificate;
 use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
+use App\Models\Age;
 use App\Models\Province;
 use App\Models\Location;
 use App\Models\CampType;
@@ -207,12 +208,14 @@ class PublicContoller extends Controller
             
           }
 
-
-
-          
-
           if (isset($data['camp_type_id'])) {
-           $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
+            $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
+          }
+          if (isset($data['speciality_id'])) {
+            $data['speciality_id'] = json_encode(array_unique($data['speciality_id']));
+          }
+          if (isset($data['age_id'])) {
+            $data['age_id'] = json_encode(array_unique($data['age_id']));
           }
 
           if (isset($_COOKIE['cookieRink'])) {
@@ -336,7 +339,9 @@ class PublicContoller extends Controller
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
-      
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
+
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
       $coaches = [];
@@ -354,7 +359,7 @@ class PublicContoller extends Controller
                'rink' =>$rink
           ]
       ])
-      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all','speciality_all','age_all'));
     }
 
     public function camp_edit(Request $request, Camp $camp){
@@ -507,6 +512,16 @@ class PublicContoller extends Controller
           }else{
             unset($data['camp_type_id']);
           }
+          if (isset($data['speciality_id'])) {
+            $data['speciality_id'] = json_encode(array_unique($data['speciality_id']));
+          } else{
+            unset($data['speciality_id']);
+          }
+          if (isset($data['age_id'])) {
+            $data['age_id'] = json_encode(array_unique($data['age_id']));
+          } else {
+            unset($data['age_id']);
+          }
           if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
@@ -651,6 +666,21 @@ class PublicContoller extends Controller
           $camp_type_id[] = CampType::find($camp_type, ['name', 'id'])->toArray();
         }
       }
+      $speciality_id =array();
+      if(!empty($camp) && !empty($camp->speciality_id)){
+        $speciality_id_data = json_decode($camp->speciality_id);
+        foreach ($speciality_id_data as $key=>$speciality) {
+          $speciality_id[] = Speciality::find($speciality, ['name', 'id'])->toArray();
+        }
+      }
+
+      $age_id =array();
+      if(!empty($camp) && !empty($camp->age_id)){
+        $age_id_data = json_decode($camp->age_id);
+        foreach ($age_id_data as $key=>$age) {
+          $age_id[] = Age::find($age, ['name', 'id'])->toArray();
+        }
+      }
 
       // print_r($camp_type_id);
       // exit();
@@ -690,6 +720,8 @@ class PublicContoller extends Controller
                'coaches'   => $coaches_datas,
                'coaches_datas_new' => $coaches_datas_new,
                'camp_type_id'   => $camp_type_id,
+               'speciality_id'   => $speciality_id,
+               'age_id'   => $age_id,
                'user'      =>  $user,
                'Title' =>  $title,
                'rink' => $rink
@@ -756,6 +788,21 @@ class PublicContoller extends Controller
           $camp_type_id[] = CampType::find($coach, ['name', 'id'])->toArray();
         }
       }
+      $speciality_id =array();
+      if(!empty($camp) && !empty($camp->speciality_id)){
+        $speciality_id_data = json_decode($camp->speciality_id);
+        foreach ($speciality_id_data as $key=>$speciality) {
+          $speciality_id[] = Speciality::find($speciality, ['name', 'id'])->toArray();
+        }
+      }
+
+      $age_id =array();
+      if(!empty($camp) && !empty($camp->age_id)){
+        $age_id_data = json_decode($camp->age_id);
+        foreach ($age_id_data as $key=>$age) {
+          $age_id[] = Age::find($age, ['name', 'id'])->toArray();
+        }
+      }
 
 
 
@@ -792,6 +839,8 @@ class PublicContoller extends Controller
                'coaches'   => $coaches_datas,
                'coaches_datas_new' => $coaches_datas_new,
                'camp_type_id'   => $camp_type_id,
+               'speciality_id'   => $speciality_id,
+               'age_id'   => $age_id,
                'Title' =>  $title
           ]
       ])
