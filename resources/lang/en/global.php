@@ -219,6 +219,22 @@ return [
     'A new Language has been created' => 'A new Language has been created',
     'Language has been updated' => 'Language has been updated',
 
+    'All Ages' => 'All Ages',
+    'Age Detail' => 'Age Detail',
+    'Age List' => 'Age List',
+    'Edit Age' => 'Edit Age',
+    'Add Age' => 'Add Age',
+    'A new Age has been created' => 'A new Age has been created',
+    'Age has been updated' => 'Age has been updated',
+
+    'All Levels' => 'All Levels',
+    'Level Detail' => 'Level Detail',
+    'Level List' => 'Level List',
+    'Edit Level' => 'Edit Level',
+    'Add Level' => 'Add Level',
+    'A new Level has been created' => 'A new Level has been created',
+    'Level has been updated' => 'Level has been updated',
+
     'All Provinces' => 'All Provinces',
     'Province Detail' => 'Province Detail',
     'Province List' => 'Province List',

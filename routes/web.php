@@ -231,6 +231,19 @@ Route::middleware(['auth', 'authority:super_admin'])->group(function () {
 	    Route::post('update/{id}',['as' =>'update','uses' =>'Admin\LevelController@update']);
   	});
 
+	//Age route
+	Route::get('ages', [App\Http\Controllers\Admin\AgeController::class, 'show']);
+	Route::get('ages/{age}', [App\Http\Controllers\Admin\AgeController::class, 'show']);
+
+	Route::group(['prefix' => 'age', 'as' => 'age.'], function () {
+
+		Route::get('add', [App\Http\Controllers\Admin\AgeController::class, 'create']);
+		Route::post('store', ['as' => 'store', 'uses' => 'Admin\AgeController@store']);
+		//Route::post('delete',['as' =>'delete','uses' =>'ManagerController@delete' ]);
+		Route::get('edit/{id}', [App\Http\Controllers\Admin\AgeController::class, 'create']);
+		Route::post('update/{id}', ['as' => 'update', 'uses' => 'Admin\AgeController@update']);
+	});
+
 
   	//language route
   	Route::get('languages',[App\Http\Controllers\Admin\LanguageController::class, 'show']);
