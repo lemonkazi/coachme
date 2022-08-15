@@ -14,24 +14,20 @@
                       <h1>
                         Filters        <i class="bi bi-x sp"></i>            
                       </h1>
-                      <label for="">Discipline</label>
-                      <div class="check-section">
+                      <div class="form-group position-relative">
+                        <label for="name">Discipline</label>
                         <?php
-                        $coachArray = array();
-                        if (isset($_GET['speciality'])) {
-                          $coachArray = explode(',', $_GET['speciality']);
+                        $specialityArray = array();
+                        if (isset($_GET['speciality_id'])) {
+                          $specialityArray = explode(',', $_GET['speciality_id']);
                         }
-                        
                         ?>
-                        @foreach($speciality_all as $id => $value)
-                          <div>
-                            <label class="box">{{ $value }}
-                              <input name="speciality" type="checkbox" value="{{ $id }}" {{ (in_array($id, $coachArray)) ? 'checked="checked"' : '' }} >
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        @endforeach
-                        
+                        <select class="form-control listdates location" id="speciality" name="speciality" multiple="multiple">
+                          @foreach($speciality_all as $id => $value)
+                            <option value="{{$id}}" @foreach($specialityArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
                       </div>
                       
                       <div class="form-group position-relative">

@@ -27,7 +27,7 @@ class ChangeCampsTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('camps', function (Blueprint $table) {
             $table->dropColumn('speciality_id');
             $table->dropColumn('age_id');
             $table->dropColumn('website');

@@ -338,6 +338,26 @@ class Camp extends Model
                }
             })->get();
         }
+        // if (isset($params['speciality_id'])) {
+        //     $array = explode(',', $params['speciality_id']);
+
+        //     $array = array_values(array_map('strval',$array));
+        //     $query->where(function ($query) use ($array) {
+        //        foreach ($array as $id) {
+        //            $query->orWhereJsonContains('speciality_id', $id);
+        //        }
+        //     })->get();
+        // }
+        // if (isset($params['age_id'])) {
+        //     $array = explode(',', $params['age_id']);
+
+        //     $array = array_values(array_map('strval',$array));
+        //     $query->where(function ($query) use ($array) {
+        //        foreach ($array as $id) {
+        //            $query->orWhereJsonContains('age_id', $id);
+        //        }
+        //     })->get();
+        // }
 
         //$params['period'] = 'winter';
         //$today =  now();
