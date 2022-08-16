@@ -15,6 +15,9 @@ class ChangeUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('certificate_name', 50)->nullable()->after('certificate_id');
+            $table->unsignedBigInteger('age_id')->nullable()->after('certificate_id');
+            $table->foreign('age_id')->references('id')->on('ages');
+            //$table->string('level_id')->nullable()->after('certificate_id');
             $table->string('website', 100)->nullable()->after('phone_number');
         });
     }
@@ -28,6 +31,9 @@ class ChangeUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('certificate_name');
+            $table->dropForeign(['age_id']);
+            $table->dropColumn('age_id');
+            //$table->dropColumn('level_id');
             $table->dropColumn('website');
         });
     }

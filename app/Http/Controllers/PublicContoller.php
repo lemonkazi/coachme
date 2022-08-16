@@ -1378,11 +1378,18 @@ class PublicContoller extends Controller
       $rink = trim($specialityaa,',');
 
       $language = $user->userinfos['languages'];
-      $specialityaa = '';
+      $languageaa = '';
       foreach($language as $row){
-          $specialityaa .=$row->content_name.',';
+          $languageaa .=$row->content_name.',';
       }
-      $language = trim($specialityaa,',');
+      $language = trim($languageaa,',');
+
+      $level = $user->userinfos['levels'];
+      $levelaa = '';
+      foreach($level as $row){
+          $levelaa .=$row->content_name.',';
+      }
+      $level = trim($levelaa,',');
 
       return view('pages.coach.details', [
           'data'=>
@@ -1391,7 +1398,8 @@ class PublicContoller extends Controller
                'Title' =>  $title,
                'speciality' => $speciality,
                'rink' => $rink,
-               'language' => $language
+               'language' => $language,
+               'level' => $level
           ]
       ]);
       //->with(compact('formatedDate'));
@@ -1530,6 +1538,7 @@ class PublicContoller extends Controller
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
       $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
       $price_all = Price::all()->pluck("name", "id")->sortBy("name");
       
       
@@ -1545,6 +1554,10 @@ class PublicContoller extends Controller
       if (isset($_GET['language'])) {
         $filtered_language = explode(',', $_GET['language']);
       }
+      $filtered_level = array();
+      if (isset($_GET['level'])) {
+        $filtered_level = explode(',', $_GET['level']);
+      }
 
       //$coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
 
@@ -1556,7 +1569,7 @@ class PublicContoller extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('filtered_language','filtered_rink','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all','language_all','price_all'));
+      ->with(compact('filtered_level','filtered_language','filtered_rink','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all','language_all','price_all','age_all'));
 
     }
     public function camp_filter(Request $request, Camp $camp){
@@ -1821,6 +1834,30 @@ class PublicContoller extends Controller
               }
             }
           }
+          if (isset($data['level_id'])) {
+            foreach ($data['level_id'] as $key => $level_id) {
+            
+              $level = Level::find($level_id);
+
+              if (!$level) {
+                 return redirect()->back()->withInput()->withErrors('level not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $level->id;
+              $insert_arr['content_type'] = 'LEVEL';
+              $insert_arr['content_name'] = $level->name;
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('content_id',$level->id)
+                               ->where('content_type','LEVEL')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
+            }
+          }
           
           $data['token'] = sha1(time());
           
@@ -1926,6 +1963,9 @@ class PublicContoller extends Controller
       $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
       $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
       $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
+      
       $price_all = Price::all()->pluck("name", "id")->sortBy("name");
       $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
       
@@ -1947,7 +1987,7 @@ class PublicContoller extends Controller
                'camps' =>  $camps
           ]
       ])
-      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
+      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all','level_all','age_all'));
 
     }
 

@@ -12,6 +12,7 @@ use App\Models\Rink;
 use App\Models\Speciality;
 use App\Models\Price;
 use App\Models\Language;
+use App\Models\Level;
 use App\Models\City;
 use App\Models\Camp;
 use App\Models\Program;
@@ -453,6 +454,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $info_array["speciality"] = array();
         $info_array["rinks"] = array();
         $info_array["languages"] = array();
+        $info_array["levels"] = array();
 
         //$userId = $this->id; //request()->user() ? request()->user()->id : null;
         //$info = $this->hasMany(UserInfo::class)->where(['user_id' => $userId]);
@@ -473,6 +475,9 @@ class User extends Authenticatable implements MustVerifyEmail
             elseif ($userinfo->content_type == "LANGUAGE") {
                 $info_array["languages"][] = $userinfo;
             }
+            elseif ($userinfo->content_type == "LEVEL") {
+              $info_array["levels"][] = $userinfo;
+          }
         }
         return $info_array;
     }
@@ -699,6 +704,24 @@ class User extends Authenticatable implements MustVerifyEmail
             }
             $params['id'] = $ids;
         }
+        if (isset($params['level'])) {
+          $params['level'] = explode(',', $params['level']);
+          $filterParams = [];
+          $filterParams['content_type'] = 'LEVEL';
+          $filterParams['content_id'] = $params['level'];
+
+          //$filterParams['type'] = $params['period'];
+          
+          $newsQuery = (new UserInfo())->filter($filterParams);
+
+          $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+                  ->toArray();
+          $ids = array();
+          foreach ($periods as $key => $value) {
+              $ids[]=$value['user_id'];
+          }
+          $params['id'] = $ids;
+      }
         // print_r($params);
         // exit();
         if (isset($params['location_id'])) {

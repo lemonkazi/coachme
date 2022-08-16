@@ -138,7 +138,28 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  
+                    <div class="form-group">
+                      <label for="experience">Student’s age</label>
+                      <select class="form-control" id="age_id" name="age_id">
+                        <option value="">Select</option>
+                        @foreach($age_all as $id => $value)
+                          <option value="{{ $id }}" {{ (old('age_id') ? old('age_id') : $data['user']->age_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                      </select>
+                      <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="level_id">Level of Coaching</label>
+                      <select class="form-control" id="level" name="level_id[]" multiple="multiple">
+  
+                        @foreach($level_all as $id => $value)
+                          <option value="{{$id}}" @foreach($data['user']->userinfos['levels'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
+                        @endforeach
+                      </select>
+                      <i class="bi bi-plus-lg"></i>
+                    </div>
                 </div>
                 <h2>Contact</h2>
                 <div class="col-md-4">

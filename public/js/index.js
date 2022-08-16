@@ -61,7 +61,7 @@ $('.program-slider').slick({
   $(function(){
     //coach edit js
     //multiselect 
-    $('#language,#speciality,.listdates,.campdates,#camp_type_id,#program_type_id').multiselect();
+    $('#language,#level,#speciality,.listdates,.campdates,#camp_type_id,#program_type_id').multiselect();
     //img preview
     // imgInp.onchange = evt => {
     //   const [file] = imgInp.files
