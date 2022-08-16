@@ -105,29 +105,16 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="speciality">Age</label>
-                      <select class="form-control" id="age" name="age_id[]" multiple="multiple">
-                        <?php 
-                        if(!empty($data['age_id'])) {
-                          ?>
-                          @foreach($age_all as $id => $value)
-                            <option value="{{$id}}" @foreach($data['age_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
-                          @endforeach
-                          <?php 
-                        } else {
-                          ?>
-                          @foreach($age_all as $id => $value)
-                            <option value="{{$id}}">{{$value}}</option>
-                          @endforeach
-                          <?php
-                        }
-                        ?>
+                      <label for="level">Age</label>
+                      <select name="age_id" id="age_id" class="form-control" style="width: 100%">
+                        <option value="">Select</option>
+                        @foreach($age_all as $id => $value)
+                          <option value="{{ $id }}" {{ (old('age_id') ? old('age_id') : $data['camp']->age_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
                       </select>
-                      <i class="bi bi-plus-lg"></i>
+                      <i class="bi bi-chevron-compact-down"></i>
                     </div>
                   </div>
-
-
                   
                 </div> 
                 <div class="col-md-4">

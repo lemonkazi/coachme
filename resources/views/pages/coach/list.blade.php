@@ -18,11 +18,11 @@
                         <label for="name">Discipline</label>
                         <?php
                         $specialityArray = array();
-                        if (isset($_GET['speciality_id'])) {
-                          $specialityArray = explode(',', $_GET['speciality_id']);
+                        if (isset($_GET['speciality'])) {
+                          $specialityArray = explode(',', $_GET['speciality']);
                         }
                         ?>
-                        <select class="form-control listdates location" id="speciality" name="speciality" multiple="multiple">
+                        <select class="form-control listdates speciality" id="speciality" name="speciality" multiple="multiple">
                           @foreach($speciality_all as $id => $value)
                             <option value="{{$id}}" @foreach($specialityArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
                           @endforeach
@@ -55,6 +55,30 @@
                         <select class="form-control listdates location" id="campdates" name="language" multiple="multiple">
                           @foreach($language_all as $id => $value)
                             <option value="{{$id}}" @foreach($filtered_language as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="name">lvl of coaching <span class="input-required">*</span></label>
+                        <select class="form-control listdates level" name="level" multiple="multiple">
+                          @foreach($level_all as $id => $value)
+                            <option value="{{$id}}" @foreach($filtered_level as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="name">student’s age</label>
+                        <?php
+                        $ageArray = array();
+                        if (isset($_GET['age'])) {
+                          $ageArray = explode(',', $_GET['age']);
+                        }
+                        ?>
+                        <select class="form-control listdates age" id="age" name="age" multiple="multiple">
+                          @foreach($age_all as $id => $value)
+                            <option value="{{$id}}" @foreach($ageArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
                           @endforeach
                         </select>
                         <i class="bi bi-plus-lg"></i>

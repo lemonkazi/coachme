@@ -147,7 +147,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_published',
         'is_verified',
         'province_id',
-        'city_id'
+        'city_id',
+        'age_id'
     ];
 
 
@@ -727,9 +728,14 @@ class User extends Authenticatable implements MustVerifyEmail
         if (isset($params['location_id'])) {
             $params['city_id'] = $params['location_id'];
         }
+        
         if (isset($params['price_id'])) {
             //$params['city_id'] = $params['price_id'];
             $params['price_id'] = explode(',', $params['price_id']);
+        }
+        if (isset($params['age_id'])) {
+          //$params['city_id'] = $params['price_id'];
+          $params['age_id'] = explode(',', $params['age_id']);
         }
         if (isset($params['certificate_id'])) {
             //$params['city_id'] = $params['price_id'];
