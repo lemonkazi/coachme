@@ -1589,9 +1589,6 @@ class PublicContoller extends Controller
           //               ->where('end_date', '>=', $dt);
           $current_camps = $sss->get()->toArray();
       }
-      // print_r($current_camps);
-      // exit();
-
       $query = $camp->filter($params);
       try {
           $limit = (int) $request->input('limit', 20);
@@ -1650,10 +1647,7 @@ class PublicContoller extends Controller
       }
       // echo json_encode($camps);
       // exit();
-
-
       $title=trans('global.Camp List');
-
       $province_all = Province::all()->pluck("name", "id")->sortBy("name");
       $city_all =array();
       if (isset($params['province_id']) && !empty($params['province_id'])) {
@@ -1679,11 +1673,7 @@ class PublicContoller extends Controller
       }
 
       $maxPrice = Camp::where('deleted_at',null)->orderBy('price', 'desc')->value('price'); 
-
-
       $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
-      // print_r($camps);
-      // exit();
       return view('pages.camp.filter', [
           'data'=>
           [
