@@ -14,7 +14,7 @@ class CreateAgesTable extends Migration
     public function up()
     {
         Schema::create('ages', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('name');
             $table->timestamps();
             $table->datetime('deleted_at')->nullable();
