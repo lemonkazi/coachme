@@ -189,7 +189,7 @@ class SpecialityController extends Controller
       );
     }
    
-    return view('admin.Discipline.add', [
+    return view('admin.speciality.add', [
           'pageInfo'=>
           [
             'siteTitle'        =>'Manage Users',

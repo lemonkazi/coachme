@@ -237,7 +237,7 @@
               </a>
             </li>
             <li class="nav-item <?php if ($controller == 'levelcontroller' && $action == 'create') echo 'active' ?>">
-              <a href="{{ url('/levels/add')}}" class="nav-link <?php if ($controller == 'levelcontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/level/add')}}" class="nav-link <?php if ($controller == 'levelcontroller' && $action == 'create') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Level of coaching</p>
               </a>
@@ -260,7 +260,7 @@
               </a>
             </li>
             <li class="nav-item <?php if ($controller == 'agecontroller' && $action == 'create') echo 'active' ?>">
-              <a href="{{ url('/ages/add')}}" class="nav-link <?php if ($controller == 'agecontroller' && $action == 'create') echo 'active' ?>">
+              <a href="{{ url('/age/add')}}" class="nav-link <?php if ($controller == 'agecontroller' && $action == 'create') echo 'active' ?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Age</p>
               </a>
