@@ -2498,3 +2498,7 @@ button.btn.btn-primary {
   padding: 9px 32px;
   margin-top: 20px;
 }
+
+button.applyBtn.btn.btn-sm.btn-primary{
+    margin-top:0;
+}
