@@ -625,6 +625,8 @@ class PublicContoller extends Controller
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
@@ -727,7 +729,7 @@ class PublicContoller extends Controller
                'rink' => $rink
           ]
       ])
-      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all','speciality_all','age_all'));
     }
 
 
