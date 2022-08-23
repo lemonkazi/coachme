@@ -56,27 +56,15 @@
                       
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <label for="">Rink</label>
-                    <p>{{$data['camp']->rink_name}}</p>
-                  </div>
+                  
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
-                    <label for="">Price</label>
-                    <p>
-                      @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
-                        {{$data['camp']->price_text}}
-                      @else
-                        {{$data['camp']->price}}$
-                      @endif
-                    </p>
-                  </div>
-                  @if (isset($data['camp']->camp_type_name))
+                  
+                  @if (isset($data['camp']->speciality_name))
                   <div class="col-md-6 ">
-                      <label for="">Camp Type</label>
-                      @foreach ($data['camp']->camp_type_name as $key => $camp_type_name)
-                          <p>{{$camp_type_name['name']}}</p></br>
+                      <label for="">Discipline</label>
+                      @foreach ($data['camp']->speciality_name as $key => $speciality_name)
+                          <p>{{$speciality_name['name']}}</p></br>
                       @endforeach
                   </div>
                   @endif
@@ -88,16 +76,7 @@
                     <label for="">Level</label>
                     <p>{{$data['camp']->level_name}}</p>
                   </div>
-                  <div class="col-md-4 wid-50">
-                    <label for="">Price</label>
-                    <p>
-                      @if(empty($data['camp']->price) && !empty($data['camp']->price_text))
-                        {{$data['camp']->price_text}}
-                      @else
-                        {{$data['camp']->price}}$
-                      @endif
-                    </p>
-                  </div>
+                  
                   
                 </div>
                 <div class="row">
@@ -118,20 +97,6 @@
                     <p>{{$data['camp']->location_name}}</p>
                   </div>
                   
-                </div>
-                <div class="row">
-                  <div class="col-md-6 wid-50">
-                    <label for="">Rink</label>
-                    <p>{{$data['camp']->rink_name}}</p>
-                  </div>
-                  @if (isset($data['camp']->camp_type_name))
-                    <div class="col-md-6 wid-50">
-                        <label for="">Camp Type</label>
-                        @foreach ($data['camp']->camp_type_name as $key => $camp_type_name)
-                            <p>{{$camp_type_name['name']}}</p></br>
-                        @endforeach
-                    </div>  
-                  @endif
                 </div>
               </div>  
 

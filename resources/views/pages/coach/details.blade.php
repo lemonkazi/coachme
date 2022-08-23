@@ -31,20 +31,6 @@
               </div>
               <div class="pc">
                 <div class="row ">
-                  <div class="col-md-6">
-                    <label for="">Price</label>
-                    <p>
-                      {{$data['user']->price_name}}
-                    </p>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="">Rink</label>
-                    <p>
-                      {{$data['rink']}}
-                    </p>
-                  </div>
-                </div>
-                <div class="row ">
                   <div class="col-md-12">
                     <label for="">Location</label>
                     <p>{{$data['user']->city_name}}</p>
@@ -57,22 +43,9 @@
                     <label for="">Location</label>
                     <p>{{$data['user']->city_name}}</p>
                   </div>
-                  <div class="col-md-6 wid-50">
-                    <label for="">Price</label>
-                    <p>
-                      {{$data['user']->price_name}}$
-                    </p>
-                  </div>
                   
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <label for="">Rink</label>
-                    <p>
-                      {{$data['rink']}}
-                    </p>
-                  </div>
-                </div>
+                
               </div>
 
 
