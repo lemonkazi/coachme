@@ -52,7 +52,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="name">Name <span class="input-required">*</span></label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Full Name"  value="{{!empty($data['age']) ? old('name', $data['age']->name) : old('name')}}" required>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Add Age"  value="{{!empty($data['age']) ? old('name', $data['age']->name) : old('name')}}" required>
                         </div>
                       </div>
                       

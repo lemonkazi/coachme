@@ -47,11 +47,11 @@ class CityController extends Controller
     if (!empty($city->id)) {
       $breadcrumb = array(
         array(
-           'name'=>trans('global.All Citys'),
+           'name'=>trans('global.City List'),
            'link'=>'/city'
         ),
         array(
-           'name'=>trans('global.City Detail'),
+           'name'=>trans('global.City List'),
            'link'=>''
         )
       );
@@ -165,7 +165,7 @@ class CityController extends Controller
   public function create($id=null)
   {
     $city='';
-    $title='Add City';
+    $title=trans('global.Add City');
     $breadcrumb = array(
         array(
            'name'=>trans('global.All City'),

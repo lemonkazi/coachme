@@ -302,8 +302,6 @@ return [
     'A new Camp has been created' => 'A new Camp has been created',
     'Camp has been updated' => 'Camp has been updated',
 
-
-
     'All Program Types' => 'All Program Types',
     'Program Type Detail' => 'Program Type Detail',
     'Program Type List' => 'Program Type List',
@@ -312,5 +310,13 @@ return [
     'A new Program Type has been created' => 'A new Program Type has been created',
     'Program Type has been updated' => 'Program Type has been updated',
 
+    'City List' => 'City List',
+    'Edit City' => 'Edit City',
+    'Add City' => 'Add City',
+    
+    'Age List' => 'Age List',
+    'Edit Age' => 'Edit Age',
+    'Add Age' => 'Add Age',
+    
 
 ];

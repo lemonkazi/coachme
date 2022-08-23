@@ -44,11 +44,11 @@ class AgeController extends Controller
         if (!empty($age->id)) {
             $breadcrumb = array(
                 array(
-                    'name' => trans('global.All ages'),
+                    'name' => trans('global.Age List'),
                     'link' => '/ages'
                 ),
                 array(
-                    'name' => trans('global.age Detail'),
+                    'name' => trans('global.Age List'),
                     'link' => ''
                 )
             );
@@ -97,7 +97,7 @@ class AgeController extends Controller
 
         $breadcrumb = array(
             array(
-                'name' => trans('global.All ages'),
+                'name' => trans('global.Age List'),
                 'link' => '/ages'
             )
         );
@@ -142,7 +142,7 @@ class AgeController extends Controller
                 [
                     'ages'      =>  $response->appends(request()->except('page')),
                     'breadcrumb' =>  $breadcrumb,
-                    'Title' =>  trans('global.age List'),
+                    'Title' =>  trans('global.Age List'),
                     'sumary' => $sumary,
                     'request' => $params,
                     'sort' => $sort,
