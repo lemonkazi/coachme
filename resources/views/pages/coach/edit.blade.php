@@ -97,7 +97,7 @@
                 <h2>Coach information</h2>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="speciality">Speciality</label>
+                    <label for="speciality">Discipline</label>
                     <select class="form-control" id="speciality" name="speciality_id[]" multiple="multiple">
 
                       @foreach($speciality_all as $id => $value)
@@ -121,26 +121,8 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="certificate">Coaching certificate</label>
-                    <select class="form-control" id="certificate_id" name="certificate_id">
-                      <option value="">Select</option>
-                      @foreach($certificate_all as $id => $value)
-                        <option value="{{ $id }}" {{ (old('experience_id') ? old('experience_id') : $data['user']->experience_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                      @endforeach
-                    </select>
-                    <i class="bi bi-chevron-compact-down"></i>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="rinks">Rinks</label>
-                    <select class="form-control" id="rinks" name="rink_id[]" multiple="multiple">
-
-                      @foreach($rink_all as $id => $value)
-                        <option value="{{$id}}" @foreach($data['user']->userinfos['rinks'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
-                      @endforeach
-                    </select>
-                    <i class="bi bi-plus-lg"></i>
+                    <label for="certificate">Coaching certification</label>
+                    <input type="text" class="form-control" id="certificate_name" name="certificate_name" placeholder="Coaching certification"  value="{{!empty($data['user']) ? old('certificate_name', $data['user']->certificate_name) : old('certificate_name')}}">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -156,18 +138,36 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="price">Price</label>
-                    <select class="form-control" id="price_id" name="price_id">
-                      <option value="">Select</option>
-                      @foreach($price_all as $id => $value)
-                        <option value="{{ $id }}" {{ (old('price_id') ? old('price_id') : $data['user']->price_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                      @endforeach
-                    </select>
-                    <i class="bi bi-chevron-compact-down"></i>
-                  </div>
+                    <div class="form-group">
+                      <label for="experience">Student’s age</label>
+                      <select class="form-control" id="age_id" name="age_id">
+                        <option value="">Select</option>
+                        @foreach($age_all as $id => $value)
+                          <option value="{{ $id }}" {{ (old('age_id') ? old('age_id') : $data['user']->age_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                      </select>
+                      <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="level_id">Level of Coaching</label>
+                      <select class="form-control" id="level" name="level_id[]" multiple="multiple">
+  
+                        @foreach($level_all as $id => $value)
+                          <option value="{{$id}}" @foreach($data['user']->userinfos['levels'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
+                        @endforeach
+                      </select>
+                      <i class="bi bi-plus-lg"></i>
+                    </div>
                 </div>
                 <h2>Contact</h2>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="phone">Website or associated club</label>
+                    <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['user']) ? old('website', $data['user']->website) : old('website')}}">
+                  </div>
+                </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="phone">Phone</label>

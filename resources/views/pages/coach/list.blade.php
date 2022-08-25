@@ -14,43 +14,22 @@
                       <h1>
                         Filters        <i class="bi bi-x sp"></i>            
                       </h1>
-                      <label for="">Speciality</label>
-                      <div class="check-section">
+                      <div class="form-group position-relative">
+                        <label for="name">Discipline</label>
                         <?php
-                        $coachArray = array();
+                        $specialityArray = array();
                         if (isset($_GET['speciality'])) {
-                          $coachArray = explode(',', $_GET['speciality']);
+                          $specialityArray = explode(',', $_GET['speciality']);
                         }
-                        
                         ?>
-                        @foreach($speciality_all as $id => $value)
-                          <div>
-                            <label class="box">{{ $value }}
-                              <input name="speciality" type="checkbox" value="{{ $id }}" {{ (in_array($id, $coachArray)) ? 'checked="checked"' : '' }} >
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        @endforeach
-                        
+                        <select class="form-control listdates location" id="speciality" name="speciality" multiple="multiple">
+                          @foreach($speciality_all as $id => $value)
+                            <option value="{{$id}}" @foreach($specialityArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
                       </div>
-                      <label for="">Coaching certificate</label>
-                      <div class="check-section">
-                        <?php
-                        $certificateArray = array();
-                        if (isset($_GET['certificate_id'])) {
-                          $certificateArray = explode(',', $_GET['certificate_id']);
-                        }
-                        
-                        ?>
-                        @foreach($certificate_all as $id => $value)
-                          <div>
-                            <label class="box">{{ $value }}
-                              <input name="certificate_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $certificateArray)) ? 'checked="checked"' : '' }} >
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        @endforeach
-                      </div>
+                      
                       <div class="form-group position-relative">
                         <label for="name">Location <span class="input-required">*</span></label>
                         <select name="province_id" id ="province_id" class="location form-control listdates">
@@ -71,40 +50,35 @@
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
-                      
-                      <label for="">Price</label>
-                      <div class="check-section">
-                        <?php
-                        $priceArray = array();
-                        if (isset($_GET['price_id'])) {
-                          $priceArray = explode(',', $_GET['price_id']);
-                        }
-                        
-                        ?>
-                        @foreach($price_all as $id => $value)
-                          <div>
-                            <label class="box">{{ $value }}
-                              <input name="price_id" type="checkbox" value="{{ $id }}" {{ (in_array($id, $priceArray)) ? 'checked="checked"' : '' }}  >
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        @endforeach
-                        
-                      </div>
-                      <div class="form-group position-relative">
-                        <label for="name">Rinks <span class="input-required">*</span></label>
-                        <select class="form-control location" id="rinks" name="rink" multiple="multiple">
-                          @foreach($rink_all as $id => $value)
-                            <option value="{{$id}}" @foreach($filtered_rink as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
-                          @endforeach
-                        </select>
-                        <i class="bi bi-plus-lg"></i>
-                      </div>
                       <div class="form-group position-relative">
                         <label for="name">Language <span class="input-required">*</span></label>
                         <select class="form-control listdates location" id="campdates" name="language" multiple="multiple">
                           @foreach($language_all as $id => $value)
                             <option value="{{$id}}" @foreach($filtered_language as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="name">lvl of coaching <span class="input-required">*</span></label>
+                        <select class="form-control listdates location" name="level" multiple="multiple">
+                          @foreach($level_all as $id => $value)
+                            <option value="{{$id}}" @foreach($filtered_level as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                        </select>
+                        <i class="bi bi-plus-lg"></i>
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="name">student’s age</label>
+                        <?php
+                        $ageArray = array();
+                        if (isset($_GET['age'])) {
+                          $ageArray = explode(',', $_GET['age']);
+                        }
+                        ?>
+                        <select class="form-control listdates location" id="age" name="age" multiple="multiple">
+                          @foreach($age_all as $id => $value)
+                            <option value="{{$id}}" @foreach($ageArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
                           @endforeach
                         </select>
                         <i class="bi bi-plus-lg"></i>

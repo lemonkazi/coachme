@@ -17,6 +17,7 @@ use App\Models\Certificate;
 use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
+use App\Models\Age;
 use App\Models\Province;
 use App\Models\Location;
 use App\Models\CampType;
@@ -76,7 +77,7 @@ class PublicContoller extends Controller
 
       $authority = array(
           'COACH_USER' => trans('global.LABEL_COACH_USER'),
-          'RINK_USER' => trans('global.LABEL_RINK_USER')
+          //'RINK_USER' => trans('global.LABEL_RINK_USER')
       );
       $rink_all = Rink::all()->sortBy("name")->toArray();
       $rinks=[];
@@ -207,12 +208,14 @@ class PublicContoller extends Controller
             
           }
 
-
-
-          
-
           if (isset($data['camp_type_id'])) {
-           $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
+            $data['camp_type_id'] = json_encode(array_unique($data['camp_type_id']));
+          }
+          if (isset($data['speciality_id'])) {
+            $data['speciality_id'] = json_encode(array_unique($data['speciality_id']));
+          }
+          if (isset($data['age_id'])) {
+            $data['age_id'] = json_encode(array_unique($data['age_id']));
           }
 
           if (isset($_COOKIE['cookieRink'])) {
@@ -336,7 +339,9 @@ class PublicContoller extends Controller
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
-      
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
+
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
       $coaches = [];
@@ -354,7 +359,7 @@ class PublicContoller extends Controller
                'rink' =>$rink
           ]
       ])
-      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all','speciality_all','age_all'));
     }
 
     public function camp_edit(Request $request, Camp $camp){
@@ -507,6 +512,16 @@ class PublicContoller extends Controller
           }else{
             unset($data['camp_type_id']);
           }
+          if (isset($data['speciality_id'])) {
+            $data['speciality_id'] = json_encode(array_unique($data['speciality_id']));
+          } else{
+            unset($data['speciality_id']);
+          }
+          if (isset($data['age_id'])) {
+            $data['age_id'] = json_encode(array_unique($data['age_id']));
+          } else {
+            unset($data['age_id']);
+          }
           if (isset($_COOKIE['cookieRink'])) {
               $data['rink_id'] = $_COOKIE['cookieRink'];
           }
@@ -610,6 +625,8 @@ class PublicContoller extends Controller
       $city_all = Location::all()->pluck("name", "id")->sortBy("name");
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
@@ -651,6 +668,21 @@ class PublicContoller extends Controller
           $camp_type_id[] = CampType::find($camp_type, ['name', 'id'])->toArray();
         }
       }
+      $speciality_id =array();
+      if(!empty($camp) && !empty($camp->speciality_id)){
+        $speciality_id_data = json_decode($camp->speciality_id);
+        foreach ($speciality_id_data as $key=>$speciality) {
+          $speciality_id[] = Speciality::find($speciality, ['name', 'id'])->toArray();
+        }
+      }
+
+      $age_id =array();
+      if(!empty($camp) && !empty($camp->age_id)){
+        $age_id_data = json_decode($camp->age_id);
+        foreach ($age_id_data as $key=>$age) {
+          $age_id[] = Age::find($age, ['name', 'id'])->toArray();
+        }
+      }
 
       // print_r($camp_type_id);
       // exit();
@@ -690,12 +722,14 @@ class PublicContoller extends Controller
                'coaches'   => $coaches_datas,
                'coaches_datas_new' => $coaches_datas_new,
                'camp_type_id'   => $camp_type_id,
+               'speciality_id'   => $speciality_id,
+               'age_id'   => $age_id,
                'user'      =>  $user,
                'Title' =>  $title,
                'rink' => $rink
           ]
       ])
-      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('coaches','formatedDate','city_all','camp_type_all','level_all','speciality_all','age_all'));
     }
 
 
@@ -756,6 +790,21 @@ class PublicContoller extends Controller
           $camp_type_id[] = CampType::find($coach, ['name', 'id'])->toArray();
         }
       }
+      $speciality_id =array();
+      if(!empty($camp) && !empty($camp->speciality_id)){
+        $speciality_id_data = json_decode($camp->speciality_id);
+        foreach ($speciality_id_data as $key=>$speciality) {
+          $speciality_id[] = Speciality::find($speciality, ['name', 'id'])->toArray();
+        }
+      }
+
+      $age_id =array();
+      if(!empty($camp) && !empty($camp->age_id)){
+        $age_id_data = json_decode($camp->age_id);
+        foreach ($age_id_data as $key=>$age) {
+          $age_id[] = Age::find($age, ['name', 'id'])->toArray();
+        }
+      }
 
 
 
@@ -792,6 +841,8 @@ class PublicContoller extends Controller
                'coaches'   => $coaches_datas,
                'coaches_datas_new' => $coaches_datas_new,
                'camp_type_id'   => $camp_type_id,
+               'speciality_id'   => $speciality_id,
+               'age_id'   => $age_id,
                'Title' =>  $title
           ]
       ])
@@ -1329,11 +1380,18 @@ class PublicContoller extends Controller
       $rink = trim($specialityaa,',');
 
       $language = $user->userinfos['languages'];
-      $specialityaa = '';
+      $languageaa = '';
       foreach($language as $row){
-          $specialityaa .=$row->content_name.',';
+          $languageaa .=$row->content_name.',';
       }
-      $language = trim($specialityaa,',');
+      $language = trim($languageaa,',');
+
+      $level = $user->userinfos['levels'];
+      $levelaa = '';
+      foreach($level as $row){
+          $levelaa .=$row->content_name.',';
+      }
+      $level = trim($levelaa,',');
 
       return view('pages.coach.details', [
           'data'=>
@@ -1342,7 +1400,8 @@ class PublicContoller extends Controller
                'Title' =>  $title,
                'speciality' => $speciality,
                'rink' => $rink,
-               'language' => $language
+               'language' => $language,
+               'level' => $level
           ]
       ]);
       //->with(compact('formatedDate'));
@@ -1392,8 +1451,9 @@ class PublicContoller extends Controller
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
-      
-      
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
+
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
 
@@ -1430,7 +1490,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('maxPrice','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('maxPrice','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all','speciality_all','age_all'));
 
     }
     public function coach_list(Request $request, User $user){
@@ -1480,6 +1540,7 @@ class PublicContoller extends Controller
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
       $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
       $price_all = Price::all()->pluck("name", "id")->sortBy("name");
       
       
@@ -1495,6 +1556,10 @@ class PublicContoller extends Controller
       if (isset($_GET['language'])) {
         $filtered_language = explode(',', $_GET['language']);
       }
+      $filtered_level = array();
+      if (isset($_GET['level'])) {
+        $filtered_level = explode(',', $_GET['level']);
+      }
 
       //$coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
 
@@ -1506,7 +1571,7 @@ class PublicContoller extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('filtered_language','filtered_rink','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all','language_all','price_all'));
+      ->with(compact('filtered_level','filtered_language','filtered_rink','rink_all','province_all','formatedDate','city_all','speciality_all','level_all','certificate_all','language_all','price_all','age_all'));
 
     }
     public function camp_filter(Request $request, Camp $camp){
@@ -1526,9 +1591,6 @@ class PublicContoller extends Controller
           //               ->where('end_date', '>=', $dt);
           $current_camps = $sss->get()->toArray();
       }
-      // print_r($current_camps);
-      // exit();
-
       $query = $camp->filter($params);
       try {
           $limit = (int) $request->input('limit', 20);
@@ -1587,10 +1649,7 @@ class PublicContoller extends Controller
       }
       // echo json_encode($camps);
       // exit();
-
-
       $title=trans('global.Camp List');
-
       $province_all = Province::all()->pluck("name", "id")->sortBy("name");
       $city_all =array();
       if (isset($params['province_id']) && !empty($params['province_id'])) {
@@ -1599,7 +1658,8 @@ class PublicContoller extends Controller
       $camp_type_all = CampType::all()->pluck("name", "id")->sortBy("name");
       $level_all = Level::all()->pluck("name", "id")->sortBy("name");
       $rink_all = Rink::all()->pluck("name", "id")->sortBy("name");
-      
+      $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
       
       $date = Carbon::now();
       $formatedDate = $date->format('Y-m-d');
@@ -1615,11 +1675,7 @@ class PublicContoller extends Controller
       }
 
       $maxPrice = Camp::where('deleted_at',null)->orderBy('price', 'desc')->value('price'); 
-
-
       $coaches = User::all()->where('authority','COACH_USER')->pluck('name','id')->sortBy("name");
-      // print_r($camps);
-      // exit();
       return view('pages.camp.filter', [
           'data'=>
           [
@@ -1627,7 +1683,7 @@ class PublicContoller extends Controller
                'coaches' => $coaches
           ]
       ])
-      ->with(compact('maxPrice','current_camps','params','camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all'));
+      ->with(compact('maxPrice','current_camps','params','camps','filtered_month','filtered_coach','rink_all','province_all','formatedDate','city_all','camp_type_all','level_all','speciality_all','age_all'));
     }
     public function coach_edit(Request $request){
       $user = $request->user();
@@ -1770,6 +1826,30 @@ class PublicContoller extends Controller
               }
             }
           }
+          if (isset($data['level_id'])) {
+            foreach ($data['level_id'] as $key => $level_id) {
+            
+              $level = Level::find($level_id);
+
+              if (!$level) {
+                 return redirect()->back()->withInput()->withErrors('level not exist');
+              }            
+              $insert_arr = array();
+              $insert_arr['user_id'] = $user->id;
+              $insert_arr['content_id'] = $level->id;
+              $insert_arr['content_type'] = 'LEVEL';
+              $insert_arr['content_name'] = $level->name;
+              $userInfo = UserInfo::where('user_id',$user->id)
+                               ->where('content_id',$level->id)
+                               ->where('content_type','LEVEL')
+                               ->first();
+              if (!$userInfo) {
+                $userInfo = UserInfo::firstOrCreate($insert_arr);
+              } else {
+                $userInfo->update($insert_arr);  
+              }
+            }
+          }
           
           $data['token'] = sha1(time());
           
@@ -1875,6 +1955,9 @@ class PublicContoller extends Controller
       $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
       $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
       $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+      $level_all = Level::all()->pluck("name", "id")->sortBy("name");
+      $age_all = Age::all()->pluck("name", "id")->sortBy("name");
+      
       $price_all = Price::all()->pluck("name", "id")->sortBy("name");
       $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
       
@@ -1896,7 +1979,7 @@ class PublicContoller extends Controller
                'camps' =>  $camps
           ]
       ])
-      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
+      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all','level_all','age_all'));
 
     }
 

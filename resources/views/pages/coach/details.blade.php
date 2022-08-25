@@ -21,7 +21,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 wid-50">
-                  <label for="">Speciality</label>
+                  <label for="">Discipline</label>
                   <p>{{$data['speciality']}}</p>
                 </div>
                 <div class="col-md-6 wid-50">
@@ -30,20 +30,6 @@
                 </div>
               </div>
               <div class="pc">
-                <div class="row ">
-                  <div class="col-md-6">
-                    <label for="">Price</label>
-                    <p>
-                      {{$data['user']->price_name}}
-                    </p>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="">Rink</label>
-                    <p>
-                      {{$data['rink']}}
-                    </p>
-                  </div>
-                </div>
                 <div class="row ">
                   <div class="col-md-12">
                     <label for="">Location</label>
@@ -57,22 +43,9 @@
                     <label for="">Location</label>
                     <p>{{$data['user']->city_name}}</p>
                   </div>
-                  <div class="col-md-6 wid-50">
-                    <label for="">Price</label>
-                    <p>
-                      {{$data['user']->price_name}}$
-                    </p>
-                  </div>
                   
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <label for="">Rink</label>
-                    <p>
-                      {{$data['rink']}}
-                    </p>
-                  </div>
-                </div>
+                
               </div>
 
 
@@ -87,6 +60,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <label for="">Contact</label>
+                  <h5>{{$data['user']->website}}</h5>
                   <h5><i class="bi bi-telephone-fill"></i>+{{$data['user']->phone_number}}</h5>
                   <h5><i class="fas fa-at"></i>{{$data['user']->email}}</h5>
                   <h5><i class="fab fa-linkedin"></i>+{{$data['user']->whatsapp}}</h5>

@@ -14,6 +14,8 @@ use App\Models\Certificate;
 use App\Models\Language;
 use App\Models\Price;
 use App\Models\Speciality;
+use App\Models\Age;
+use App\Models\Level;
 use App\Models\Province;
 use App\Models\Location;
 
@@ -207,6 +209,8 @@ class CoachController extends Controller
     $experience_all = Experience::all()->pluck("name", "id")->sortBy("name");
     $certificate_all = Certificate::all()->pluck("name", "id")->sortBy("name");
     $language_all = Language::all()->pluck("name", "id")->sortBy("name");
+    $age_all = Age::all()->pluck("name", "id")->sortBy("name");
+    $level_all = Level::all()->pluck("name", "id")->sortBy("name");
     $price_all = Price::all()->pluck("name", "id")->sortBy("name");
     $speciality_all = Speciality::all()->pluck("name", "id")->sortBy("name");
     
@@ -224,7 +228,7 @@ class CoachController extends Controller
                'Title' =>  $title
           ]
       ])
-      ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
+      ->with(compact('age_all','level_all','rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all'));
   }
 
   /**
@@ -329,7 +333,7 @@ class CoachController extends Controller
         }
       }
       if (isset($data['language_id'])) {
-        $language = Language::find($data['speciality_id']);
+        $language = Language::find($data['language_id']);
 
         if (!$language) {
            return redirect()->back()->withInput()->withErrors('rink not exist');
@@ -342,6 +346,27 @@ class CoachController extends Controller
         $userInfo = UserInfo::where('user_id',$user->id)
                          ->where('content_id',$language->id)
                          ->where('content_type','LANGUAGE')
+                         ->first();
+        if (!$userInfo) {
+          $userInfo = UserInfo::firstOrCreate($insert_arr);
+        } else {
+          $userInfo->update($insert_arr);  
+        }
+      }
+      if (isset($data['level_id'])) {
+        $level = Level::find($data['level_id']);
+
+        if (!$level) {
+           return redirect()->back()->withInput()->withErrors('level not exist');
+        }            
+        $insert_arr = array();
+        $insert_arr['user_id'] = $user->id;
+        $insert_arr['content_id'] = $level->id;
+        $insert_arr['content_type'] = 'LEVEL';
+        $insert_arr['content_name'] = $level->name;
+        $userInfo = UserInfo::where('user_id',$user->id)
+                         ->where('content_id',$level->id)
+                         ->where('content_type','LEVEL')
                          ->first();
         if (!$userInfo) {
           $userInfo = UserInfo::firstOrCreate($insert_arr);

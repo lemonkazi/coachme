@@ -41,7 +41,7 @@ class Controller extends BaseController
 
         $this->all_authority = array(
           'COACH_USER' => trans('global.LABEL_COACH_USER'),
-          'RINK_USER' => trans('global.LABEL_RINK_USER')
+          //'RINK_USER' => trans('global.LABEL_RINK_USER')
         );
 
         $this->middleware(function ($request, $next) {

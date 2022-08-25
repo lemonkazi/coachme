@@ -61,7 +61,7 @@ $('.program-slider').slick({
   $(function(){
     //coach edit js
     //multiselect 
-    $('#language,#speciality,.listdates,.campdates,#camp_type_id,#program_type_id').multiselect();
+    $('#language,#level,#speciality,.listdates,.campdates,#camp_type_id,#program_type_id').multiselect();
     //img preview
     // imgInp.onchange = evt => {
     //   const [file] = imgInp.files
@@ -98,6 +98,41 @@ $('.program-slider').slick({
       $('input[name="start_date"]').val(picker.startDate.format('YYYY-MM-DD'));
       $('input[name="end_date"]').val(picker.endDate.format('YYYY-MM-DD'));
     });
+    $('input[name="dates"]').on("show.daterangepicker", function (ev, picker) {
+        console.log(picker.startDate.format("YYYY-MM-DD"));
+        console.log(picker.endDate.format("YYYY-MM-DD"));
+
+        //[startDate, endDate] = $('.date_range').val().split(' - ');
+        $('input[name="start_date"]').val(
+            picker.startDate.format("YYYY-MM-DD")
+        );
+        $('input[name="end_date"]').val(picker.endDate.format("YYYY-MM-DD"));
+    });
+    $('input[name="dates"]').on("hide.daterangepicker", function (ev, picker) {
+        console.log(picker.startDate.format("YYYY-MM-DD"));
+        console.log(picker.endDate.format("YYYY-MM-DD"));
+
+        //[startDate, endDate] = $('.date_range').val().split(' - ');
+        $('input[name="start_date"]').val(
+            picker.startDate.format("YYYY-MM-DD")
+        );
+        $('input[name="end_date"]').val(picker.endDate.format("YYYY-MM-DD"));
+    });
+    $('input[name="dates"]').on(
+        "hideCalendar.daterangepicker",
+        function (ev, picker) {
+            console.log(picker.startDate.format("YYYY-MM-DD"));
+            console.log(picker.endDate.format("YYYY-MM-DD"));
+
+            //[startDate, endDate] = $('.date_range').val().split(' - ');
+            $('input[name="start_date"]').val(
+                picker.startDate.format("YYYY-MM-DD")
+            );
+            $('input[name="end_date"]').val(
+                picker.endDate.format("YYYY-MM-DD")
+            );
+        }
+    );
 
     var todayReg = $('input[name="reg_start_date"]').val();
     var endDateReg = $('input[name="reg_end_date"]').val();

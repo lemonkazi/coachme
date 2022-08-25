@@ -219,6 +219,22 @@ return [
     'A new Language has been created' => 'A new Language has been created',
     'Language has been updated' => 'Language has been updated',
 
+    'All Ages' => 'All Ages',
+    'Age Detail' => 'Age Detail',
+    'Age List' => 'Age List',
+    'Edit Age' => 'Edit Age',
+    'Add Age' => 'Add Age',
+    'A new Age has been created' => 'A new Age has been created',
+    'Age has been updated' => 'Age has been updated',
+
+    'All Levels' => 'All Levels',
+    'Level Detail' => 'Level Detail',
+    'Level List' => 'Level List',
+    'Edit Level' => 'Edit Level',
+    'Add Level' => 'Add Level',
+    'A new Level has been created' => 'A new Level has been created',
+    'Level has been updated' => 'Level has been updated',
+
     'All Provinces' => 'All Provinces',
     'Province Detail' => 'Province Detail',
     'Province List' => 'Province List',
@@ -260,13 +276,13 @@ return [
     'A new Rink has been created' => 'A new Rink has been created',
     'Rink has been updated' => 'Rink has been updated',
 
-    'All Speciality' => 'All Speciality',
-    'Speciality Detail' => 'Speciality Detail',
-    'Speciality List' => 'Speciality List',
-    'Edit Speciality' => 'Edit Speciality',
-    'Add Speciality' => 'Add Speciality',
-    'A new Speciality has been created' => 'A new Speciality has been created',
-    'Speciality has been updated' => 'Speciality has been updated',
+    'All Discipline' => 'All Discipline',
+    'Discipline Detail' => 'Discipline Detail',
+    'Discipline List' => 'Discipline List',
+    'Edit Discipline' => 'Edit Discipline',
+    'Add Discipline' => 'Add Discipline',
+    'A new Discipline has been created' => 'A new Discipline has been created',
+    'Discipline has been updated' => 'Discipline has been updated',
     'LABEL_USER_CHANGE_PASSWORD' => 'Change Password',
 
 
@@ -286,8 +302,6 @@ return [
     'A new Camp has been created' => 'A new Camp has been created',
     'Camp has been updated' => 'Camp has been updated',
 
-
-
     'All Program Types' => 'All Program Types',
     'Program Type Detail' => 'Program Type Detail',
     'Program Type List' => 'Program Type List',
@@ -296,5 +310,13 @@ return [
     'A new Program Type has been created' => 'A new Program Type has been created',
     'Program Type has been updated' => 'Program Type has been updated',
 
+    'City List' => 'City List',
+    'Edit City' => 'Edit City',
+    'Add City' => 'Add City',
+    
+    'Age List' => 'Age List',
+    'Edit Age' => 'Edit Age',
+    'Add Age' => 'Add Age',
+    
 
 ];

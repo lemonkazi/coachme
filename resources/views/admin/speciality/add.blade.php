@@ -67,22 +67,6 @@
                 </div>  
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="card card-secondary">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    Instraction
-                  </h3>
-                </div>
-                <div class="card-body">
-                  <ul>
-                    <li><b>User name</b> 1 to 60 character.</li>
-                    <li><b>email</b> place email here.</li>
-                    <li><b>Password</b> Half-width alphanumeric characters between 8 and 20 characters.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
         </div>
     </div>
   </section>

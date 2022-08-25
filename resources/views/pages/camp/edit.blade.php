@@ -74,21 +74,20 @@
                   </div>
                 </div>
                 <div class="row">
-
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="camp-type">Camp Type</label>
-                      <select class="form-control" id="camp_type_id" name="camp_type_id[]" multiple="multiple">
+                      <label for="speciality">Discipline</label>
+                      <select class="form-control" id="speciality" name="speciality_id[]" multiple="multiple">
                         <?php 
-                        if(!empty($data['camp_type_id'])) {
+                        if(!empty($data['speciality_id'])) {
                           ?>
-                          @foreach($camp_type_all as $id => $value)
-                            <option value="{{$id}}" @foreach($data['camp_type_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
+                          @foreach($speciality_all as $id => $value)
+                            <option value="{{$id}}" @foreach($data['speciality_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
                           @endforeach
                           <?php 
                         } else {
                           ?>
-                          @foreach($camp_type_all as $id => $value)
+                          @foreach($speciality_all as $id => $value)
                             <option value="{{$id}}">{{$value}}</option>
                           @endforeach
                           <?php
@@ -98,8 +97,24 @@
                       <i class="bi bi-plus-lg"></i>
                     </div>
                   </div>
-
-
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="phone">Website</label>
+                      <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['user']) ? old('website', $data['user']->website) : old('website')}}">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="level">Age</label>
+                      <select name="age_id" id="age_id" class="form-control" style="width: 100%">
+                        <option value="">Select</option>
+                        @foreach($age_all as $id => $value)
+                          <option value="{{ $id }}" {{ (old('age_id') ? old('age_id') : $data['camp']->age_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                      </select>
+                      <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                  </div>
                   
                 </div> 
                 <div class="col-md-4">
@@ -115,18 +130,7 @@
                     
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="dates">Price <span class="input-required">*</span></label>
-                    
-                    @if(!empty($data['camp']) && empty($data['camp']->price) && !empty($data['camp']->price_text))
-                      <input type="text" class="form-control" id="price" name="price" value="{{!empty($data['camp']) ? old('price', $data['camp']->price_text) : old('price')}}"  required aria-describedby="emailHelp" >
-                    @else
-                      <input type="text" class="form-control" id="price" name="price" value="{{!empty($data['camp']) ? old('price', $data['camp']->price) : old('price')}}"  required aria-describedby="emailHelp" >
-                    @endif
-                    
-                  </div>
-                </div>
+                
 
                 <div class="col-md-4">
                   <div class="form-group">

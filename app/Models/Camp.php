@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\BaseModel as Model;
 use App\Models\User;
 use App\Models\CampType;
+use App\Models\Speciality;
+use App\Models\Age;
 use App\Models\Level;
 use App\Models\Rink;
 use App\Models\Location;
@@ -26,6 +28,9 @@ class Camp extends Model
         'level_id',
         'rink_id',
         'camp_type_id',
+        'speciality_id',
+        'age_id',
+        'website',
         'web_site_url',
         'start_date',
         'end_date',
@@ -52,6 +57,8 @@ class Camp extends Model
         'level_name',
         'rink_name',
         'camp_type_name',
+        'speciality_name',
+        'age_name',
         'camp_photo'
     ];
 
@@ -180,9 +187,51 @@ class Camp extends Model
               $camp_types[] = CampType::find($camp_type, ['name', 'id'])->toArray();
             }
         }
+
+        $speciality_ids = array();
+        if (!empty($this->speciality_id)) {
+            $speciality_id_data = json_decode($this->speciality_id);
+            foreach ($speciality_id_data as $key => $speciality) {
+                $speciality_ids[] = CampType::find($speciality, ['name', 'id'
+                ])->toArray();
+            }
+        }
+
+        $age_ids = array();
+        if (!empty($this->age_id)) {
+            $age_id_data = json_decode($this->age_id);
+            foreach ($age_id_data as $key => $age) {
+                $age_ids[] = CampType::find($age, ['name', 'id'])->toArray();
+            }
+        }
         
         
         return $camp_types;
+    }
+
+    public function getSpecialityNameAttribute()
+    {
+        $speciality_ids = array();
+        if (!empty($this->speciality_id)) {
+            $speciality_id_data = json_decode($this->speciality_id);
+            foreach ($speciality_id_data as $key => $speciality) {
+                $speciality_ids[] = Speciality::find($speciality, ['name', 'id'
+                ])->toArray();
+            }
+        }
+        return $speciality_ids;
+    }
+    public function getAgeNameAttribute()
+    {
+
+        $age_ids = array();
+        if (!empty($this->age_id)) {
+            $age_id_data = json_decode($this->age_id);
+            foreach ($age_id_data as $key => $age) {
+                $age_ids[] = Age::find($age, ['name', 'id'])->toArray();
+            }
+        }
+        return $age_ids;
     }
 
 
@@ -260,6 +309,9 @@ class Camp extends Model
         if (isset($params['level_id'])) {
             $params['level_id'] = explode(',', $params['level_id']);
         }
+        if (isset($params['age_id'])) {
+            $params['age_id'] = explode(',', $params['age_id']);
+        }
         
         if (isset($params['is_varified'])) {
             $params['is_verified'] = $params['is_varified'];
@@ -289,6 +341,17 @@ class Camp extends Model
                }
             })->get();
         }
+        if (isset($params['speciality_id'])) {
+            $array = explode(',', $params['speciality_id']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('speciality_id', $id);
+               }
+            })->get();
+        }
+        
 
         //$params['period'] = 'winter';
         //$today =  now();
