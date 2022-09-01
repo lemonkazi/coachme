@@ -11,6 +11,9 @@ use App\Models\Camp;
 use App\Models\Program;
 use App\Models\Language;
 use App\Models\Location;
+use App\Models\Province;
+use App\Models\City;
+use App\Models\Age;
 use Illuminate\Http\Response;
 use Cookie;
 
@@ -108,6 +111,31 @@ class AjaxController extends Controller {
 				$result['status'] = 0;
 			}
 		}
+        if ($param['controller'] =='provincecontroller') {
+			$province = Province::find($param['id']);
+			if ($province->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+        if ($param['controller'] =='citycontroller') {
+			$city = City::find($param['id']);
+			if ($city->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+        if ($param['controller'] =='agecontroller') {
+			$age = Age::find($param['id']);
+			if ($age->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+        
 
 		
 		return response()->json($result);
