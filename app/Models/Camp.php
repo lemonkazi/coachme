@@ -281,9 +281,6 @@ class Camp extends Model
         if (isset($params['level_id'])) {
             $params['level_id'] = explode(',', $params['level_id']);
         }
-        if (isset($params['age_id'])) {
-            $params['age_id'] = explode(',', $params['age_id']);
-        }
         
         if (isset($params['is_varified'])) {
             $params['is_verified'] = $params['is_varified'];
@@ -320,6 +317,16 @@ class Camp extends Model
             $query->where(function ($query) use ($array) {
                foreach ($array as $id) {
                    $query->orWhereJsonContains('speciality_id', $id);
+               }
+            })->get();
+        }
+        if (isset($params['age_id'])) {
+            $array = explode(',', $params['age_id']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('age_id', $id);
                }
             })->get();
         }

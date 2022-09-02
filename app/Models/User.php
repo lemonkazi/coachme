@@ -752,9 +752,8 @@ class User extends Authenticatable implements MustVerifyEmail
             //$params['city_id'] = $params['price_id'];
             $params['price_id'] = explode(',', $params['price_id']);
         }
-        if (isset($params['age_id'])) {
-          //$params['city_id'] = $params['price_id'];
-          $params['age_id'] = explode(',', $params['age_id']);
+        if (isset($params['age'])) {
+          $params['age_id'] = explode(',', $params['age']);
         }
         if (isset($params['certificate_id'])) {
             //$params['city_id'] = $params['price_id'];
