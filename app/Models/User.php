@@ -88,7 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $appends = [
         'experience_name',
-        'certificate_name',
+        //'certificate_name',
         'price_name',
         'userinfos',
         'city_name',
@@ -283,10 +283,10 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return string
      */
-    public function getCertificateNameAttribute()
-    {
-        return !empty($this->certificate) ? $this->certificate->name : null;
-    }
+    // public function getCertificateNameAttribute()
+    // {
+    //     return !empty($this->certificate) ? $this->certificate->name : null;
+    // }
 
     /**
      * Get the user's experience name.

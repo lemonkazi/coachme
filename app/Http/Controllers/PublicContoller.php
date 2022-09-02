@@ -1969,7 +1969,9 @@ class PublicContoller extends Controller
                         ['user_id', $user->id],
                         ['deleted_at', null],
                     ])->get()->toArray();
-
+      $user = User::where([
+        ['id', $user->id]
+      ])->first();
       return view('pages.coach.edit', [
           'data'=>
           [
