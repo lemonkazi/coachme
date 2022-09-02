@@ -116,7 +116,7 @@
                           <?php 
                         } else {
                           ?>
-                          @foreach($speciality_all as $id => $value)
+                          @foreach($age_all as $id => $value)
                             <option value="{{$id}}">{{$value}}</option>
                           @endforeach
                           <?php
