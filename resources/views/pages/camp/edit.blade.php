@@ -201,7 +201,7 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Email <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="email" name="email" value="{{!empty($data['camp']) ? old('email', $data['camp']->email) : old('email')}}"  required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control cont" id="email" name="email" value="{{!empty($data['camp']) ? old('email', $data['camp']->email) : old('email')}}" aria-describedby="emailHelp" >
                   </div>
                 </div>
 
@@ -345,7 +345,7 @@
         };
         var whatsapp = $('#whatsapp').val();
 
-        $('#whatsapp,#contacts').keyup(function() { 
+        $('#whatsapp,#contacts,#email').keyup(function() { 
             if ($('#whatsapp').val() != '') {
               var inputs = $(".cont");
               for(var i = 0; i < inputs.length; i++){
@@ -353,6 +353,12 @@
               };
             }
             if ($('#contacts').val() != '') {
+              var inputs = $(".cont");
+              for(var i = 0; i < inputs.length; i++){
+                $(inputs[i]).removeAttr('required');
+              };
+            }
+            if ($('#email').val() != '') {
               var inputs = $(".cont");
               for(var i = 0; i < inputs.length; i++){
                 $(inputs[i]).removeAttr('required');
