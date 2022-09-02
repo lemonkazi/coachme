@@ -407,12 +407,12 @@ class PublicContoller extends Controller
         // exit();
         $rules = array(
             'name'   => 'required|string|max:255',
-            'email'  => 'required|string|email|max:255'
+            'email'  => 'string|email|max:255'
           );    
         $messages = array(
                     'name.required' => trans('messages.name.required'),
                     'name.max' => trans('messages.name.max'),
-                    'email.required' => trans('messages.email.required'),
+                    //'email.required' => trans('messages.email.required'),
                     'email.string' => trans('messages.email.string'),
                     'email.email' => trans('messages.email.email'),
                     'email.max' => trans('messages.email.max')
