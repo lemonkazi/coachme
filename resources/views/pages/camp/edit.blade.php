@@ -189,19 +189,19 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Phone <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="contacts" name="contacts" value="{{!empty($data['camp']) ? old('contacts', $data['camp']->contacts) : old('contacts')}}" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control cont" id="contacts" name="contacts" value="{{!empty($data['camp']) ? old('contacts', $data['camp']->contacts) : old('contacts')}}"  aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">WhatsApp <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{!empty($data['camp']) ? old('whatsapp', $data['camp']->whatsapp) : old('whatsapp')}}" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control cont" id="whatsapp" name="whatsapp" value="{{!empty($data['camp']) ? old('whatsapp', $data['camp']->whatsapp) : old('whatsapp')}}"  aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Email <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="email" name="email" value="{{!empty($data['camp']) ? old('email', $data['camp']->email) : old('email')}}" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control" id="email" name="email" value="{{!empty($data['camp']) ? old('email', $data['camp']->email) : old('email')}}"  required aria-describedby="emailHelp" >
                   </div>
                 </div>
 
@@ -328,6 +328,66 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
+        var inputs = $(".cont");
+        let empty = 1;
+
+        for(var i = 0; i < inputs.length; i++){
+          
+            if ($(inputs[i]).val() != '') {
+              $(inputs[i]).removeAttr('required');
+              empty = 0;
+            }
+            else{
+              $(inputs[i]).attr('required', '');
+              //$(this).setAttribute("required", "");         //Correct
+              //return false
+            }
+        };
+        var whatsapp = $('#whatsapp').val();
+
+        $('#whatsapp,#contacts').keyup(function() { 
+            if ($('#whatsapp').val() != '') {
+              var inputs = $(".cont");
+              for(var i = 0; i < inputs.length; i++){
+                $(inputs[i]).removeAttr('required');
+              };
+            }
+            if ($('#contacts').val() != '') {
+              var inputs = $(".cont");
+              for(var i = 0; i < inputs.length; i++){
+                $(inputs[i]).removeAttr('required');
+              };
+            }
+        });
+        $(document).on("click", "#save", function () {
+          var inputs = $(".cont");
+          let empty = 1;
+          
+
+          for(var i = 0; i < inputs.length; i++){
+              if ($(inputs[i]).val() != '') {
+                $(inputs[i]).removeAttr('required');
+                empty = 0;
+                break;
+              }
+              else{
+                $(inputs[i]).attr('required', '');
+                //$(this).setAttribute("required", "");         //Correct
+                //return false
+              }
+          };
+          for(var i = 0; i < inputs.length; i++){
+              if (empty == 0) {
+                $(inputs[i]).removeAttr('required');
+                
+              } else {
+                 $(inputs[i]).attr('required', '');
+              }
+          };
+          //return false;
+        });
+        
+
         $("#coachimg2").hide();
         var projects =  <?php echo json_encode($coaches) ?>;
         console.log(projects);
