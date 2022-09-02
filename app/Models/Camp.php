@@ -171,15 +171,6 @@ class Camp extends Model
 
     public function getCampTypeNameAttribute()
     {
-        
-
-        // $info  = DB::table('user_infos')
-        //              ->select('id', 'content_type', 'content_id')
-        //              ->where('user_id', '=', $this->id)
-        //              ->where('deleted_at', '=', null)
-        //              ->get();
-
-
         $camp_types=array();
         if(!empty($this->camp_type_id)){
             $camp_type_id_data = json_decode($this->camp_type_id);
@@ -187,25 +178,6 @@ class Camp extends Model
               $camp_types[] = CampType::find($camp_type, ['name', 'id'])->toArray();
             }
         }
-
-        $speciality_ids = array();
-        if (!empty($this->speciality_id)) {
-            $speciality_id_data = json_decode($this->speciality_id);
-            foreach ($speciality_id_data as $key => $speciality) {
-                $speciality_ids[] = CampType::find($speciality, ['name', 'id'
-                ])->toArray();
-            }
-        }
-
-        $age_ids = array();
-        if (!empty($this->age_id)) {
-            $age_id_data = json_decode($this->age_id);
-            foreach ($age_id_data as $key => $age) {
-                $age_ids[] = CampType::find($age, ['name', 'id'])->toArray();
-            }
-        }
-        
-        
         return $camp_types;
     }
 
