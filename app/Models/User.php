@@ -14,6 +14,7 @@ use App\Models\Price;
 use App\Models\Language;
 use App\Models\Level;
 use App\Models\City;
+use App\Models\Age;
 use App\Models\Camp;
 use App\Models\Program;
 use App\Models\Province;
@@ -67,7 +68,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_published',
         'deleted_at',
         'token',
-        'web_site_url'
+        'web_site_url',
+        'age_id'
     ];
 
     /**
@@ -88,6 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $appends = [
         'experience_name',
+        'age_name',
         //'certificate_name',
         'price_name',
         'userinfos',
@@ -350,6 +353,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return !empty($this->price) ? $this->price->name : null;
     }
 
+     /**
+     * Get the user's Age  anme.
+     *
+     * @return string
+     */
+    public function getAgeNameAttribute()
+    {
+        return !empty($this->age) ? $this->age->name : null;
+    }
+
 
 
      /**
@@ -377,7 +390,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Province::class);
     }
     
-
+     /**
+     * Get the experience for the user.
+     */
+    public function age()
+    {
+        return $this->belongsTo(Age::class);
+    }
      /**
      * Get the experience for the user.
      */
