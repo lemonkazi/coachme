@@ -160,12 +160,12 @@ class PublicContoller extends Controller
         // exit();
         $rules = array(
             'name'   => 'required|string|max:255',
-            'email'  => 'required|string|email|max:255'
+            'email'  => 'string|email|max:255'
           );    
         $messages = array(
                     'name.required' => trans('messages.name.required'),
                     'name.max' => trans('messages.name.max'),
-                    'email.required' => trans('messages.email.required'),
+                    //'email.required' => trans('messages.email.required'),
                     'email.string' => trans('messages.email.string'),
                     'email.email' => trans('messages.email.email'),
                     'email.max' => trans('messages.email.max')
@@ -216,6 +216,8 @@ class PublicContoller extends Controller
           }
           if (isset($data['age_id'])) {
             $data['age_id'] = json_encode(array_unique($data['age_id']));
+          } else {
+            unset($data['age_id']);
           }
 
           if (isset($_COOKIE['cookieRink'])) {
@@ -1850,6 +1852,11 @@ class PublicContoller extends Controller
               }
             }
           }
+          if (isset($data['age_id'])) {
+            $data['age_id'] = json_encode(array_unique($data['age_id']));
+          } else {
+            unset($data['age_id']);
+          }
           
           $data['token'] = sha1(time());
           
@@ -1939,6 +1946,8 @@ class PublicContoller extends Controller
           if (!$user->update($data)) {
             return redirect()->back()->withInput()->withErrors(trans('messages.error_message'));
           }
+          $status = "Your account has been saved.";
+          return redirect(RouteServiceProvider::COACH_PROFILE)->with('status', $status);
           
 
           
@@ -1972,13 +1981,22 @@ class PublicContoller extends Controller
       $user = User::where([
         ['id', $user->id]
       ])->first();
+
+      $age_id =array();
+      if(!empty($user) && !empty($user->age_id)){
+        $age_id_data = json_decode($user->age_id);
+        foreach ($age_id_data as $key=>$age) {
+          $age_id[] = Age::find($age, ['name', 'id'])->toArray();
+        }
+      }
       return view('pages.coach.edit', [
           'data'=>
           [
                'user'      =>  $user,
                'Title' =>  $title,
                'programs' =>  $programs,
-               'camps' =>  $camps
+               'camps' =>  $camps,
+               'age_id' =>  $age_id
           ]
       ])
       ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all','level_all','age_all'));
