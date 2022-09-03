@@ -12,10 +12,12 @@ use App\Models\Rink;
 use App\Models\Location;
 use App\Models\AttachedFile;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Camp extends Model
 {
+  use SoftDeletes;
 
     protected $cascadeDeletes = [
         //
@@ -106,6 +108,15 @@ class Camp extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+    /**
+     * Get the user for the thread report.
+     */
+    public function user()
+    {
+      //return $this->hasMany('Photo', 'cover_id');
+      return $this->belongsTo(User::class);
+        
     }
 
     /**
@@ -271,6 +282,13 @@ class Camp extends Model
 
         $query = $this->newQuery();
 
+
+        $query->leftJoin('users', function($join)
+        {
+            $join->on('users.id', '=', 'camps.user_id')
+                ->where('users.deleted_at',null);
+        });
+        
         
         
         if (empty($params) || !is_array($params)) {
@@ -306,7 +324,7 @@ class Camp extends Model
             $array = array_values(array_map('strval',$array));
             $query->where(function ($query) use ($array) {
                foreach ($array as $id) {
-                   $query->orWhereJsonContains('camp_type_id', $id);
+                   $query->orWhereJsonContains('camps.camp_type_id', $id);
                }
             })->get();
         }
@@ -316,7 +334,7 @@ class Camp extends Model
             $array = array_values(array_map('strval',$array));
             $query->where(function ($query) use ($array) {
                foreach ($array as $id) {
-                   $query->orWhereJsonContains('speciality_id', $id);
+                   $query->orWhereJsonContains('camps.speciality_id', $id);
                }
             })->get();
         }
@@ -326,7 +344,7 @@ class Camp extends Model
             $array = array_values(array_map('strval',$array));
             $query->where(function ($query) use ($array) {
                foreach ($array as $id) {
-                   $query->orWhereJsonContains('age_id', $id);
+                   $query->orWhereJsonContains('camps.age_id', $id);
                }
             })->get();
         }
@@ -355,15 +373,15 @@ class Camp extends Model
             $dt =  now();
             $dt      = strtotime($params['date']);
             $dt = date('Y-m-d H:i:s', $dt);
-            $query->where('start_date', '<=', "$dt")
-                          ->where('end_date', '>=', "$dt");
+            $query->where('camps.start_date', '<=', "$dt")
+                          ->where('camps.end_date', '>=', "$dt");
         } 
         if (isset($params['current_date']) && !empty($params['current_date'])) {
             $dt =  now();
             $dt      = strtotime($dt);
              $dt = date('Y-m-d', $dt);
-            $query->where('start_date', '<=', "$dt")
-                          ->where('end_date', '>=', "$dt");
+            $query->where('camps.start_date', '<=', "$dt")
+                          ->where('camps.end_date', '>=', "$dt");
            
         } 
 
@@ -407,7 +425,7 @@ class Camp extends Model
             // if none of them is null
             //if (! (is_null($min_value) && is_null($max_value))) {
                 // fetch all between min & max values
-                $query->whereBetween('price', [$min_value, $max_value]);
+                $query->whereBetween('camps.price', [$min_value, $max_value]);
             // }
             // // if just min_value is available (is not null)
             // elseif (! is_null($min_value)) {
@@ -431,12 +449,12 @@ class Camp extends Model
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
-                    $query->where($key, 'LIKE', "%{$value}%");
+                    $query->where('camps.'.$key, 'LIKE', "%{$value}%");
                 } elseif (in_array($key, $this->exactFilterable)) {
                     if (is_array($value)) {
-                        $query->whereIn($key, $value);
+                        $query->whereIn('camps.'.$key, $value);
                     } else {
-                        $query->where($key, '=', $value);
+                        $query->where('camps.'.$key, '=', $value);
                     }
                 }
             }

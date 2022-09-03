@@ -13,6 +13,7 @@ use App\Models\Language;
 use App\Models\Location;
 use App\Models\Province;
 use App\Models\City;
+use App\Models\Level;
 use App\Models\Age;
 use Illuminate\Http\Response;
 use Cookie;
@@ -54,6 +55,14 @@ class AjaxController extends Controller {
 		if ($param['controller'] =='specialitycontroller') {
 			$speciality = Speciality::find($param['id']);
 			if ($speciality->delete()) {
+				$result['message'] = trans('messages.success_message');
+			} else {
+				$result['status'] = 0;
+			}
+		}
+    if ($param['controller'] =='levelcontroller') {
+			$level = Level::find($param['id']);
+			if ($level->delete()) {
 				$result['message'] = trans('messages.success_message');
 			} else {
 				$result['status'] = 0;

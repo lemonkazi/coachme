@@ -160,7 +160,7 @@ class PublicContoller extends Controller
         // exit();
         $rules = array(
             'name'   => 'required|string|max:255',
-            'email'  => 'string|email|max:255'
+            'email'  => 'nullable|string|email|max:255'
           );    
         $messages = array(
                     'name.required' => trans('messages.name.required'),
@@ -174,7 +174,6 @@ class PublicContoller extends Controller
 
         if ( $validator->fails() ) 
         {
-            
           //Toastr::warning('Error occured',$validator->errors()->all()[0]);
           return redirect()->back()->withInput()->withErrors($validator);
         }
@@ -182,7 +181,6 @@ class PublicContoller extends Controller
         {
 
           if (isset($data['price'])) {
-           
             if ( filter_var($data['price'], FILTER_VALIDATE_INT) === false ) {
               //echo "Your variable is not an integer";
               $data['price_text'] = $data['price'];
@@ -409,7 +407,7 @@ class PublicContoller extends Controller
         // exit();
         $rules = array(
             'name'   => 'required|string|max:255',
-            'email'  => 'string|email|max:255'
+            'email'  => 'nullable|string|email|max:255'
           );    
         $messages = array(
                     'name.required' => trans('messages.name.required'),
@@ -475,8 +473,7 @@ class PublicContoller extends Controller
             
           }
 
-          // print_r($data);
-          // exit();
+         
 
 
           if (isset($data['coach_name_array'])) {
@@ -713,8 +710,6 @@ class PublicContoller extends Controller
         $coach['value'] =  $coach['name'];
         $coaches[] = $coach;
       }
-
-
       return view('pages.camp.edit', [
           'data'=>
           [
@@ -1435,10 +1430,10 @@ class PublicContoller extends Controller
       if (isset($params['sort']) && !empty($params['sort'])) {
         $sort = $params['sort'];
         $sortExplode = explode('-', $params['sort']);
-        $query->orderBy($sortExplode[0],$sortExplode[1]);
+        $query->orderBy('camps.'.$sortExplode[0],$sortExplode[1]);
       } else {
-        $sort = 'id-desc'; 
-        $query->orderBy('id', 'desc');
+        $sort = 'id-desc';
+        $query->orderBy('camps.id', 'desc');
       }
       //$programs = $query->paginate($limit);
       $camps = $query->get()->toArray();
@@ -1611,10 +1606,10 @@ class PublicContoller extends Controller
       if (isset($params['sort']) && !empty($params['sort'])) {
         $sort = $params['sort'];
         $sortExplode = explode('-', $params['sort']);
-        $query->orderBy($sortExplode[0],$sortExplode[1]);
+         $query->orderBy('camps.'.$sortExplode[0],$sortExplode[1]);
       } else {
         $sort = 'id-desc'; 
-        $query->orderBy('id', 'desc');
+        $query->orderBy('camps.id', 'desc');
       }
       $camps_all = $query->get()->toArray();
 

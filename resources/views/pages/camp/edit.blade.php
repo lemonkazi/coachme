@@ -55,7 +55,7 @@
                     <select name="location_id" id ="location" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($city_all as $id => $value)
-                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $data['rink']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $data['camp']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                       @endforeach
                     </select>
                     <i class="bi bi-chevron-compact-down"></i>
@@ -100,7 +100,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="phone">Website</label>
-                      <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['user']) ? old('website', $data['user']->website) : old('website')}}">
+                      <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['camp']) ? old('website', $data['camp']->website) : old('website')}}">
                     </div>
                   </div>
                   <div class="col-md-4">
