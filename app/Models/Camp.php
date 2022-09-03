@@ -281,7 +281,7 @@ class Camp extends Model
         
 
         $query = $this->newQuery();
-
+        $query->select('camps.*');
 
         $query->leftJoin('users', function($join)
         {
