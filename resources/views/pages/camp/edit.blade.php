@@ -55,7 +55,7 @@
                     <select name="location_id" id ="location" class="form-control" style="width: 100%">
                       <option value="">Select</option>
                       @foreach($city_all as $id => $value)
-                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $data['rink']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $data['camp']->location_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
                       @endforeach
                     </select>
                     <i class="bi bi-chevron-compact-down"></i>
@@ -100,19 +100,30 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="phone">Website</label>
-                      <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['user']) ? old('website', $data['user']->website) : old('website')}}">
+                      <input type="text" class="form-control" id="website" name="website" value="{{!empty($data['camp']) ? old('website', $data['camp']->website) : old('website')}}">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="level">Age</label>
-                      <select name="age_id" id="age_id" class="form-control" style="width: 100%">
-                        <option value="">Select</option>
-                        @foreach($age_all as $id => $value)
-                          <option value="{{ $id }}" {{ (old('age_id') ? old('age_id') : $data['camp']->age_id ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
-                        @endforeach
+                      <select class="form-control" id="age" name="age_id[]" multiple="multiple">
+                        <?php 
+                        if(!empty($data['age_id'])) {
+                          ?>
+                          @foreach($age_all as $id => $value)
+                            <option value="{{$id}}" @foreach($data['age_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                          <?php 
+                        } else {
+                          ?>
+                          @foreach($age_all as $id => $value)
+                            <option value="{{$id}}">{{$value}}</option>
+                          @endforeach
+                          <?php
+                        }
+                        ?>
                       </select>
-                      <i class="bi bi-chevron-compact-down"></i>
+                      <i class="bi bi-plus-lg"></i>
                     </div>
                   </div>
                   
@@ -178,19 +189,19 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Phone <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="contacts" name="contacts" value="{{!empty($data['camp']) ? old('contacts', $data['camp']->contacts) : old('contacts')}}" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control cont" id="contacts" name="contacts" value="{{!empty($data['camp']) ? old('contacts', $data['camp']->contacts) : old('contacts')}}"  aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">WhatsApp <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{!empty($data['camp']) ? old('whatsapp', $data['camp']->whatsapp) : old('whatsapp')}}" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control cont" id="whatsapp" name="whatsapp" value="{{!empty($data['camp']) ? old('whatsapp', $data['camp']->whatsapp) : old('whatsapp')}}"  aria-describedby="emailHelp" >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="dates">Email <span class="input-required">*</span></label>
-                    <input type="text" class="form-control" id="email" name="email" value="{{!empty($data['camp']) ? old('email', $data['camp']->email) : old('email')}}" required aria-describedby="emailHelp" >
+                    <input type="text" class="form-control cont" id="email" name="email" value="{{!empty($data['camp']) ? old('email', $data['camp']->email) : old('email')}}" aria-describedby="emailHelp" >
                   </div>
                 </div>
 
@@ -317,6 +328,72 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
+        var inputs = $(".cont");
+        let empty = 1;
+
+        for(var i = 0; i < inputs.length; i++){
+          
+            if ($(inputs[i]).val() != '') {
+              $(inputs[i]).removeAttr('required');
+              empty = 0;
+            }
+            else{
+              $(inputs[i]).attr('required', '');
+              //$(this).setAttribute("required", "");         //Correct
+              //return false
+            }
+        };
+        var whatsapp = $('#whatsapp').val();
+
+        $('#whatsapp,#contacts,#email').keyup(function() { 
+            if ($('#whatsapp').val() != '') {
+              var inputs = $(".cont");
+              for(var i = 0; i < inputs.length; i++){
+                $(inputs[i]).removeAttr('required');
+              };
+            }
+            if ($('#contacts').val() != '') {
+              var inputs = $(".cont");
+              for(var i = 0; i < inputs.length; i++){
+                $(inputs[i]).removeAttr('required');
+              };
+            }
+            if ($('#email').val() != '') {
+              var inputs = $(".cont");
+              for(var i = 0; i < inputs.length; i++){
+                $(inputs[i]).removeAttr('required');
+              };
+            }
+        });
+        $(document).on("click", "#save", function () {
+          var inputs = $(".cont");
+          let empty = 1;
+          
+
+          for(var i = 0; i < inputs.length; i++){
+              if ($(inputs[i]).val() != '') {
+                $(inputs[i]).removeAttr('required');
+                empty = 0;
+                break;
+              }
+              else{
+                $(inputs[i]).attr('required', '');
+                //$(this).setAttribute("required", "");         //Correct
+                //return false
+              }
+          };
+          for(var i = 0; i < inputs.length; i++){
+              if (empty == 0) {
+                $(inputs[i]).removeAttr('required');
+                
+              } else {
+                 $(inputs[i]).attr('required', '');
+              }
+          };
+          //return false;
+        });
+        
+
         $("#coachimg2").hide();
         var projects =  <?php echo json_encode($coaches) ?>;
         console.log(projects);

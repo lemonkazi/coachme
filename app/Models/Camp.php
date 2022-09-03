@@ -12,10 +12,12 @@ use App\Models\Rink;
 use App\Models\Location;
 use App\Models\AttachedFile;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Camp extends Model
 {
+  use SoftDeletes;
 
     protected $cascadeDeletes = [
         //
@@ -107,6 +109,15 @@ class Camp extends Model
     {
         return $this->hasMany(User::class);
     }
+    /**
+     * Get the user for the thread report.
+     */
+    public function user()
+    {
+      //return $this->hasMany('Photo', 'cover_id');
+      return $this->belongsTo(User::class);
+        
+    }
 
     /**
      * The coupons that belong to the city.
@@ -171,15 +182,6 @@ class Camp extends Model
 
     public function getCampTypeNameAttribute()
     {
-        
-
-        // $info  = DB::table('user_infos')
-        //              ->select('id', 'content_type', 'content_id')
-        //              ->where('user_id', '=', $this->id)
-        //              ->where('deleted_at', '=', null)
-        //              ->get();
-
-
         $camp_types=array();
         if(!empty($this->camp_type_id)){
             $camp_type_id_data = json_decode($this->camp_type_id);
@@ -187,25 +189,6 @@ class Camp extends Model
               $camp_types[] = CampType::find($camp_type, ['name', 'id'])->toArray();
             }
         }
-
-        $speciality_ids = array();
-        if (!empty($this->speciality_id)) {
-            $speciality_id_data = json_decode($this->speciality_id);
-            foreach ($speciality_id_data as $key => $speciality) {
-                $speciality_ids[] = CampType::find($speciality, ['name', 'id'
-                ])->toArray();
-            }
-        }
-
-        $age_ids = array();
-        if (!empty($this->age_id)) {
-            $age_id_data = json_decode($this->age_id);
-            foreach ($age_id_data as $key => $age) {
-                $age_ids[] = CampType::find($age, ['name', 'id'])->toArray();
-            }
-        }
-        
-        
         return $camp_types;
     }
 
@@ -298,7 +281,14 @@ class Camp extends Model
         
 
         $query = $this->newQuery();
+        $query->select('camps.*');
 
+        $query->leftJoin('users', function($join)
+        {
+            $join->on('users.id', '=', 'camps.user_id')
+                ->where('users.deleted_at',null);
+        });
+        
         
         
         if (empty($params) || !is_array($params)) {
@@ -308,9 +298,6 @@ class Camp extends Model
         
         if (isset($params['level_id'])) {
             $params['level_id'] = explode(',', $params['level_id']);
-        }
-        if (isset($params['age_id'])) {
-            $params['age_id'] = explode(',', $params['age_id']);
         }
         
         if (isset($params['is_varified'])) {
@@ -337,7 +324,7 @@ class Camp extends Model
             $array = array_values(array_map('strval',$array));
             $query->where(function ($query) use ($array) {
                foreach ($array as $id) {
-                   $query->orWhereJsonContains('camp_type_id', $id);
+                   $query->orWhereJsonContains('camps.camp_type_id', $id);
                }
             })->get();
         }
@@ -347,7 +334,17 @@ class Camp extends Model
             $array = array_values(array_map('strval',$array));
             $query->where(function ($query) use ($array) {
                foreach ($array as $id) {
-                   $query->orWhereJsonContains('speciality_id', $id);
+                   $query->orWhereJsonContains('camps.speciality_id', $id);
+               }
+            })->get();
+        }
+        if (isset($params['age_id'])) {
+            $array = explode(',', $params['age_id']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('camps.age_id', $id);
                }
             })->get();
         }
@@ -376,15 +373,15 @@ class Camp extends Model
             $dt =  now();
             $dt      = strtotime($params['date']);
             $dt = date('Y-m-d H:i:s', $dt);
-            $query->where('start_date', '<=', "$dt")
-                          ->where('end_date', '>=', "$dt");
+            $query->where('camps.start_date', '<=', "$dt")
+                          ->where('camps.end_date', '>=', "$dt");
         } 
         if (isset($params['current_date']) && !empty($params['current_date'])) {
             $dt =  now();
             $dt      = strtotime($dt);
              $dt = date('Y-m-d', $dt);
-            $query->where('start_date', '<=', "$dt")
-                          ->where('end_date', '>=', "$dt");
+            $query->where('camps.start_date', '<=', "$dt")
+                          ->where('camps.end_date', '>=', "$dt");
            
         } 
 
@@ -428,7 +425,7 @@ class Camp extends Model
             // if none of them is null
             //if (! (is_null($min_value) && is_null($max_value))) {
                 // fetch all between min & max values
-                $query->whereBetween('price', [$min_value, $max_value]);
+                $query->whereBetween('camps.price', [$min_value, $max_value]);
             // }
             // // if just min_value is available (is not null)
             // elseif (! is_null($min_value)) {
@@ -452,12 +449,12 @@ class Camp extends Model
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
-                    $query->where($key, 'LIKE', "%{$value}%");
+                    $query->where('camps.'.$key, 'LIKE', "%{$value}%");
                 } elseif (in_array($key, $this->exactFilterable)) {
                     if (is_array($value)) {
-                        $query->whereIn($key, $value);
+                        $query->whereIn('camps.'.$key, $value);
                     } else {
-                        $query->where($key, '=', $value);
+                        $query->where('camps.'.$key, '=', $value);
                     }
                 }
             }

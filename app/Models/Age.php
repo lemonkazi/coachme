@@ -57,7 +57,13 @@ class Age extends Model
     ];
 
 
-
+      /**
+     * Get the users for the building.
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
     /**
      * Get the users for the building.
