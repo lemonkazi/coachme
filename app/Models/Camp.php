@@ -362,7 +362,7 @@ class Camp extends Model
             $array = explode(',', $params['month']);
             foreach ($array as $key => $value) {
 
-                $query->orWhere(function ($sq) use ($value) {
+                $query->where(function ($sq) use ($value) {
                             $sq->whereRaw('extract(month from start_date) ='.$value)
                                 ->whereRaw('extract(month from end_date) ='.$value);
                         });
