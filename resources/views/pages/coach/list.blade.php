@@ -50,38 +50,42 @@
                         </select>
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
-                      <div class="form-group position-relative">
-                        <label for="name">Language <span class="input-required">*</span></label>
-                        <select class="form-control listdates location" id="campdates" name="language" multiple="multiple">
-                          @foreach($language_all as $id => $value)
-                            <option value="{{$id}}" @foreach($filtered_language as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
-                          @endforeach
-                        </select>
-                        <i class="bi bi-plus-lg"></i>
-                      </div>
-                      <div class="form-group position-relative">
-                        <label for="name">lvl of coaching <span class="input-required">*</span></label>
-                        <select class="form-control listdates location" name="level" multiple="multiple">
-                          @foreach($level_all as $id => $value)
-                            <option value="{{$id}}" @foreach($filtered_level as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
-                          @endforeach
-                        </select>
-                        <i class="bi bi-plus-lg"></i>
-                      </div>
-                      <div class="form-group position-relative">
-                        <label for="name">student’s age</label>
-                        <?php
-                        $ageArray = array();
-                        if (isset($_GET['age'])) {
-                          $ageArray = explode(',', $_GET['age']);
-                        }
-                        ?>
-                        <select class="form-control listdates location" id="age" name="age" multiple="multiple">
-                          @foreach($age_all as $id => $value)
-                            <option value="{{$id}}" @foreach($ageArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
-                          @endforeach
-                        </select>
-                        <i class="bi bi-plus-lg"></i>
+
+                      <button id="advanced-search">Advanced Search</button>
+                      <div id="advenced-content">
+                        <div class="form-group position-relative">
+                          <label for="name">Language <span class="input-required">*</span></label>
+                          <select class="form-control listdates location" id="campdates" name="language" multiple="multiple">
+                            @foreach($language_all as $id => $value)
+                              <option value="{{$id}}" @foreach($filtered_language as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                            @endforeach
+                          </select>
+                          <i class="bi bi-plus-lg"></i>
+                        </div>
+                        <div class="form-group position-relative">
+                          <label for="name">lvl of coaching <span class="input-required">*</span></label>
+                          <select class="form-control listdates location" name="level" multiple="multiple">
+                            @foreach($level_all as $id => $value)
+                              <option value="{{$id}}" @foreach($filtered_level as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                            @endforeach
+                          </select>
+                          <i class="bi bi-plus-lg"></i>
+                        </div>
+                        <div class="form-group position-relative">
+                          <label for="name">student’s age</label>
+                          <?php
+                          $ageArray = array();
+                          if (isset($_GET['age'])) {
+                            $ageArray = explode(',', $_GET['age']);
+                          }
+                          ?>
+                          <select class="form-control listdates location" id="age" name="age" multiple="multiple">
+                            @foreach($age_all as $id => $value)
+                              <option value="{{$id}}" @foreach($ageArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
+                            @endforeach
+                          </select>
+                          <i class="bi bi-plus-lg"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -130,10 +134,19 @@
           </div>
         </div>
     </div>
+    <style>
+    #advenced-content{
+      display:none;
+    }
+    </style>
 
     <script type="text/javascript">
 
       $(document).ready(function () {
+        $("#advanced-search").on("click", function(){
+          $("#advenced-content").toggle();
+        });
+
         $('#rinks').multiselect();
         $("#ex2").bootstrapSlider({});
         // add logic change value of result top condition
