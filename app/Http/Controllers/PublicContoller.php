@@ -93,12 +93,13 @@ class PublicContoller extends Controller
           "hotelName"=> $value['name']
         );
       }
-      //print_r($rinks);
-      //$rinks  = json_encode($rinks);
-      //exit();
-      
+      $province_all = Province::all()->pluck("name", "id")->sortBy("name");
+      $city_all =array();
+      // if (isset($params['province_id']) && !empty($params['province_id'])) {
+      //   $city_all = Location::all()->where('province_id',$params['province_id'])->pluck('name','id')->sortBy("name");
+      // }
       return view('pages.home')
-      ->with(compact('authority','testimonials','rinks'));
+      ->with(compact('authority','testimonials','rinks','province_all','city_all'));
     }
 
 

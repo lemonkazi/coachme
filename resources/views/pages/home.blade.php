@@ -21,10 +21,17 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="text-content">
-                        <h1>Finding <span>a coach, a program or camp</span> has never been that simple.</h1>
-                        <p>Coach me solutions is the easiest, safest and most affordable way to connect with an experienced coach who can help you improve your athletic performance and reach your individual goals.</p>
-
-                        <a href="{{ url('/coach/list') }}" class="btn hero-button">Explore  <i class="fas fa-arrow-right"></i></a>
+                      <h1>
+                        If you are looking for a coach, <a data-toggle="modal" data-target="#coachModalCenter" href="{{ url('/coach/list') }}">CLICK HERE</a>
+                        </br>
+                        @if (Route::has('logout'))
+                          @auth
+                            If you are a coach, <a href="{{ url('/logout') }}">Logout</a>
+                          @else
+                            If you are a coach, <a data-toggle="modal" data-target="#exampleModalCenter">CLICK HERE</a>
+                          @endauth
+                        @endif
+                      </h1>
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -127,9 +134,102 @@
           </div>
       </section>
 
+      <!-- MOdal Start-->
+      <section class="modal-section">
+        <div class="modal fade" id="coachModalCenter" tabindex="-1" role="dialog" aria-labelledby="coachModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content registration-modal">
+              <div class="modal-body p-4 p-md-5 ">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="text-center mb-2">Search</h3>
+                <div class="alert alert-danger login" style="display:none"></div>
+                <form method="GET" action="{{ url('coach/list') }}" class="login-form">
+                  @csrf
+                  @if(session()->has('error'))
+                      <div class="alert alert-danger invalid-feedback d-block">{{ session()->get('error') }}</div>
+                  @endif
+                  @if (session('status'))
+                    <div class="alert alert-success">
+                      {{ session('status') }}
+                    </div>
+                  @endif
+                  @if (session('warning'))
+                    <div class="alert alert-warning">
+                      {{ session('warning') }}
+                    </div>
+                  @endif
+                  <div class="form-group position-relative">
+                    <label for="name">Location <span class="input-required">*</span></label>
+                    <select required name="province_id" id ="province_id" class="form-control">
+                      <option value="">Select</option>
+                      @foreach($province_all as $id => $value)
+                          <option value="{{ $id }}" {{ (old('province_id') ? old('province_id') : $_GET['province_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                      @endforeach
+                    </select>
+                    <!-- <i class="bi bi-chevron-compact-down"></i> -->
+                  </div>
+                  <div class="form-group position-relative without-label">
+                    <select name="location_id" id ="city_id" class="form-control">
+                      <option value="">Select</option>
+                      @foreach($city_all as $id => $value)
+                        <option value="{{ $id }}" {{ (old('location_id') ? old('location_id') : $_GET['location_id'] ?? '') == $id ? 'selected' : '' }}>{{ $value }}</option>
+                        
+                      @endforeach
+                    </select>
+                    <!-- <i class="bi bi-chevron-compact-down"></i> -->
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="form-control btn btn-primary submit px-3">Search</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <script type="text/javascript">
         
+        $(document).ready(function () {
 
+          // add logic change value of result top condition
+          $('#province_id').on('change', function(){
+              var name = $(this).attr('name');
+              $('#city_id').html('');
+              if (name == '') {
+                  return false;
+              }
+
+              var value = $(this).val();
+              var csrfToken = $('meta[name="_token"]').attr('content') ? $('meta[name="_token"]').attr('content') : '';
+            
+
+              var data = {
+                  province_id: value,
+                  _token:csrfToken
+              };
+
+
+              $.ajax({
+                type: 'POST',
+                url: baseUrl + '/ajax_citylist',
+                data: data,
+                //dataType: 'json',
+                success: function (response) {
+                  console.log(response);
+                  if (response) {
+                      $('#city_id').html(response);
+                  } else {
+                      $('#city_id').html('');
+                  }
+                },
+                complete: function () {}
+              });
+              return false;
+          });
+        });
 
     $("#address").keyup(function(event) {
         if (event.keyCode === 13) {
