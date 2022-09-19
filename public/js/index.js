@@ -185,6 +185,7 @@ $('.program-slider').slick({
     $(".check-section input:checkbox").on('change', function(){
 
       var name = $(this).attr("name");
+      let advanced = $(this).data('advanced');
       
       var checkedVals = $('input:checkbox[name='+name+']:checked').map(function() {
           return this.value;
@@ -201,7 +202,7 @@ $('.program-slider').slick({
         if (url instanceof Array) {
           var url = url.join(",");
         } 
-        var newurl = replaceUrlParam(name,url,newUrl);
+        var newurl = replaceUrlParam(name,url,newUrl,advanced);
         newurl = newurl.replace(/%2C/g,",");
         newurl = newurl.replace(/&amp;/g, "&");
         newurl = newurl.replace("&amp;", "&");
@@ -210,7 +211,18 @@ $('.program-slider').slick({
         
       } else {
         var newurl = removeParam(name,CURRENT_URL);
-        //console.log(newurl);
+        advanced = getURLParameter('advanced', newurl);
+        if (advanced == 1) {
+          if (typeof advanced !== "undefined" && advanced !== null) {
+            let language = getURLParameter('language', newurl);
+            let level = getURLParameter('level', newurl);
+            let age = getURLParameter('age', newurl);
+            console.log(language);
+            if (language == null && level == null && age == null) {
+              newurl = removeParam('advanced',newurl);
+            }
+          }
+        }
         window.location = newurl; // redirect
       }
       return false;
@@ -219,6 +231,7 @@ $('.program-slider').slick({
     $(".location").on('change', function(){
 
       var name = $(this).attr("name");
+      let advanced = $(this).data('advanced');
       
       // var checkedVals = $('input:checkbox[name='+name+']:checked').map(function() {
       //     return this.value;
@@ -237,7 +250,8 @@ $('.program-slider').slick({
           var url = url.join(",");
         } 
         
-        var newurl = replaceUrlParam(name,url,newUrl);
+        var newurl = replaceUrlParam(name,url,newUrl,advanced);
+        
         newurl = newurl.replace(/%2C/g,",");
         newurl = newurl.replace(/&amp;/g, "&");
         newurl = newurl.replace("&amp;", "&");
@@ -248,6 +262,19 @@ $('.program-slider').slick({
         
       } else {
         var newurl = removeParam(name,CURRENT_URL);
+        advanced = getURLParameter('advanced', newurl);
+        if (advanced == 1) {
+          if (typeof advanced !== "undefined" && advanced !== null) {
+            let language = getURLParameter('language', newurl);
+            let level = getURLParameter('level', newurl);
+            let age = getURLParameter('age', newurl);
+            console.log(language);
+            if (language == null && level == null && age == null) {
+              newurl = removeParam('advanced',newurl);
+            }
+          }
+        }
+        //console.log(advanced);
         window.location = newurl; // redirect
       }
       return false;
@@ -354,7 +381,7 @@ $('.program-slider').slick({
   }
 
 
-  function replaceUrlParam(paramName, paramValue,newUrl){
+  function replaceUrlParam(paramName, paramValue,newUrl,advanced=null){
     var url = newUrl;
 
     if (paramValue == null) {
@@ -363,14 +390,29 @@ $('.program-slider').slick({
 
     var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
     if (url.search(pattern)>=0) {
-        return url.replace(pattern,'$1' + paramValue + '$2');
+      return url.replace(pattern,'$1' + paramValue + '$2');
     }
 
     url = url.replace(/[?#]$/,'');
     url=url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
     url = url.replace(/%2C/g,",");
     url = url.replace(/&amp;/g, "&");
-    console.log(url);
+    if (typeof advanced !== "undefined" && advanced !== null) {
+      paramName = 'advanced';
+      var patternadvanced = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+      paramValue = 1;
+      if (url.search(patternadvanced)>=0) {
+          return url.replace(patternadvanced,'$1' + paramValue + '$2');
+      }
+
+      url = url.replace(/[?#]$/,'');
+      url=url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+      url = url.replace(/%2C/g,",");
+      url = url.replace(/&amp;/g, "&");
+    }
+
+    console.log(newUrl);
+
     return url = url.replace("&amp;", "&");
     //var reg = new RegExp( '&', g );
     //return url.replace( reg, '%26' );

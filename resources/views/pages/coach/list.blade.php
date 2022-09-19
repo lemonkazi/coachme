@@ -52,10 +52,10 @@
                       </div>
 
                       <button id="advanced-search">Advanced Search</button>
-                      <div id="advenced-content">
+                      <div id="advenced-content" class="{{isset($_GET['advanced']) ? '': 'collapsed'}}">
                         <div class="form-group position-relative">
                           <label for="name">Language <span class="input-required">*</span></label>
-                          <select class="form-control listdates location" id="campdates" name="language" multiple="multiple">
+                          <select class="form-control listdates location" id="campdates" name="language" data-advanced="1" multiple="multiple">
                             @foreach($language_all as $id => $value)
                               <option value="{{$id}}" @foreach($filtered_language as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
                             @endforeach
@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-group position-relative">
                           <label for="name">lvl of coaching <span class="input-required">*</span></label>
-                          <select class="form-control listdates location" name="level" multiple="multiple">
+                          <select class="form-control listdates location" name="level"  data-advanced="1" multiple="multiple">
                             @foreach($level_all as $id => $value)
                               <option value="{{$id}}" @foreach($filtered_level as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
                             @endforeach
@@ -79,7 +79,7 @@
                             $ageArray = explode(',', $_GET['age']);
                           }
                           ?>
-                          <select class="form-control listdates location" id="age" name="age" multiple="multiple">
+                          <select class="form-control listdates location" id="age" name="age"  data-advanced="1" multiple="multiple">
                             @foreach($age_all as $id => $value)
                               <option value="{{$id}}" @foreach($ageArray as $aItemKey => $p) @if($id == $p)selected="selected"@endif @endforeach>{{$value}}</option>
                             @endforeach
@@ -135,7 +135,7 @@
         </div>
     </div>
     <style>
-    #advenced-content{
+    #advenced-content.collapsed{
       display:none;
     }
     </style>
@@ -143,8 +143,9 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
-        $("#advanced-search").on("click", function(){
-          $("#advenced-content").toggle();
+        $("#advanced-search").on("click", function(e){
+          $("#advenced-content").toggleClass("collapsed");
+          e.preventDefault();
         });
 
         $('#rinks').multiselect();
