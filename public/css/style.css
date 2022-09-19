@@ -330,7 +330,7 @@ div#advenced-content {
     margin: 0 auto;
 }
 button#advanced-search:after {
-    content: "\f64d";
+    
     display: inline-block;
     font-family: bootstrap-icons !important;
     font-style: normal;
@@ -346,6 +346,12 @@ button#advanced-search:after {
     right: 11px;
     color: #a7be79;
     font-size: 15px;
+}
+button#advanced-search.collapsed:after {
+    content: "\f64d";
+}
+button#advanced-search:after {
+    content: "\f63b";
 }
 
 .card-section {
