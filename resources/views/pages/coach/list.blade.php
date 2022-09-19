@@ -51,7 +51,7 @@
                         <i class="bi bi-chevron-compact-down"></i>
                       </div>
 
-                      <button id="advanced-search">Advanced Search</button>
+                      <button id="advanced-search" class="{{isset($_GET['advanced']) ? '': 'collapsed'}}">Advanced Search</button>
                       <div id="advenced-content" class="{{isset($_GET['advanced']) ? '': 'collapsed'}}">
                         <div class="form-group position-relative">
                           <label for="name">Language <span class="input-required">*</span></label>
@@ -145,6 +145,7 @@
       $(document).ready(function () {
         $("#advanced-search").on("click", function(e){
           $("#advenced-content").toggleClass("collapsed");
+          $(this).toggleClass('collapsed');
           e.preventDefault();
         });
 
