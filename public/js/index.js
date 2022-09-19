@@ -202,7 +202,10 @@ $('.program-slider').slick({
           var url = url.join(",");
         } 
         var newurl = replaceUrlParam(name,url,newUrl);
+        newurl = newurl.replace(/%2C/g,",");
+        newurl = newurl.replace(/&amp;/g, "&");
         newurl = newurl.replace("&amp;", "&");
+        newurl = newurl.replace("amp;", "");
         window.location = newurl; // redirect
         
       } else {
@@ -221,8 +224,9 @@ $('.program-slider').slick({
       //     return this.value;
       // }).get();
 
-      //console.log(checkedVals);
+      
       var url = $(this).val(); // get selected value
+      
       if (url.length != 0) { 
         //if (url) { // require a URL
         var newUrl = CURRENT_URL;
@@ -232,8 +236,14 @@ $('.program-slider').slick({
         if (url instanceof Array) {
           var url = url.join(",");
         } 
+        
         var newurl = replaceUrlParam(name,url,newUrl);
+        newurl = newurl.replace(/%2C/g,",");
+        newurl = newurl.replace(/&amp;/g, "&");
         newurl = newurl.replace("&amp;", "&");
+        newurl = newurl.replace("amp;", "");
+        //console.log(newurl);
+        //console.log(newurl);
         window.location = newurl; // redirect
         
       } else {
@@ -360,11 +370,12 @@ $('.program-slider').slick({
     url=url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
     url = url.replace(/%2C/g,",");
     url = url.replace(/&amp;/g, "&");
+    console.log(url);
     return url = url.replace("&amp;", "&");
     //var reg = new RegExp( '&', g );
     //return url.replace( reg, '%26' );
     //return encodeURL = encodeURIComponent( url );
-    console.log(url);
+    
     
   }
   var loadFile = function(event) {

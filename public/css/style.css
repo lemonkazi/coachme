@@ -257,7 +257,7 @@ header nav ul li.active a {
 }
 
 .hero-banner .text-content h1 {
-    font-size: 45px;
+    font-size: 30px;
     color: #ffffff;
     margin-bottom: 70px;
 }
@@ -265,6 +265,17 @@ header nav ul li.active a {
 .hero-banner .text-content h1 span {
     color: #233c50;
     font-weight: bold;
+}
+.hero-banner .text-content h1 a {
+    color: #233c50;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.hero-banner .text-content h1 a:hover {
+    color: #233c50;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .hero-banner .text-content p {
@@ -293,6 +304,40 @@ header nav ul li.active a {
 
 .hero-banner .hero-image img {
     width: 100%;
+}
+button#advanced-search {
+    margin: 0 auto;
+    border: none;
+    text-align: left;
+    border-radius: 8px;
+    background: #d0e6a5 0% 0% no-repeat padding-box;
+    position: relative;
+    flex-shrink: 0;
+    width: 93%;
+    max-width: 97%;
+    padding-right: calc(var(--bs-gutter-x)/ 2);
+    padding-left: calc(var(--bs-gutter-x)/ 2);
+    margin-top: var(--bs-gutter-y);
+    padding: 6px 13px;
+    margin-bottom: 1rem;
+}
+button#advanced-search:after {
+    content: "\f64d";
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -0.125em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    color: #a7be79;
+    font-size: 15px;
 }
 
 .card-section {

@@ -160,6 +160,11 @@
           </div>
         </div>
     </div>
+    <style>
+    .fc-event{
+    cursor: pointer;
+    }
+    </style>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -209,6 +214,11 @@
             });
             //return false;
             //$('.event').show();
+          },
+          eventClick: function (event, jsEvent, view) {
+            if (event.event.id) {
+              window.location = baseUrl + '/camp/details/' + event.event.id;
+            }
           },
           events : <?php echo json_encode($camps) ?>
           

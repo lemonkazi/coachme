@@ -203,7 +203,40 @@ header {
     z-index: 2;
     position: relative;
 }
-
+button#advanced-search {
+    margin: 0 auto;
+    border: none;
+    text-align: left;
+    border-radius: 8px;
+    background: #d0e6a5 0% 0% no-repeat padding-box;
+    position: relative;
+    flex-shrink: 0;
+    width: 93%;
+    max-width: 97%;
+    padding-right: calc(var(--bs-gutter-x)/ 2);
+    padding-left: calc(var(--bs-gutter-x)/ 2);
+    margin-top: var(--bs-gutter-y);
+    padding: 6px 13px;
+    margin-bottom: 1rem;
+}
+button#advanced-search:after {
+    content: "\f64d";
+    display: inline-block;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -0.125em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    color: #a7be79;
+    font-size: 15px;
+}
 .hero-banner {
     background-color: #f3f6fb;
     background-image: url(../img/Group76@1X.png);
@@ -215,10 +248,14 @@ header {
     padding: 5%;
     .text-content {
         h1 {
-            font-size: 45px;
+            font-size: 30px;
             color: #ffffff;
             margin-bottom: 70px;
             span {
+                color: #233c50;
+                font-weight: bold;
+            }
+            a {
                 color: #233c50;
                 font-weight: bold;
             }

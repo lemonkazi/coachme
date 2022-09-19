@@ -58,7 +58,7 @@
                       <img class="img-fluid pc" src="{{ asset('img/logo.png') }}" alt="">
                       <img class="img-fluid sp logo-sp" src="{{ asset('img/logo_sp.png') }}" alt="">
                     </a>
-                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                    <button style="display:none;" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
@@ -66,8 +66,8 @@
                       <i class="bi bi-x "></i>
                     </span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <div  class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul style="display:none;" class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <!-- <li class="nav-item">
                         <a class="nav-link" href="#">About us</a>
                         </li> -->
