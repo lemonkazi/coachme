@@ -257,7 +257,7 @@ header nav ul li.active a {
 }
 
 .hero-banner .text-content h1 {
-    font-size: 30px;
+    font-size: 45px;
     color: #ffffff;
     margin-bottom: 70px;
 }
@@ -266,12 +266,12 @@ header nav ul li.active a {
     color: #233c50;
     font-weight: bold;
 }
-.hero-banner .text-content h1 a {
+.hero-banner .text-content p a {
     color: #233c50;
     font-weight: bold;
     text-decoration: underline;
 }
-.hero-banner .text-content h1 a:hover {
+.hero-banner .text-content p a:hover {
     color: #233c50;
     font-weight: bold;
     text-decoration: underline;
