@@ -311,69 +311,69 @@ class CoachController extends Controller
         
       }
 
-      if (isset($data['speciality_id'])) {
-        $speciality = Speciality::find($data['speciality_id']);
+    //   if (isset($data['speciality_id'])) {
+    //     $speciality = Speciality::find($data['speciality_id']);
 
-        if (!$speciality) {
-           return redirect()->back()->withInput()->withErrors('rink not exist');
-        }            
-        $insert_arr = array();
-        $insert_arr['user_id'] = $user->id;
-        $insert_arr['content_id'] = $speciality->id;
-        $insert_arr['content_type'] = 'SPECIALITY';
-        $insert_arr['content_name'] = $speciality->name;
-        $userInfo = UserInfo::where('user_id',$user->id)
-                         ->where('content_id',$speciality->id)
-                         ->where('content_type','SPECIALITY')
-                         ->first();
-        if (!$userInfo) {
-          $userInfo = UserInfo::firstOrCreate($insert_arr);
-        } else {
-          $userInfo->update($insert_arr);  
-        }
-      }
-      if (isset($data['language_id'])) {
-        $language = Language::find($data['language_id']);
+    //     if (!$speciality) {
+    //        return redirect()->back()->withInput()->withErrors('rink not exist');
+    //     }            
+    //     $insert_arr = array();
+    //     $insert_arr['user_id'] = $user->id;
+    //     $insert_arr['content_id'] = $speciality->id;
+    //     $insert_arr['content_type'] = 'SPECIALITY';
+    //     $insert_arr['content_name'] = $speciality->name;
+    //     $userInfo = UserInfo::where('user_id',$user->id)
+    //                      ->where('content_id',$speciality->id)
+    //                      ->where('content_type','SPECIALITY')
+    //                      ->first();
+    //     if (!$userInfo) {
+    //       $userInfo = UserInfo::firstOrCreate($insert_arr);
+    //     } else {
+    //       $userInfo->update($insert_arr);  
+    //     }
+    //   }
+    //   if (isset($data['language_id'])) {
+    //     $language = Language::find($data['language_id']);
 
-        if (!$language) {
-           return redirect()->back()->withInput()->withErrors('rink not exist');
-        }            
-        $insert_arr = array();
-        $insert_arr['user_id'] = $user->id;
-        $insert_arr['content_id'] = $language->id;
-        $insert_arr['content_type'] = 'LANGUAGE';
-        $insert_arr['content_name'] = $language->name;
-        $userInfo = UserInfo::where('user_id',$user->id)
-                         ->where('content_id',$language->id)
-                         ->where('content_type','LANGUAGE')
-                         ->first();
-        if (!$userInfo) {
-          $userInfo = UserInfo::firstOrCreate($insert_arr);
-        } else {
-          $userInfo->update($insert_arr);  
-        }
-      }
-      if (isset($data['level_id'])) {
-        $level = Level::find($data['level_id']);
+    //     if (!$language) {
+    //        return redirect()->back()->withInput()->withErrors('rink not exist');
+    //     }            
+    //     $insert_arr = array();
+    //     $insert_arr['user_id'] = $user->id;
+    //     $insert_arr['content_id'] = $language->id;
+    //     $insert_arr['content_type'] = 'LANGUAGE';
+    //     $insert_arr['content_name'] = $language->name;
+    //     $userInfo = UserInfo::where('user_id',$user->id)
+    //                      ->where('content_id',$language->id)
+    //                      ->where('content_type','LANGUAGE')
+    //                      ->first();
+    //     if (!$userInfo) {
+    //       $userInfo = UserInfo::firstOrCreate($insert_arr);
+    //     } else {
+    //       $userInfo->update($insert_arr);  
+    //     }
+    //   }
+    //   if (isset($data['level_id'])) {
+    //     $level = Level::find($data['level_id']);
 
-        if (!$level) {
-           return redirect()->back()->withInput()->withErrors('level not exist');
-        }            
-        $insert_arr = array();
-        $insert_arr['user_id'] = $user->id;
-        $insert_arr['content_id'] = $level->id;
-        $insert_arr['content_type'] = 'LEVEL';
-        $insert_arr['content_name'] = $level->name;
-        $userInfo = UserInfo::where('user_id',$user->id)
-                         ->where('content_id',$level->id)
-                         ->where('content_type','LEVEL')
-                         ->first();
-        if (!$userInfo) {
-          $userInfo = UserInfo::firstOrCreate($insert_arr);
-        } else {
-          $userInfo->update($insert_arr);  
-        }
-      }
+    //     if (!$level) {
+    //        return redirect()->back()->withInput()->withErrors('level not exist');
+    //     }            
+    //     $insert_arr = array();
+    //     $insert_arr['user_id'] = $user->id;
+    //     $insert_arr['content_id'] = $level->id;
+    //     $insert_arr['content_type'] = 'LEVEL';
+    //     $insert_arr['content_name'] = $level->name;
+    //     $userInfo = UserInfo::where('user_id',$user->id)
+    //                      ->where('content_id',$level->id)
+    //                      ->where('content_type','LEVEL')
+    //                      ->first();
+    //     if (!$userInfo) {
+    //       $userInfo = UserInfo::firstOrCreate($insert_arr);
+    //     } else {
+    //       $userInfo->update($insert_arr);  
+    //     }
+    //   }
       
       $user->authority = User::ACCESS_LEVEL_COACH;
       $user->token = sha1(time());
