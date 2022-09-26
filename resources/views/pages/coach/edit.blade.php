@@ -99,10 +99,21 @@
                   <div class="form-group">
                     <label for="speciality">Discipline</label>
                     <select class="form-control" id="speciality" name="speciality_id[]" multiple="multiple">
-
-                      @foreach($speciality_all as $id => $value)
-                        <option value="{{$id}}" @foreach($data['user']->userinfos['speciality'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
-                      @endforeach
+                      <?php 
+                        if(!empty($data['speciality_id'])) {
+                          ?>
+                          @foreach($speciality_all as $id => $value)
+                            <option value="{{$id}}" @foreach($data['speciality_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                          <?php 
+                        } else {
+                          ?>
+                          @foreach($speciality_all as $id => $value)
+                            <option value="{{$id}}">{{$value}}</option>
+                          @endforeach
+                          <?php
+                        }
+                        ?>
                     </select>
                     <i class="bi bi-plus-lg"></i>
                   </div>
@@ -130,9 +141,21 @@
                     <label for="language">Language spoken</label>
                     <select class="form-control" id="language" name="language_id[]" multiple="multiple">
 
-                      @foreach($language_all as $id => $value)
-                        <option value="{{$id}}" @foreach($data['user']->userinfos['languages'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
-                      @endforeach
+                     <?php 
+                        if(!empty($data['language_id'])) {
+                          ?>
+                          @foreach($language_all as $id => $value)
+                            <option value="{{$id}}" @foreach($data['language_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                          <?php 
+                        } else {
+                          ?>
+                          @foreach($language_all as $id => $value)
+                            <option value="{{$id}}">{{$value}}</option>
+                          @endforeach
+                          <?php
+                        }
+                        ?>
                     </select>
                     <i class="bi bi-plus-lg"></i>
                   </div>
@@ -164,10 +187,22 @@
                     <div class="form-group">
                       <label for="level_id">Level of Coaching</label>
                       <select class="form-control" id="level" name="level_id[]" multiple="multiple">
-  
-                        @foreach($level_all as $id => $value)
-                          <option value="{{$id}}" @foreach($data['user']->userinfos['levels'] as $aItemKey => $p) @if($id == $p->content_id)selected="selected"@endif @endforeach>{{$value}}</option>
-                        @endforeach
+
+                        <?php 
+                        if(!empty($data['level_id'])) {
+                          ?>
+                          @foreach($level_all as $id => $value)
+                            <option value="{{$id}}" @foreach($data['level_id'] as $aItemKey => $p) @if($id == $p['id'])selected="selected"@endif @endforeach>{{$value}}</option>
+                          @endforeach
+                          <?php 
+                        } else {
+                          ?>
+                          @foreach($level_all as $id => $value)
+                            <option value="{{$id}}">{{$value}}</option>
+                          @endforeach
+                          <?php
+                        }
+                        ?>
                       </select>
                       <i class="bi bi-plus-lg"></i>
                     </div>
