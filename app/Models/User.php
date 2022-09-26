@@ -653,12 +653,22 @@ class User extends Authenticatable implements MustVerifyEmail
         // print_r($params);
         // exit();
         $query = $this->newQuery();
+        $query->select('users.*');
+        $query->distinct();
         
 
         $authUser = request()->user();
         if (empty($params) || !is_array($params)) {
             return $query;
         }
+
+        $query->leftJoin('user_infos', function($join)
+        {
+            $join->on('users.id', '=', 'user_infos.user_id')
+                ->where('user_infos.deleted_at',null);
+        });
+        
+        
 
        
         
@@ -668,25 +678,30 @@ class User extends Authenticatable implements MustVerifyEmail
             $params['is_verified'] = $params['is_varified'];
             unset($params['is_varified']);
         }
+        
 
         if (isset($params['speciality'])) {
             $params['speciality'] = explode(',', $params['speciality']);
             $filterParams = [];
             $filterParams['content_type'] = 'SPECIALITY';
             $filterParams['content_id'] = $params['speciality'];
-
+            //foreach ($params['speciality'] as $key => $value) {
+                $query->where('user_infos.content_type', '==', 'SPECIALITY')
+                      ->whereIn('user_infos.content_id', $params['speciality']);
+            //}
+            unset($params['speciality']);
             //$filterParams['type'] = $params['period'];
             
-            $newsQuery = (new UserInfo())->filter($filterParams);
+            // $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                    ->toArray();
+            // $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+            //         ->toArray();
 
-            $ids = array();
-            foreach ($periods as $key => $value) {
-                $ids[]=$value['user_id'];
-            }
-            $params['id'] = $ids;
+            // $ids = array();
+            // foreach ($periods as $key => $value) {
+            //     $ids[]=$value['user_id'];
+            // }
+            // $params['id'] = $ids;
         }
         if (isset($params['rink'])) {
             $params['rink'] = explode(',', $params['rink']);
@@ -695,34 +710,43 @@ class User extends Authenticatable implements MustVerifyEmail
             $filterParams['content_id'] = $params['rink'];
 
             //$filterParams['type'] = $params['period'];
-            
-            $newsQuery = (new UserInfo())->filter($filterParams);
+            //foreach ($params['rink'] as $key => $value) {
+                $query->where('user_infos.content_type', '==', 'RINK')
+                      ->whereIn('user_infos.content_id', $params['rink']);
+            //}
+            unset($params['rink']);
+            // $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                    ->toArray();
-            $ids = array();
-            foreach ($periods as $key => $value) {
-                $ids[]=$value['user_id'];
-            }
-            $params['id'] = $ids;
+            // $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+            //         ->toArray();
+            // $ids = array();
+            // foreach ($periods as $key => $value) {
+            //     $ids[]=$value['user_id'];
+            // }
+            // $params['id'] = $ids;
         }
         if (isset($params['language'])) {
             $params['language'] = explode(',', $params['language']);
             $filterParams = [];
             $filterParams['content_type'] = 'LANGUAGE';
             $filterParams['content_id'] = $params['language'];
+            //foreach ($params['language'] as $key => $value) {
+                $query->where('user_infos.content_type', '==', 'LANGUAGE')
+                      ->whereIn('user_infos.content_id', $params['language']);
+            //}
+            unset($params['language']);
 
             //$filterParams['type'] = $params['period'];
             
-            $newsQuery = (new UserInfo())->filter($filterParams);
+            // $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                    ->toArray();
-            $ids = array();
-            foreach ($periods as $key => $value) {
-                $ids[]=$value['user_id'];
-            }
-            $params['id'] = $ids;
+            // $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+            //         ->toArray();
+            // $ids = array();
+            // foreach ($periods as $key => $value) {
+            //     $ids[]=$value['user_id'];
+            // }
+            // $params['id'] = $ids;
         }
         if (isset($params['level'])) {
           $params['level'] = explode(',', $params['level']);
@@ -731,17 +755,22 @@ class User extends Authenticatable implements MustVerifyEmail
           $filterParams['content_id'] = $params['level'];
 
           //$filterParams['type'] = $params['period'];
-          
-          $newsQuery = (new UserInfo())->filter($filterParams);
+          //foreach ($params['level'] as $key => $value) {
+              $query->where('user_infos.content_type', '==', 'LEVEL')
+                    ->whereIn('user_infos.content_id', $params['level']);
+          //}
+          unset($params['level']);
 
-          $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                  ->toArray();
-          $ids = array();
-          foreach ($periods as $key => $value) {
-              $ids[]=$value['user_id'];
-          }
-          $params['id'] = $ids;
-      }
+          // $newsQuery = (new UserInfo())->filter($filterParams);
+
+          // $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+          //         ->toArray();
+          // $ids = array();
+          // foreach ($periods as $key => $value) {
+          //     $ids[]=$value['user_id'];
+          // }
+          // $params['id'] = $ids;
+        }
         // print_r($params);
         // exit();
         if (isset($params['location_id'])) {
@@ -762,12 +791,12 @@ class User extends Authenticatable implements MustVerifyEmail
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
-                    $query->where($key, 'LIKE', "%{$value}%");
+                    $query->where('users.'.$key, 'LIKE', "%{$value}%");
                 } elseif (in_array($key, $this->exactFilterable)) {
                     if (is_array($value)) {
-                        $query->whereIn($key, $value);
+                        $query->whereIn('users.'.$key, $value);
                     } else {
-                        $query->where($key, '=', $value);
+                        $query->where('users.'.$key, '=', $value);
                     }
                 }
             }
