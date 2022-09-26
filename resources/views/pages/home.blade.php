@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="text-content">
-                      <h1>Finding a coach has never been that simple</h1>
+                      <h1>Finding a <span>coach</span> has never been that simple</h1>
                       <p>
                         If you are looking for a coach, <a data-toggle="modal" data-target="#coachModalCenter" href="{{ url('/coach/list') }}">CLICK HERE</a>
                         </br>
