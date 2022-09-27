@@ -1374,7 +1374,7 @@ class PublicContoller extends Controller
         $ooo = json_decode($user->speciality_id);
         
         foreach ($ooo as $key=>$speciality) {
-          $speciality = Age::find($speciality, ['name', 'id'])->toArray();
+          $speciality = Speciality::find($speciality, ['name', 'id'])->toArray();
           $specialityaa .= $speciality['name'].',';
         }
       }
@@ -1412,7 +1412,7 @@ class PublicContoller extends Controller
         $ooo = json_decode($user->language_id);
         
         foreach ($ooo as $key=>$language) {
-          $language = Age::find($language, ['name', 'id'])->toArray();
+          $language = Language::find($language, ['name', 'id'])->toArray();
           $languageaa .= $language['name'].',';
         }
       }
@@ -1429,7 +1429,7 @@ class PublicContoller extends Controller
         $ooo = json_decode($user->level_id);
         
         foreach ($ooo as $key=>$level) {
-          $level = Age::find($level, ['name', 'id'])->toArray();
+          $level = Level::find($level, ['name', 'id'])->toArray();
           $levelaa .= $language['name'].',';
         }
       }
