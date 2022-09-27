@@ -1362,12 +1362,35 @@ class PublicContoller extends Controller
       if ($user->is_published !=1) {
          return redirect(RouteServiceProvider::ROOT);
       } 
-      $ooo = $user->userinfos['speciality'];
+      // $ooo = $user->userinfos['speciality'];
+      // $specialityaa = '';
+      // foreach($ooo as $row){
+      //     $specialityaa .=$row->content_name.',';
+      // }
+      // $speciality = trim($specialityaa,',');
+
       $specialityaa = '';
-      foreach($ooo as $row){
-          $specialityaa .=$row->content_name.',';
+      if(!empty($user) && !empty($user->speciality_id)){
+        $ooo = json_decode($user->speciality_id);
+        
+        foreach ($ooo as $key=>$speciality) {
+          $speciality = Speciality::find($speciality, ['name', 'id'])->toArray();
+          $specialityaa .= $speciality['name'].',';
+        }
       }
       $speciality = trim($specialityaa,',');
+
+      $ageaa = '';
+      if(!empty($user) && !empty($user->age_id)){
+        $age_id_data = json_decode($user->age_id);
+        
+        foreach ($age_id_data as $key=>$age) {
+          $age = Age::find($age, ['name', 'id'])->toArray();
+          $ageaa .= $age['name'].',';
+        }
+      }
+      $age = trim($ageaa,',');
+      
 
 
       $rink = $user->userinfos['rinks'];
@@ -1377,17 +1400,38 @@ class PublicContoller extends Controller
       }
       $rink = trim($specialityaa,',');
 
-      $language = $user->userinfos['languages'];
+      // $language = $user->userinfos['languages'];
+      // $languageaa = '';
+      // foreach($language as $row){
+      //     $languageaa .=$row->content_name.',';
+      // }
+      // $language = trim($languageaa,',');
+
       $languageaa = '';
-      foreach($language as $row){
-          $languageaa .=$row->content_name.',';
+      if(!empty($user) && !empty($user->language_id)){
+        $ooo = json_decode($user->language_id);
+        
+        foreach ($ooo as $key=>$language) {
+          $language = Language::find($language, ['name', 'id'])->toArray();
+          $languageaa .= $language['name'].',';
+        }
       }
       $language = trim($languageaa,',');
 
-      $level = $user->userinfos['levels'];
+      // $level = $user->userinfos['levels'];
+      // $levelaa = '';
+      // foreach($level as $row){
+      //     $levelaa .=$row->content_name.',';
+      // }
+      // $level = trim($levelaa,',');
       $levelaa = '';
-      foreach($level as $row){
-          $levelaa .=$row->content_name.',';
+      if(!empty($user) && !empty($user->level_id)){
+        $ooo = json_decode($user->level_id);
+        
+        foreach ($ooo as $key=>$level) {
+          $level = Level::find($level, ['name', 'id'])->toArray();
+          $levelaa .= $language['name'].',';
+        }
       }
       $level = trim($levelaa,',');
 
@@ -1399,7 +1443,8 @@ class PublicContoller extends Controller
                'speciality' => $speciality,
                'rink' => $rink,
                'language' => $language,
-               'level' => $level
+               'level' => $level,
+               'age' => $age
           ]
       ]);
       //->with(compact('formatedDate'));
@@ -1774,80 +1819,94 @@ class PublicContoller extends Controller
             
             
           }
-
           if (isset($data['speciality_id'])) {
-            foreach ($data['speciality_id'] as $key => $speciality_id) {
-
-              $speciality = Speciality::find($speciality_id);
-
-              if (!$speciality) {
-                 return redirect()->back()->withInput()->withErrors('rink not exist');
-              }            
-              $insert_arr = array();
-              $insert_arr['user_id'] = $user->id;
-              $insert_arr['content_id'] = $speciality->id;
-              $insert_arr['content_type'] = 'SPECIALITY';
-              $insert_arr['content_name'] = $speciality->name;
-              $userInfo = UserInfo::where('user_id',$user->id)
-                               ->where('content_id',$speciality->id)
-                               ->where('content_type','SPECIALITY')
-                               ->first();
-              if (!$userInfo) {
-                $userInfo = UserInfo::firstOrCreate($insert_arr);
-              } else {
-                $userInfo->update($insert_arr);  
-              }
-            }
-            
+            $data['speciality_id'] = json_encode(array_unique($data['speciality_id']));
+          } else {
+            unset($data['speciality_id']);
           }
+          // if (isset($data['speciality_id'])) {
+          //   foreach ($data['speciality_id'] as $key => $speciality_id) {
+
+          //     $speciality = Speciality::find($speciality_id);
+
+          //     if (!$speciality) {
+          //        return redirect()->back()->withInput()->withErrors('rink not exist');
+          //     }            
+          //     $insert_arr = array();
+          //     $insert_arr['user_id'] = $user->id;
+          //     $insert_arr['content_id'] = $speciality->id;
+          //     $insert_arr['content_type'] = 'SPECIALITY';
+          //     $insert_arr['content_name'] = $speciality->name;
+          //     $userInfo = UserInfo::where('user_id',$user->id)
+          //                      ->where('content_id',$speciality->id)
+          //                      ->where('content_type','SPECIALITY')
+          //                      ->first();
+          //     if (!$userInfo) {
+          //       $userInfo = UserInfo::firstOrCreate($insert_arr);
+          //     } else {
+          //       $userInfo->update($insert_arr);  
+          //     }
+          //   }
+            
+          // }
           if (isset($data['language_id'])) {
-            foreach ($data['language_id'] as $key => $language_id) {
-            
-              $language = Language::find($language_id);
-
-              if (!$language) {
-                 return redirect()->back()->withInput()->withErrors('rink not exist');
-              }            
-              $insert_arr = array();
-              $insert_arr['user_id'] = $user->id;
-              $insert_arr['content_id'] = $language->id;
-              $insert_arr['content_type'] = 'LANGUAGE';
-              $insert_arr['content_name'] = $language->name;
-              $userInfo = UserInfo::where('user_id',$user->id)
-                               ->where('content_id',$language->id)
-                               ->where('content_type','LANGUAGE')
-                               ->first();
-              if (!$userInfo) {
-                $userInfo = UserInfo::firstOrCreate($insert_arr);
-              } else {
-                $userInfo->update($insert_arr);  
-              }
-            }
+            $data['language_id'] = json_encode(array_unique($data['language_id']));
+          } else {
+            unset($data['language_id']);
           }
+          // if (isset($data['language_id'])) {
+          //   foreach ($data['language_id'] as $key => $language_id) {
+            
+          //     $language = Language::find($language_id);
+
+          //     if (!$language) {
+          //        return redirect()->back()->withInput()->withErrors('rink not exist');
+          //     }            
+          //     $insert_arr = array();
+          //     $insert_arr['user_id'] = $user->id;
+          //     $insert_arr['content_id'] = $language->id;
+          //     $insert_arr['content_type'] = 'LANGUAGE';
+          //     $insert_arr['content_name'] = $language->name;
+          //     $userInfo = UserInfo::where('user_id',$user->id)
+          //                      ->where('content_id',$language->id)
+          //                      ->where('content_type','LANGUAGE')
+          //                      ->first();
+          //     if (!$userInfo) {
+          //       $userInfo = UserInfo::firstOrCreate($insert_arr);
+          //     } else {
+          //       $userInfo->update($insert_arr);  
+          //     }
+          //   }
+          // }
           if (isset($data['level_id'])) {
-            foreach ($data['level_id'] as $key => $level_id) {
-            
-              $level = Level::find($level_id);
-
-              if (!$level) {
-                 return redirect()->back()->withInput()->withErrors('level not exist');
-              }            
-              $insert_arr = array();
-              $insert_arr['user_id'] = $user->id;
-              $insert_arr['content_id'] = $level->id;
-              $insert_arr['content_type'] = 'LEVEL';
-              $insert_arr['content_name'] = $level->name;
-              $userInfo = UserInfo::where('user_id',$user->id)
-                               ->where('content_id',$level->id)
-                               ->where('content_type','LEVEL')
-                               ->first();
-              if (!$userInfo) {
-                $userInfo = UserInfo::firstOrCreate($insert_arr);
-              } else {
-                $userInfo->update($insert_arr);  
-              }
-            }
+            $data['level_id'] = json_encode(array_unique($data['level_id']));
+          } else {
+            unset($data['level_id']);
           }
+          // if (isset($data['level_id'])) {
+          //   foreach ($data['level_id'] as $key => $level_id) {
+            
+          //     $level = Level::find($level_id);
+
+          //     if (!$level) {
+          //        return redirect()->back()->withInput()->withErrors('level not exist');
+          //     }            
+          //     $insert_arr = array();
+          //     $insert_arr['user_id'] = $user->id;
+          //     $insert_arr['content_id'] = $level->id;
+          //     $insert_arr['content_type'] = 'LEVEL';
+          //     $insert_arr['content_name'] = $level->name;
+          //     $userInfo = UserInfo::where('user_id',$user->id)
+          //                      ->where('content_id',$level->id)
+          //                      ->where('content_type','LEVEL')
+          //                      ->first();
+          //     if (!$userInfo) {
+          //       $userInfo = UserInfo::firstOrCreate($insert_arr);
+          //     } else {
+          //       $userInfo->update($insert_arr);  
+          //     }
+          //   }
+          // }
           if (isset($data['age_id'])) {
             $data['age_id'] = json_encode(array_unique($data['age_id']));
           } else {
@@ -1978,6 +2037,27 @@ class PublicContoller extends Controller
         ['id', $user->id]
       ])->first();
 
+      $speciality_id =array();
+      if(!empty($user) && !empty($user->speciality_id)){
+        $speciality_id_data = json_decode($user->age_id);
+        foreach ($speciality_id_data as $key=>$speciality) {
+          $speciality_id[] = Speciality::find($speciality, ['name', 'id'])->toArray();
+        }
+      }
+      $level_id =array();
+      if(!empty($user) && !empty($user->level_id)){
+        $level_id_data = json_decode($user->level_id);
+        foreach ($level_id_data as $key=>$level) {
+          $level_id[] = Level::find($level, ['name', 'id'])->toArray();
+        }
+      }
+      $language_id =array();
+      if(!empty($user) && !empty($user->language_id)){
+        $language_id_data = json_decode($user->language_id);
+        foreach ($language_id_data as $key=>$language) {
+          $language_id[] = Language::find($language, ['name', 'id'])->toArray();
+        }
+      }
       $age_id =array();
       if(!empty($user) && !empty($user->age_id)){
         $age_id_data = json_decode($user->age_id);
@@ -1992,7 +2072,10 @@ class PublicContoller extends Controller
                'Title' =>  $title,
                'programs' =>  $programs,
                'camps' =>  $camps,
-               'age_id' =>  $age_id
+               'age_id' =>  $age_id,
+               'level_id' =>  $level_id,
+               'language_id' =>  $language_id,
+               'speciality_id' =>  $speciality_id
           ]
       ])
       ->with(compact('rink_all','experience_all','speciality_all','language_all','price_all','certificate_all','province_all','city_all','level_all','age_all'));

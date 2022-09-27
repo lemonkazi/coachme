@@ -69,7 +69,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'deleted_at',
         'token',
         'web_site_url',
-        'age_id'
+        'age_id',
+        'level_id',
+        'language_id',
+        'speciality_id'
     ];
 
     /**
@@ -151,7 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_verified',
         'province_id',
         'city_id',
-        'age_id'
+        //'age_id'
     ];
 
 
@@ -653,12 +656,22 @@ class User extends Authenticatable implements MustVerifyEmail
         // print_r($params);
         // exit();
         $query = $this->newQuery();
+        $query->select('users.*');
+        //$query->distinct();
         
 
         $authUser = request()->user();
         if (empty($params) || !is_array($params)) {
             return $query;
         }
+
+        // $query->leftJoin('user_infos', function($join)
+        // {
+        //     $join->on('users.id', '=', 'user_infos.user_id')
+        //         ->where('user_infos.deleted_at',null);
+        // });
+        
+        
 
        
         
@@ -668,80 +681,113 @@ class User extends Authenticatable implements MustVerifyEmail
             $params['is_verified'] = $params['is_varified'];
             unset($params['is_varified']);
         }
+        // $ids = array();
+        // $content_type = array();
 
-        if (isset($params['speciality'])) {
-            $params['speciality'] = explode(',', $params['speciality']);
-            $filterParams = [];
-            $filterParams['content_type'] = 'SPECIALITY';
-            $filterParams['content_id'] = $params['speciality'];
-
-            //$filterParams['type'] = $params['period'];
+        // if (isset($params['speciality'])) {
+        //     $content_type[] = 'SPECIALITY';
+        //     $params['speciality'] = explode(',', $params['speciality']);
+        //     $filterParams = [];
+        //     $filterParams['content_type'] = 'SPECIALITY';
+        //     $filterParams['content_id'] = $params['speciality'];
+        //     //foreach ($params['speciality'] as $key => $value) {
+        //         // $query->where('user_infos.content_type', '=', 'SPECIALITY')
+        //         //       ->whereIn('user_infos.content_id', $params['speciality']);
+        //     //}
+        //     unset($params['speciality']);
+        //     //$filterParams['type'] = $params['period'];
             
-            $newsQuery = (new UserInfo())->filter($filterParams);
+        //     $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                    ->toArray();
+        //     $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+        //             ->toArray();
 
-            $ids = array();
-            foreach ($periods as $key => $value) {
-                $ids[]=$value['user_id'];
-            }
-            $params['id'] = $ids;
-        }
-        if (isset($params['rink'])) {
-            $params['rink'] = explode(',', $params['rink']);
-            $filterParams = [];
-            $filterParams['content_type'] = 'RINK';
-            $filterParams['content_id'] = $params['rink'];
-
-            //$filterParams['type'] = $params['period'];
             
-            $newsQuery = (new UserInfo())->filter($filterParams);
+        //     foreach ($periods as $key => $value) {
+        //         $ids[]=$value['id'];
+        //     }
+        //     //$params['userid'] = $ids;
+        // }
+        // if (isset($params['rink'])) {
+        //   $content_type[] = 'RINK';
+        //     $params['rink'] = explode(',', $params['rink']);
+        //     $filterParams = [];
+        //     $filterParams['content_type'] = 'RINK';
+        //     $filterParams['content_id'] = $params['rink'];
 
-            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                    ->toArray();
-            $ids = array();
-            foreach ($periods as $key => $value) {
-                $ids[]=$value['user_id'];
-            }
-            $params['id'] = $ids;
-        }
-        if (isset($params['language'])) {
-            $params['language'] = explode(',', $params['language']);
-            $filterParams = [];
-            $filterParams['content_type'] = 'LANGUAGE';
-            $filterParams['content_id'] = $params['language'];
+        //     //$filterParams['type'] = $params['period'];
+        //     // //foreach ($params['rink'] as $key => $value) {
+        //     //     $query->where('user_infos.content_type', '=', 'RINK')
+        //     //           ->whereIn('user_infos.content_id', $params['rink']);
+        //     // //}
+        //     unset($params['rink']);
+        //     $newsQuery = (new UserInfo())->filter($filterParams);
 
-            //$filterParams['type'] = $params['period'];
+        //     $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+        //             ->toArray();
+        //     //$ids = array();
+        //     foreach ($periods as $key => $value) {
+        //         $ids[]=$value['id'];
+        //     }
+        //      $query->where('user_infos.content_type', '=', 'RINK');
+        //     // $params['id'] = $ids;
+        // }
+        // if (isset($params['language'])) {
+        //   $content_type[] = 'LANGUAGE';
+        //     $params['language'] = explode(',', $params['language']);
+        //     $filterParams = [];
+        //     $filterParams['content_type'] = 'LANGUAGE';
+        //     $filterParams['content_id'] = $params['language'];
+        //     // foreach ($params['language'] as $key => $value) {
+        //     //     $query->where('user_infos.content_type', '=', 'LANGUAGE')
+        //     //           ->whereIn('user_infos.content_id', $params['language']);
+        //     //}
+        //     unset($params['language']);
+
             
-            $newsQuery = (new UserInfo())->filter($filterParams);
+        //     $newsQuery = (new UserInfo())->filter($filterParams);
 
-            $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                    ->toArray();
-            $ids = array();
-            foreach ($periods as $key => $value) {
-                $ids[]=$value['user_id'];
-            }
-            $params['id'] = $ids;
-        }
-        if (isset($params['level'])) {
-          $params['level'] = explode(',', $params['level']);
-          $filterParams = [];
-          $filterParams['content_type'] = 'LEVEL';
-          $filterParams['content_id'] = $params['level'];
+        //     $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+        //             ->toArray();
+        //     //$ids = array();
+        //     foreach ($periods as $key => $value) {
+        //         $ids[]=$value['id'];
+        //     }
+        //     // $params['id'] = $ids;
+        // }
+        // if (isset($params['level'])) {
+        //   $content_type[] = 'LEVEL';
+        //   $params['level'] = explode(',', $params['level']);
+        //   $filterParams = [];
+        //   $filterParams['content_type'] = 'LEVEL';
+        //   $filterParams['content_id'] = $params['level'];
 
-          //$filterParams['type'] = $params['period'];
-          
-          $newsQuery = (new UserInfo())->filter($filterParams);
+        //   //$filterParams['type'] = $params['period'];
+        //   //foreach ($params['level'] as $key => $value) {
+        //       // $query->where('user_infos.content_type', '=', 'LEVEL')
+        //       //       ->whereIn('user_infos.content_id', $params['level']);
+        //   //}
+        //   unset($params['level']);
 
-          $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
-                  ->toArray();
-          $ids = array();
-          foreach ($periods as $key => $value) {
-              $ids[]=$value['user_id'];
-          }
-          $params['id'] = $ids;
-      }
+        //   $newsQuery = (new UserInfo())->filter($filterParams);
+
+        //   $periods = $newsQuery->get(['content_id','user_id', 'content_type', 'id'])
+        //           ->toArray();
+        //   //$ids = array();
+        //   foreach ($periods as $key => $value) {
+        //       $ids[]=$value['id'];
+        //   }
+        //   // $params['id'] = $ids;
+        // }
+        // // print_r(implode(',',$ids));
+        // // exit();
+
+        // if (!empty($ids)) {
+        //   $query->whereIn('user_infos.id', $ids);
+        //   $query->whereIn('user_infos.content_type', $content_type);
+        //   //$content_type[] = 'LEVEL';
+        // }
+
         // print_r($params);
         // exit();
         if (isset($params['location_id'])) {
@@ -753,7 +799,44 @@ class User extends Authenticatable implements MustVerifyEmail
             $params['price_id'] = explode(',', $params['price_id']);
         }
         if (isset($params['age'])) {
-          $params['age_id'] = explode(',', $params['age']);
+            $array = explode(',', $params['age']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('users.age_id', $id);
+               }
+            })->get();
+        }
+        if (isset($params['level'])) {
+            $array = explode(',', $params['level']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('users.level_id', $id);
+               }
+            })->get();
+        }
+        if (isset($params['language'])) {
+            $array = explode(',', $params['language']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('users.language_id', $id);
+               }
+            })->get();
+        }
+        if (isset($params['speciality'])) {
+            $array = explode(',', $params['speciality']);
+
+            $array = array_values(array_map('strval',$array));
+            $query->where(function ($query) use ($array) {
+               foreach ($array as $id) {
+                   $query->orWhereJsonContains('users.speciality_id', $id);
+               }
+            })->get();
         }
         if (isset($params['certificate_id'])) {
             //$params['city_id'] = $params['price_id'];
@@ -762,12 +845,12 @@ class User extends Authenticatable implements MustVerifyEmail
         foreach ($params as $key => $value) { 
             if ($value != "") {
                 if (in_array($key, $this->partialFilterable)) { 
-                    $query->where($key, 'LIKE', "%{$value}%");
+                    $query->where('users.'.$key, 'LIKE', "%{$value}%");
                 } elseif (in_array($key, $this->exactFilterable)) {
                     if (is_array($value)) {
-                        $query->whereIn($key, $value);
+                        $query->whereIn('users.'.$key, $value);
                     } else {
-                        $query->where($key, '=', $value);
+                        $query->where('users.'.$key, '=', $value);
                     }
                 }
             }
