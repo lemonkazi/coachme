@@ -1430,7 +1430,7 @@ class PublicContoller extends Controller
         
         foreach ($ooo as $key=>$level) {
           $level = Level::find($level, ['name', 'id'])->toArray();
-          $levelaa .= $language['name'].',';
+          $levelaa .= $level['name'].',';
         }
       }
       $level = trim($levelaa,',');
