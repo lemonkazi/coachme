@@ -2039,7 +2039,7 @@ class PublicContoller extends Controller
 
       $speciality_id =array();
       if(!empty($user) && !empty($user->speciality_id)){
-        $speciality_id_data = json_decode($user->age_id);
+        $speciality_id_data = json_decode($user->speciality_id);
         foreach ($speciality_id_data as $key=>$speciality) {
           $speciality_id[] = Speciality::find($speciality, ['name', 'id'])->toArray();
         }
